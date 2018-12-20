@@ -20,6 +20,8 @@
     import Vue from 'vue';
     import Login from '../../app/login/Login.vue';
     import Navbar from './Navbar.vue';
+    import axios from 'axios';
+
     export default Vue.extend({
         components: {Login, Navbar},
         name: "Appl",
@@ -27,6 +29,11 @@
             user: null,
             cart: 1
         }),
+        mounted(){
+            axios.get('/api/v1/me').then(res => {
+                this.user = res.data.user;
+            });
+        },
         methods: {
             changeLang: (lang: string) => {
 
