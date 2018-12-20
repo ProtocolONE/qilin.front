@@ -4,12 +4,17 @@
     "plugins": [{ "name": "ts-vue-plugin" }],
 
     "outDir": "./build-ts/",
-    "sourceMap": true,
-    "noImplicitAny": true,
-    "module": "commonjs",
-    "target": "es5",
     "jsx": "react",
-    "allowJs": true
+    "allowJs": true,
+
+    "resolveJsonModule": true,
+    "module": "es2015",
+    "moduleResolution": "node",
+    "target": "es6",
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "sourceMap": true,
+    "experimentalDecorators": true
   },
   "exclude": [
     "node_modules",

@@ -2,12 +2,17 @@
 
 export class Test {
 
-    constructor (){
-        alert('ggg');
-    }
+    constructor (){}
 
     foo(){
-
+        console.log(`%c ________________________________________
+< mooooooooooooooooooooooooooooooooooooo >
+ ----------------------------------------
+        \\   ^__^
+         \\  (oo)\\_______
+            (__)\\       )\\/\\
+                ||----w |
+                ||     ||`, "font-family:monospace")
     }
 
 }

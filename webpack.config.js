@@ -27,13 +27,24 @@ module.exports = {
         rules: [
             {
                 test: /\.vue$/,
-                loader: 'vue-loader'
+                loader: 'vue-loader',
+                options: {
+                    loaders: {
+                        ts: 'ts-loader'
+                    },
+                    esModule: true
+                }
+            },
+            {
+                resourceQuery: /blockType=i18n/,
+                type: 'javascript/auto',
+                loader: '@kazupon/vue-i18n-loader'
             },
             {
                 test: /\.ts$/,
                 use: [
                     {loader: 'babel-loader', options: {presets: ['@babel/preset-env']}},
-                    {loader: 'ts-loader', options: {appendTsSuffixTo: ['\\.vue$']}},
+                    {loader: 'ts-loader', options: {appendTsSuffixTo: [/\.vue$/]}},
                 ],
                 exclude: /(node_modules|bower_components)/
             },
@@ -55,15 +66,7 @@ module.exports = {
                     ENV_DEV
                         ? 'vue-style-loader'
                         : MiniCssExtractPlugin.loader,
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            // enable CSS Modules
-                            modules: true,
-                            // customize generated class names
-                            localIdentName: '[local]_[hash:base64:8]'
-                        }
-                    },
+                    'css-loader',
                     'postcss-loader',
                     'sass-loader',
                 ]
@@ -84,7 +87,10 @@ module.exports = {
     devServer: {
         hot: true,
         host: '0.0.0.0',
-        proxy: {'/api/*': 'http://localhost:3000'},
+        proxy: {
+            '/api/*': 'http://localhost:3001',
+            '/auth-api/*': 'http://localhost:3001',
+        },
         historyApiFallback: {index: 'index.html'},
     },
 
