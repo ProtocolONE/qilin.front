@@ -4,9 +4,11 @@
     "login_name": "Email address:",
     "login_place": "Enter email",
     "pass_name": "Password",
-    "pass_place": "Password"
+    "pass_place": "Password",
+    "not_found": "User not found"
 },
 "ru": {
+    "not_found": "Пользователь не найден",
     "title": "Авторизация",
     "login_name": "Почта:",
     "login_place": "Укажите Email",
@@ -46,6 +48,7 @@
     import Vue from 'vue'
     import axios from 'axios'
     import * as qs from 'querystring'
+    import config from '../../config'
 
     export default Vue.extend({
         props: ['id'],
@@ -57,10 +60,10 @@
         }),
         methods: {
             handleOk(){
-                axios.post('/auth-api/login', qs.stringify(this.form)).then(res => {
+                axios.post(config.api + '/auth-api/login', qs.stringify(this.form)).then(res => {
                     console.log(res.data);
                 }).catch(err => {
-                    alert(err);
+                    alert(this.$t('not_found'));
                 });
             }
         }

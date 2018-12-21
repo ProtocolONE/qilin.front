@@ -17,10 +17,11 @@
 </template>
 
 <script lang="ts">
-    import Vue from 'vue';
-    import Login from '../../app/login/Login.vue';
-    import Navbar from './Navbar.vue';
-    import axios from 'axios';
+    import Vue from 'vue'
+    import Login from '../../app/login/Login.vue'
+    import Navbar from './Navbar.vue'
+    import axios from 'axios'
+    import config from '../../config'
 
     export default Vue.extend({
         components: {Login, Navbar},
@@ -30,9 +31,13 @@
             cart: 1
         }),
         mounted(){
-            axios.get('/api/v1/me').then(res => {
-                this.user = res.data.user;
-            });
+            if (this.$cookie.get('token')) {
+                axios.get(config.api + '/api/v1/me').then(res => {
+                    this.user = res.data.user;
+                }).catch(err => {
+                    /// ignore...
+                });
+            }
         },
         methods: {
             changeLang: (lang: string) => {
