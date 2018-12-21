@@ -20,9 +20,9 @@
 <template>
     <b-modal :id="id"
              :title="$t('title')"
-             @ok="handleOk">
+             @ok.prevent="clickOk">
 
-        <b-form @submit="handleOk">
+        <b-form @submit.prevent="submit" method="post">
             <b-form-group :label="$t('login_name')" label-for="login">
                 <b-form-input id="login"
                               type="email"
@@ -39,6 +39,7 @@
                               :placeholder="$t('pass_place')">
                 </b-form-input>
             </b-form-group>
+            <b-button type="submit" variant="primary" ref="submit" v-show="false">Submit</b-button>
         </b-form>
 
     </b-modal>
@@ -59,12 +60,16 @@
             },
         }),
         methods: {
-            handleOk(){
+            submit(){
                 axios.post(config.api + '/auth-api/login', qs.stringify(this.form)).then(res => {
-                    console.log(res.data);
+                    document.location = document.location;
                 }).catch(err => {
                     alert(this.$t('not_found'));
                 });
+            },
+            clickOk(){
+                this.$refs.submit.click();
+                return false;
             }
         }
     })

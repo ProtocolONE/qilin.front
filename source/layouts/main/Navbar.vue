@@ -37,7 +37,7 @@
                         <em>User</em>
                     </template>
                     <b-dropdown-item href="#">Profile</b-dropdown-item>
-                    <b-dropdown-item href="#">Signout</b-dropdown-item>
+                    <b-dropdown-item @click="$parent.logout">Signout</b-dropdown-item>
                 </b-nav-item-dropdown>
             </b-navbar-nav>
 

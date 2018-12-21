@@ -40,8 +40,12 @@
             }
         },
         methods: {
-            changeLang: (lang: string) => {
-
+            logout(){
+                this.$cookie.delete('token');
+                document.location = document.location;
+            },
+            changeLang(lang: string){
+                alert(lang);
             }
         }
     })
