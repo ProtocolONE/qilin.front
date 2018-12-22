@@ -5,13 +5,18 @@ import en from './locale/en.json'
 
 Vue.use(VueI18n);
 
+let defaultLang = '';
+if (window.localStorage && window.localStorage.lang) {
+    defaultLang = window.localStorage.lang;
+} else {
+    defaultLang = (window.navigator && window.navigator.language ? window.navigator.language : 'ru-RU').split('-')[0];
+}
+
 const i18n = new VueI18n({
-    locale: (window.navigator && window.navigator.language ? window.navigator.language : 'en-Au').split('-')[0],
+    locale: defaultLang,
     fallbackLocale: 'en',
     messages: {en, ru}
 });
-
-
 
 export default i18n;
 

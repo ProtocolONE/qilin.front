@@ -1,5 +1,19 @@
+<i18n>
+    {
+    "en": {
+    "title": "About us",
+    "descr": "Header home descr"
+    },
+    "ru": {
+    "title": "О нас",
+    "descr": "Мета описание"
+    }
+    }
+</i18n>
+
 <template>
     <div>
+        <vue-headful :title="$t('title')" :description="$t('descr')"/>
         <b-form @submit="onSubmit" @reset="onReset" v-if="show">
             <b-form-group id="exampleInputGroup1"
                           label="Email address:"

@@ -23,12 +23,13 @@
     import axios from 'axios'
     import config from '../../config'
 
+    import './bootstrap'
+
     export default Vue.extend({
         components: {Login, Navbar},
         name: "Appl",
         data: () => ({
             user: null,
-            cart: 1
         }),
         mounted(){
             if (this.$cookie.get('token')) {
@@ -45,7 +46,8 @@
                 document.location = document.location;
             },
             changeLang(lang: string){
-                alert(lang);
+                window.localStorage.lang = lang;
+                document.location = document.location;
             }
         }
     })

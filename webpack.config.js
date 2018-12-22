@@ -4,6 +4,8 @@ const webpack = require('webpack');
 const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 const ENV_DEV = process.env.NODE_ENV === 'development';
 const ENV_PROD = process.env.NODE_ENV === 'production';
@@ -63,9 +65,7 @@ module.exports = {
             {
                 test: /\.s?css$/,
                 use: [
-                    ENV_DEV
-                        ? 'vue-style-loader'
-                        : MiniCssExtractPlugin.loader,
+                    ENV_DEV ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
                     'css-loader',
                     'postcss-loader',
                     'sass-loader',
@@ -73,8 +73,22 @@ module.exports = {
             }
         ]
     },
+    optimization: !MINIFY ? {} : {
+        minimizer:  [
+            new UglifyJsPlugin({
+                cache: true,
+                parallel: true,
+                extractComments: true,
+            }),
+            new OptimizeCSSAssetsPlugin({
+                cssProcessorPluginOptions: {
+                    preset: ['default', { discardComments: { removeAll: true } }],
+                },
+            })
+        ]
+    },
     plugins: [
-        new MiniCssExtractPlugin({filename: '[name].css'}),
+        new MiniCssExtractPlugin({filename: '[name].css', chunkFilename: "[id].css"}),
         new VueLoaderPlugin(),
     ].concat(
         ENV_DEV ? [new webpack.HotModuleReplacementPlugin()]

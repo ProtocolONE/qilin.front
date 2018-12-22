@@ -1,7 +1,20 @@
+<i18n>
+{
+    "en": {
+        "title": "Home",
+        "descr": "Header home descr"
+    },
+    "ru": {
+        "title": "Начало",
+        "descr": "Мета описание"
+    }
+}
+</i18n>
+
 <template>
     <div>
-        <h1>HOME</h1>
-
+        <h1>{{ $t('title') }}</h1>
+        <vue-headful :title="$t('title')" :description="$t('descr')"/>
     </div>
 </template>
 
