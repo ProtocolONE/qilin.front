@@ -1,0 +1,50 @@
+{{- $configMapName := printf "%s-%s" .Release.Name .Values.frontend.name }}
+{{/* {{ $backendSvc := printf "%s-%s" .Release.Name .Values.backend.name }} */}}
+{{ $deployment := .Values.frontend }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $configMapName }}
+  labels:
+    app: {{ .Chart.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }} 
+    role: {{ $deployment.role }}
+data:
+  {{ .Values.ingress.hostname }}.conf: |
+      server {
+        server_name {{ .Values.ingress.hostname }};
+        listen {{ .Values.frontend.port }} default_server;
+
+        charset utf-8;
+
+        gzip on;
+        gzip_vary on;
+        gzip_proxied any;
+        gzip_comp_level 6;
+        gzip_buffers 16 8k;
+        gzip_http_version 1.1;
+        gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+
+        root /var/www;
+        index index.html;
+        
+        client_max_body_size 30m;
+
+        location = /_healthz {
+          add_header Content-Type text/plain;
+          return 200 'ok';
+        }
+
+        location ~* ^/.*\.(jpg|jpeg|png|gif|swf|eot|woff|svg|ttf|css|js) {
+          autoindex off;
+          access_log off;
+          expires 31536000;
+        }
+
+        location / {
+          index index.html;
+          try_files $uri /index.html;
+        }
+      }

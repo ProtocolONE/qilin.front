@@ -1,0 +1,14 @@
+version: '3'
+services:
+  p1qilinfront:
+    build: .
+    container_name: p1qilinfront
+    networks: 
+    - p1devnet
+    ports:
+    - "8180:80"          
+    restart: unless-stopped
+
+networks:
+  p1devnet:
+    external: true
