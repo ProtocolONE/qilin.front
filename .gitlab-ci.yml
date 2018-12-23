@@ -1,5 +1,5 @@
 variables:
-  P1_PROJECT: p1storefront
+  P1_PROJECT: p1qilinfront
 
 stages:
   - build
