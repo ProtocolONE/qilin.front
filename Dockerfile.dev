@@ -9,7 +9,7 @@ COPY . /app/
 
 RUN npm i -D
 ENV NODE_ENV=production
-ENV QILIN_API=https://qilinapi.tst.protocol.one
+ENV QILIN_API=http://localhost:3001
 RUN webpack
 
 FROM nginx:1.15.4
