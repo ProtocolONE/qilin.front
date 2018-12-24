@@ -62,6 +62,10 @@
         methods: {
             submit(){
                 axios.post(config.api + '/auth-api/login', qs.stringify(this.form)).then(res => {
+
+                    // Cuz withCredentials didn't works here.
+                    this.$cookie.set('token', res.data.access_token, { expires: '24h' });
+
                     document.location = document.location;
                 }).catch(err => {
                     alert(this.$t('not_found'));
