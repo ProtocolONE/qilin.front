@@ -90,6 +90,9 @@ module.exports = {
     plugins: [
         new MiniCssExtractPlugin({filename: '[name].css', chunkFilename: "[id].css"}),
         new VueLoaderPlugin(),
+        new webpack.DefinePlugin({
+            'process.env.QILIN_API': JSON.stringify(process.env.QILIN_API),
+        }),
     ].concat(
         ENV_DEV ? [new webpack.HotModuleReplacementPlugin()]
                 : []

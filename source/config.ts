@@ -1,5 +1,5 @@
 
 
 export default {
-    api: 'http://localhost:3001',
+    api: process.env.QILIN_API,
 };
