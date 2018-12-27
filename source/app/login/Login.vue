@@ -61,12 +61,17 @@
                 Don`t have an account? <a href="/">Sign Up</a> | <a href="/">Reset password</a>
             </small>
 
-
-            <b-button type="submit" variant="primary" ref="submit" v-show="false">Submit</b-button>
+            <b-button type="submit" ref="submit" v-show="false">Submit</b-button>
         </b-form>
 
         <div slot="modal-footer" class="w-100">
-            <b-btn size="sm" class="float-right" variant="primary" @click="show=false">{{ $t('submit_btn') }}</b-btn>
+            <b-btn class="float-left" variant="primary" @click="clickOk">{{ $t('submit_btn') }}</b-btn>
+
+            <div style="clear: both;"></div>
+
+            <small class="form-text text-muted q-policy">
+                By signing up, you agree to our Terms and that you have read our <a href="/">Privacy Policy</a> and <a href="/">Content Policy</a>.
+            </small>
         </div>
     </b-modal>
 </template>
@@ -106,5 +111,12 @@
 </script>
 
 <style scoped lang="scss">
-
+    .q-policy {
+        margin-top: 90px;
+        font-size: 12px;
+        a {
+            font-weight: bold;
+            color: #757575;
+        }
+    }
 </style>

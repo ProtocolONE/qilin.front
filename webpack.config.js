@@ -31,6 +31,7 @@ module.exports = {
                 test: /\.vue$/,
                 loader: 'vue-loader',
                 options: {
+                    hotReload: true,
                     loaders: {
                         ts: 'ts-loader'
                     },
@@ -73,7 +74,9 @@ module.exports = {
             }
         ]
     },
-    optimization: !MINIFY ? {} : {
+    optimization: !MINIFY ? {
+        minimize: false
+    } : {
         minimizer:  [
             new UglifyJsPlugin({
                 cache: true,
