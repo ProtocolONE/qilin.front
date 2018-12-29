@@ -1,11 +1,11 @@
 <i18n>
 {
     "en": {
-        "title": "Home",
+        "title": "Protocol One Qilin",
         "descr": "Header home descr"
     },
     "ru": {
-        "title": "Начало",
+        "title": "Protocol One Qilin",
         "descr": "Мета описание"
     }
 }
@@ -13,8 +13,8 @@
 
 <template>
     <div>
-        <h1>{{ $t('title') }}</h1>
         <vue-headful :title="$t('title')" :description="$t('descr')"/>
+
     </div>
 </template>
 
@@ -30,5 +30,7 @@
 </script>
 
 <style scoped lang="scss">
-
+    div {
+        min-height: 400px;
+    }
 </style>

@@ -1,17 +1,17 @@
 <template>
     <div>
-        <b-container>
+        <b-container fluid>
             <Navbar></Navbar>
-
-            <h1>{{ $t('QILIN') }}</h1>
-
-            <hr>
-
             <router-view></router-view>
 
-            <Login id="login"></Login>
+            <Login ref="login" id="login"
+                   :openReg="() => $refs.reg.$refs.modal.show()"
+                   :openReset="() => $refs.resetpass.$refs.modal.show()"></Login>
+            <Register ref="reg" id="register" :openLogin="() => $refs.login.$refs.modal.show()"></Register>
+            <ResetPass ref="resetpass" id="resetpass" :openLogin="() => $refs.login.$refs.modal.show()"></ResetPass>
 
             <hr>
+            <Footer></Footer>
         </b-container>
     </div>
 </template>
@@ -19,6 +19,9 @@
 <script lang="ts">
     import Vue from 'vue'
     import Login from '../../app/login/Login.vue'
+    import Register from '../../app/register/Register.vue'
+    import ResetPass from '../../app/resetpass/ResetPass.vue'
+    import Footer from './Footer.vue'
     import Navbar from './Navbar.vue'
     import axios from 'axios'
     import config from '../../config'
@@ -26,7 +29,7 @@
     import './bootstrap'
 
     export default Vue.extend({
-        components: {Login, Navbar},
+        components: {Login, Navbar, Register, ResetPass, Footer},
         name: "Appl",
         data: () => ({
             user: null,

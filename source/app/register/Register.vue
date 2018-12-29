@@ -1,71 +1,72 @@
 <i18n>
-{"en": {
+    {"en": {
     "title": "Protocol One Qilin Account",
-    "submit_btn": "Log in",
-    "login_name": "Enter Email",
+    "submit_btn": "Sign in",
+
+    "login_label": "Enter Email",
     "login_place": "Email address",
-    "pass_name": "Password",
+
+    "pass_label": "Set Password",
     "pass_place": "Password",
+
     "not_found": "User not found",
     "body": "By having a Qilin account, you can import or add your games to Qilin Data Hub ecosystem and use amazing distribution abilities. Sign up in just seconds.",
-    "have-acc": ["Don`t have an account?", "Sign Up", "Reset password"],
+    "have-acc": ["Already have an account?", "Log in"],
     "policy": ["By signing up, you agree to our Terms and that you have read our", "Privacy Policy", "and", "Content Policy."],
 
     "---":""
-},
-"ru": {
-    "title": "Вход",
-    "submit_btn": "Вход",
-    "login_name": "Почта",
+    },
+    "ru": {
+    "title": "Регистрация",
+    "submit_btn": "Регистрация",
+
+    "login_label": "Почта",
     "login_place": "Укажите Email",
+
     "pass_name": "Пароль",
     "pass_place": "Пароль",
+
     "not_found": "Пользователь не найден",
     "body": "С помощью аккаунта Qilin, Вы сможете добавлять игры в экосистему Qilin Data Hub и пользоваться уникальнми возможностями дистрибьюции. Заходите! Это займет нескольк секунд.",
-    "have-acc": ["Еще нет аккаунта?", "Регистрация", "Сброс пароля"],
+
+    "have-acc": ["Уже есть аккаунт?", "Войдите"],
     "policy": ["Входя в систему вы соглашаетесь с нашими правилами пользования, для этого пожалуйста прочтите документы", "Политика конфиденциальности", "и", "Правила размещения контента."],
 
     "---":""
-}}
+    }}
 </i18n>
 
 <template>
     <b-modal :id="id"
              :title="$t('title')"
+             ref="modal"
              class="qilin-modal"
              centered
-             ref="modal"
              hide-header-close
              @ok.prevent="clickOk">
 
         <p style="padding-top: 0;">{{ $t('body') }}</p>
 
         <b-form @submit.prevent="submit" method="post">
-            <b-form-group :label="$t('login_name')" label-for="login-login">
-                <ValidateInput  id="login-login"
+            <b-form-group :label="$t('login_label')" label-for="reg-login">
+                <ValidateInput  id="reg-login"
                                 type="email"
                                 v-model="form.login"
-                                :validate="(val) => !!val.match(/.+?@.+?\..+/)"
+                                :validate="(val) => val.length > 3 && val.indexOf('@') > 1"
                                 :placeholder="$t('login_place')">
                 </ValidateInput>
             </b-form-group>
-            <b-form-group label-for="login-password">
-                <ValidateInput  id="login-password"
+            <b-form-group :label="$t('pass_label')" label-for="reg-password">
+                <ValidateInput  id="reg-password"
                                 type="password"
                                 v-model="form.password"
                                 :validate="(val) => val.length > 3"
                                 :placeholder="$t('pass_place')">
                 </ValidateInput>
-                <!--
-                <b-tooltip target="password" placement="right">
-                    Hello <strong>World!</strong>
-                </b-tooltip>
-                -->
             </b-form-group>
 
             <small class="form-text q-have-acc">
-                {{ $t('have-acc.0') }} <a href="/" @click.prevent="goto_reg">{{ $t('have-acc.1') }}</a> | <a
-                    href="/" @click.prevent="goto_reset">{{ $t('have-acc.2') }}</a>
+                {{ $t('have-acc.0') }} <a href="/" @click.prevent="goto_login">{{ $t('have-acc.1') }}</a>
             </small>
 
             <b-button type="submit" ref="submit" v-show="false"></b-button>
@@ -92,7 +93,7 @@
 
     export default Vue.extend({
         components: {ValidateInput},
-        props: ['id', 'openReg', 'openReset'],
+        props: ['id', 'openLogin'],
         data: () => ({
             form: {
                 login: '',
@@ -100,13 +101,9 @@
             },
         }),
         methods: {
-            goto_reg(){
+            goto_login(){
                 this.$refs.modal.hide();
-                this.openReg();
-            },
-            goto_reset(){
-                this.$refs.modal.hide();
-                this.openReset();
+                this.openLogin();
             },
             submit(){
                 axios.post(config.api + '/auth-api/login', qs.stringify(this.form)).then(res => {
@@ -114,7 +111,7 @@
                     // Cuz withCredentials didn't works here.
                     this.$cookie.set('token', res.data.access_token, { expires: '24h' });
 
-                    window.location.href = '/vendor/on-boarding';
+                    document.location = document.location;
                 }).catch(err => {
                     alert(this.$t('not_found'));
                 });

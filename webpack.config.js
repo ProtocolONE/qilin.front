@@ -105,6 +105,7 @@ module.exports = {
     },
     devtool: ENV_DEV ? 'inline-source-map' : '',
     devServer: {
+        stats: 'verbose',
         hot: true,
         host: '0.0.0.0',
         proxy: {

@@ -5,11 +5,15 @@
             "profile": "Profile",
             "quit": "Logout",
             "login": "Log in",
+            "register": "Sign in",
+            "resetpass": "Reset passwd",
             "about": "About Us"
         },
         "ru": {
             "lang": "Язык",
             "profile": "Профиль",
+            "register": "Регистрация",
+            "resetpass": "Сбос пароля",
             "quit": "Выход",
             "login": "Войти",
             "about": "О нас"
@@ -40,10 +44,6 @@
 
         <b-collapse is-nav id="nav_collapse">
 
-            <b-navbar-nav>
-                <b-nav-item to="/about">{{ $t('about') }}</b-nav-item>
-            </b-navbar-nav>
-
             <!-- Right aligned nav items -->
             <b-navbar-nav class="ml-auto">
 
@@ -54,6 +54,7 @@
                 </b-nav-item-dropdown>
 
                 <b-nav-item v-if="!$parent.user" v-b-modal.login>{{ $t('login') }}</b-nav-item>
+                <b-nav-item v-if="!$parent.user" v-b-modal.register>{{ $t('register') }}</b-nav-item>
 
                 <b-nav-item-dropdown v-if="$parent.user" right>
                     <!-- Using button-content slot -->
@@ -85,4 +86,11 @@
     .score a {
         color: white !important;
     }
+    .nav-qilin {
+        margin-top: 20px;
+    }
+    .navbar-brand {
+        margin-left: 30px;
+    }
+
 </style>

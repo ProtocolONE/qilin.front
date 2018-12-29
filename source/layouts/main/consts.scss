@@ -1,0 +1,22 @@
+$font-family-base: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+$font-size-base: 1rem;
+$small-font-size: 14px;
+
+$q-back: #E0E0E0;
+$q-blue: #2FA7D3;
+$q-input: #E9E9E9;
+$q-primary: #DB4E2B;
+
+$grid-breakpoints: (
+        xs: 0,
+        sm: 576px,
+        md: 768px,
+        lg: 992px,
+        xl: 1200px
+);
+
+$screen-xs-min: map-get($grid-breakpoints, "xs");
+$screen-sm-min: map-get($grid-breakpoints, "sm");
+$screen-md-min: map-get($grid-breakpoints, "md");
+$screen-lg-min: map-get($grid-breakpoints, "lg");
+$screen-xl-min: map-get($grid-breakpoints, "xl");
