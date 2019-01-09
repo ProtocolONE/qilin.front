@@ -11,6 +11,8 @@
     "have-acc": ["Back to", "Log in"],
     "policy": ["By signing up, you agree to our Terms and that you have read our", "Privacy Policy", "and", "Content Policy."],
 
+    "reset-done": "Request for reset your password is send to your mailbox.",
+
     "---":""
     },
     "ru": {
@@ -25,6 +27,8 @@
 
     "have-acc": ["Назад", "Войти"],
     "policy": ["Входя в систему вы соглашаетесь с нашими правилами пользования, для этого пожалуйста прочтите документы", "Политика конфиденциальности", "и", "Правила размещения контента."],
+
+    "reset-done": "Запрос на сброс пароля отправлен Вам на почту.",
 
     "---":""
     }}
@@ -91,12 +95,9 @@
                 this.openLogin();
             },
             submit(){
-                axios.post(config.api + '/auth-api/login', qs.stringify(this.form)).then(res => {
-
-                    // Cuz withCredentials didn't works here.
-                    this.$cookie.set('token', res.data.access_token, { expires: '24h' });
-
-                    document.location = document.location;
+                axios.post(config.api + '/auth-api/reset', qs.stringify(this.form)).then(res => {
+                    alert(this.$t('reset-done'));
+                    this.goto_login();
                 }).catch(err => {
                     alert(this.$t('not_found'));
                 });

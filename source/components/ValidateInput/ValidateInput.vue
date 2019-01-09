@@ -15,7 +15,7 @@
     </div>
 </template>
 
-<script type="ts">
+<script lang="ts">
     import Vue from 'vue'
 
     export default Vue.extend({
@@ -26,12 +26,12 @@
             is_valid: false,
         }),
         watch: {
-            inputVal(val) {
+            inputVal(val: string) {
                 this.$emit('input', val);
             }
         },
         methods: {
-            change(event) {
+            change(event: any) {
                 this.$nextTick(() =>
                     this.is_valid = this.validate(event.target.value));
             }

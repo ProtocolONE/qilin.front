@@ -113,6 +113,7 @@
 
                     // Cuz withCredentials didn't works here.
                     this.$cookie.set('token', res.data.access_token, { expires: '24h' });
+                    window.localStorage.lang = res.data.user.lang;
 
                     window.location.href = '/vendor/on-boarding';
                 }).catch(err => {

@@ -16,9 +16,10 @@ console.log('ENV_DEV:', ENV_DEV, 'ENV_PROD:', ENV_PROD, 'MINIFY:', MINIFY);
 module.exports = {
     mode: process.env.NODE_ENV,
     context: path.join(__dirname, 'source'),
-    entry: {
-        main: './main.ts',
-    },
+    entry: (ENV_DEV ? [
+            'webpack-dev-server/client?http://localhost:8080', // WebpackDevServer host and port
+            'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
+            ] : []).concat(['./main.ts']),
     output: {
         path: path.join(__dirname, 'build'),
         publicPath: '',

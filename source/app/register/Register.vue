@@ -23,7 +23,7 @@
     "login_label": "Почта",
     "login_place": "Укажите Email",
 
-    "pass_name": "Пароль",
+    "pass_label": "Пароль",
     "pass_place": "Пароль",
 
     "not_found": "Пользователь не найден",
@@ -97,7 +97,7 @@
         data: () => ({
             form: {
                 login: '',
-                password: '',
+                password: ''
             },
         }),
         methods: {
@@ -106,12 +106,8 @@
                 this.openLogin();
             },
             submit(){
-                axios.post(config.api + '/auth-api/login', qs.stringify(this.form)).then(res => {
-
-                    // Cuz withCredentials didn't works here.
-                    this.$cookie.set('token', res.data.access_token, { expires: '24h' });
-
-                    document.location = document.location;
+                axios.post(config.api + '/auth-api/register', qs.stringify(this.form)).then(res => {
+                    this.goto_login();
                 }).catch(err => {
                     alert(this.$t('not_found'));
                 });

@@ -35,6 +35,9 @@
             user: null,
         }),
         mounted(){
+            if (!window.localStorage.lang) {
+                window.localStorage.lang = window.navigator.language;
+            }
             if (this.$cookie.get('token')) {
                 axios.get(config.api + '/api/v1/me').then(res => {
                     this.user = res.data.user;
@@ -49,7 +52,7 @@
                 document.location = document.location;
             },
             changeLang(lang: string){
-                window.localStorage.lang = lang;
+                window.localStorage.lang = ('' + window.navigator.language).replace(/^\w+/, lang);
                 document.location = document.location;
             }
         }

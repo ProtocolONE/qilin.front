@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "lib": ["es5", "es6", "dom"],
+
     "allowSyntheticDefaultImports": true,
     "plugins": [{ "name": "ts-vue-plugin" }],
 
