@@ -3,10 +3,10 @@ Frontend for DRM platform Qilin
 
 Start dev-server:
 ```bash
-npm run serve
+yarn serve
 ```
 
 Build:
 ```bash
-npm run build
+yarn build
 ```
