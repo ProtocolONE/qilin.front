@@ -18,9 +18,9 @@
 
 <script lang="ts">
     import Vue from 'vue'
-    import Login from '../../app/login/Login.vue'
-    import Register from '../../app/register/Register.vue'
-    import ResetPass from '../../app/resetpass/ResetPass.vue'
+    import Login from '../../modules/login/Login.vue'
+    import Register from '../../modules/register/Register.vue'
+    import ResetPass from '../../modules/resetpass/ResetPass.vue'
     import Footer from './Footer.vue'
     import Navbar from './Navbar.vue'
     import axios from 'axios'

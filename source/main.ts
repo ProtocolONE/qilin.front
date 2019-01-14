@@ -8,7 +8,7 @@ import router from './router';
 import i18n from './i18n';
 import MainLayout from './layouts/main/Main.vue';
 
-// Нет @types для модулей, потому импортим их через require
+// If we haven't @types notations for npm-modules, we use 'require'
 const VueCookie = require('vue-cookie');
 const vueHeadful = require('vue-headful').default;
 
