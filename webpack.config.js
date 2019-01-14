@@ -51,7 +51,13 @@ module.exports = {
                 test: /\.ts$/,
                 use: [
                     { loader: 'babel-loader', options: { presets: ['@babel/preset-env'] } },
-                    { loader: 'ts-loader', options: { appendTsSuffixTo: [/\.vue$/] } },
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            appendTsSuffixTo: [/\.vue$/],
+                            transpileOnly: true,
+                        },
+                    },
                 ],
                 exclude: /(node_modules|bower_components)/,
             },

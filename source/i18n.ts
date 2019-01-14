@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
+import en from '@/locale/en.json';
+import ru from '@/locale/ru.json';
 
 Vue.use(VueI18n);
 
@@ -14,7 +16,7 @@ export default i18n;
 
 if (module.hot) {
     module.hot.accept([], () => {
-        i18n.setLocaleMessage('en', require('./locale/en.json').default);
-        i18n.setLocaleMessage('ru', require('./locale/ru.json').default);
+        i18n.setLocaleMessage('en', en);
+        i18n.setLocaleMessage('ru', ru);
     });
 }

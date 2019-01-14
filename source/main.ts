@@ -24,6 +24,7 @@ const store = new Vuex.Store({
     ...RootStore,
 });
 
+// eslint-disable-next-line no-new
 new Vue({
     i18n,
     router,

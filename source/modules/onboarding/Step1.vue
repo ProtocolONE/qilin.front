@@ -28,75 +28,93 @@
 </i18n>
 
 <template>
-<div class="page">
-    <vue-headful :title="$t('title')" :description="$t('descr')"/>
+  <div class="page">
+    <vue-headful
+      :title="$t('title')"
+      :description="$t('descr')"
+    />
     <b-row>
-        <b-col class="left">
-            <div class="center">
-                <h1>{{ $t('title') }}</h1>
-                <p>{{ $t('descr') }}</p>
-                <br>
-                <p class="step">{{ $t('step') }}</p>
-            </div>
-        </b-col>
+      <b-col class="left">
+        <div class="center">
+          <h1>{{ $t('title') }}</h1>
+          <p>{{ $t('descr') }}</p>
+          <br>
+          <p class="step">
+            {{ $t('step') }}
+          </p>
+        </div>
+      </b-col>
 
-        <b-col class="right">
-            <div class="center">
-                <b-form>
-                    <div class="company-name">
-                        <b-form-group :label="$t('your-company-name')" label-for="company-name">
-                            <ValidateInput  id="company-name"
-                                            type="text"
-                                            v-model="form.name"
-                                            :validate="(val) => val.length > 2"
-                                            :placeholder="$t('name')">
-                            </ValidateInput>
-                        </b-form-group>
-                        <small class="form-text text-muted">{{ $t('name-you-choose') }}</small>
-                    </div>
-                    <div class="region">
-                        <label>{{$t('region')}}</label>
-                        <small class="form-text text-muted">{{ $t('region-laws') }}</small>
-                    </div>
-                    <b-btn class="float-left" variant="primary" @click="nextStep">{{$t('next')}}</b-btn>
-                </b-form>
+      <b-col class="right">
+        <div class="center">
+          <b-form>
+            <div class="company-name">
+              <b-form-group
+                :label="$t('your-company-name')"
+                label-for="company-name"
+              >
+                <ValidateInput
+                  id="company-name"
+                  v-model="form.name"
+                  type="text"
+                  :validate="(val) => val.length > 2"
+                  :placeholder="$t('name')"
+                />
+              </b-form-group>
+              <small class="form-text text-muted">
+                {{ $t('name-you-choose') }}
+              </small>
             </div>
-
-        </b-col>
+            <div class="region">
+              <label>{{ $t('region') }}</label>
+              <small class="form-text text-muted">
+                {{ $t('region-laws') }}
+              </small>
+            </div>
+            <b-btn
+              class="float-left"
+              variant="primary"
+              @click="nextStep"
+            >
+              {{ $t('next') }}
+            </b-btn>
+          </b-form>
+        </div>
+      </b-col>
     </b-row>
-</div>
+  </div>
 </template>
 
 <script type="ts">
-import Vue from 'vue'
-import $ from 'jquery'
-import ValidateInput from '../../components/ValidateInput/ValidateInput.vue'
+import Vue from 'vue';
+import $ from 'jquery';
+import ValidateInput from '../../components/ValidateInput/ValidateInput.vue';
 
 export default Vue.extend({
-    components: {ValidateInput},
-    name: "OnBoarding-Step1",
+    name: 'OnBoardingStep1',
+    components: { ValidateInput },
     data: () => ({
         enabled: true,
         form: {
             name: '',
-        }
+        },
     }),
+    mounted() {
+        this.$nextTick(() => {
+            const h = Math.max($(window).outerHeight() - 180, 400);
+            this.$el.style.minHeight = `${h}px`;
+        });
+    },
     methods: {
-        nextStep(){
+        nextStep() {
             if (this.form.name.length < 2) {
                 alert(this.$t('name-too-short'));
                 return;
             }
             this.$parent.nextStep();
-        }
+        },
     },
-    mounted(){
-        this.$nextTick(() => {
-            const h = Math.max($(window).outerHeight() - 180, 400);
-            this.$el.style.minHeight = h + 'px';
-        });
-    },
-})
+});
 </script>
 
 <style scoped lang="scss">
@@ -157,7 +175,6 @@ export default Vue.extend({
                 }
             }
         }
-
     }
 }
 </style>

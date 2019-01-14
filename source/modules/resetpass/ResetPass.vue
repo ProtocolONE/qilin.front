@@ -33,54 +33,86 @@
 </i18n>
 
 <template>
-<b-modal :id="id"
-            :title="$t('title')"
-            ref="modal"
-            class="qilin-modal"
-            centered
-            hide-header-close
-            @ok.prevent="clickOk">
+  <b-modal
+    :id="id"
+    ref="modal"
+    :title="$t('title')"
+    class="qilin-modal"
+    centered
+    hide-header-close
+    @ok.prevent="clickOk"
+  >
+    <p style="padding-top: 0;">
+      {{ $t('body') }}
+    </p>
 
-    <p style="padding-top: 0;">{{ $t('body') }}</p>
+    <b-form
+      method="post"
+      @submit.prevent="submit"
+    >
+      <b-form-group
+        :label="$t('login_label')"
+        label-for="reset-email"
+      >
+        <ValidateInput
+          id="reset-email"
+          v-model="form.email"
+          type="email"
+          :validate="(val) => val.length > 3 && val.indexOf('@') > 1"
+          :placeholder="$t('login_place')"
+        />
+      </b-form-group>
 
-    <b-form @submit.prevent="submit" method="post">
-        <b-form-group :label="$t('login_label')" label-for="reset-email">
-            <ValidateInput  id="reset-email"
-                            type="email"
-                            v-model="form.email"
-                            :validate="(val) => val.length > 3 && val.indexOf('@') > 1"
-                            :placeholder="$t('login_place')">
-            </ValidateInput>
-        </b-form-group>
+      <small class="form-text q-have-acc">
+        {{ $t('have-acc.0') }} <a
+          href="/"
+          @click.prevent="goto_login"
+        >
+          {{ $t('have-acc.1') }}
+        </a>
+      </small>
 
-        <small class="form-text q-have-acc">
-            {{ $t('have-acc.0') }} <a href="/" @click.prevent="goto_login">{{ $t('have-acc.1') }}</a>
-        </small>
-
-        <b-button type="submit" ref="submit" v-show="false"></b-button>
+      <b-button
+        v-show="false"
+        ref="submit"
+        type="submit"
+      />
     </b-form>
 
-    <div slot="modal-footer" class="w-100">
-        <b-btn class="float-left" variant="primary" @click="clickOk">{{ $t('submit_btn') }}</b-btn>
+    <div
+      slot="modal-footer"
+      class="w-100"
+    >
+      <b-btn
+        class="float-left"
+        variant="primary"
+        @click="clickOk"
+      >
+        {{ $t('submit_btn') }}
+      </b-btn>
 
-        <div style="clear: both;"></div>
+      <div style="clear: both;" />
 
-        <small class="form-text text-muted q-policy">
-            {{ $t('policy.0') }} <a href="/">{{ $t('policy.1') }}</a> {{ $t('policy.2') }} <a href="/">{{ $t('policy.3') }}</a>.
-        </small>
+      <small class="form-text text-muted q-policy">
+        {{ $t('policy.0') }} <a href="/">
+          {{ $t('policy.1') }}
+        </a> {{ $t('policy.2') }} <a href="/">
+          {{ $t('policy.3') }}
+        </a>.
+      </small>
     </div>
-</b-modal>
+  </b-modal>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import axios from 'axios'
-import * as qs from 'querystring'
-import config from '../../config'
-import ValidateInput from '../../components/ValidateInput/ValidateInput.vue'
+import axios from 'axios';
+import * as qs from 'querystring';
+import Vue from 'vue';
+import config from '@/config';
+import ValidateInput from '@/components/ValidateInput/ValidateInput.vue';
 
 export default Vue.extend({
-    components: {ValidateInput},
+    components: { ValidateInput },
     props: ['id', 'openLogin'],
     data: () => ({
         form: {
@@ -88,24 +120,27 @@ export default Vue.extend({
         },
     }),
     methods: {
-        goto_login(){
+        goto_login() {
             this.$refs.modal.hide();
             this.openLogin();
         },
-        submit(){
-            axios.post(config.api + '/auth-api/reset', qs.stringify(this.form)).then(res => {
-                alert(this.$t('reset-done'));
-                this.goto_login();
-            }).catch(err => {
-                alert(this.$t('not_found'));
-            });
+        submit() {
+            axios
+                .post(`${config.api}/auth-api/reset`, qs.stringify(this.form))
+                .then(() => {
+                    alert(this.$t('reset-done'));
+                    this.goto_login();
+                })
+                .catch(() => {
+                    alert(this.$t('not_found'));
+                });
         },
-        clickOk(){
+        clickOk() {
             this.$refs.submit.click();
             return false;
-        }
-    }
-})
+        },
+    },
+});
 </script>
 
 <style scoped lang="scss">

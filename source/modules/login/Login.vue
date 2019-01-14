@@ -28,68 +28,105 @@
 </i18n>
 
 <template>
-    <b-modal :id="id"
-             :title="$t('title')"
-             class="qilin-modal"
-             centered
-             ref="modal"
-             hide-header-close
-             @ok.prevent="clickOk">
+  <b-modal
+    :id="id"
+    ref="modal"
+    :title="$t('title')"
+    class="qilin-modal"
+    centered
+    hide-header-close
+    @ok.prevent="clickOk"
+  >
+    <p style="padding-top: 0;">
+      {{ $t('body') }}
+    </p>
 
-        <p style="padding-top: 0;">{{ $t('body') }}</p>
+    <b-form
+      method="post"
+      @submit.prevent="submit"
+    >
+      <b-form-group
+        :label="$t('login_name')"
+        label-for="login-login"
+      >
+        <ValidateInput
+          id="login-login"
+          v-model="form.login"
+          type="email"
+          :validate="(val) => !!val.match(/.+?@.+?\..+/)"
+          :placeholder="$t('login_place')"
+        />
+      </b-form-group>
+      <b-form-group label-for="login-password">
+        <ValidateInput
+          id="login-password"
+          v-model="form.password"
+          type="password"
+          :validate="(val) => val.length > 3"
+          :placeholder="$t('pass_place')"
+        />
+        <!--
+            <b-tooltip target="password" placement="right">
+                Hello <strong>World!</strong>
+            </b-tooltip>
+            -->
+      </b-form-group>
 
-        <b-form @submit.prevent="submit" method="post">
-            <b-form-group :label="$t('login_name')" label-for="login-login">
-                <ValidateInput  id="login-login"
-                                type="email"
-                                v-model="form.login"
-                                :validate="(val) => !!val.match(/.+?@.+?\..+/)"
-                                :placeholder="$t('login_place')">
-                </ValidateInput>
-            </b-form-group>
-            <b-form-group label-for="login-password">
-                <ValidateInput  id="login-password"
-                                type="password"
-                                v-model="form.password"
-                                :validate="(val) => val.length > 3"
-                                :placeholder="$t('pass_place')">
-                </ValidateInput>
-                <!--
-                <b-tooltip target="password" placement="right">
-                    Hello <strong>World!</strong>
-                </b-tooltip>
-                -->
-            </b-form-group>
+      <small class="form-text q-have-acc">
+        {{ $t('have-acc.0') }} <a
+          href="/"
+          @click.prevent="goto_reg"
+        >
+          {{ $t('have-acc.1') }}
+        </a> | <a
+          href="/"
+          @click.prevent="goto_reset"
+        >
+          {{ $t('have-acc.2') }}
+        </a>
+      </small>
 
-            <small class="form-text q-have-acc">
-                {{ $t('have-acc.0') }} <a href="/" @click.prevent="goto_reg">{{ $t('have-acc.1') }}</a> | <a
-                    href="/" @click.prevent="goto_reset">{{ $t('have-acc.2') }}</a>
-            </small>
+      <b-button
+        v-show="false"
+        ref="submit"
+        type="submit"
+      />
+    </b-form>
 
-            <b-button type="submit" ref="submit" v-show="false"></b-button>
-        </b-form>
+    <div
+      slot="modal-footer"
+      class="w-100"
+    >
+      <b-btn
+        class="float-left"
+        variant="primary"
+        @click="clickOk"
+      >
+        {{ $t('submit_btn') }}
+      </b-btn>
 
-        <div slot="modal-footer" class="w-100">
-            <b-btn class="float-left" variant="primary" @click="clickOk">{{ $t('submit_btn') }}</b-btn>
+      <div style="clear: both;" />
 
-            <div style="clear: both;"></div>
-
-            <small class="form-text text-muted q-policy">
-                {{ $t('policy.0') }} <a href="/">{{ $t('policy.1') }}</a> {{ $t('policy.2') }} <a href="/">{{ $t('policy.3') }}</a>.
-            </small>
-        </div>
-    </b-modal>
+      <small class="form-text text-muted q-policy">
+        {{ $t('policy.0') }} <a href="/">
+          {{ $t('policy.1') }}
+        </a> {{ $t('policy.2') }} <a href="/">
+          {{ $t('policy.3') }}
+        </a>.
+      </small>
+    </div>
+  </b-modal>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import axios from 'axios'
-import * as qs from 'querystring'
-import config from '../../config'
-import ValidateInput from '../../components/ValidateInput/ValidateInput.vue'
+import axios from 'axios';
+import * as qs from 'querystring';
+import Vue from 'vue';
+import config from '@/config';
+import ValidateInput from '@/components/ValidateInput/ValidateInput.vue';
 
 export default Vue.extend({
-    components: {ValidateInput},
+    components: { ValidateInput },
     props: ['id', 'openReg', 'openReset'],
     data: () => ({
         form: {
@@ -98,32 +135,34 @@ export default Vue.extend({
         },
     }),
     methods: {
-        goto_reg(){
+        goto_reg() {
             this.$refs.modal.hide();
             this.openReg();
         },
-        goto_reset(){
+        goto_reset() {
             this.$refs.modal.hide();
             this.openReset();
         },
-        submit(){
-            axios.post(config.api + '/auth-api/login', qs.stringify(this.form)).then(res => {
+        submit() {
+            axios
+                .post(`${config.api}/auth-api/login`, qs.stringify(this.form))
+                .then(res => {
+                    // Cuz withCredentials didn't works here.
+                    this.$cookie.set('token', res.data.access_token, { expires: '24h' });
+                    window.localStorage.lang = res.data.user.lang;
 
-                // Cuz withCredentials didn't works here.
-                this.$cookie.set('token', res.data.access_token, { expires: '24h' });
-                window.localStorage.lang = res.data.user.lang;
-
-                window.location.href = '/vendor/on-boarding';
-            }).catch(err => {
-                alert(this.$t('not_found'));
-            });
+                    window.location.href = '/vendor/on-boarding';
+                })
+                .catch(() => {
+                    alert(this.$t('not_found'));
+                });
         },
-        clickOk(){
+        clickOk() {
             this.$refs.submit.click();
             return false;
-        }
-    }
-})
+        },
+    },
+});
 </script>
 
 <style scoped lang="scss">
