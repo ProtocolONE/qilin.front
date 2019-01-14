@@ -3,14 +3,14 @@
 </template>
 
 <script type="ts">
-    import Vue from 'vue'
+import Vue from 'vue'
 
-    export default Vue.extend({
-        name: "Vendor",
-        data: () => ({
-            enabled: true
-        }),
-    })
+export default Vue.extend({
+    name: "Vendor",
+    data: () => ({
+        enabled: true
+    }),
+})
 </script>
 
 <style scoped lang="scss">

@@ -1,24 +1,22 @@
 <i18n>
-    {
+{
     "en": {
-    "title": "Tell us more",
-    "descr": "These question will help us better tailor you Qilin experience to fit your needs",
-    "step": "STEP 2 OF 2",
-    "how-many-products": "Please tell us how many digital products your company will work with.",
-    "products": "Products",
-    "create-account": "Create account",
-    "----":""
+        "title": "Tell us more",
+        "descr": "These question will help us better tailor you Qilin experience to fit your needs",
+        "step": "STEP 2 OF 2",
+        "how-many-products": "Please tell us how many digital products your company will work with.",
+        "products": "Products",
+        "create-account": "Create account"
     },
     "ru": {
-    "title": "Tell us more",
-    "descr": "These question will help us better tailor you Qilin experience to fit your needs",
-    "step": "STEP 2 OF 2",
-    "how-many-products": "Please tell us how many digital products your company will work with.",
-    "products": "Products",
-    "create-account": "Create account",
-    "----":""
+        "title": "Tell us more",
+        "descr": "These question will help us better tailor you Qilin experience to fit your needs",
+        "step": "STEP 2 OF 2",
+        "how-many-products": "Please tell us how many digital products your company will work with.",
+        "products": "Products",
+        "create-account": "Create account"
     }
-    }
+}
 </i18n>
 
 <template>

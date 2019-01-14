@@ -1,32 +1,30 @@
 <i18n>
-    {
+{
     "en": {
-    "title": "Welcome to Qilin",
-    "descr": "Help us setup your first tenant and start untegration.",
-    "step": "STEP 1 OF 2",
-    "name-you-choose": "The name you choose here will be used for the internal purposes and some API endpoints of your cliends. Once chosen, a company name cannot be renamed.",
-    "region-laws": "We will host all of your data in EU region to comply with EU Data Protection Directive.",
-    "region": "Region",
-    "next": "Next",
-    "name": "Name",
-    "name-too-short": "Name is too short",
-    "your-company-name": "Your company name",
-    "---":""
+        "title": "Welcome to Qilin",
+        "descr": "Help us setup your first tenant and start untegration.",
+        "step": "STEP 1 OF 2",
+        "name-you-choose": "The name you choose here will be used for the internal purposes and some API endpoints of your cliends. Once chosen, a company name cannot be renamed.",
+        "region-laws": "We will host all of your data in EU region to comply with EU Data Protection Directive.",
+        "region": "Region",
+        "next": "Next",
+        "name": "Name",
+        "name-too-short": "Name is too short",
+        "your-company-name": "Your company name"
     },
     "ru": {
-    "title": "Welcome to Qilin",
-    "descr": "Help us setup your first tenant and start untegration.",
-    "step": "STEP 1 OF 2",
-    "name-you-choose": "The name you choose here will be used for the internal purposes and some API endpoints of your cliends. Once chosen, a company name cannot be renamed.",
-    "region-laws": "We will host all of your data in EU region to comply with EU Data Protection Directive.",
-    "region": "Region",
-    "next": "Next",
-    "name": "Name",
-    "name-too-short": "Name is too short",
-    "your-company-name": "Your company name",
-    "---":""
+        "title": "Welcome to Qilin",
+        "descr": "Help us setup your first tenant and start untegration.",
+        "step": "STEP 1 OF 2",
+        "name-you-choose": "The name you choose here will be used for the internal purposes and some API endpoints of your cliends. Once chosen, a company name cannot be renamed.",
+        "region-laws": "We will host all of your data in EU region to comply with EU Data Protection Directive.",
+        "region": "Region",
+        "next": "Next",
+        "name": "Name",
+        "name-too-short": "Name is too short",
+        "your-company-name": "Your company name"
     }
-    }
+}
 </i18n>
 
 <template>
