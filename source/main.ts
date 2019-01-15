@@ -1,39 +1,34 @@
-import "@babel/polyfill";
+import '@babel/polyfill';
 
+import axios from 'axios';
 import Vue from 'vue';
-import router from "./router";
-import i18n from "./i18n";
+import Vuex from 'vuex';
+import RootStore from './RootStore';
+import router from './router';
+import i18n from './i18n';
 import MainLayout from './layouts/main/Main.vue';
-import axios from "axios";
+
+// If we haven't @types notations for npm-modules, we use 'require'
+const VueCookie = require('vue-cookie');
+const vueHeadful = require('vue-headful').default;
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common['Accept-Language'] = window.localStorage.lang || window.navigator.language;
 
-const VueCookie = require('vue-cookie');
 Vue.use(VueCookie);
-
-const vueHeadful = require('vue-headful').default;
-Vue.component('vue-headful', vueHeadful);
-
-import Vuex from 'vuex';
 Vue.use(Vuex);
 
+Vue.component('vue-headful', vueHeadful);
+
 const store = new Vuex.Store({
-    state: {
-        user: null
-    },
-    mutations: {
-        update_user(state) {
-            //state.count++
-        }
-    },
-    getters: {}
+    ...RootStore,
 });
 
+// eslint-disable-next-line no-new
 new Vue({
     i18n,
     router,
     store,
-    el: '#body',
+    el: '#app',
     render: (h: any) => h(MainLayout, {}),
 });

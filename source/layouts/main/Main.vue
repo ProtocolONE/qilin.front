@@ -1,69 +1,81 @@
 <template>
-    <div>
-        <b-container fluid>
-            <Navbar></Navbar>
-            <router-view></router-view>
+  <div>
+    <b-container fluid>
+      <Navbar />
+      <router-view />
 
-            <Login ref="login" id="login"
-                   :openReg="() => $refs.reg.$refs.modal.show()"
-                   :openReset="() => $refs.resetpass.$refs.modal.show()"></Login>
-            <Register ref="reg" id="register" :openLogin="() => $refs.login.$refs.modal.show()"></Register>
-            <ResetPass ref="resetpass" id="resetpass" :openLogin="() => $refs.login.$refs.modal.show()"></ResetPass>
+      <Login
+        id="login"
+        ref="login"
+        :open-reg="() => $refs.reg.$refs.modal.show()"
+        :open-reset="() => $refs.resetpass.$refs.modal.show()"
+      />
+      <Register
+        id="register"
+        ref="reg"
+        :open-login="() => $refs.login.$refs.modal.show()"
+      />
+      <ResetPass
+        id="resetpass"
+        ref="resetpass"
+        :open-login="() => $refs.login.$refs.modal.show()"
+      />
 
-            <hr>
-            <Footer></Footer>
-        </b-container>
-    </div>
+      <hr>
+      <Footer />
+    </b-container>
+  </div>
 </template>
 
 <script lang="ts">
-    import Vue from 'vue'
-    import Login from '../../app/login/Login.vue'
-    import Register from '../../app/register/Register.vue'
-    import ResetPass from '../../app/resetpass/ResetPass.vue'
-    import Footer from './Footer.vue'
-    import Navbar from './Navbar.vue'
-    import axios from 'axios'
-    import config from '../../config'
+import axios from 'axios';
+import Vue from 'vue';
+import config from '@/config';
+import Login from '@/modules/login/Login.vue';
+import Register from '@/modules/register/Register.vue';
+import ResetPass from '@/modules/resetpass/ResetPass.vue';
+import Footer from './Footer.vue';
+import Navbar from './Navbar.vue';
 
-    import './bootstrap'
+import './bootstrap';
 
-    export default Vue.extend({
-        components: {Login, Navbar, Register, ResetPass, Footer},
-        name: "Appl",
-        data: () => ({
-            user: null,
-        }),
-        mounted(){
-            if (!window.localStorage.lang) {
-                window.localStorage.lang = window.navigator.language;
-            }
-            if (this.$cookie.get('token')) {
-                axios.get(config.api + '/api/v1/me').then(res => {
-                    this.user = res.data.user;
-                }).catch(err => {
-                    /// ignore...
-                });
-            }
-        },
-        methods: {
-            logout(){
-                this.$cookie.delete('token');
-                document.location = document.location;
-            },
-            changeLang(lang: string){
-                window.localStorage.lang = ('' + window.navigator.language).replace(/^\w+/, lang);
-                document.location = document.location;
-            }
+export default Vue.extend({
+    name: 'Appl',
+    components: { Login, Navbar, Register, ResetPass, Footer },
+    data: () => ({
+        user: null,
+    }),
+    mounted() {
+        if (!window.localStorage.lang) {
+            window.localStorage.lang = window.navigator.language;
         }
-    })
+        if (this.$cookie.get('token')) {
+            axios
+                .get(`${config.api}/api/v1/me`)
+                .then(res => {
+                    this.user = res.data.user;
+                })
+                .catch(() => {
+                    // / ignore...
+                });
+        }
+    },
+    methods: {
+        logout() {
+            this.$cookie.delete('token');
+            document.location = document.location;
+        },
+        changeLang(lang: string) {
+            window.localStorage.lang = `${window.navigator.language}`.replace(/^\w+/, lang);
+            document.location = document.location;
+        },
+    },
+});
 </script>
 
 <style scoped lang="scss">
-
-    h1 {
-        color: red;
-        font-weight: bold;
-    }
-
+h1 {
+    color: red;
+    font-weight: bold;
+}
 </style>
