@@ -86,17 +86,11 @@
     ],
     "gitHooks": {
         "pre-commit": "ESLINT_STRICT=true lint-staged",
-        "pre-push": "vue-cli-service test:unit"
+        "pre-push": "set \"NODE_PATH=./source\" mocha './source/**/*.spec.js' --require babel-register"
     },
     "lint-staged": {
-        "*.js": [
-            "eslint"
-        ],
-        "*.ts": [
-            "eslint"
-        ],
-        "*.vue": [
-            "eslint"
-        ]
+        "*.js": ["eslint"],
+        "*.ts": ["eslint"],
+        "*.vue": ["eslint"]
     }
 }
