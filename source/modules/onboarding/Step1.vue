@@ -53,14 +53,6 @@
                 :label="$t('your-company-name')"
                 label-for="company-name"
               >
-                <TextField
-                    class="new"
-                    label="some mega super puper stranger big long text"
-                    additionalInfo="some mega super puper stranger big long text"
-                    errorText="some mega super puper stranger big long text"
-                    :hasError="hasError"
-                    @input="input"
-                />
                 <ValidateInput
                   id="company-name"
                   v-model="form.name"
@@ -86,10 +78,6 @@
             >
               {{ $t('next') }}
             </b-btn>
-
-            <Button class="button" text="Next" />
-            <Checkbox class="checkbox" />
-            <SwitchBox class="switch" />
           </b-form>
         </div>
       </b-col>
@@ -101,20 +89,15 @@
 import Vue from 'vue';
 import $ from 'jquery';
 import ValidateInput from '@/components/ValidateInput/ValidateInput.vue';
-import TextField from '@/components/TextField.vue';
-import Button from '@/components/Button.vue';
-import Checkbox from '@/components/Checkbox.vue';
-import SwitchBox from '@/components/SwitchBox.vue';
 
 export default Vue.extend({
     name: 'OnBoardingStep1',
-    components: { ValidateInput, TextField, Button, Checkbox, SwitchBox },
+    components: { ValidateInput },
     data: () => ({
         enabled: true,
         form: {
             name: '',
         },
-        hasError: false,
     }),
     mounted() {
         this.$nextTick(() => {
@@ -130,28 +113,12 @@ export default Vue.extend({
             }
             this.$parent.nextStep();
         },
-        input(value) {
-            if (value === 'invalid') {
-                this.hasError = true;
-            } else {
-                this.hasError = false;
-            }
-        },
     },
 });
 </script>
 
 <style scoped lang="scss">
 @import '../../layouts/main/consts.scss';
-
-.new {
-    margin-bottom: 20px;
-}
-.button,
-.checkbox,
-.switch {
-    margin-left: 40px;
-}
 
 .page {
     position: relative;
