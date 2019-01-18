@@ -56,6 +56,10 @@ export default Vue.extend({
         },
     },
     methods: {
+        /**
+         * @TODO - Add type for DOMEvent
+         * @param {Any} event
+         */
         emitClick(event: Object) {
             // If button has disabled we shoudn't send events
             if (this.disabled) {
@@ -126,7 +130,7 @@ $button-font-style: Roboto;
         }
     }
 
-    &[disabled] {
+    &._disabled {
         background-color: $disabled-button-color;
         pointer-events: none;
     }

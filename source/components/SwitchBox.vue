@@ -1,15 +1,13 @@
 <template>
-<div class="base-checkbox">
+<div class="switch-box">
     <input
         v-bind="{ checked, disabled, id }"
         class="input"
         type="checkbox"
         @change="emitChange"
     />
-    <label :for="id" :class="checkboxClasses">
-        <svg viewBox="0,0,50,50">
-            <path d="M12 27 L 20 35 L 40 15"></path>
-        </svg>
+    <label :for="id" :class="switchClasses">
+        <div class="dot"></div>
     </label>
 </div>
 </template>
@@ -37,17 +35,17 @@ export default Vue.extend({
         },
     },
     computed: {
-        /** Classes for checkbox */
-        checkboxClasses(): Array<string> {
+        /** Classes for switch */
+        switchClasses(): Array<string> {
             return [
                 'label',
                 `_${this.size}`,
                 this.disabled ? '_disabled' : '',
             ];
         },
-        /** Unique ID for checkbox element */
+        /** Unique ID for switch element */
         id(): string {
-            return uniqueId('checkbox');
+            return uniqueId('switch');
         }
     },
     methods: {
@@ -69,13 +67,12 @@ export default Vue.extend({
 
 <style scoped lang="scss">
 /** @TODO - move to gui consts, fix color and typographics consts */
-$checkbox-color: #fff;
-$checkbox-check-color: #333;
-$disabled-checkbox-color: #e1e1e1;
-$checkbox-border-color: #b1b1b1;
-$hover-checkbox-border-color: #3787ff;
+$switch-color: #cfcfcf;
+$switch-dot-color: #fff;
+$disabled-switch-color: #e1e1e1;
+$checked-switch-color: #55d287;
 
-.base-checkbox {
+.switch-box {
     display: inline-block;
     position: relative;
 }
@@ -86,45 +83,40 @@ $hover-checkbox-border-color: #3787ff;
     width: 0;
 	
 	&:checked + .label {
-        border-color: $hover-checkbox-border-color;
+        background-color: $checked-switch-color;
+        box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.15);
 	}
-	&:checked + .label > svg > path {
-		stroke-dashoffset: 0;
+	&:checked + .label > .dot {
+        left: 24px;
 	}
 }
 .label {
-	border-radius: 3px;
-	border: 2px solid $checkbox-border-color;
+	border-radius: 12px;
 	cursor: pointer;
 	display: block;
 	transition: all .2s ease-out;
-    background-color: $checkbox-color;
-    height: 20px;
-    width: 20px;
-
-	& > svg {
-        pointer-events: none;
-        vertical-align: top;
-
-		& > path {			
-			fill: none;			
-			stroke-dasharray: 100;
-			stroke-dashoffset: 101;
-			stroke-linecap: round;
-			stroke-linejoin: round;
-			stroke-width: 5px;
-			stroke: $checkbox-check-color;
-			transition: all .2s ease-out;
-		}
-	}
-    
-    &:hover {
-        border-color: $hover-checkbox-border-color;
-    }
+    background-color: $switch-color;
+    height: 24px;
+    width: 44px;
 
     &._disabled {
-        background-color: $disabled-checkbox-color;
-        border-color: $disabled-checkbox-color;
+        background-color: $disabled-switch-color;
+        border-color: $disabled-switch-color;
+
+        & > .dot {
+            box-shadow: none;
+        }
     }
+}
+.dot {
+    background-color: $switch-dot-color;
+	border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+    height: 16px;
+    left: 4px;
+    position: absolute;
+    top: 4px;
+	transition: left .2s ease-out;
+    width: 16px;
 }
 </style>
