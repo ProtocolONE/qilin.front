@@ -2,7 +2,7 @@
 <div class="text-field">
     <input
         v-model="inputValue"
-        v-bind="{ type, required, disebled }"
+        v-bind="{ type, required, disabled }"
         :class="inputClasses"
         @input="$emit('input', inputValue)"
     >
@@ -33,7 +33,7 @@ export default Vue.extend({
             default: '',
             type: String,
         },
-        disebled: {
+        disabled: {
             default: false,
             type: Boolean,
         },
@@ -73,12 +73,13 @@ export default Vue.extend({
             return !!(this.hasError && this.errorText);
         },
         /** Classes for input */
-        inputClasses(): Object {
-            return {
-                input: true,
-                _empty: !this.inputValue,
-                _error: this.isVisibleError,
-            };
+        inputClasses(): Array<string> {
+            return [
+                'input',
+                !this.inputValue ? '_empty' : '',
+                this.isVisibleError ? '_error' : '',
+                this.disabled ? '_disabled' : '',
+            ];
         },
     },
     watch: {
@@ -91,6 +92,7 @@ export default Vue.extend({
 
 <style scoped lang="scss">
 /** @TODO - move to gui for typographics */
+$input-background-color: #fff;
 $primary-input-color: #333;
 $secondary-input-color: #b1b1b1;
 $focus-input-color: #3787ff;
@@ -104,11 +106,12 @@ $input-font-style: Lato;
 .text-field {
     display: inline-block;
     font-style: $input-font-style;
+    padding: 24px 0;
     position: relative;
     width: 100%;
-    padding: 24px 0;
 }
 .input {
+    background-color: $input-background-color;
     border-width: 0;
     border-bottom-width: 1px;
     border-color: #e5e5e5;
@@ -149,9 +152,19 @@ $input-font-style: Lato;
 
         border-color: $error-input-color;
     }
+
+    &._disabled {
+        &:not(._empty) {
+            border-bottom-color: transparent;
+        }
+        border-bottom-color: transparent;
+        color: $secondary-input-color;
+        pointer-events: none;
+    }
 }
 .additional,
 .label {
+    color: $secondary-input-color;
     line-height: 32px;
     margin: 0;
     overflow: hidden;
@@ -169,7 +182,6 @@ $input-font-style: Lato;
     width: 100%;
 }
 .additional {
-    color: $secondary-input-color;
     font-size: $secondary-input-size;
     max-width: 50%;
     right: 0;

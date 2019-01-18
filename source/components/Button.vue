@@ -51,6 +51,7 @@ export default Vue.extend({
                  * because root elements debends on parent's style scope
                  */
                 'base-button',
+                this.disabled ? '_disabled' : '',
                 ...[this.color, this.size, this.type].map(value => `_${value}`),
             ];
         },
@@ -84,20 +85,21 @@ $button-font-style: Roboto;
 
 .base-button {
     background-color: $button-color;
-    border-width: 0;
-    outline: none;
     border-radius: 20px;
+    border-width: 0;
     color: $button-font-color;
+    cursor: pointer;
     display: inline-block;
     font-size: $primary-button-size;
     font-style: $button-font-style;
-    line-height: 40px;
     height: 40px;
-    position: relative;
-    transition: background-color .2s ease-out, box-shadow .2s ease-out;
+    line-height: 40px;
     max-width: 100%;
-    text-align: center;
+    outline: none;
     padding: 0 24px;
+    position: relative;
+    text-align: center;
+    transition: background-color .2s ease-out, box-shadow .2s ease-out;
 
     &:before {
         bottom: 1px;
