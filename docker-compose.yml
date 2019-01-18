@@ -1,12 +1,14 @@
 version: '3'
 services:
   p1qilinfront:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     container_name: p1qilinfront
-    networks: 
+    networks:
     - p1devnet
     ports:
-    - "8180:80"          
+    - "8080:8080"
     restart: unless-stopped
 
 networks:

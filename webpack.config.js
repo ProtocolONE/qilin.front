@@ -18,7 +18,7 @@ module.exports = {
     context: path.join(__dirname, 'source'),
     entry: (ENV_DEV
         ? [
-              'webpack-dev-server/client?http://localhost:8080', // WebpackDevServer host and port
+              'webpack-dev-server/client?http://0.0.0.0:8080', // WebpackDevServer host and port
               'webpack/hot/only-dev-server', // 'only' prevents reload on syntax errors
           ]
         : []
@@ -124,6 +124,7 @@ module.exports = {
         stats: 'verbose',
         hot: true,
         host: '0.0.0.0',
+        port: 8080,
         proxy: {
             '/api/*': 'http://localhost:3001',
             '/auth-api/*': 'http://localhost:3001',
