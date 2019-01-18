@@ -2,7 +2,7 @@
 <div class="text-field">
     <input
         v-model="inputValue"
-        v-bind="{ type, required }"
+        v-bind="{ type, required, disebled }"
         :class="inputClasses"
         @input="$emit('input', inputValue)"
     >
@@ -32,6 +32,10 @@ export default Vue.extend({
         additionalInfo: {
             default: '',
             type: String,
+        },
+        disebled: {
+            default: false,
+            type: Boolean,
         },
         errorText: {
             default: '',
