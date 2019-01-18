@@ -25,6 +25,7 @@
         "bootstrap": "^4.1.3",
         "bootstrap-vue": "^2.0.0-rc.11",
         "jquery": "^3.3.1",
+        "lodash": "^4.17.11",
         "querystring": "^0.2.0",
         "vue": "^2.5.21",
         "vue-cookie": "^1.1.4",
@@ -89,8 +90,14 @@
         "pre-push": "set \"NODE_PATH=./source\" mocha './source/**/*.spec.js' --require babel-register"
     },
     "lint-staged": {
-        "*.js": ["eslint"],
-        "*.ts": ["eslint"],
-        "*.vue": ["eslint"]
+        "*.js": [
+            "eslint"
+        ],
+        "*.ts": [
+            "eslint"
+        ],
+        "*.vue": [
+            "eslint"
+        ]
     }
 }
