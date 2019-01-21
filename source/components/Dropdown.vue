@@ -141,12 +141,13 @@ $input-font-style: Lato;
     transition: border-color 0.2s ease-out;
     width: 100%;
 
-    &._focused {
-        border-color: $input-background-color;
-
-        & > .box {
-            transform: scaleY(1);
-        }
+    &:after{
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 40px;
+        border: 4px solid transparent;
+        border-top: 4px solid $secondary-input-color;
     }
 
     &:not(._empty) {
@@ -161,8 +162,11 @@ $input-font-style: Lato;
         }
 
         &._focused {
+            &:after {
+                border-top-color: $focus-input-color;
+            }
+
             & > .label {
-                color: $focus-input-color;
                 pointer-events: none;
                 width: 100%;
                 transform: translateY(0) scale(1, 1);
@@ -171,6 +175,22 @@ $input-font-style: Lato;
             & > .selected {
                 transform: scaleY(0);
             }
+        }
+    }
+
+    &._focused {
+        border-color: $input-background-color;
+
+        &:after {
+            border-top-color: $focus-input-color;
+        }
+
+        & > .label {
+            color: $focus-input-color;
+        }
+
+        & > .box {
+            transform: scaleY(1);
         }
     }
 
@@ -214,8 +234,9 @@ $input-font-style: Lato;
     width: 100%;
 }
 .overlay {
-    background-color: linear-gradient(0deg, $input-background-color 0%, rgba($input-background-color, 0) 142.5%);
+    background-image: linear-gradient(0deg, $input-background-color 0%, rgba($input-background-color, 0) 100%);
     bottom: 0;
+    pointer-events: none;
     height: 40px;
     left: 0;
     min-height: 40px;
