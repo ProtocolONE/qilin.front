@@ -3,7 +3,9 @@
     :class="buttonClasses"
     v-bind="{ disabled, type }"
     @click="emitClick"
->{{text}}</button>
+>
+    {{ text }}
+</button>
 </template>
 
 <script lang="ts">
@@ -69,7 +71,7 @@ export default Vue.extend({
 
             this.$emit('click', event);
         },
-    }
+    },
 });
 </script>
 
@@ -99,17 +101,17 @@ $button-font-style: Roboto;
     padding: 0 24px;
     position: relative;
     text-align: center;
-    transition: background-color .2s ease-out, box-shadow .2s ease-out;
+    transition: background-color 0.2s ease-out, box-shadow 0.2s ease-out;
 
     &:before {
         bottom: 1px;
-        box-shadow: 0 4px 16px rgba($hover-button-color, .85);
+        box-shadow: 0 4px 16px rgba($hover-button-color, 0.85);
         content: '';
         left: 1px;
         position: absolute;
         right: 1px;
         top: 3px;
-        transition: opacity .3s;
+        transition: opacity 0.3s;
         pointer-events: none;
         border-radius: 20px;
         opacity: 0;
@@ -126,7 +128,7 @@ $button-font-style: Roboto;
     &:active {
         background-color: $button-color;
         box-shadow: inset 0px 4px 16px rgba(0, 0, 0, 0.15);
-        
+
         &:before {
             opacity: 0;
         }

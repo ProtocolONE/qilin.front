@@ -1,30 +1,30 @@
 <template>
-  <div>
+<div>
     <b-container fluid>
-      <Navbar />
-      <router-view />
+        <Navbar />
+        <router-view />
 
-      <Login
-        id="login"
-        ref="login"
-        :open-reg="() => $refs.reg.$refs.modal.show()"
-        :open-reset="() => $refs.resetpass.$refs.modal.show()"
-      />
-      <Register
-        id="register"
-        ref="reg"
-        :open-login="() => $refs.login.$refs.modal.show()"
-      />
-      <ResetPass
-        id="resetpass"
-        ref="resetpass"
-        :open-login="() => $refs.login.$refs.modal.show()"
-      />
+        <Login
+            id="login"
+            ref="login"
+            :open-reg="() => $refs.reg.$refs.modal.show()"
+            :open-reset="() => $refs.resetpass.$refs.modal.show()"
+        />
+        <Register
+            id="register"
+            ref="reg"
+            :open-login="() => $refs.login.$refs.modal.show()"
+        />
+        <ResetPass
+            id="resetpass"
+            ref="resetpass"
+            :open-login="() => $refs.login.$refs.modal.show()"
+        />
 
-      <hr>
-      <Footer />
+        <hr>
+        <Footer />
     </b-container>
-  </div>
+</div>
 </template>
 
 <script lang="ts">

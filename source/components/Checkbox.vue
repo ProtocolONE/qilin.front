@@ -5,10 +5,13 @@
         class="input"
         type="checkbox"
         @change="emitChange"
-    />
-    <label :for="id" :class="checkboxClasses">
+    >
+    <label
+        :for="id"
+        :class="checkboxClasses"
+    >
         <svg viewBox="0,0,50,50">
-            <path d="M12 27 L 20 35 L 40 15"></path>
+            <path d="M12 27 L 20 35 L 40 15" />
         </svg>
     </label>
 </div>
@@ -39,16 +42,12 @@ export default Vue.extend({
     computed: {
         /** Classes for checkbox */
         checkboxClasses(): Array<string> {
-            return [
-                'label',
-                `_${this.size}`,
-                this.disabled ? '_disabled' : '',
-            ];
+            return ['label', `_${this.size}`, this.disabled ? '_disabled' : ''];
         },
         /** Unique ID for checkbox element */
         id(): string {
             return uniqueId('checkbox');
-        }
+        },
     },
     methods: {
         /**
@@ -61,9 +60,9 @@ export default Vue.extend({
                 return;
             }
 
-            this.$emit('change', event.target.checked)
-        }
-    }
+            this.$emit('change', event.target.checked);
+        },
+    },
 });
 </script>
 
@@ -81,43 +80,43 @@ $hover-checkbox-border-color: #3787ff;
 }
 .input {
     height: 0;
-	position: absolute;
+    position: absolute;
     visibility: hidden;
     width: 0;
-	
-	&:checked + .label {
+
+    &:checked + .label {
         border-color: $hover-checkbox-border-color;
-	}
-	&:checked + .label > svg > path {
-		stroke-dashoffset: 0;
-	}
+    }
+    &:checked + .label > svg > path {
+        stroke-dashoffset: 0;
+    }
 }
 .label {
-	border-radius: 3px;
-	border: 2px solid $checkbox-border-color;
-	cursor: pointer;
-	display: block;
-	transition: all .2s ease-out;
+    border-radius: 3px;
+    border: 2px solid $checkbox-border-color;
+    cursor: pointer;
+    display: block;
+    transition: all 0.2s ease-out;
     background-color: $checkbox-color;
     height: 20px;
     width: 20px;
 
-	& > svg {
+    & > svg {
         pointer-events: none;
         vertical-align: top;
 
-		& > path {			
-			fill: none;			
-			stroke-dasharray: 100;
-			stroke-dashoffset: 101;
-			stroke-linecap: round;
-			stroke-linejoin: round;
-			stroke-width: 5px;
-			stroke: $checkbox-check-color;
-			transition: all .2s ease-out;
-		}
-	}
-    
+        & > path {
+            fill: none;
+            stroke-dasharray: 100;
+            stroke-dashoffset: 101;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-width: 5px;
+            stroke: $checkbox-check-color;
+            transition: all 0.2s ease-out;
+        }
+    }
+
     &:hover {
         border-color: $hover-checkbox-border-color;
     }

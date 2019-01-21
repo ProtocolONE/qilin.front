@@ -20,72 +20,72 @@
 </i18n>
 
 <template>
-  <div class="page">
+<div class="page">
     <vue-headful
-      :title="$t('title')"
-      :description="$t('descr')"
+        :title="$t('title')"
+        :description="$t('descr')"
     />
     <b-row>
-      <b-col class="left">
-        <div class="center">
-          <h1>{{ $t('title') }}</h1>
-          <p>{{ $t('descr') }}</p>
-          <br>
-          <p class="step">
-            {{ $t('step') }}
-          </p>
-        </div>
-      </b-col>
-
-      <b-col class="right">
-        <div class="center">
-          <b-form>
-            <div class="how-many-products">
-              <b-form-group
-                :label="$t('products')"
-                label-for="how-many-products"
-              >
-                <select
-                  id="how-many-products"
-                  v-model="form.howManyProds"
-                  class="form-control"
-                >
-                  <option value="1-10">
-                    1 - 10
-                  </option>
-                  <option value="10-50">
-                    10 - 50
-                  </option>
-                  <option value="50-200">
-                    50 - 200
-                  </option>
-                  <option value="200-500">
-                    200 - 500
-                  </option>
-                  <option value="500-1000">
-                    500 - 1000
-                  </option>
-                  <option value="+1000">
-                    > 1000
-                  </option>
-                </select>
-              </b-form-group>
-              <small class="form-text text-muted">
-                {{ $t('how-many-products') }}
-              </small>
+        <b-col class="left">
+            <div class="center">
+                <h1>{{ $t('title') }}</h1>
+                <p>{{ $t('descr') }}</p>
+                <br>
+                <p class="step">
+                    {{ $t('step') }}
+                </p>
             </div>
-            <b-btn
-              class="float-left"
-              variant="primary"
-              @click="createAccount"
-            >
-              {{ $t('create-account') }}
-            </b-btn>
-          </b-form>
-        </div>
-      </b-col>
+        </b-col>
+
+        <b-col class="right">
+            <div class="center">
+                <b-form>
+                    <div class="how-many-products">
+                        <b-form-group
+                            :label="$t('products')"
+                            label-for="how-many-products"
+                        >
+                            <select
+                                id="how-many-products"
+                                v-model="form.howManyProds"
+                                class="form-control"
+                            >
+                                <option value="1-10">
+                                    1 - 10
+                                </option>
+                                <option value="10-50">
+                                    10 - 50
+                                </option>
+                                <option value="50-200">
+                                    50 - 200
+                                </option>
+                                <option value="200-500">
+                                    200 - 500
+                                </option>
+                                <option value="500-1000">
+                                    500 - 1000
+                                </option>
+                                <option value="+1000">
+                                    > 1000
+                                </option>
+                            </select>
+                        </b-form-group>
+                        <small class="form-text text-muted">
+                            {{ $t('how-many-products') }}
+                        </small>
+                    </div>
+                    <b-btn
+                        class="float-left"
+                        variant="primary"
+                        @click="createAccount"
+                    >
+                        {{ $t('create-account') }}
+                    </b-btn>
+                </b-form>
+            </div>
+        </b-col>
     </b-row>
-  </div>
+</div>
 </template>
 
 <script type="ts">
@@ -115,7 +115,7 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
-@import '../../layouts/main/consts.scss';
+@import '@/layouts/main/consts.scss';
 
 .page {
     position: relative;

@@ -102,5 +102,14 @@ module.exports = {
                 enforceForRenamedProperties: false,
             },
         ],
+
+        'vue/html-indent': [
+            'error',
+            4,
+            {
+                'baseIndent': 0,
+                'ignores': []
+            }
+        ],
     },
 };

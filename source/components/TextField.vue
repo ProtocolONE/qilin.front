@@ -9,18 +9,23 @@
     <label
         class="label"
         :title="label"
-    >{{label}}</label>
+    >
+        {{ label }}
+    </label>
     <span
         v-if="isVisibleError"
         class="error"
         :title="errorText"
-    >{{errorText}}
+    >
+        {{ errorText }}
     </span>
     <span
         v-if="additionalInfo"
         class="additional"
         :title="additionalInfo"
-    >{{additionalInfo}}</span>
+    >
+        {{ additionalInfo }}
+    </span>
 </div>
 </template>
 
@@ -122,7 +127,7 @@ $input-font-style: Lato;
     line-height: 32px;
     outline: none;
     padding: 0;
-    transition: border-color .2s ease-out;
+    transition: border-color 0.2s ease-out;
     width: 100%;
 
     &:focus {
@@ -135,7 +140,7 @@ $input-font-style: Lato;
     &:focus ~ .label,
     &:not(:focus):not(._empty) ~ .label {
         width: 50%;
-        transform: translateY(-24px) scale(.875, .875);
+        transform: translateY(-24px) scale(0.875, 0.875);
     }
     &:focus ~ .label {
         pointer-events: auto;
@@ -178,7 +183,7 @@ $input-font-style: Lato;
     pointer-events: none;
     top: 24px;
     transform-origin: left;
-    transition: transform .2s ease-out, color .2s linear, width .1s ease-out;
+    transition: transform 0.2s ease-out, color 0.2s linear, width 0.1s ease-out;
     width: 100%;
 }
 .additional {

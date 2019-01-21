@@ -28,61 +28,61 @@
 </i18n>
 
 <template>
-  <div class="page">
+<div class="page">
     <vue-headful
-      :title="$t('title')"
-      :description="$t('descr')"
+        :title="$t('title')"
+        :description="$t('descr')"
     />
     <b-row>
-      <b-col class="left">
-        <div class="center">
-          <h1>{{ $t('title') }}</h1>
-          <p>{{ $t('descr') }}</p>
-          <br>
-          <p class="step">
-            {{ $t('step') }}
-          </p>
-        </div>
-      </b-col>
+        <b-col class="left">
+            <div class="center">
+                <h1>{{ $t('title') }}</h1>
+                <p>{{ $t('descr') }}</p>
+                <br>
+                <p class="step">
+                    {{ $t('step') }}
+                </p>
+            </div>
+        </b-col>
 
-      <b-col class="right">
-        <div class="center">
-          <b-form>
-            <div class="company-name">
-              <b-form-group
-                :label="$t('your-company-name')"
-                label-for="company-name"
-              >
-                <ValidateInput
-                  id="company-name"
-                  v-model="form.name"
-                  type="text"
-                  :validate="(val) => val.length > 2"
-                  :placeholder="$t('name')"
-                />
-              </b-form-group>
-              <small class="form-text text-muted">
-                {{ $t('name-you-choose') }}
-              </small>
+        <b-col class="right">
+            <div class="center">
+                <b-form>
+                    <div class="company-name">
+                        <b-form-group
+                            :label="$t('your-company-name')"
+                            label-for="company-name"
+                        >
+                            <ValidateInput
+                                id="company-name"
+                                v-model="form.name"
+                                type="text"
+                                :validate="(val) => val.length > 2"
+                                :placeholder="$t('name')"
+                            />
+                        </b-form-group>
+                        <small class="form-text text-muted">
+                            {{ $t('name-you-choose') }}
+                        </small>
+                    </div>
+                    <div class="region">
+                        <label>{{ $t('region') }}</label>
+                        <small class="form-text text-muted">
+                            {{ $t('region-laws') }}
+                        </small>
+                    </div>
+                    <b-btn
+                        class="float-left"
+                        variant="primary"
+                        @click="nextStep"
+                    >
+                        {{ $t('next') }}
+                    </b-btn>
+                </b-form>
             </div>
-            <div class="region">
-              <label>{{ $t('region') }}</label>
-              <small class="form-text text-muted">
-                {{ $t('region-laws') }}
-              </small>
-            </div>
-            <b-btn
-              class="float-left"
-              variant="primary"
-              @click="nextStep"
-            >
-              {{ $t('next') }}
-            </b-btn>
-          </b-form>
-        </div>
-      </b-col>
+        </b-col>
     </b-row>
-  </div>
+</div>
 </template>
 
 <script type="ts">
@@ -118,7 +118,7 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
-@import '../../layouts/main/consts.scss';
+@import '@/layouts/main/consts.scss';
 
 .page {
     position: relative;

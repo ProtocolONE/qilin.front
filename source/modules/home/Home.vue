@@ -14,26 +14,26 @@
 </i18n>
 
 <template>
-  <div class="page">
+<div class="page">
     <vue-headful
-      :title="$t('title')"
-      :description="$t('descr')"
+        :title="$t('title')"
+        :description="$t('descr')"
     />
     <b-row>
-      <b-col class="left">
-        <div class="center">
-          <b-btn
-            class="float-left"
-            variant="primary"
-            to="/vendor/on-boarding"
-          >
-            {{ $t('add_vendor') }}
-          </b-btn>
-        </div>
-      </b-col>
-      <b-col class="right" />
+        <b-col class="left">
+            <div class="center">
+                <b-btn
+                    class="float-left"
+                    variant="primary"
+                    to="/vendor/on-boarding"
+                >
+                    {{ $t('add_vendor') }}
+                </b-btn>
+            </div>
+        </b-col>
+        <b-col class="right" />
     </b-row>
-  </div>
+</div>
 </template>
 
 <script lang="ts">

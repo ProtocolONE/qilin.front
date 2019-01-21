@@ -5,9 +5,12 @@
         class="input"
         type="checkbox"
         @change="emitChange"
-    />
-    <label :for="id" :class="switchClasses">
-        <div class="dot"></div>
+    >
+    <label
+        :for="id"
+        :class="switchClasses"
+    >
+        <div class="dot" />
     </label>
 </div>
 </template>
@@ -37,16 +40,12 @@ export default Vue.extend({
     computed: {
         /** Classes for switch */
         switchClasses(): Array<string> {
-            return [
-                'label',
-                `_${this.size}`,
-                this.disabled ? '_disabled' : '',
-            ];
+            return ['label', `_${this.size}`, this.disabled ? '_disabled' : ''];
         },
         /** Unique ID for switch element */
         id(): string {
             return uniqueId('switch');
-        }
+        },
     },
     methods: {
         /**
@@ -59,9 +58,9 @@ export default Vue.extend({
                 return;
             }
 
-            this.$emit('change', event.target.checked)
-        }
-    }
+            this.$emit('change', event.target.checked);
+        },
+    },
 });
 </script>
 
@@ -78,23 +77,23 @@ $checked-switch-color: #55d287;
 }
 .input {
     height: 0;
-	position: absolute;
+    position: absolute;
     visibility: hidden;
     width: 0;
-	
-	&:checked + .label {
+
+    &:checked + .label {
         background-color: $checked-switch-color;
         box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.15);
-	}
-	&:checked + .label > .dot {
+    }
+    &:checked + .label > .dot {
         left: 24px;
-	}
+    }
 }
 .label {
-	border-radius: 12px;
-	cursor: pointer;
-	display: block;
-	transition: all .2s ease-out;
+    border-radius: 12px;
+    cursor: pointer;
+    display: block;
+    transition: all 0.2s ease-out;
     background-color: $switch-color;
     height: 24px;
     width: 44px;
@@ -110,13 +109,13 @@ $checked-switch-color: #55d287;
 }
 .dot {
     background-color: $switch-dot-color;
-	border-radius: 8px;
+    border-radius: 8px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
     height: 16px;
     left: 4px;
     position: absolute;
     top: 4px;
-	transition: left .2s ease-out;
+    transition: left 0.2s ease-out;
     width: 16px;
 }
 </style>
