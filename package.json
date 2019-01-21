@@ -28,6 +28,7 @@
         "lodash-es": "^4.17.11",
         "querystring": "^0.2.0",
         "vue": "^2.5.21",
+        "vue-clickaway": "^2.2.2",
         "vue-cookie": "^1.1.4",
         "vue-headful": "^2.0.1",
         "vuex": "^3.0.1"

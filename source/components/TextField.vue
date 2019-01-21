@@ -72,6 +72,11 @@ export default Vue.extend({
             inputValue: this.value,
         };
     },
+    watch: {
+        value(val: string) {
+            this.inputValue = val;
+        },
+    },
     computed: {
         /** Error is visible if it exists and error text isn't empty */
         isVisibleError(): boolean {
@@ -85,11 +90,6 @@ export default Vue.extend({
                 this.isVisibleError ? '_error' : '',
                 this.disabled ? '_disabled' : '',
             ];
-        },
-    },
-    watch: {
-        inputValue(val: string) {
-            this.$emit('input', val);
         },
     },
 });
@@ -124,6 +124,7 @@ $input-font-style: Lato;
     color: $primary-input-color;
     display: block;
     font-size: $primary-input-size;
+    height: 32px;
     line-height: 32px;
     outline: none;
     padding: 0;
@@ -132,9 +133,6 @@ $input-font-style: Lato;
 
     &:focus {
         border-color: $focus-input-color;
-    }
-    &:not(:focus):not(._empty) {
-        border-color: $secondary-input-color;
     }
 
     &:focus ~ .label,
