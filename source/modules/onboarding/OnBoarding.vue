@@ -1,14 +1,14 @@
 <template>
-  <div>
+<div>
     <Step1
-      v-show="step == 1"
-      ref="step1"
+        v-show="step == 1"
+        ref="step1"
     />
     <Step2
-      v-show="step == 2"
-      ref="step2"
+        v-show="step == 2"
+        ref="step2"
     />
-  </div>
+</div>
 </template>
 
 <script type="ts">

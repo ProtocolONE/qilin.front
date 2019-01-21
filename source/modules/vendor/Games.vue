@@ -28,22 +28,22 @@
 </i18n>
 
 <template>
-  <div class="page">
+<div class="page">
     <vue-headful
-      :title="$t('title')"
-      :description="$t('descr')"
+        :title="$t('title')"
+        :description="$t('descr')"
     />
     <b-row>
-      <b-col class="left">
-        <div class="center" />
-      </b-col>
-      <b-col class="right">
-        <div class="center">
-          <h1>Games</h1>
-        </div>
-      </b-col>
+        <b-col class="left">
+            <div class="center" />
+        </b-col>
+        <b-col class="right">
+            <div class="center">
+                <h1>Games</h1>
+            </div>
+        </b-col>
     </b-row>
-  </div>
+</div>
 </template>
 
 <script type="ts">

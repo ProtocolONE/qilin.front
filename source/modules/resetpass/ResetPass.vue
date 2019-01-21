@@ -33,7 +33,7 @@
 </i18n>
 
 <template>
-  <b-modal
+<b-modal
     :id="id"
     ref="modal"
     :title="$t('title')"
@@ -41,67 +41,67 @@
     centered
     hide-header-close
     @ok.prevent="clickOk"
-  >
+>
     <p style="padding-top: 0;">
-      {{ $t('body') }}
+        {{ $t('body') }}
     </p>
 
     <b-form
-      method="post"
-      @submit.prevent="submit"
+        method="post"
+        @submit.prevent="submit"
     >
-      <b-form-group
-        :label="$t('login_label')"
-        label-for="reset-email"
-      >
-        <ValidateInput
-          id="reset-email"
-          v-model="form.email"
-          type="email"
-          :validate="(val) => val.length > 3 && val.indexOf('@') > 1"
-          :placeholder="$t('login_place')"
-        />
-      </b-form-group>
-
-      <small class="form-text q-have-acc">
-        {{ $t('have-acc.0') }} <a
-          href="/"
-          @click.prevent="goto_login"
+        <b-form-group
+            :label="$t('login_label')"
+            label-for="reset-email"
         >
-          {{ $t('have-acc.1') }}
-        </a>
-      </small>
+            <ValidateInput
+                id="reset-email"
+                v-model="form.email"
+                type="email"
+                :validate="(val) => val.length > 3 && val.indexOf('@') > 1"
+                :placeholder="$t('login_place')"
+            />
+        </b-form-group>
 
-      <b-button
-        v-show="false"
-        ref="submit"
-        type="submit"
-      />
+        <small class="form-text q-have-acc">
+            {{ $t('have-acc.0') }} <a
+                href="/"
+                @click.prevent="goto_login"
+            >
+                {{ $t('have-acc.1') }}
+            </a>
+        </small>
+
+        <b-button
+            v-show="false"
+            ref="submit"
+            type="submit"
+        />
     </b-form>
 
     <div
-      slot="modal-footer"
-      class="w-100"
+        slot="modal-footer"
+        class="w-100"
     >
-      <b-btn
-        class="float-left"
-        variant="primary"
-        @click="clickOk"
-      >
-        {{ $t('submit_btn') }}
-      </b-btn>
+        <b-btn
+            class="float-left"
+            variant="primary"
+            @click="clickOk"
+        >
+            {{ $t('submit_btn') }}
+        </b-btn>
 
-      <div style="clear: both;" />
+        <div style="clear: both;" />
 
-      <small class="form-text text-muted q-policy">
-        {{ $t('policy.0') }} <a href="/">
-          {{ $t('policy.1') }}
-        </a> {{ $t('policy.2') }} <a href="/">
-          {{ $t('policy.3') }}
-        </a>.
-      </small>
+        <small class="form-text text-muted q-policy">
+            {{ $t('policy.0') }} <a href="/">
+                {{ $t('policy.1') }}
+            </a> {{ $t('policy.2') }} <a href="/">
+                {{ $t('policy.3') }}
+            </a>.
+        </small>
     </div>
-  </b-modal>
+</b-modal>
 </template>
 
 <script lang="ts">

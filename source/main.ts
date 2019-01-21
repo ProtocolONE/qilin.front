@@ -3,6 +3,7 @@ import '@babel/polyfill';
 import axios from 'axios';
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { directive as onClickaway } from 'vue-clickaway';
 import RootStore from './RootStore';
 import router from './router';
 import i18n from './i18n';
@@ -19,6 +20,7 @@ Vue.use(VueCookie);
 Vue.use(Vuex);
 
 Vue.component('vue-headful', vueHeadful);
+Vue.directive('clickaway', onClickaway);
 
 const store = new Vuex.Store({
     ...RootStore,
