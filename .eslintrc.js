@@ -25,7 +25,7 @@ module.exports = {
             },
         ],
         'valid-jsdoc': [
-            2,
+            1,
             {
                 prefer: {
                     returns: 'return',

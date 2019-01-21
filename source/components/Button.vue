@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { includes } from 'lodash';
+import { includes } from 'lodash-es';
 import Vue from 'vue';
 
 export default Vue.extend({

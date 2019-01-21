@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { includes, uniqueId } from 'lodash';
+import { includes, uniqueId } from 'lodash-es';
 import Vue from 'vue';
 
 export default Vue.extend({
