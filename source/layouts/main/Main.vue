@@ -20,9 +20,6 @@
             ref="resetpass"
             :open-login="() => $refs.login.$refs.modal.show()"
         />
-
-        <hr>
-        <Footer />
     </b-container>
 </div>
 </template>
@@ -34,14 +31,13 @@ import config from '@/config';
 import Login from '@/modules/login/Login.vue';
 import Register from '@/modules/register/Register.vue';
 import ResetPass from '@/modules/resetpass/ResetPass.vue';
-import Footer from './Footer.vue';
 import Navbar from './Navbar.vue';
 
 import './bootstrap';
 
 export default Vue.extend({
     name: 'Appl',
-    components: { Login, Navbar, Register, ResetPass, Footer },
+    components: { Login, Navbar, Register, ResetPass },
     data: () => ({
         user: null,
     }),
