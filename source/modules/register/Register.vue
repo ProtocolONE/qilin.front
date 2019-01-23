@@ -36,85 +36,85 @@
 
 <template>
 <b-modal
-    :id="id"
-    ref="modal"
-    :title="$t('title')"
-    class="qilin-modal"
-    centered
-    hide-header-close
-    @ok.prevent="clickOk"
+  :id="id"
+  ref="modal"
+  :title="$t('title')"
+  class="qilin-modal"
+  centered
+  hide-header-close
+  @ok.prevent="clickOk"
 >
-    <p style="padding-top: 0;">
-        {{ $t('body') }}
-    </p>
+  <p style="padding-top: 0;">
+    {{ $t('body') }}
+  </p>
 
-    <b-form
-        method="post"
-        @submit.prevent="submit"
+  <b-form
+    method="post"
+    @submit.prevent="submit"
+  >
+    <b-form-group
+      :label="$t('login_label')"
+      label-for="reg-login"
     >
-        <b-form-group
-            :label="$t('login_label')"
-            label-for="reg-login"
-        >
-            <ValidateInput
-                id="reg-login"
-                v-model="form.login"
-                type="email"
-                :validate="(val) => val.length > 3 && val.indexOf('@') > 1"
-                :placeholder="$t('login_place')"
-            />
-        </b-form-group>
-        <b-form-group
-            :label="$t('pass_label')"
-            label-for="reg-password"
-        >
-            <ValidateInput
-                id="reg-password"
-                v-model="form.password"
-                type="password"
-                :validate="(val) => val.length > 3"
-                :placeholder="$t('pass_place')"
-            />
-        </b-form-group>
-
-        <small class="form-text q-have-acc">
-            {{ $t('have-acc.0') }} <a
-                href="/"
-                @click.prevent="goto_login"
-            >
-                {{ $t('have-acc.1') }}
-            </a>
-        </small>
-
-        <b-button
-            v-show="false"
-            ref="submit"
-            type="submit"
-        />
-    </b-form>
-
-    <div
-        slot="modal-footer"
-        class="w-100"
+      <ValidateInput
+        id="reg-login"
+        v-model="form.login"
+        type="email"
+        :validate="(val) => val.length > 3 && val.indexOf('@') > 1"
+        :placeholder="$t('login_place')"
+      />
+    </b-form-group>
+    <b-form-group
+      :label="$t('pass_label')"
+      label-for="reg-password"
     >
-        <b-btn
-            class="float-left"
-            variant="primary"
-            @click="clickOk"
-        >
-            {{ $t('submit_btn') }}
-        </b-btn>
+      <ValidateInput
+        id="reg-password"
+        v-model="form.password"
+        type="password"
+        :validate="(val) => val.length > 3"
+        :placeholder="$t('pass_place')"
+      />
+    </b-form-group>
 
-        <div style="clear: both;" />
+    <small class="form-text q-have-acc">
+      {{ $t('have-acc.0') }} <a
+        href="/"
+        @click.prevent="goto_login"
+      >
+        {{ $t('have-acc.1') }}
+      </a>
+    </small>
 
-        <small class="form-text text-muted q-policy">
-            {{ $t('policy.0') }} <a href="/">
-                {{ $t('policy.1') }}
-            </a> {{ $t('policy.2') }} <a href="/">
-                {{ $t('policy.3') }}
-            </a>.
-        </small>
-    </div>
+    <b-button
+      v-show="false"
+      ref="submit"
+      type="submit"
+    />
+  </b-form>
+
+  <div
+    slot="modal-footer"
+    class="w-100"
+  >
+    <b-btn
+      class="float-left"
+      variant="primary"
+      @click="clickOk"
+    >
+      {{ $t('submit_btn') }}
+    </b-btn>
+
+    <div style="clear: both;" />
+
+    <small class="form-text text-muted q-policy">
+      {{ $t('policy.0') }} <a href="/">
+        {{ $t('policy.1') }}
+      </a> {{ $t('policy.2') }} <a href="/">
+        {{ $t('policy.3') }}
+      </a>.
+    </small>
+  </div>
 </b-modal>
 </template>
 
@@ -126,47 +126,47 @@ import config from '@/config';
 import ValidateInput from '@/components/ValidateInput/ValidateInput.vue';
 
 export default Vue.extend({
-    components: { ValidateInput },
-    props: ['id', 'openLogin'],
-    data: () => ({
-        form: {
-            login: '',
-            password: '',
-        },
-    }),
-    methods: {
-        goto_login() {
-            this.$refs.modal.hide();
-            this.openLogin();
-        },
-        submit() {
-            axios
-                .post(`${config.api}/auth-api/register`, qs.stringify(this.form))
-                .then(() => {
-                    this.goto_login();
-                })
-                .catch(() => {
-                    alert(this.$t('not_found'));
-                });
-        },
-        clickOk() {
-            this.$refs.submit.click();
-            return false;
-        },
+  components: { ValidateInput },
+  props: ['id', 'openLogin'],
+  data: () => ({
+    form: {
+      login: '',
+      password: '',
     },
+  }),
+  methods: {
+    goto_login() {
+      this.$refs.modal.hide();
+      this.openLogin();
+    },
+    submit() {
+      axios
+        .post(`${config.api}/auth-api/register`, qs.stringify(this.form))
+        .then(() => {
+          this.goto_login();
+        })
+        .catch(() => {
+          alert(this.$t('not_found'));
+        });
+    },
+    clickOk() {
+      this.$refs.submit.click();
+      return false;
+    },
+  },
 });
 </script>
 
 <style scoped lang="scss">
 .q-have-acc {
-    font-size: 16px;
+  font-size: 16px;
 }
 .q-policy {
-    margin-top: 90px;
-    font-size: 12px;
-    a {
-        font-weight: bold;
-        color: #757575;
-    }
+  margin-top: 90px;
+  font-size: 12px;
+  a {
+    font-weight: bold;
+    color: #757575;
+  }
 }
 </style>

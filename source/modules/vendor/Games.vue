@@ -29,20 +29,20 @@
 
 <template>
 <div class="page">
-    <vue-headful
-        :title="$t('title')"
-        :description="$t('descr')"
-    />
-    <b-row>
-        <b-col class="left">
-            <div class="center" />
-        </b-col>
-        <b-col class="right">
-            <div class="center">
-                <h1>Games</h1>
-            </div>
-        </b-col>
-    </b-row>
+  <vue-headful
+    :title="$t('title')"
+    :description="$t('descr')"
+  />
+  <b-row>
+    <b-col class="left">
+      <div class="center" />
+    </b-col>
+    <b-col class="right">
+      <div class="center">
+        <h1>Games</h1>
+      </div>
+    </b-col>
+  </b-row>
 </div>
 </template>
 
@@ -51,15 +51,15 @@ import $ from 'jquery';
 import Vue from 'vue';
 
 export default Vue.extend({
-    name: 'VendorGames',
-    data: () => ({}),
-    mounted() {
-        this.$nextTick(() => {
-            const h = Math.max($(window).outerHeight() - 180, 400);
-            this.$el.style.minHeight = `${h}px`;
-        });
-    },
-    methods: {},
+  name: 'VendorGames',
+  data: () => ({}),
+  mounted() {
+    this.$nextTick(() => {
+      const h = Math.max($(window).outerHeight() - 180, 400);
+      this.$el.style.minHeight = `${h}px`;
+    });
+  },
+  methods: {},
 });
 </script>
 
@@ -67,11 +67,11 @@ export default Vue.extend({
 @import '@/layouts/main/consts.scss';
 
 .page {
-    position: relative;
-    > .row {
-        position: absolute;
-        height: 100%;
-        width: 100%;
-    }
+  position: relative;
+  > .row {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+  }
 }
 </style>

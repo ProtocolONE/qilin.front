@@ -34,73 +34,73 @@
 
 <template>
 <b-modal
-    :id="id"
-    ref="modal"
-    :title="$t('title')"
-    class="qilin-modal"
-    centered
-    hide-header-close
-    @ok.prevent="clickOk"
+  :id="id"
+  ref="modal"
+  :title="$t('title')"
+  class="qilin-modal"
+  centered
+  hide-header-close
+  @ok.prevent="clickOk"
 >
-    <p style="padding-top: 0;">
-        {{ $t('body') }}
-    </p>
+  <p style="padding-top: 0;">
+    {{ $t('body') }}
+  </p>
 
-    <b-form
-        method="post"
-        @submit.prevent="submit"
+  <b-form
+    method="post"
+    @submit.prevent="submit"
+  >
+    <b-form-group
+      :label="$t('login_label')"
+      label-for="reset-email"
     >
-        <b-form-group
-            :label="$t('login_label')"
-            label-for="reset-email"
-        >
-            <ValidateInput
-                id="reset-email"
-                v-model="form.email"
-                type="email"
-                :validate="(val) => val.length > 3 && val.indexOf('@') > 1"
-                :placeholder="$t('login_place')"
-            />
-        </b-form-group>
+      <ValidateInput
+        id="reset-email"
+        v-model="form.email"
+        type="email"
+        :validate="(val) => val.length > 3 && val.indexOf('@') > 1"
+        :placeholder="$t('login_place')"
+      />
+    </b-form-group>
 
-        <small class="form-text q-have-acc">
-            {{ $t('have-acc.0') }} <a
-                href="/"
-                @click.prevent="goto_login"
-            >
-                {{ $t('have-acc.1') }}
-            </a>
-        </small>
+    <small class="form-text q-have-acc">
+      {{ $t('have-acc.0') }} <a
+        href="/"
+        @click.prevent="goto_login"
+      >
+        {{ $t('have-acc.1') }}
+      </a>
+    </small>
 
-        <b-button
-            v-show="false"
-            ref="submit"
-            type="submit"
-        />
-    </b-form>
+    <b-button
+      v-show="false"
+      ref="submit"
+      type="submit"
+    />
+  </b-form>
 
-    <div
-        slot="modal-footer"
-        class="w-100"
+  <div
+    slot="modal-footer"
+    class="w-100"
+  >
+    <b-btn
+      class="float-left"
+      variant="primary"
+      @click="clickOk"
     >
-        <b-btn
-            class="float-left"
-            variant="primary"
-            @click="clickOk"
-        >
-            {{ $t('submit_btn') }}
-        </b-btn>
+      {{ $t('submit_btn') }}
+    </b-btn>
 
-        <div style="clear: both;" />
+    <div style="clear: both;" />
 
-        <small class="form-text text-muted q-policy">
-            {{ $t('policy.0') }} <a href="/">
-                {{ $t('policy.1') }}
-            </a> {{ $t('policy.2') }} <a href="/">
-                {{ $t('policy.3') }}
-            </a>.
-        </small>
-    </div>
+    <small class="form-text text-muted q-policy">
+      {{ $t('policy.0') }} <a href="/">
+        {{ $t('policy.1') }}
+      </a> {{ $t('policy.2') }} <a href="/">
+        {{ $t('policy.3') }}
+      </a>.
+    </small>
+  </div>
 </b-modal>
 </template>
 
@@ -112,47 +112,47 @@ import config from '@/config';
 import ValidateInput from '@/components/ValidateInput/ValidateInput.vue';
 
 export default Vue.extend({
-    components: { ValidateInput },
-    props: ['id', 'openLogin'],
-    data: () => ({
-        form: {
-            email: '',
-        },
-    }),
-    methods: {
-        goto_login() {
-            this.$refs.modal.hide();
-            this.openLogin();
-        },
-        submit() {
-            axios
-                .post(`${config.api}/auth-api/reset`, qs.stringify(this.form))
-                .then(() => {
-                    alert(this.$t('reset-done'));
-                    this.goto_login();
-                })
-                .catch(() => {
-                    alert(this.$t('not_found'));
-                });
-        },
-        clickOk() {
-            this.$refs.submit.click();
-            return false;
-        },
+  components: { ValidateInput },
+  props: ['id', 'openLogin'],
+  data: () => ({
+    form: {
+      email: '',
     },
+  }),
+  methods: {
+    goto_login() {
+      this.$refs.modal.hide();
+      this.openLogin();
+    },
+    submit() {
+      axios
+        .post(`${config.api}/auth-api/reset`, qs.stringify(this.form))
+        .then(() => {
+          alert(this.$t('reset-done'));
+          this.goto_login();
+        })
+        .catch(() => {
+          alert(this.$t('not_found'));
+        });
+    },
+    clickOk() {
+      this.$refs.submit.click();
+      return false;
+    },
+  },
 });
 </script>
 
 <style scoped lang="scss">
 .q-have-acc {
-    font-size: 16px;
+  font-size: 16px;
 }
 .q-policy {
-    margin-top: 90px;
-    font-size: 12px;
-    a {
-        font-weight: bold;
-        color: #757575;
-    }
+  margin-top: 90px;
+  font-size: 12px;
+  a {
+    font-weight: bold;
+    color: #757575;
+  }
 }
 </style>

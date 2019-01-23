@@ -8,15 +8,15 @@ Vue.use(VueI18n);
 const locale = (window.localStorage.lang || window.navigator.language).split('-')[0];
 
 const i18n = new VueI18n({
-    locale,
-    fallbackLocale: 'en',
+  locale,
+  fallbackLocale: 'en',
 });
 
 export default i18n;
 
 if (module.hot) {
-    module.hot.accept([], () => {
-        i18n.setLocaleMessage('en', en);
-        i18n.setLocaleMessage('ru', ru);
-    });
+  module.hot.accept([], () => {
+    i18n.setLocaleMessage('en', en);
+    i18n.setLocaleMessage('ru', ru);
+  });
 }

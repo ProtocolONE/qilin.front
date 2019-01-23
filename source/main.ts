@@ -23,14 +23,14 @@ Vue.component('vue-headful', vueHeadful);
 Vue.directive('clickaway', onClickaway);
 
 const store = new Vuex.Store({
-    ...RootStore,
+  ...RootStore,
 });
 
 // eslint-disable-next-line no-new
 new Vue({
-    i18n,
-    router,
-    store,
-    el: '#app',
-    render: (h: any) => h(MainLayout, {}),
+  i18n,
+  router,
+  store,
+  el: '#app',
+  render: (h: any) => h(MainLayout, {}),
 });
