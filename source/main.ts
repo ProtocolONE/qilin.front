@@ -7,7 +7,7 @@ import { directive as onClickaway } from 'vue-clickaway';
 import RootStore from './RootStore';
 import router from './router';
 import i18n from './i18n';
-import MainLayout from './layouts/main/Main.vue';
+import MainLayout from './layouts/Main.vue';
 
 // If we haven't @types notations for npm-modules, we use 'require'
 const VueCookie = require('vue-cookie');

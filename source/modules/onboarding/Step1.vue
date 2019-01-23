@@ -53,12 +53,13 @@
                             :label="$t('your-company-name')"
                             label-for="company-name"
                         >
-                            <ValidateInput
-                                id="company-name"
+                            <TextField
                                 v-model="form.name"
-                                type="text"
-                                :validate="(val) => val.length > 2"
-                                :placeholder="$t('name')"
+                                id="company-name"
+                                :label="$t('name')"
+                                :hasError="hasError"
+                                :errorText="errorText"
+                                @input="changeCompanyName"
                             />
                         </b-form-group>
                         <small class="form-text text-muted">
@@ -88,16 +89,18 @@
 <script type="ts">
 import Vue from 'vue';
 import $ from 'jquery';
-import ValidateInput from '@/components/ValidateInput/ValidateInput.vue';
+import { TextField } from 'ui-kit';
 
 export default Vue.extend({
     name: 'OnBoardingStep1',
-    components: { ValidateInput },
+    components: { TextField },
     data: () => ({
         enabled: true,
         form: {
             name: '',
         },
+        hasError: false,
+        errorText: '',
     }),
     mounted() {
         this.$nextTick(() => {
@@ -112,6 +115,20 @@ export default Vue.extend({
                 return;
             }
             this.$parent.nextStep();
+        },
+        changeCompanyName(name) {
+            console.error(name);
+            if (name.length < 3) {
+                this.hasError = true;
+                this.errorText = 'Name must be more 2 symbols'
+                return;
+            }
+
+            this.hasError = false;
+            this.errorText = ''
+
+            this.form.name = name;
+            
         },
     },
 });

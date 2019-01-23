@@ -18,7 +18,7 @@ module.exports = {
             'error',
             {
                 singleQuote: true,
-                tabWidth: 4,
+                tabWidth: 2,
                 printWidth: 120,
                 // Подразумеваем, что наш код либо транспайлится, либо запускается в среде, где поддерживаются висящие запятые в функциях
                 trailingComma: 'all',
@@ -105,7 +105,7 @@ module.exports = {
 
         'vue/html-indent': [
             'error',
-            4,
+            2,
             {
                 'baseIndent': 0,
                 'ignores': []
