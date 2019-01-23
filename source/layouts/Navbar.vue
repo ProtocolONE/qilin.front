@@ -1,23 +1,23 @@
 <i18n>
 {
-    "en": {
-        "lang": "Language",
-        "profile": "Profile",
-        "quit": "Logout",
-        "login": "Log in",
-        "register": "Sign in",
-        "resetpass": "Reset passwd",
-        "about": "About Us"
-    },
-    "ru": {
-        "lang": "Язык",
-        "profile": "Профиль",
-        "register": "Регистрация",
-        "resetpass": "Сбос пароля",
-        "quit": "Выход",
-        "login": "Войти",
-        "about": "О нас"
-    }
+  "en": {
+    "about": "About Us",
+    "lang": "Language",
+    "login": "Log in",
+    "profile": "Profile",
+    "quit": "Logout",
+    "register": "Sign in",
+    "resetpass": "Reset passwd"
+  },
+  "ru": {
+    "about": "О нас",
+    "lang": "Язык",
+    "login": "Войти",
+    "profile": "Профиль",
+    "quit": "Выход",
+    "register": "Регистрация",
+    "resetpass": "Сбос пароля"
+  }
 }
 </i18n>
 
@@ -41,20 +41,7 @@
   >
     <!-- Right aligned nav items -->
     <b-navbar-nav class="ml-auto">
-      <b-nav-item-dropdown
-        :text="$t('lang')"
-        right
-      >
-        <b-dropdown-item @click="$parent.changeLang('en')">
-          EN
-        </b-dropdown-item>
-        <b-dropdown-item @click="$parent.changeLang('ru')">
-          RU
-        </b-dropdown-item>
-        <b-dropdown-item @click="$parent.changeLang('de')">
-          DE
-        </b-dropdown-item>
-      </b-nav-item-dropdown>
+      <LocaleChanger/>
 
       <b-nav-item
         v-if="!$parent.user"
@@ -86,18 +73,37 @@
       </b-nav-item-dropdown>
     </b-navbar-nav>
   </b-collapse>
+
+  <Login
+    id="login"
+    ref="login"
+    :open-reg="() => $refs.reg.$refs.modal.show()"
+    :open-reset="() => $refs.resetpass.$refs.modal.show()"
+  />
+  <Register
+    id="register"
+    ref="reg"
+    :open-login="() => $refs.login.$refs.modal.show()"
+  />
+  <ResetPass
+    id="resetpass"
+    ref="resetpass"
+    :open-login="() => $refs.login.$refs.modal.show()"
+  />
 </b-navbar>
 </template>
 
 <script type="ts">
 import Vue from 'vue';
 import Logo from '@/icons/Logo.vue';
+import Login from '@/modules/login/Login.vue';
+import Register from '@/modules/register/Register.vue';
+import ResetPass from '@/modules/resetpass/ResetPass.vue';
+import LocaleChanger from '@/components/LocaleChanger.vue';
 
 export default Vue.extend({
   name: 'Navbar',
-  components: {
-    Logo,
-  },
+  components: { Logo, Login, Register, ResetPass, LocaleChanger },
   data: () => ({
     enabled: true,
   }),

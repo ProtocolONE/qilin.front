@@ -64,8 +64,6 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
-@import '@/layouts/main/consts.scss';
-
 .page {
   position: relative;
   > .row {

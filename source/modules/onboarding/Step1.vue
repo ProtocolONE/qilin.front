@@ -134,7 +134,7 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
-@import '@/layouts/main/consts.scss';
+@import '@/layouts/consts.scss';
 
 .page {
   position: relative;

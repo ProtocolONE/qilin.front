@@ -1,15 +1,15 @@
 <i18n>
 {
-    "en": {
-        "title": "Protocol One Qilin",
-        "descr": "Header home descr",
-        "add_vendor": "Add Vendor"
-    },
-    "ru": {
-        "title": "Protocol One Qilin",
-        "descr": "Мета описание",
-        "add_vendor": "Добавить вендора"
-    }
+  "en": {
+    "title": "Protocol One Qilin",
+    "descr": "Header home descr",
+    "add_vendor": "Add Vendor"
+  },
+  "ru": {
+    "title": "Protocol One Qilin",
+    "descr": "Мета описание",
+    "add_vendor": "Добавить вендора"
+  }
 }
 </i18n>
 

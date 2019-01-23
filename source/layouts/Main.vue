@@ -1,26 +1,7 @@
 <template>
-<div>
-  <b-container fluid>
-    <Navbar />
-    <router-view />
-
-    <Login
-      id="login"
-      ref="login"
-      :open-reg="() => $refs.reg.$refs.modal.show()"
-      :open-reset="() => $refs.resetpass.$refs.modal.show()"
-    />
-    <Register
-      id="register"
-      ref="reg"
-      :open-login="() => $refs.login.$refs.modal.show()"
-    />
-    <ResetPass
-      id="resetpass"
-      ref="resetpass"
-      :open-login="() => $refs.login.$refs.modal.show()"
-    />
-  </b-container>
+<div class="main-wrapper">
+  <Navbar />
+  <router-view />
 </div>
 </template>
 
@@ -28,16 +9,12 @@
 import axios from 'axios';
 import Vue from 'vue';
 import config from '@/config';
-import Login from '@/modules/login/Login.vue';
-import Register from '@/modules/register/Register.vue';
-import ResetPass from '@/modules/resetpass/ResetPass.vue';
 import Navbar from './Navbar.vue';
 
 import './bootstrap';
 
 export default Vue.extend({
-  name: 'Appl',
-  components: { Login, Navbar, Register, ResetPass },
+  components: { Navbar },
   data: () => ({
     user: null,
   }),
