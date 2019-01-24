@@ -16,8 +16,8 @@
 import Vue from 'vue';
 
 export default Vue.extend({
-  data () {
-    return { langs: ['ru', 'en', 'de'] }
-  }
+  data() {
+    return { langs: ['ru', 'en', 'de'] };
+  },
 });
 </script>

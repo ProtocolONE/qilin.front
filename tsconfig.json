@@ -1,28 +1,28 @@
 {
-    "compilerOptions": {
-        "lib": ["es5", "es6", "dom"],
+  "compilerOptions": {
+    "lib": ["es5", "es6", "dom"],
 
-        "allowSyntheticDefaultImports": true,
-        "plugins": [{ "name": "ts-vue-plugin" }],
+    "allowSyntheticDefaultImports": true,
+    "plugins": [{ "name": "ts-vue-plugin" }],
 
-        "outDir": "./build-ts/",
-        "jsx": "react",
-        "allowJs": true,
+    "outDir": "./build-ts/",
+    "jsx": "react",
+    "allowJs": true,
 
-        "resolveJsonModule": true,
-        "module": "es2015",
-        "moduleResolution": "node",
-        "target": "es6",
-        "noImplicitAny": true,
-        "noImplicitReturns": true,
-        "sourceMap": true,
-        "experimentalDecorators": true
-    },
-    "exclude": [
-        "node_modules",
-        "build"
-    ],
-    "include": [
-        "source"
-    ]
+    "resolveJsonModule": true,
+    "module": "es2015",
+    "moduleResolution": "node",
+    "target": "es6",
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "sourceMap": true,
+    "experimentalDecorators": true
+  },
+  "exclude": [
+    "node_modules",
+    "build"
+  ],
+  "include": [
+    "source"
+  ]
 }
