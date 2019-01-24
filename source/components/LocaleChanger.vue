@@ -14,10 +14,11 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import locales from '@/locales';
 
 export default Vue.extend({
   data() {
-    return { langs: ['ru', 'en', 'de'] };
+    return { langs: [ ...Object.keys(locales) ] };
   },
 });
 </script>

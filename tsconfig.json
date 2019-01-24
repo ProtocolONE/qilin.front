@@ -16,7 +16,11 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "sourceMap": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": [ "./source/*" ],
+    }
   },
   "exclude": [
     "node_modules",

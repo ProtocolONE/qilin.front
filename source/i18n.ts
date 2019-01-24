@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
-import en from '@/locale/en.json';
-import ru from '@/locale/ru.json';
+import forEach from 'lodash-es/forEach';
+import locales from '@/locales';
 
 Vue.use(VueI18n);
 
@@ -16,7 +16,8 @@ export default i18n;
 
 if (module.hot) {
   module.hot.accept([], () => {
-    i18n.setLocaleMessage('en', en);
-    i18n.setLocaleMessage('ru', ru);
+    forEach(locales, (localeItem: any, key: string) => {
+      i18n.setLocaleMessage(key, localeItem);
+    });
   });
 }
