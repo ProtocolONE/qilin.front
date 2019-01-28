@@ -125,12 +125,6 @@ export default Vue.extend({
       type: String,
     },
   },
-  data() {
-    return {
-      // Navbar in user's focus
-      focused: false,
-    };
-  },
 });
 </script>
 
