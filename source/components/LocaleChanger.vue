@@ -17,7 +17,6 @@
 import Vue from 'vue';
 import get from 'lodash-es/get';
 import changeI18nMeta from '@/helpers/changeI18nMeta';
-import locales from '@/locales';
 
 export default Vue.extend({
   data() {
@@ -33,10 +32,10 @@ export default Vue.extend({
   },
   computed: {
     label(): string {
-      return get(locales, `${this.$i18n.locale}.lang`, 'Language');
+      return get(this.$i18n.t('lang'), 'Language');
     },
     langs(): Array<string> {
-      return [ ...Object.keys(locales) ];
+      return [ ...Object.keys(this.$i18n.messages) ];
     },
   },
 });
