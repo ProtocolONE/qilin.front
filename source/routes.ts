@@ -4,9 +4,24 @@ import OnBoarding from '@/modules/onboarding/OnBoarding.vue';
 import VendorGames from '@/modules/vendor/Games.vue';
 
 const routes: RouteConfig[] = [
-  { path: '/', name: 'home', component: Home },
-  { path: '/vendor/on-boarding', name: 'onboarding', component: OnBoarding },
-  { path: '/vendor/games', name: 'vendor-games', component: VendorGames },
+  {
+    path: '/',
+    name: 'home',
+    component: Home,
+    meta: 'routes.home.meta',
+  },
+  {
+    path: '/vendor/on-boarding',
+    name: 'onBoarding',
+    component: OnBoarding,
+    meta: 'routes.onBoarding.meta',
+  },
+  {
+    path: '/vendor/games',
+    name: 'vendorGames',
+    component: VendorGames,
+    meta: 'routes.vendorGames.meta',
+  },
 ];
 
 export default routes;

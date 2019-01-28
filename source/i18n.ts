@@ -10,6 +10,7 @@ const locale = (window.localStorage.lang || window.navigator.language).split('-'
 const i18n = new VueI18n({
   locale,
   fallbackLocale: 'en',
+  messages: locales,
 });
 
 export default i18n;

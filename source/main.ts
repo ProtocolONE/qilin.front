@@ -11,7 +11,6 @@ import MainLayout from './layouts/Main.vue';
 
 // If we haven't @types notations for npm-modules, we use 'require'
 const VueCookie = require('vue-cookie');
-const vueHeadful = require('vue-headful').default;
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common['Accept-Language'] = window.localStorage.lang || window.navigator.language;
@@ -19,7 +18,6 @@ axios.defaults.headers.common['Accept-Language'] = window.localStorage.lang || w
 Vue.use(VueCookie);
 Vue.use(Vuex);
 
-Vue.component('vue-headful', vueHeadful);
 Vue.directive('clickaway', onClickaway);
 
 const store = new Vuex.Store({
