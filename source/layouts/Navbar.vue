@@ -73,7 +73,7 @@
       >
         <span>{{ userName }}</span>
         <router-link to='#'>{{ $t('profile') }}</router-link>
-        <span @click="$parent.logout">{{ $t('quit') }}</span>
+        <span @click="$emit('logout')">{{ $t('quit') }}</span>
       </div>
     </div>
   </div>
@@ -245,7 +245,7 @@ $hover-font-color: #fff;
   border-radius: 50%;
   width: 20px;
   height: 20px;
-  margin: 0 24px 0 16px;
+  margin: 0 30px 0 14px;
   border: 2px solid $font-color;
 }
 .bottom {

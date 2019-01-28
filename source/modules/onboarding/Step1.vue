@@ -84,7 +84,7 @@
 
 <script type="ts">
 import Vue from 'vue';
-import { TextField } from 'ui-kit';
+import { TextField } from '@protocol-one/ui-kit';
 
 export default Vue.extend({
   name: 'OnBoardingStep1',

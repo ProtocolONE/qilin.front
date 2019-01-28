@@ -27,13 +27,22 @@ export default Vue.extend({
   watch: {
     locale(val: string) {
       this.$i18n.locale = val;
+      // Change i18n meta data by rout
       changeI18nMeta(`routes.${this.$route.name}.meta`);
     },
   },
   computed: {
+    /**
+     * Label for localeChanger
+     * @return {string}
+     */
     label(): string {
-      return get(this.$i18n.t('lang'), 'Language');
+      return this.$i18n.t('lang');
     },
+    /**
+     * Langs array for localeChanger
+     * @return {Array<string>}
+     */
     langs(): Array<string> {
       return [ ...Object.keys(this.$i18n.messages) ];
     },

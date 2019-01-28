@@ -1,6 +1,9 @@
 <template>
 <div class="main-wrapper">
-  <Navbar :links="links" />
+  <Navbar
+    :links="links"
+    @logout="logout"
+  />
   <router-view />
 </div>
 </template>
@@ -21,7 +24,9 @@ export default Vue.extend({
   }),
   computed: {
     ...mapState(['navbarLinks']),
+
     links() {
+      // @TODO - Add type for navbarLinks/links
       return this.navbarLinks.map(link => ({
         ...link,
         title: this.$i18n.t(`routes.${link.name}.title`),
@@ -30,6 +35,7 @@ export default Vue.extend({
     },
   },
   mounted() {
+    // @TODO - Move to store
     if (!window.localStorage.lang) {
       window.localStorage.lang = window.navigator.language;
     }
@@ -46,11 +52,8 @@ export default Vue.extend({
   },
   methods: {
     logout() {
+      // @TODO - Move to store
       this.$cookie.delete('token');
-      document.location = document.location;
-    },
-    changeLang(lang: string) {
-      window.localStorage.lang = `${window.navigator.language}`.replace(/^\w+/, lang);
       document.location = document.location;
     },
   },
