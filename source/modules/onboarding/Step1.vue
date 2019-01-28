@@ -1,38 +1,34 @@
 <i18n>
 {
-    "en": {
-        "title": "Welcome to Qilin",
-        "descr": "Help us setup your first tenant and start untegration.",
-        "step": "STEP 1 OF 2",
-        "name-you-choose": "The name you choose here will be used for the internal purposes and some API endpoints of your cliends. Once chosen, a company name cannot be renamed.",
-        "region-laws": "We will host all of your data in EU region to comply with EU Data Protection Directive.",
-        "region": "Region",
-        "next": "Next",
-        "name": "Name",
-        "name-too-short": "Name is too short",
-        "your-company-name": "Your company name"
-    },
-    "ru": {
-        "title": "Welcome to Qilin",
-        "descr": "Help us setup your first tenant and start untegration.",
-        "step": "STEP 1 OF 2",
-        "name-you-choose": "The name you choose here will be used for the internal purposes and some API endpoints of your cliends. Once chosen, a company name cannot be renamed.",
-        "region-laws": "We will host all of your data in EU region to comply with EU Data Protection Directive.",
-        "region": "Region",
-        "next": "Next",
-        "name": "Name",
-        "name-too-short": "Name is too short",
-        "your-company-name": "Your company name"
-    }
+  "en": {
+    "title": "Welcome to Qilin",
+    "descr": "Help us setup your first tenant and start untegration.",
+    "step": "STEP 1 OF 2",
+    "name-you-choose": "The name you choose here will be used for the internal purposes and some API endpoints of your cliends. Once chosen, a company name cannot be renamed.",
+    "region-laws": "We will host all of your data in EU region to comply with EU Data Protection Directive.",
+    "region": "Region",
+    "next": "Next",
+    "name": "Name",
+    "name-too-short": "Name is too short",
+    "your-company-name": "Your company name"
+  },
+  "ru": {
+    "title": "Welcome to Qilin",
+    "descr": "Help us setup your first tenant and start untegration.",
+    "step": "STEP 1 OF 2",
+    "name-you-choose": "The name you choose here will be used for the internal purposes and some API endpoints of your cliends. Once chosen, a company name cannot be renamed.",
+    "region-laws": "We will host all of your data in EU region to comply with EU Data Protection Directive.",
+    "region": "Region",
+    "next": "Next",
+    "name": "Name",
+    "name-too-short": "Name is too short",
+    "your-company-name": "Your company name"
+  }
 }
 </i18n>
 
 <template>
 <div class="page">
-  <vue-headful
-    :title="$t('title')"
-    :description="$t('descr')"
-  />
   <b-row>
     <b-col class="left">
       <div class="center">
@@ -88,7 +84,6 @@
 
 <script type="ts">
 import Vue from 'vue';
-import $ from 'jquery';
 import { TextField } from 'ui-kit';
 
 export default Vue.extend({
@@ -102,22 +97,15 @@ export default Vue.extend({
     hasError: false,
     errorText: '',
   }),
-  mounted() {
-    this.$nextTick(() => {
-      const h = Math.max($(window).outerHeight() - 180, 400);
-      this.$el.style.minHeight = `${h}px`;
-    });
-  },
   methods: {
     nextStep() {
       if (this.form.name.length < 2) {
         alert(this.$t('name-too-short'));
         return;
       }
-      this.$parent.nextStep();
+      this.$emit('nextStep');
     },
     changeCompanyName(name) {
-      console.error(name);
       if (name.length < 3) {
         this.hasError = true;
         this.errorText = 'Name must be more 2 symbols';
@@ -138,6 +126,8 @@ export default Vue.extend({
 
 .page {
   position: relative;
+  min-height: 100vh;
+
   > .row {
     position: absolute;
     height: 100%;

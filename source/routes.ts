@@ -8,20 +8,17 @@ const routes: RouteConfig[] = [
     path: '/',
     name: 'home',
     component: Home,
-    meta: 'routes.home.meta',
   },
   {
     path: '/vendor/on-boarding',
     name: 'onBoarding',
     component: OnBoarding,
-    meta: 'routes.onBoarding.meta',
   },
   {
     path: '/vendor/games',
     name: 'vendorGames',
     component: VendorGames,
-    meta: 'routes.vendorGames.meta',
   },
-];
+].map(route => ({...route, meta: `routes.${route.name}.meta`}));
 
 export default routes;

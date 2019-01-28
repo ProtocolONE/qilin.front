@@ -1,6 +1,6 @@
 <template functional>
 <svg
-  width="43"
+  width="48"
   height="45"
   viewBox="0 0 43 45"
   fill="none"

@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
-    "lib": ["es5", "es6", "dom"],
+    "lib": ["es5", "es6", "es7", "dom"],
 
     "allowSyntheticDefaultImports": true,
     "plugins": [{ "name": "ts-vue-plugin" }],
+    "types": [ "vue-typescript-import-dts", "node" ],
 
     "outDir": "./build-ts/",
     "jsx": "react",

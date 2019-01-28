@@ -3,10 +3,12 @@
   <Step1
     v-show="step == 1"
     ref="step1"
+    @nextStep="nextStep"
   />
   <Step2
     v-show="step == 2"
     ref="step2"
+    @createAccount="createAccount"
   />
 </div>
 </template>

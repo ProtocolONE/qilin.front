@@ -1,13 +1,9 @@
 <i18n>
 {
   "en": {
-    "title": "Protocol One Qilin",
-    "descr": "Header home descr",
     "add_vendor": "Add Vendor"
   },
   "ru": {
-    "title": "Protocol One Qilin",
-    "descr": "Мета описание",
     "add_vendor": "Добавить вендора"
   }
 }
@@ -15,10 +11,6 @@
 
 <template>
 <div class="page">
-  <vue-headful
-    :title="$t('title')"
-    :description="$t('descr')"
-  />
   <b-row>
     <b-col class="left">
       <div class="center">
@@ -38,28 +30,15 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import * as $ from 'jquery';
 
-export default Vue.extend({
-  name: 'Home',
-  data: () => ({
-    test: 1,
-  }),
-  computed: {
-    user: () => this.$state.state.user,
-  },
-  mounted() {
-    this.$nextTick(() => {
-      const h = Math.max($(window).outerHeight() - 180, 400);
-      this.$el.style.minHeight = `${h}px`;
-    });
-  },
-});
+export default Vue.extend({});
 </script>
 
 <style scoped lang="scss">
 .page {
   position: relative;
+  min-height: 100vh;
+
   .row {
     position: absolute;
     height: 100%;

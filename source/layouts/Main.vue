@@ -1,6 +1,6 @@
 <template>
 <div class="main-wrapper">
-  <Navbar />
+  <Navbar :links="links" />
   <router-view />
 </div>
 </template>
@@ -8,6 +8,7 @@
 <script lang="ts">
 import axios from 'axios';
 import Vue from 'vue';
+import { mapState } from 'vuex';
 import config from '@/config';
 import Navbar from './Navbar.vue';
 
@@ -18,6 +19,16 @@ export default Vue.extend({
   data: () => ({
     user: null,
   }),
+  computed: {
+    ...mapState(['navbarLinks']),
+    links() {
+      return this.navbarLinks.map(link => ({
+        ...link,
+        title: this.$i18n.t(`routes.${link.name}.title`),
+        isActive: this.$route.name === link.name,
+      }))
+    },
+  },
   mounted() {
     if (!window.localStorage.lang) {
       window.localStorage.lang = window.navigator.language;
@@ -46,9 +57,8 @@ export default Vue.extend({
 });
 </script>
 
-<style scoped lang="scss">
-h1 {
-  color: red;
-  font-weight: bold;
+<style lang="scss" scoped>
+.main-wrapper {
+  margin-left: 80px;
 }
 </style>

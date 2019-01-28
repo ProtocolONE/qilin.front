@@ -1,30 +1,26 @@
 <i18n>
 {
-    "en": {
-        "title": "Tell us more",
-        "descr": "These question will help us better tailor you Qilin experience to fit your needs",
-        "step": "STEP 2 OF 2",
-        "how-many-products": "Please tell us how many digital products your company will work with.",
-        "products": "Products",
-        "create-account": "Create account"
-    },
-    "ru": {
-        "title": "Tell us more",
-        "descr": "These question will help us better tailor you Qilin experience to fit your needs",
-        "step": "STEP 2 OF 2",
-        "how-many-products": "Please tell us how many digital products your company will work with.",
-        "products": "Products",
-        "create-account": "Create account"
-    }
+  "en": {
+    "title": "Tell us more",
+    "descr": "These question will help us better tailor you Qilin experience to fit your needs",
+    "step": "STEP 2 OF 2",
+    "how-many-products": "Please tell us how many digital products your company will work with.",
+    "products": "Products",
+    "create-account": "Create account"
+  },
+  "ru": {
+    "title": "Tell us more",
+    "descr": "These question will help us better tailor you Qilin experience to fit your needs",
+    "step": "STEP 2 OF 2",
+    "how-many-products": "Please tell us how many digital products your company will work with.",
+    "products": "Products",
+    "create-account": "Create account"
+  }
 }
 </i18n>
 
 <template>
 <div class="page">
-  <vue-headful
-    :title="$t('title')"
-    :description="$t('descr')"
-  />
   <b-row>
     <b-col class="left">
       <div class="center">
@@ -77,7 +73,7 @@
           <b-btn
             class="float-left"
             variant="primary"
-            @click="createAccount"
+            @click="$emit('createAccount')"
           >
             {{ $t('create-account') }}
           </b-btn>
@@ -89,7 +85,6 @@
 </template>
 
 <script type="ts">
-import $ from 'jquery';
 import Vue from 'vue';
 
 export default Vue.extend({
@@ -100,17 +95,6 @@ export default Vue.extend({
       howManyProds: '1-10',
     },
   }),
-  mounted() {
-    this.$nextTick(() => {
-      const h = Math.max($(window).outerHeight() - 180, 400);
-      this.$el.style.minHeight = `${h}px`;
-    });
-  },
-  methods: {
-    createAccount() {
-      this.$parent.createAccount();
-    },
-  },
 });
 </script>
 
@@ -119,6 +103,8 @@ export default Vue.extend({
 
 .page {
   position: relative;
+  min-height: 100vh;
+
   > .row {
     position: absolute;
     height: 100%;

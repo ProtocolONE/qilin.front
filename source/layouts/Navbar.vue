@@ -2,18 +2,18 @@
 {
   "en": {
     "about": "About Us",
-    "lang": "Language",
     "login": "Log in",
     "profile": "Profile",
+    "qilin": "Qilin",
     "quit": "Logout",
     "register": "Sign in",
     "resetpass": "Reset passwd"
   },
   "ru": {
     "about": "О нас",
-    "lang": "Язык",
     "login": "Войти",
     "profile": "Профиль",
+    "qilin": "Qilin",
     "quit": "Выход",
     "register": "Регистрация",
     "resetpass": "Сбос пароля"
@@ -22,57 +22,61 @@
 </i18n>
 
 <template>
-<b-navbar
-  toggleable="md"
-  class="nav-qilin"
->
-  <b-navbar-toggle target="nav_collapse" />
-
-  <b-navbar-brand
-    href="#"
+<div class="main-navbar">
+  <router-link
+    class="logo-link"
     to="/"
   >
     <Logo />
-  </b-navbar-brand>
+    <span class="logo-text">
+      {{ $t('qilin') }}
+    </span>
+  </router-link>
 
-  <b-collapse
-    id="nav_collapse"
-    is-nav
-  >
-    <!-- Right aligned nav items -->
-    <b-navbar-nav class="ml-auto">
-      <LocaleChanger/>
+  <div class="links">
+    <router-link
+      v-for="(link, index) in links"
+      :class="['link', link.isActive ? '_active' : '']"
+      :key="index"
+      :title="link.title"
+      :to="link.href"
+    >
+      <span class="dummy-logo"></span>
+      {{link.title}}
+    </router-link>
+  </div>
 
-      <b-nav-item
-        v-if="!$parent.user"
+  <div class="bottom">
+    <LocaleChanger class="locales" />
+    <div class="auth-logo">
+      <AuthLogo />
+    </div>
+    <div class="auth">
+      <span
+        v-if="!hasAuth"
         v-b-modal.login
+        class="auth-item"
       >
         {{ $t('login') }}
-      </b-nav-item>
-      <b-nav-item
-        v-if="!$parent.user"
+      </span>
+      <span
+        v-if="!hasAuth"
         v-b-modal.register
+        class="auth-item"
       >
         {{ $t('register') }}
-      </b-nav-item>
+      </span>
 
-      <b-nav-item-dropdown
-        v-if="$parent.user"
-        right
+      <div
+        v-if="hasAuth"
+        class="logout"
       >
-        <!-- Using button-content slot -->
-        <template slot="button-content">
-          <em>{{ $parent.user.nickname }}</em>
-        </template>
-        <b-dropdown-item href="#">
-          {{ $t('profile') }}
-        </b-dropdown-item>
-        <b-dropdown-item @click="$parent.logout">
-          {{ $t('quit') }}
-        </b-dropdown-item>
-      </b-nav-item-dropdown>
-    </b-navbar-nav>
-  </b-collapse>
+        <span>{{ userName }}</span>
+        <router-link to='#'>{{ $t('profile') }}</router-link>
+        <span @click="$parent.logout">{{ $t('quit') }}</span>
+      </div>
+    </div>
+  </div>
 
   <Login
     id="login"
@@ -90,34 +94,209 @@
     ref="resetpass"
     :open-login="() => $refs.login.$refs.modal.show()"
   />
-</b-navbar>
+</div>
 </template>
 
 <script type="ts">
 import Vue from 'vue';
+import AuthLogo from '@/icons/AuthLogo.vue';
 import Logo from '@/icons/Logo.vue';
-import Login from '@/modules/login/Login.vue';
-import Register from '@/modules/register/Register.vue';
-import ResetPass from '@/modules/resetpass/ResetPass.vue';
 import LocaleChanger from '@/components/LocaleChanger.vue';
+import Login from '@/components/Login.vue';
+import Register from '@/components/Register.vue';
+import ResetPass from '@/components/ResetPass.vue';
 
 export default Vue.extend({
-  name: 'Navbar',
-  components: { Logo, Login, Register, ResetPass, LocaleChanger },
-  data: () => ({
-    enabled: true,
-  }),
+  components: { AuthLogo, Logo, LocaleChanger, Login, Register, ResetPass },
+  props: {
+    /** User has auth */
+    hasAuth: {
+      default: false,
+      type: Boolean,
+    },
+    /** Links for routing */
+    links: {
+      default: () => [],
+      type: Array,
+    },
+    /** Name by auth user */
+    userName: {
+      default: '',
+      type: String,
+    },
+  },
+  data() {
+    return {
+      // Navbar in user's focus
+      focused: false,
+    };
+  },
 });
 </script>
 
 <style scoped lang="scss">
-.score a {
-  color: white !important;
+$navbar-color: #203d5f;
+$hover-navbar-item-color: #2f6ecd;
+$font-color: #6b85a2;
+$hover-font-color: #fff;
+
+.main-navbar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 80px;
+  background-color: $navbar-color;
+  z-index: 1;
+  transition: width 0.2s ease-out 0.1s;
+  color: $font-color;
+
+  &:before {
+    content: '';
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    transition: background-color 0.2s ease-out 0.1s;
+    z-index: -1;
+  }
+
+  &:after {
+    content: '';
+    pointer-events: none;
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    transition: opacity 0.3s ease-out;
+    box-shadow: 0px 4px 32px rgba(0, 0, 0, 0.25);
+  }
+
+  &:hover {
+    width: 224px;
+
+    &:before {
+      background-color: rgba($navbar-color, 0.4);
+    }
+    
+    &:after {
+      opacity: 1;
+    }
+  }
 }
-.nav-qilin {
-  margin-top: 20px;
+.overlay {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  transition: background-color 0.2s ease-out 0.1s;
 }
-.navbar-brand {
-  margin-left: 30px;
+.logo-link {
+  cursor: pointer;
+  display: block;
+  height: 80px;
+  width: 100%;
+  padding: 16px;
+  text-decoration: none;
+  color: $hover-font-color;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.logo-text {
+  margin-left: 16px;
+  font-weight: 500;
+  font-size: 24px;
+  vertical-align: middle;
+}
+.links {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.link {
+  padding: 16px;
+  display: block;
+  text-decoration: none;
+  color: $font-color;
+
+  &:hover {
+    color: $hover-font-color;
+    background-color: rgba($navbar-color, 0.5);
+
+    & > .dummy-logo {
+      border-color: $hover-font-color;
+    }
+  }
+
+  &._active,
+  &._active:hover {
+    color: $hover-font-color;
+    background-color: $hover-navbar-item-color;
+
+    & > .dummy-logo {
+      background-color: $hover-font-color;
+      border-color: $hover-font-color;
+    }
+  }
+}
+.dummy-logo {
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  margin: 0 24px 0 16px;
+  border: 2px solid $font-color;
+}
+.bottom {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.locales {
+  padding-left: 16px;
+}
+.auth-logo {
+  padding: 16px;
+  cursor: pointer;
+  max-width: 80px;
+  width: 100%;
+
+  &:hover ~ .auth {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+.auth {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+  position: absolute;
+  width: 144px;
+  bottom: 0;
+  left: 80px;
+
+  &:hover {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+.auth-item {
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  cursor: pointer;
+
+  &:hover {
+    color: $hover-font-color;
+  }
 }
 </style>
