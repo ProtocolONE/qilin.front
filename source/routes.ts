@@ -19,6 +19,6 @@ const routes: RouteConfig[] = [
     name: 'vendorGames',
     component: VendorGames,
   },
-].map(route => ({...route, meta: `routes.${route.name}.meta`}));
+].map(route => ({ ...route, meta: `routes.${route.name}.meta` }));
 
 export default routes;

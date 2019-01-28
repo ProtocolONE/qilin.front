@@ -31,7 +31,7 @@ export default Vue.extend({
         ...link,
         title: this.$i18n.t(`routes.${link.name}.title`),
         isActive: this.$route.name === link.name,
-      }))
+      }));
     },
   },
   mounted() {

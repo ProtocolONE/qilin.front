@@ -36,13 +36,13 @@
   <div class="links">
     <router-link
       v-for="(link, index) in links"
-      :class="['link', link.isActive ? '_active' : '']"
       :key="index"
+      :class="['link', link.isActive ? '_active' : '']"
       :title="link.title"
       :to="link.href"
     >
-      <span class="dummy-logo"></span>
-      {{link.title}}
+      <span class="dummy-logo" />
+      {{ link.title }}
     </router-link>
   </div>
 
@@ -72,8 +72,12 @@
         class="logout"
       >
         <span>{{ userName }}</span>
-        <router-link to='#'>{{ $t('profile') }}</router-link>
-        <span @click="$emit('logout')">{{ $t('quit') }}</span>
+        <router-link to="#">
+          {{ $t('profile') }}
+        </router-link>
+        <span @click="$emit('logout')">
+          {{ $t('quit') }}
+        </span>
       </div>
     </div>
   </div>
@@ -176,7 +180,7 @@ $hover-font-color: #fff;
     &:before {
       background-color: rgba($navbar-color, 0.4);
     }
-    
+
     &:after {
       opacity: 1;
     }
