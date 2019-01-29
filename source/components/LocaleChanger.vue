@@ -38,7 +38,7 @@ export default Vue.extend({
      * @return {Array<string>}
      */
     langs(): Array<string> {
-      return [...Object.keys(this.$i18n.messages)];
+      return Object.keys(this.$i18n.messages);
     },
   },
   watch: {

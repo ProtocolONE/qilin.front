@@ -27,7 +27,7 @@
     class="logo-link"
     to="/"
   >
-    <Logo />
+    <IconLogo />
     <span class="logo-text">
       {{ $t('qilin') }}
     </span>
@@ -49,7 +49,7 @@
   <div class="bottom">
     <LocaleChanger class="locales" />
     <div class="auth-logo">
-      <AuthLogo />
+      <IconAuth />
     </div>
     <div class="auth">
       <span
@@ -103,15 +103,15 @@
 
 <script type="ts">
 import Vue from 'vue';
-import AuthLogo from '@/icons/AuthLogo.vue';
-import Logo from '@/icons/Logo.vue';
+import IconAuth from '@/components/IconAuth.vue';
+import IconLogo from '@/components/IconLogo.vue';
 import LocaleChanger from '@/components/LocaleChanger.vue';
 import Login from '@/components/Login.vue';
 import Register from '@/components/Register.vue';
 import ResetPass from '@/components/ResetPass.vue';
 
 export default Vue.extend({
-  components: { AuthLogo, Logo, LocaleChanger, Login, Register, ResetPass },
+  components: { IconAuth, IconLogo, LocaleChanger, Login, Register, ResetPass },
   props: {
     /** User has auth */
     hasAuth: {
