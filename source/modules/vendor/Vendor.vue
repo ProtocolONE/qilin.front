@@ -2,9 +2,9 @@
 import Vue from 'vue';
 
 export default Vue.extend({
-    name: 'Vendor',
-    data: () => ({
-        enabled: true,
-    }),
+  name: 'Vendor',
+  data: () => ({
+    enabled: true,
+  }),
 });
 </script>

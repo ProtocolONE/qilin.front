@@ -1,6 +1,6 @@
 module.exports = {
-    plugins: {
-        'postcss-assets': {},
-        autoprefixer: {}
-    }
+  plugins: {
+    'postcss-assets': {},
+    autoprefixer: {}
+  }
 };
