@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 const ENV_DEV = process.env.NODE_ENV === 'development';
@@ -37,7 +37,7 @@ module.exports = {
         options: {
           hotReload: true,
           loaders: {
-              ts: 'ts-loader',
+            ts: 'ts-loader',
           },
           esModule: true,
         },
@@ -50,14 +50,14 @@ module.exports = {
       {
         test: /\.ts$/,
         use: [
-            { loader: 'babel-loader', options: { presets: ['@babel/preset-env'] } },
-            {
-                loader: 'ts-loader',
-                options: {
-                    appendTsSuffixTo: [/\.vue$/],
-                    transpileOnly: true,
-                },
+          { loader: 'babel-loader', options: { presets: ['@babel/preset-env'] } },
+          {
+            loader: 'ts-loader',
+            options: {
+              appendTsSuffixTo: [/\.vue$/],
+              transpileOnly: true,
             },
+          },
         ],
         exclude: /(node_modules|bower_components)/,
       },
@@ -92,15 +92,15 @@ module.exports = {
     ? { minimize: false }
     : {
         minimizer: [
-          new UglifyJsPlugin({
-            cache: true,
-            parallel: true,
-            extractComments: true,
-          }),
           new OptimizeCSSAssetsPlugin({
             cssProcessorPluginOptions: {
               preset: ['default', { discardComments: { removeAll: true } }],
             },
+          }),
+          new TerserPlugin({
+            cache: true,
+            parallel: true,
+            extractComments: true,
           }),
         ],
       },
@@ -110,7 +110,7 @@ module.exports = {
     new MiniCssExtractPlugin({ filename: '[name].css', chunkFilename: '[id].css' }),
     new VueLoaderPlugin(),
     new webpack.DefinePlugin({
-        'process.env.QILIN_API': JSON.stringify(process.env.QILIN_API),
+      'process.env.QILIN_API': JSON.stringify(process.env.QILIN_API),
     }),
   ].concat(ENV_DEV ? [new webpack.HotModuleReplacementPlugin()] : []),
   resolve: {
