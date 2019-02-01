@@ -1,5 +1,7 @@
 import MainStores from '@/stores';
 import routes from '@/routes';
+import config from '@/config';
+import MediaStore from '@/modules/media/store';
 
 const mainStores = MainStores(routes);
 /**
@@ -19,5 +21,7 @@ export default {
   mutations: { ...mainStores.mutations },
 
   // Modules by root store
-  modules: {},
+  modules: {
+    Media: MediaStore(config.api),
+  },
 };

@@ -3,7 +3,9 @@ import { RouteConfig } from 'vue-router';
 export default function NavbarStore(routes: RouteConfig[]) {
   return {
     state: {
-      navbarLinks: routes.map(route => ({
+      navbarLinks: routes
+        .filter(a => ['home', 'onBoarding', 'vendorGames'].indexOf(a.name) > -1)
+        .map(route => ({
         name: route.name,
         href: route.path,
       })),

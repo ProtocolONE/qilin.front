@@ -16,7 +16,7 @@ export default {
         description: 'Начните интеграцию',
       },
     },
-    vendorGames: {
+    VendorGames: {
       title: 'Игры',
       meta: {
         title: 'Добро пожаловать в Qilin',

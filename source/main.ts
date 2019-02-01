@@ -9,15 +9,13 @@ import router from './router';
 import i18n from './i18n';
 import MainLayout from './layouts/Main.vue';
 
-// If we haven't @types notations for npm-modules, we use 'require'
-const VueCookie = require('vue-cookie');
-
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common['Accept-Language'] = window.localStorage.lang || window.navigator.language;
+if (window.localStorage.access_token) {
+  axios.defaults.headers.common['Authorization'] = 'Bearer ' + window.localStorage.access_token;
+}
 
-Vue.use(VueCookie);
 Vue.use(Vuex);
-
 Vue.directive('clickaway', onClickaway);
 
 const store = new Vuex.Store({

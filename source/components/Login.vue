@@ -147,14 +147,13 @@ export default Vue.extend({
       axios
         .post(`${config.api}/auth-api/login`, qs.stringify(this.form))
         .then(res => {
-          // Cuz withCredentials didn't works here.
-          this.$cookie.set('token', res.data.access_token, { expires: '24h' });
           window.localStorage.lang = res.data.user.lang;
+          window.localStorage.access_token = res.data.access_token;
 
           window.location.href = '/vendor/on-boarding';
         })
-        .catch(() => {
-          alert(this.$t('not_found'));
+        .catch(err => {
+          alert(err.message);
         });
     },
     clickOk() {

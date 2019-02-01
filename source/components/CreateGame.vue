@@ -1,0 +1,176 @@
+<i18n>
+    {
+        "en": {
+            "name": "Name",
+            "you_can_change": "You can change the game name later in the aplication settings. All other settings would be available on game edit page later",
+            "title": "Create New Game",
+            "create": "Create"
+        },
+        "ru": {
+            "name": "Название",
+            "you_can_change": "Вы в любое время сможете поменять название игры в настройках",
+            "title": "Создание новой игры",
+            "create": "Создать"
+        }
+    }
+</i18n>
+
+<template>
+  <transition name="modal">
+    <div class="modal-mask">
+      <div class="modal-wrapper" @click.self="$emit('close')">
+        <div class="modal-container">
+            <form method="post" @submit.prevent="submit">
+              <div class="modal-header">
+                <h2>{{ $t('title') }}</h2>
+              </div>
+
+              <div class="modal-body">
+                  <label>{{$t('name')}}</label>
+                  <input type="text"
+                         v-model="internalName"
+                         required/>
+                  <small>{{$t('you_can_change')}}</small>
+              </div>
+
+              <div class="modal-footer">
+                <Button type="submit" class="modal-default-button" :text="$t('create')"></Button>
+              </div>
+
+            </form>
+        </div>
+      </div>
+    </div>
+  </transition>
+</template>
+
+<script type="ts">
+  import Vue from 'vue'
+  import axios from 'axios'
+  import Button from './ui-kit/Button'
+  import config from '@/config'
+
+  export default Vue.extend({
+    props: {
+      vendorId: {
+        type: String,
+        require: true,
+      }
+    },
+    components: {Button},
+    name: "CreateGame",
+    data: () => ({
+      internalName: '',
+    }),
+    methods: {
+      submit(){
+        axios
+          .post(`${config.api}/api/v1/games`, {internalName: this.internalName, vendorId: this.$props.vendorId})
+          .then(res => {
+            this.$emit('close');
+            this.$router.push({path: '/vendor/games/' + res.data.id});
+          })
+          .catch(err => {
+            alert(err.message);
+          });
+      }
+    }
+  })
+</script>
+
+<style scoped lang="scss">
+
+    .modal-mask {
+        position: fixed;
+        z-index: 9998;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, .5);
+        display: table;
+        transition: opacity .3s ease;
+
+        .modal-wrapper {
+            display: table-cell;
+            vertical-align: middle;
+
+            .modal-container {
+                width: 1000px;
+                background-color: white;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+                border-radius: 4px;
+
+                margin: 0px auto;
+                padding: 20px 30px;
+                transition: all .3s ease;
+                font-family: Helvetica, Arial, sans-serif;
+
+                .modal-header {
+                    margin-top: 0;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .modal-body {
+                    margin: 20px 0;
+                }
+
+                .modal-footer {
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+        }
+    }
+
+    .modal-container {
+      *, h2 {
+        font-size: 18px;
+      }
+    }
+
+    .modal-body {
+      label {
+        display: block;
+      }
+      input {
+        display: block;
+        width:100%;
+        padding: 12px 23px;
+        border: 1px solid black;
+        background-color: #E9E9E9;
+        border-radius: 3px;
+
+      }
+      small {
+        margin-top: 10px;
+        font-size: 16px;
+        display: block;
+      }
+    }
+
+    /*
+     * The following styles are auto-applied to elements with
+     * transition="modal" when their visibility is toggled
+     * by Vue.js.
+     *
+     * You can easily play with the modal transition by editing
+     * these styles.
+     */
+
+    .modal-enter {
+        opacity: 0;
+    }
+
+    .modal-leave-active {
+        opacity: 0;
+    }
+
+    .modal-enter .modal-container,
+    .modal-leave-active .modal-container {
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1);
+    }
+
+</style>

@@ -39,7 +39,7 @@ export default Vue.extend({
     if (!window.localStorage.lang) {
       window.localStorage.lang = window.navigator.language;
     }
-    if (this.$cookie.get('token')) {
+    if (window.localStorage.access_token) {
       axios
         .get(`${config.api}/api/v1/me`)
         .then(res => {
@@ -53,7 +53,7 @@ export default Vue.extend({
   methods: {
     logout() {
       // @TODO - Move to store
-      this.$cookie.delete('token');
+      delete window.localStorage.access_token;
       document.location = document.location;
     },
   },

@@ -42,8 +42,8 @@ export default Vue.extend({
           email: `${domain}@protocol.one`,
           howManyProducts: this.$refs.step2.form.howManyProds,
         })
-        .then(() => {
-          window.location.href = '/vendor/games';
+        .then(res => {
+          this.$router.push({path: '/vendor/games'});
         })
         .catch(err => alert(err.response.data.message));
     },
