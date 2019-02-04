@@ -103,7 +103,7 @@ export default Vue.extend({
         alert(this.$t('name-too-short'));
         return;
       }
-      this.$emit('nextStep');
+      this.$emit('nextStep', this.form.name);
     },
     changeCompanyName(name) {
       if (name.length < 3) {

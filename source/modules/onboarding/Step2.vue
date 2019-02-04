@@ -73,7 +73,7 @@
           <b-btn
             class="float-left"
             variant="primary"
-            @click="$emit('createAccount')"
+            @click="$emit('createVendor', form.howManyProds)"
           >
             {{ $t('create-account') }}
           </b-btn>
