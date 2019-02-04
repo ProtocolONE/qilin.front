@@ -87,6 +87,7 @@
     ref="login"
     :open-reg="() => $refs.reg.$refs.modal.show()"
     :open-reset="() => $refs.resetpass.$refs.modal.show()"
+    @login="$emit('login', $event)"
   />
   <Register
     id="register"

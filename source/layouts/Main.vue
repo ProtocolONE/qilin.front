@@ -2,6 +2,7 @@
 <div class="main-wrapper">
   <Navbar
     :links="links"
+    @login="login"
     @logout="logout"
   />
   <router-view />
@@ -11,7 +12,7 @@
 <script lang="ts">
 import axios from 'axios';
 import Vue from 'vue';
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import config from '@/config';
 import Navbar from './Navbar.vue';
 
@@ -19,11 +20,8 @@ import './bootstrap';
 
 export default Vue.extend({
   components: { Navbar },
-  data: () => ({
-    user: null,
-  }),
   computed: {
-    ...mapState(['navbarLinks']),
+    ...mapState(['navbarLinks', 'user']),
 
     links() {
       // @TODO - Add type for navbarLinks/links
@@ -35,26 +33,13 @@ export default Vue.extend({
     },
   },
   mounted() {
-    // @TODO - Move to store
-    if (!window.localStorage.lang) {
-      window.localStorage.lang = window.navigator.language;
-    }
-    if (this.$cookie.get('token')) {
-      axios
-        .get(`${config.api}/api/v1/me`)
-        .then(res => {
-          this.user = res.data.user;
-        })
-        .catch(() => {
-          // / ignore...
-        });
-    }
+    this.initUser();
   },
   methods: {
+    ...mapActions(['initUser', 'login']),
+
     logout() {
-      // @TODO - Move to store
-      this.$cookie.delete('token');
-      document.location = document.location;
+      document.location.reload();
     },
   },
 });
