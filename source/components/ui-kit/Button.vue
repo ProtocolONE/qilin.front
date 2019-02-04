@@ -9,9 +9,10 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import { includes } from 'lodash-es';
 
-export default {
+export default Vue.extend({
   props: {
     glyph: {
       default: '',
@@ -80,7 +81,7 @@ export default {
       this.$emit('click', event);
     },
   },
-};
+});
 </script>
 
 <style scoped lang="scss">

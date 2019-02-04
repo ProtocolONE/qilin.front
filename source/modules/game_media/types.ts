@@ -8,7 +8,7 @@ export interface MediaStore {
   friends: LocalizedString;
 }
 
-export interface MediaStore {
+export interface MediaCapsule {
   generic: LocalizedString;
   small: LocalizedString;
 }
@@ -18,9 +18,10 @@ export interface Media {
   coverVideo: LocalizedString;
   trailers: LocalizedString;
   store: MediaStore;
-  capsule: MediaStore;
+  capsule: MediaCapsule;
 }
 
 export interface State {
   media: Media;
+  wait: boolean;
 }

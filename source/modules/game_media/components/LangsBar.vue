@@ -2,11 +2,12 @@
 <template>
   <div class="langs-bar">
 
-    <LangButton v-for="(value) in list"
-                @click="onSelect(value)"
-                :select="value === select"
-                :key="value"
-                :text="value"/>
+    <LangButton v-for="(val) in list"
+                @click="onSelect(val)"
+                :filled="!!occupied[val]"
+                :select="val === value"
+                :key="val"
+                :text="val"/>
 
   </div>
 </template>
@@ -22,19 +23,19 @@
         type: Array,
         default: () => ['en', 'ru', 'fr', 'ptbr'],
       },
-      select: {
+      occupied: {
+        type: Object,
+        default: () => {{}},
+      },
+      value: {
         type: String,
         default: 'en',
       }
     },
     name: "LangsBar",
-    data: () => ({
-
-    }),
-    methods:{
+    methods: {
       onSelect(value){
-        this.select = value;
-        this.$emit('select', value);
+        this.$emit('change', value);
       }
     }
   })

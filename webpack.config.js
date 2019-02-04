@@ -128,7 +128,22 @@ module.exports = {
     proxy: {
       '/api/*': 'http://localhost:3001',
       '/auth-api/*': 'http://localhost:3001',
+      '/upload': {
+        target: {
+          host: "localhost",
+          protocol: 'http:',
+          port: 9000,
+        },
+        pathRewrite: {
+          '^/upload': ''
+        }
+      }
     },
     historyApiFallback: { index: 'index.html' },
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+      "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+    }
   },
 };
