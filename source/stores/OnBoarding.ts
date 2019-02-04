@@ -2,9 +2,9 @@ import axios from 'axios';
 import { GetterTree, ActionTree, MutationTree } from 'vuex';
 import State from './onBoardingTypes';
 
-export default function MainStore(apiUrl: string) {
+export default function OnBoardingStore(apiUrl: string) {
   const state: State = {
-    vendor: undefined,
+    vendor: null,
   };
   const getters: GetterTree<State, any> = {};
   const actions: ActionTree<State, any> = {
@@ -26,8 +26,6 @@ export default function MainStore(apiUrl: string) {
 
       if (vendor) {
         commit('vendor', vendor);
-
-        this.$router.push('/games');
       }
     },
   };

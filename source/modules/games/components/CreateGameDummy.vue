@@ -39,7 +39,6 @@ export default Vue.extend({
   margin-top: 12px;
 }
 .text {
-  max-width: 280px;
   display: block;
   font-size: 12px;
   margin-top: 8px;
