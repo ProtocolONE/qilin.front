@@ -5,18 +5,17 @@
     @search="filterByName"
   />
 
-  <GamesFilters
-    @toggleSort="toggleSort"
-  />
+  <template v-if="hasGames">
+    <GamesFilters @toggleSort="toggleSort" />
 
-  <GameItem
-    v-if="hasGames"
-    v-for="game in innerGames"
-    v-bind="{ game }"
-    :key="game.id"
-  />
+    <GameItem
+      v-for="game in innerGames"
+      v-bind="{ game }"
+      :key="game.id"
+    />
+  </template>
 
-  <CreateGameDummy v-if="!hasGames" />
+  <CreateGameDummy v-else />
 </div>
 </template>
 
@@ -57,6 +56,7 @@ export default Vue.extend({
     toggleSort(propName) {
       this.sortingProps[propName] = !this.sortingProps[propName];
 
+      // @TODO - add sorting by genres and price
       this.innerGames = orderBy(
         this.games,
         Object.keys(this.sortingProps),
