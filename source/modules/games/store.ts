@@ -3,7 +3,7 @@ import cloneDeep from 'lodash-es/cloneDeep';
 import { GetterTree, ActionTree, MutationTree } from 'vuex';
 import formatDate from '@/helpers/formatDate';
 import State from './types';
-import testData from './testData';
+// import testData from './testData';
 
 export default function GamesStore(apiUrl: string) {
   const state: State = {
@@ -11,12 +11,13 @@ export default function GamesStore(apiUrl: string) {
   };
   const getters: GetterTree<State, any> = {};
   const actions: ActionTree<State, any> = {
-    async initState({ commit }, { vendorId: string }) {
-      const games = testData;
+    async initState({ commit }, { vendorId }: { vendorId: string }) {
+      // const games = testData;
       
-      // const games = await axios
-      //   .get(`${apiUrl}/v1/vendors/${vendorId}/games`)
-      //   .then(result => result || []);
+      // @TODO - We havent vendors by users in api
+      const games = await axios
+        .get(`${apiUrl}/v1/vendors/${vendorId}/games`)
+        .then(result => result || []);
 
       const preparedGames = games.map(game => ({
         ...cloneDeep(game),
