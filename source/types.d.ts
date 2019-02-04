@@ -18,6 +18,13 @@ declare module 'vue-clickaway' {
   export { directive, mixin, version };
 }
 
+declare module '@protocol-one/ui-kit' {
+  const Button: any;
+  const TextField: any;
+
+  export { Button, TextField };
+}
+
 declare interface NodeModule {
   hot: {
     accept(paths?: [], callback?: () => void): void

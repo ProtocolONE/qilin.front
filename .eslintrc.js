@@ -111,5 +111,7 @@ module.exports = {
         'ignores': []
       }
     ],
+
+    'vue/no-use-v-if-with-v-for': 'off',
   },
 };

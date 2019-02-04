@@ -16,7 +16,7 @@ export default {
         description: 'Help us setup your first tenant and start untegration',
       },
     },
-    vendorGames: {
+    games: {
       title: 'Games',
       meta: {
         title: 'Welcome to Qilin',

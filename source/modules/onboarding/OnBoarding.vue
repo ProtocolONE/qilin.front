@@ -8,14 +8,14 @@
   <Step2
     v-show="step == 2"
     ref="step2"
-    @createAccount="createAccount"
+    @createVendor="emitCreateVendor"
   />
 </div>
 </template>
 
 <script type="ts">
-import axios from 'axios';
 import Vue from 'vue';
+import { mapActions } from 'vuex';
 import Step1 from './Step1.vue';
 import Step2 from './Step2.vue';
 
@@ -24,28 +24,23 @@ export default Vue.extend({
   components: { Step1, Step2 },
   data: () => ({
     step: 1,
+    vendorName: '',
   }),
   mounted() {},
   methods: {
-    nextStep() {
+    ...mapActions(['createVendor']),
+
+    nextStep(vendorName) {
+      this.vendorName = vendorName;
+
       this.step += 1;
     },
-    createAccount() {
-      const domain = this.$refs.step1.form.name
-        .toLowerCase()
-        .replace(' ', '')
-        .replace(/^\d+/, '');
-      axios
-        .post('/api/v1/vendors', {
-          name: this.$refs.step1.form.name,
-          domain3: domain,
-          email: `${domain}@protocol.one`,
-          howManyProducts: this.$refs.step2.form.howManyProds,
-        })
-        .then(() => {
-          window.location.href = '/vendor/games';
-        })
-        .catch(err => alert(err.response.data.message));
+    emitCreateVendor(howManyProds) {
+      const query = {
+        name: this.vendorName,
+        howManyProds,
+      };
+      this.createVendor(query);
     },
   },
 });

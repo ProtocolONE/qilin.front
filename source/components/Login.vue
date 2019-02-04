@@ -120,7 +120,6 @@
 
 <script lang="ts">
 import axios from 'axios';
-import * as qs from 'querystring';
 import Vue from 'vue';
 import config from '@/config';
 import ValidateInput from '@/components/ValidateInput/ValidateInput.vue';
@@ -144,18 +143,7 @@ export default Vue.extend({
       this.openReset();
     },
     submit() {
-      axios
-        .post(`${config.api}/auth-api/login`, qs.stringify(this.form))
-        .then(res => {
-          // Cuz withCredentials didn't works here.
-          this.$cookie.set('token', res.data.access_token, { expires: '24h' });
-          window.localStorage.lang = res.data.user.lang;
-
-          window.location.href = '/vendor/on-boarding';
-        })
-        .catch(() => {
-          alert(this.$t('not_found'));
-        });
+      this.$emit('login', this.form);
     },
     clickOk() {
       this.$refs.submit.click();

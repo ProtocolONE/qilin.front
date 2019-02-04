@@ -15,6 +15,11 @@ const VueCookie = require('vue-cookie');
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common['Accept-Language'] = window.localStorage.lang || window.navigator.language;
 
+const accessToken = localStorage.getItem('accessToken') || '';
+
+if (accessToken) {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+}
 Vue.use(VueCookie);
 Vue.use(Vuex);
 

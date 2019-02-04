@@ -1,7 +1,13 @@
-import MainStores from '@/stores';
+import config from '@/config';
 import routes from '@/routes';
+import MainStores from '@/stores';
+import GamesModule from '@/modules/games/store';
 
-const mainStores = MainStores(routes);
+const apiUrl = config.api;
+const accessToken = localStorage.getItem('accessToken') || '';
+
+const mainStores = MainStores(apiUrl, accessToken, routes);
+
 /**
  * Root store, that agragate high-level modules.
  * Every module have its own endpoint, that specified in routes
@@ -19,5 +25,7 @@ export default {
   mutations: { ...mainStores.mutations },
 
   // Modules by root store
-  modules: {},
+  modules: {
+    Games: GamesModule(apiUrl),
+  },
 };
