@@ -3,13 +3,13 @@
   class="upload-image"
   :style="`background-image: url(${image})`"
 >
-  <div class="blank" />
+  <div class="blank"></div>
   <Button
     color="orange"
     glyph="plus"
-    :text="!!image ? replaceText : uploadText"
+    :text="image ? replaceText : uploadText"
     @click="$emit('click')"
-  />
+  ></Button>
   <a
     v-if="!!image"
     class="remove"
