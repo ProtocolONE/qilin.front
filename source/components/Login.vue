@@ -53,18 +53,18 @@
         id="login-login"
         v-model="form.login"
         type="email"
-        :validate="(val) => !!val.match(/.+?@.+?\..+/)"
+        :validate="val => !!val.match(/.+?@.+?\..+/)"
         :placeholder="$t('login_place')"
-      />
+      ></ValidateInput>
     </b-form-group>
     <b-form-group label-for="login-password">
       <ValidateInput
         id="login-password"
         v-model="form.password"
         type="password"
-        :validate="(val) => val.length > 3"
+        :validate="val => val.length > 3"
         :placeholder="$t('pass_place')"
-      />
+      ></ValidateInput>
       <!--
             <b-tooltip target="password" placement="right">
                 Hello <strong>World!</strong>
@@ -73,12 +73,15 @@
     </b-form-group>
 
     <small class="form-text q-have-acc">
-      {{ $t('have-acc.0') }} <a
+      {{ $t('have-acc.0') }}
+      <a
         href="/"
         @click.prevent="goto_reg"
       >
         {{ $t('have-acc.1') }}
-      </a> | <a
+      </a>
+      |
+      <a
         href="/"
         @click.prevent="goto_reset"
       >
@@ -108,9 +111,12 @@
     <div style="clear: both;" />
 
     <small class="form-text text-muted q-policy">
-      {{ $t('policy.0') }} <a href="/">
+      {{ $t('policy.0') }}
+      <a href="/">
         {{ $t('policy.1') }}
-      </a> {{ $t('policy.2') }} <a href="/">
+      </a>
+      {{ $t('policy.2') }}
+      <a href="/">
         {{ $t('policy.3') }}
       </a>.
     </small>
@@ -127,7 +133,20 @@ import ValidateInput from '@/components/ValidateInput/ValidateInput.vue';
 
 export default Vue.extend({
   components: { ValidateInput },
-  props: ['id', 'openReg', 'openReset'],
+  props: {
+    id: {
+      type: String,
+      required: true,
+    },
+    openReg: {
+      type: Function,
+      required: true,
+    },
+    openReset: {
+      type: Function,
+      required: true,
+    }
+  },
   data: () => ({
     form: {
       login: '',
@@ -144,17 +163,12 @@ export default Vue.extend({
       this.openReset();
     },
     submit() {
-      axios
-        .post(`${config.api}/auth-api/login`, qs.stringify(this.form))
-        .then(res => {
-          window.localStorage.lang = res.data.user.lang;
-          window.localStorage.access_token = res.data.access_token;
+      axios.post(`${config.api}/auth-api/login`, qs.stringify(this.form)).then(res => {
+        localStorage.setItem('lang', res.data.user.lang);
+        localStorage.setItem('access_token', res.data.access_token);
 
-          window.location.href = '/vendor/on-boarding';
-        })
-        .catch(err => {
-          alert(err.message);
-        });
+        window.location.href = '/vendor/on-boarding';
+      });
     },
     clickOk() {
       this.$refs.submit.click();

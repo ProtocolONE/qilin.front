@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { GetterTree, ActionTree, MutationTree } from 'vuex';
 import { State } from './types';
 

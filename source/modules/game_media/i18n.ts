@@ -1,10 +1,9 @@
-
-
 export default {
   messages: {
     en: {
       cover_image: 'Cover image',
-      cover_image_descr: 'The cover image is used on the main game page on the store and could be used as special feature block on the store main page. Required at least 1920х800 image (aspect 1.77) in PNG or JPEG format. Please avoid duplicating your project\'s screenshots here.',
+      cover_image_descr:
+        "The cover image is used on the main game page on the store and could be used as special feature block on the store main page. Required at least 1920х800 image (aspect 1.77) in PNG or JPEG format. Please avoid duplicating your project's screenshots here.",
       upload_cover_image: 'Upload cover image',
       replace_cover_image: 'Replace cover image',
       remove_cover: 'Remove cover image',
@@ -19,11 +18,11 @@ export default {
       replace_cover_video: 'Replace cover video',
       remove_video: 'Remove video',
       select_video_url: 'Select video url',
-
     },
     ru: {
       cover_image: 'Cover image',
-      cover_image_descr: 'The cover image is used on the main game page on the store and could be used as special feature block on the store main page. Required at least 1920х800 image (aspect 1.77) in PNG or JPEG format. Please avoid duplicating your project\'s screenshots here.',
+      cover_image_descr:
+        "The cover image is used on the main game page on the store and could be used as special feature block on the store main page. Required at least 1920х800 image (aspect 1.77) in PNG or JPEG format. Please avoid duplicating your project's screenshots here.",
       upload_cover_image: 'Загрузить обложку',
       replace_cover_image: 'Заменить обложку',
       remove_cover: 'Убрать обложку',
@@ -38,9 +37,6 @@ export default {
       replace_cover_video: 'Заменить ссылку',
       remove_video: 'Убрать видео',
       select_video_url: 'Укажите URL с источником видео',
-
-    }
-
-
-  }
+    },
+  },
 };

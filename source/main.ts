@@ -10,9 +10,9 @@ import i18n from './i18n';
 import MainLayout from './layouts/Main.vue';
 
 axios.defaults.withCredentials = true;
-axios.defaults.headers.common['Accept-Language'] = window.localStorage.lang || window.navigator.language;
-if (window.localStorage.access_token) {
-  axios.defaults.headers.common['Authorization'] = 'Bearer ' + window.localStorage.access_token;
+axios.defaults.headers.common['Accept-Language'] = localStorage.getItem('lang') || navigator.language;
+if (localStorage.getItem('access_token')) {
+  axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('access_token')}`;
 }
 
 Vue.use(Vuex);

@@ -6,9 +6,9 @@ export default function NavbarStore(routes: RouteConfig[]) {
       navbarLinks: routes
         .filter(a => ['home', 'onBoarding', 'vendorGames'].indexOf(a.name) > -1)
         .map(route => ({
-        name: route.name,
-        href: route.path,
-      })),
+          name: route.name,
+          href: route.path,
+        })),
     },
     getters: {},
     actions: {},

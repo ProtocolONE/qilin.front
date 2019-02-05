@@ -36,10 +36,10 @@ export default Vue.extend({
   },
   mounted() {
     // @TODO - Move to store
-    if (!window.localStorage.lang) {
-      window.localStorage.lang = window.navigator.language;
+    if (!localStorage.getItem('lang')) {
+      localStorage.setItem('lang', navigator.language);
     }
-    if (window.localStorage.access_token) {
+    if (localStorage.getItem('access_token')) {
       axios
         .get(`${config.api}/api/v1/me`)
         .then(res => {
@@ -53,7 +53,7 @@ export default Vue.extend({
   methods: {
     logout() {
       // @TODO - Move to store
-      delete window.localStorage.access_token;
+      localStorage.removeItem('access_token');
       document.location = document.location;
     },
   },

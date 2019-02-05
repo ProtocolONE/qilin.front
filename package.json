@@ -70,6 +70,7 @@
     "terser-webpack-plugin": "^1.2.1",
     "ts-loader": "^5.3.1",
     "ts-vue-plugin": "^0.2.0",
+    "tslint": "^5.12.1",
     "typescript": "^3.3.1",
     "url-loader": "^1.1.2",
     "vue-class-component": "^6.3.2",

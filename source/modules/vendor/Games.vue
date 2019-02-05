@@ -8,15 +8,20 @@
       <div class="center">
         <h1>Games</h1>
 
-          <Button color="orange"
-                  @click="showCreateGameModal = true"
-                  :text="$t('create_new_game')"></Button>
-
+        <Button
+          color="orange"
+          :text="$t('create_new_game')"
+          @click="showCreateGameModal = true"
+        />
       </div>
     </b-col>
   </b-row>
 
-  <CreateGame v-if="showCreateGameModal" @close="showCreateGameModal = false" :vendorId="vendor.id"></CreateGame>
+  <CreateGame
+    v-if="showCreateGameModal"
+    :vendor-id="vendor.id"
+    @close="showCreateGameModal = false"
+  />
 </div>
 </template>
 
@@ -24,15 +29,19 @@
 import Vue from 'vue';
 import axios from 'axios';
 import config from '@/config';
-import Button from '../../components/ui-kit/Button';
-import CreateGame from '../../components/CreateGame';
+import Button from '@protocol-one/ui-kit/src/Button.vue';
+import CreateGame from '../../components/CreateGame.vue';
 import i18n from './texts';
 import {Vendor} from './types';
 
 export default Vue.extend({
   i18n,
-  components: {Button, CreateGame},
   name: 'VendorGames',
+  components: {Button, CreateGame},
+  data: () => ({
+      vendor: Vendor,
+      showCreateGameModal: false,
+  }),
   mounted(){
     // Get latest created vendor
     axios
@@ -44,15 +53,8 @@ export default Vue.extend({
         } else {
           this.vendor = res.data[0];
         }
-      })
-      .catch(err => {
-        alert(err.message);
       });
   },
-  data: () => ({
-      vendor: Vendor,
-      showCreateGameModal: false,
-  }),
   methods: {},
 });
 </script>

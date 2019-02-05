@@ -1,14 +1,14 @@
 import axios from 'axios';
-import {mergeWith} from 'lodash-es';
+import { mergeWith } from 'lodash-es';
 import { GetterTree, ActionTree, MutationTree } from 'vuex';
-import {Media, State} from './types';
+import { Media, State } from './types';
 
 const defaultMedia: Media = {
-  coverImage: {en:''},
-  coverVideo: {en:''},
-  trailers: {en:''},
-  store: {special: {en:''}, friends: {en:''}},
-  capsule: {generic: {en:''}, small: {en:''}},
+  coverImage: { en: '' },
+  coverVideo: { en: '' },
+  trailers: { en: '' },
+  store: { special: { en: '' }, friends: { en: '' } },
+  capsule: { generic: { en: '' }, small: { en: '' } },
 };
 
 export default function MediaStore(apiUrl: string) {
@@ -18,23 +18,19 @@ export default function MediaStore(apiUrl: string) {
   };
   const getters: GetterTree<State, any> = {};
   const actions: ActionTree<State, any> = {
-
-    clickSave({ commit, state }, gameId){
-      axios.put(`${apiUrl}/api/v1/games/${gameId}/media`, state.media)
-        .catch(err => alert(err.message))
+    clickSave({ commit, state }, gameId) {
+      axios.put(`${apiUrl}/api/v1/games/${gameId}/media`, state.media);
     },
-
     initState({ commit }, gameId) {
-      axios.get(`${apiUrl}/api/v1/games/${gameId}/media`)
+      axios
+        .get(`${apiUrl}/api/v1/games/${gameId}/media`)
         .then(result => {
-          commit('updateMedia', mergeWith(defaultMedia, result.data, (a, b) => b === null ? a : b))
-        })
-        .catch(err => alert(err.message))
+          commit('updateMedia', mergeWith(defaultMedia, result.data, (a, b) => (b === null ? a : b)));
+        });
     },
-
   };
   const mutations: MutationTree<State> = {
-    updateMedia: (state, value) => state.media = value,
+    updateMedia: (state, value) => (state.media = value),
   };
   return {
     state,

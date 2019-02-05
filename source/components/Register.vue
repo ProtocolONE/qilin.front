@@ -60,9 +60,9 @@
         id="reg-login"
         v-model="form.login"
         type="email"
-        :validate="(val) => val.length > 3 && val.indexOf('@') > 1"
+        :validate="val => val.length > 3 && val.indexOf('@') > 1"
         :placeholder="$t('login_place')"
-      />
+      ></ValidateInput>
     </b-form-group>
     <b-form-group
       :label="$t('pass_label')"
@@ -72,13 +72,14 @@
         id="reg-password"
         v-model="form.password"
         type="password"
-        :validate="(val) => val.length > 3"
+        :validate="val => val.length > 3"
         :placeholder="$t('pass_place')"
-      />
+      ></ValidateInput>
     </b-form-group>
 
     <small class="form-text q-have-acc">
-      {{ $t('have-acc.0') }} <a
+      {{ $t('have-acc.0') }}
+      <a
         href="/"
         @click.prevent="goto_login"
       >
@@ -90,7 +91,7 @@
       v-show="false"
       ref="submit"
       type="submit"
-    />
+    ></b-button>
   </b-form>
 
   <div
@@ -105,12 +106,15 @@
       {{ $t('submit_btn') }}
     </b-btn>
 
-    <div style="clear: both;" />
+    <div style="clear: both;" ></div>
 
     <small class="form-text text-muted q-policy">
-      {{ $t('policy.0') }} <a href="/">
+      {{ $t('policy.0') }}
+      <a href="/">
         {{ $t('policy.1') }}
-      </a> {{ $t('policy.2') }} <a href="/">
+      </a>
+      {{ $t('policy.2') }}
+      <a href="/">
         {{ $t('policy.3') }}
       </a>.
     </small>
@@ -127,7 +131,16 @@ import ValidateInput from '@/components/ValidateInput/ValidateInput.vue';
 
 export default Vue.extend({
   components: { ValidateInput },
-  props: ['id', 'openLogin'],
+  props: {
+    id: {
+      type: String,
+      required: true,
+    },
+    openLogin: {
+      type: Function,
+      required: true,
+    }
+  },
   data: () => ({
     form: {
       login: '',

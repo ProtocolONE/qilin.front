@@ -3,6 +3,7 @@ import routes from '@/routes';
 import config from '@/config';
 import MediaStore from '@/modules/game_media/store';
 import GameStore from '@/modules/game/store';
+import CreateGameStore from '@/modules/game_create/store';
 
 const mainStores = MainStores(routes);
 /**
@@ -25,5 +26,6 @@ export default {
   modules: {
     Game: GameStore(config.api),
     Media: MediaStore(config.api),
+    CreateGame: CreateGameStore(config.api),
   },
 };

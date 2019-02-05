@@ -1,20 +1,3 @@
-<i18n>
-    {
-        "en": {
-            "name": "Name",
-            "you_can_change": "You can change the game name later in the aplication settings. All other settings would be available on game edit page later",
-            "title": "Create New Game",
-            "create": "Create"
-        },
-        "ru": {
-            "name": "Название",
-            "you_can_change": "Вы в любое время сможете поменять название игры в настройках",
-            "title": "Создание новой игры",
-            "create": "Создать"
-        }
-    }
-</i18n>
-
 <template>
 <transition name="modal">
   <div class="modal-mask">
@@ -30,7 +13,6 @@
           <div class="modal-header">
             <h2>{{ $t('title') }}</h2>
           </div>
-
           <div class="modal-body">
             <label>{{ $t('name') }}</label>
             <input
@@ -40,13 +22,12 @@
             >
             <small>{{ $t('you_can_change') }}</small>
           </div>
-
           <div class="modal-footer">
             <Button
               type="submit"
               class="modal-default-button"
               :text="$t('create')"
-            />
+            ></Button>
           </div>
         </form>
       </div>
@@ -57,33 +38,36 @@
 
 <script type="ts">
 import Vue from 'vue'
-import axios from 'axios'
-import Button from './ui-kit/Button'
-import config from '@/config'
+import {mapActions, mapState} from 'vuex'
+import Button from '@protocol-one/ui-kit/src/Button.vue'
+import i18n from './i18n'
 
 export default Vue.extend({
+  i18n,
   name: "CreateGame",
   components: {Button},
   props: {
     vendorId: {
-      type: String,
-      require: true,
-    }
-  },
+        type: String,
+        required: true,
+      }
+    },
   data: () => ({
     internalName: '',
   }),
+  computed: {
+    ...mapState('CreateGame', ['gameId']),
+  },
+  watch: {
+    gameId(){
+      this.$emit('close');
+      this.$router.push({path: `/vendor/games/${this.gameId}`});
+    }
+  },
   methods: {
-    submit(){
-      axios
-        .post(`${config.api}/api/v1/games`, {internalName: this.internalName, vendorId: this.$props.vendorId})
-        .then(res => {
-          this.$emit('close');
-          this.$router.push({path: `/vendor/games/${  res.data.id}`});
-        })
-        .catch(err => {
-          alert(err.message);
-        });
+    ...mapActions('CreateGame', ['save']),
+    submit() {
+      this.save(this.internalName, this.vendorId);
     }
   }
 })

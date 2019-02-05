@@ -1,5 +1,3 @@
-
-
 import anchors from './anchors';
 
 export default {
@@ -21,6 +19,6 @@ export default {
       tab_price: 'Цены',
       tab_sales: 'Распродажи',
       ...anchors.messages.ru,
-    }
+    },
   },
 };

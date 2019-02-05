@@ -4,12 +4,12 @@
     v-show="step == 1"
     ref="step1"
     @nextStep="nextStep"
-  />
+  ></Step1>
   <Step2
     v-show="step == 2"
     ref="step2"
     @createAccount="createAccount"
-  />
+  ></Step2>
 </div>
 </template>
 
@@ -42,10 +42,9 @@ export default Vue.extend({
           email: `${domain}@protocol.one`,
           howManyProducts: this.$refs.step2.form.howManyProds,
         })
-        .then(res => {
+        .then(() => {
           this.$router.push({path: '/vendor/games'});
-        })
-        .catch(err => alert(err.response.data.message));
+        });
     },
   },
 });

@@ -1,5 +1,3 @@
-
-
 export default {
   messages: {
     en: {
@@ -7,7 +5,6 @@ export default {
     },
     ru: {
       title: 'Заголовок',
-    }
-
-  }
+    },
+  },
 };

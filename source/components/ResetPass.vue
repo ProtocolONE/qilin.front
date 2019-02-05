@@ -58,13 +58,14 @@
         id="reset-email"
         v-model="form.email"
         type="email"
-        :validate="(val) => val.length > 3 && val.indexOf('@') > 1"
+        :validate="val => val.length > 3 && val.indexOf('@') > 1"
         :placeholder="$t('login_place')"
-      />
+      ></ValidateInput>
     </b-form-group>
 
     <small class="form-text q-have-acc">
-      {{ $t('have-acc.0') }} <a
+      {{ $t('have-acc.0') }}
+      <a
         href="/"
         @click.prevent="goto_login"
       >
@@ -94,9 +95,12 @@
     <div style="clear: both;" />
 
     <small class="form-text text-muted q-policy">
-      {{ $t('policy.0') }} <a href="/">
+      {{ $t('policy.0') }}
+      <a href="/">
         {{ $t('policy.1') }}
-      </a> {{ $t('policy.2') }} <a href="/">
+      </a>
+      {{ $t('policy.2') }}
+      <a href="/">
         {{ $t('policy.3') }}
       </a>.
     </small>
@@ -113,7 +117,16 @@ import ValidateInput from '@/components/ValidateInput/ValidateInput.vue';
 
 export default Vue.extend({
   components: { ValidateInput },
-  props: ['id', 'openLogin'],
+  props: {
+    id: {
+      type: String,
+      required: true,
+    },
+    openLogin: {
+      type: Function,
+      required: true,
+    }
+  },
   data: () => ({
     form: {
       email: '',

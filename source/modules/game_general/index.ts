@@ -1,19 +1,19 @@
-import Vue from 'vue'
-import { mapState, mapActions, mapMutations } from 'vuex';
-import i18n from './i18n'
-import Button from '../../components/ui-kit/Button.vue'
+import Vue from 'vue';
+import Button from '@protocol-one/ui-kit/src/Button.vue';
+import i18n from './i18n';
 
 export default Vue.extend({
+  name: 'GameGeneral',
+  components: { Button },
   props: {
     gameId: {
       type: String,
       require: true,
-    }
+      default: '',
+    },
   },
-  components: {Button},
   i18n,
-  name: "GameGeneral",
-  mounted() {},
   computed: {},
+  mounted() {},
   methods: {},
-})
+});
