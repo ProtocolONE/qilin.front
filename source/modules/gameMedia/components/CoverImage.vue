@@ -1,32 +1,31 @@
 <template>
 <div class="cover-image">
-  <UploadImage
+  <LangsBar
+    :value="lang"
+    :filled-list="Object.keys(value).filter(a => value[a])"
+    @change="selectLang"
+  />
+  <ImageUpload
     :upload-text="$t('upload_cover_image')"
     :replace-text="$t('replace_cover_image')"
     :remove-text="$t('remove_cover')"
     :image="value[lang] || ''"
     @click="upload"
     @clickRemove="clickRemove"
-  ></UploadImage>
-  <LangsBar
-    :value="lang"
-    :occupied="value"
-    @change="selectLang"
-  ></LangsBar>
+  />
 </div>
 </template>
 
 <script type="ts">
 import Vue from 'vue'
-import LangsBar from '@protocol-one/ui-kit/src/LangsBar.vue'
-import UploadImage from './UploadImage.vue'
-import uploadFile from '../uploader'
+import {LangsBar} from '@protocol-one/ui-kit'
+import ImageUpload from './ImageUploader.vue'
+import uploadImage from '../uploaderImage'
 import i18n from '../i18n'
 
 export default Vue.extend({
   i18n,
-  name: "CoverImage",
-  components: {UploadImage, LangsBar},
+  components: {ImageUpload, LangsBar},
   props: {
     value: {
       type: Object,
@@ -48,7 +47,7 @@ export default Vue.extend({
       this.$emit('change', {...this.value, ...{[this.lang]: ''}});
     },
     upload(){
-      uploadFile({width: 1920, height: 800}, (urls) => {
+      uploadImage({width: 1920, height: 800}, (urls) => {
         this.$emit('change', {...this.value, ...{[this.lang]: urls[0]}});
       });
     }
@@ -58,6 +57,9 @@ export default Vue.extend({
 
 <style scoped lang="scss">
 .cover-image {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+}
+.langs-bar {
+  margin-bottom: 8px;
 }
 </style>

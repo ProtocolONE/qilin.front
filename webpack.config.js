@@ -111,6 +111,8 @@ module.exports = {
     new VueLoaderPlugin(),
     new webpack.DefinePlugin({
       'process.env.QILIN_API': JSON.stringify(process.env.QILIN_API),
+      'process.env.IMAGINARY_API': JSON.stringify(process.env.IMAGINARY_API),
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     }),
   ].concat(ENV_DEV ? [new webpack.HotModuleReplacementPlugin()] : []),
   resolve: {

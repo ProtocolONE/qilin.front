@@ -1,8 +1,9 @@
 import { RouteConfig } from 'vue-router';
 import Home from '@/modules/home/Home.vue';
 import OnBoarding from '@/modules/onboarding/OnBoarding.vue';
-import VendorGames from '@/modules/vendor/Games.vue';
 import Game from '@/modules/game/Game.vue';
+import Games from '@/modules/games/Games.vue';
+import GameMedia from '@/modules/gameMedia/Media.vue';
 
 const routes: RouteConfig[] = [
   {
@@ -16,14 +17,20 @@ const routes: RouteConfig[] = [
     component: OnBoarding,
   },
   {
-    path: '/vendor/games',
-    name: 'vendorGames',
-    component: VendorGames,
+    path: '/games',
+    name: 'Games',
+    component: Games,
   },
   {
-    path: '/vendor/games/:id',
+    path: '/games/:id',
     name: 'Game',
     component: Game,
+    children: [
+      {
+        path: 'media',
+        component: GameMedia
+      },
+    ],
   },
 ].map(route => ({ ...route, meta: `routes.${route.name}.meta` }));
 

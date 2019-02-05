@@ -580,10 +580,10 @@
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@kazupon/vue-i18n-loader/-/vue-i18n-loader-0.3.0.tgz#e068de2d75d891275814ae28ad1fcaf1b537694f"
 
-"@protocol-one/ui-kit@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@protocol-one/ui-kit/-/ui-kit-0.1.0.tgz#5fd986035be46646fd8a9e6511a36a5beb4735b4"
-  integrity sha512-Oy5JyORN/FsZGVR6XzWzXblXOLO20J39ZOg1Edrey9JbqvKhZeO3bBBt9Iu1C4az68J7fCsDTlgKupbFOu29Gw==
+"@protocol-one/ui-kit@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@protocol-one/ui-kit/-/ui-kit-0.2.0.tgz#ab2299d8ec52ea84910f1b4f227105f96d4822c1"
+  integrity sha512-c7rskkRzXk6LmuCLdmFTzLGea1b29KQlRM5/uO2aeY80PevXsaPMMIi3XGTRw0Z37sFSUcWFQVLjj8+CFDU4RA==
   dependencies:
     lodash-es "^4.17.11"
     vue "^2.5.21"

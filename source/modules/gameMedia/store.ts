@@ -6,9 +6,9 @@ import { Media, State } from './types';
 const defaultMedia: Media = {
   coverImage: { en: '' },
   coverVideo: { en: '' },
-  trailers: { en: '' },
+  trailers: { en: [] },
   store: { special: { en: '' }, friends: { en: '' } },
-  capsule: { generic: { en: '' }, small: { en: '' } },
+  capsule: { generic: { en: [] }, small: { en: [] } },
 };
 
 export default function MediaStore(apiUrl: string) {
@@ -21,7 +21,7 @@ export default function MediaStore(apiUrl: string) {
     clickSave({ commit, state }, gameId) {
       axios.put(`${apiUrl}/api/v1/games/${gameId}/media`, state.media);
     },
-    initState({ commit }, gameId) {
+    initState({ commit }, gameId: string) {
       axios
         .get(`${apiUrl}/api/v1/games/${gameId}/media`)
         .then(result => {
@@ -30,7 +30,7 @@ export default function MediaStore(apiUrl: string) {
     },
   };
   const mutations: MutationTree<State> = {
-    updateMedia: (state, value) => (state.media = value),
+    updateMedia: (state, value) => {state.media = value},
   };
   return {
     state,

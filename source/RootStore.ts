@@ -1,9 +1,10 @@
 import MainStores from '@/stores';
 import routes from '@/routes';
 import config from '@/config';
-import MediaStore from '@/modules/game_media/store';
+import MediaStore from '@/modules/gameMedia/store';
 import GameStore from '@/modules/game/store';
-import CreateGameStore from '@/modules/game_create/store';
+import CreateGameStore from '@/modules/gameCreate/store';
+import GamesStore from '@/modules/games/store';
 
 const mainStores = MainStores(routes);
 /**
@@ -27,5 +28,6 @@ export default {
     Game: GameStore(config.api),
     Media: MediaStore(config.api),
     CreateGame: CreateGameStore(config.api),
+    Games: GamesStore(config.api),
   },
 };

@@ -55,7 +55,7 @@
         type="email"
         :validate="val => !!val.match(/.+?@.+?\..+/)"
         :placeholder="$t('login_place')"
-      ></ValidateInput>
+      />
     </b-form-group>
     <b-form-group label-for="login-password">
       <ValidateInput
@@ -64,7 +64,7 @@
         type="password"
         :validate="val => val.length > 3"
         :placeholder="$t('pass_place')"
-      ></ValidateInput>
+      />
       <!--
             <b-tooltip target="password" placement="right">
                 Hello <strong>World!</strong>

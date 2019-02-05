@@ -1,15 +1,13 @@
 <template>
 <ul class="menu">
   <li
-    :v-for="item in items"
-    :class="item === currentTab ? 'select' : ''"
+    v-for="item in items"
+    :key="item"
+    :class="$route.path === `/games/${$route.params.id}/${item}` ? 'select' : ''"
   >
-    <a
-      href="/"
-      @click.prevent="$emit('selectTab', item)"
-    >
-      {{ $t('tab_' + item.toLowerCase()) }}
-    </a>
+    <router-link :to="`/games/${$route.params.id}/${item}`">
+      {{ $t('tab_' + item) }}
+    </router-link>
   </li>
 </ul>
 </template>
@@ -20,16 +18,8 @@ import i18n from '../i18n'
 
 export default Vue.extend({
   i18n,
-  name: "GameMenu",
-  props: {
-    currentTab: {
-      type: String,
-      require: true,
-      default: 'General',
-    }
-  },
   data: () => ({
-    items: ['General', 'Description', 'Ratings', 'Media', 'Price', 'Sales'],
+    items: ['general', 'description', 'ratings', 'media'],
   }),
 })
 </script>
@@ -37,17 +27,23 @@ export default Vue.extend({
 <style scoped lang="scss">
 .menu {
   list-style: none;
-  margin-top: 120px;
+  margin: 0;
+  padding: 0;
+  width: 224px;
+  height: 3126px;
+  background: #F6F6F6;
+  box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.06);
   li {
-    display: inline-block;
-    margin-right: 20px;
-    margin-bottom: 6px;
+    display: block;
+    padding-left: 30px;
+    padding-top: 8px;
+    padding-bottom: 14px;
     &.select {
-      border-bottom: 3px solid #444444;
+      background: #bcd6f4;
     }
     a {
-      color: #2fa7d3;
-      font-size: 22px;
+      color: #0c2441;
+      font-size: 16px;
       &:hover {
         text-decoration: none;
       }

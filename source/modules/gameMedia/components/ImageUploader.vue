@@ -1,15 +1,13 @@
 <template>
 <div
-  class="upload-image"
+  class="uploader"
   :style="`background-image: url(${image})`"
 >
-  <div class="blank"></div>
+  <div class="blank" />
   <Button
-    color="orange"
-    glyph="plus"
     :text="image ? replaceText : uploadText"
     @click="$emit('click')"
-  ></Button>
+  />
   <a
     v-if="!!image"
     class="remove"
@@ -23,10 +21,9 @@
 
 <script type="ts">
 import Vue from 'vue'
-import Button from '@protocol-one/ui-kit/src/Button.vue'
+import {Button} from '@protocol-one/ui-kit'
 
 export default Vue.extend({
-  name: "UploadImage",
   components: {Button},
   props: {
     uploadText: {
@@ -51,12 +48,11 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
-.upload-image {
-  width: 795px;
-  height: 293px;
-  background-color: #c4c4c4;
-  border: 1px solid #000000;
-  border-radius: 4px;
+.uploader {
+  height: 248px;
+  background-color: #f6f6f6;
+  border: 1px solid #e5e5e5;
+  box-sizing: border-box;
 
   flex-direction: column;
   display: flex;
@@ -77,7 +73,7 @@ export default Vue.extend({
 
   .blank {
     opacity: 0.5;
-    background-color: #c4c4c4;
+    background-color: #f6f6f6;
     width: 100%;
     height: 100%;
     position: absolute;

@@ -56,7 +56,7 @@
                 :has-error="hasError"
                 :error-text="errorText"
                 @input="changeCompanyName"
-              ></TextField>
+              />
             </b-form-group>
             <small class="form-text text-muted">
               {{ $t('name-you-choose') }}
@@ -84,7 +84,7 @@
 
 <script type="ts">
 import Vue from 'vue';
-import TextField from '@protocol-one/ui-kit/src/TextField.vue';
+import {TextField} from '@protocol-one/ui-kit';
 
 export default Vue.extend({
   name: 'OnBoardingStep1',

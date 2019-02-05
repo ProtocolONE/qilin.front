@@ -21,7 +21,7 @@ export default function Uploader(opts: Options, fileReady: FileReadyFunc) {
       const file: File = input.files[0];
       const formData = new FormData();
       formData.append('file', file, file.name);
-      const response: AxiosResponse = await axios.post(`${config.image_api}/resize`, formData, {
+      const response: AxiosResponse = await axios.post(`${config.imaginary_api}/resize`, formData, {
         params: {
           width: opts.width,
           height: opts.height,
