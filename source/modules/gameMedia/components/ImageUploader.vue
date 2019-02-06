@@ -1,15 +1,15 @@
 <template>
 <div
-  class="uploader"
-  :style="`background-image: url(${image})`"
+  :class="['uploader', small ? '_small' : '']"
+  :style="`background-image: url(${source})`"
 >
   <div class="blank" />
   <Button
-    :text="image ? replaceText : uploadText"
+    :text="source ? replaceText : uploadText"
     @click="$emit('click')"
   />
   <a
-    v-if="!!image"
+    v-if="!!source || removeBtn"
     class="remove"
     href="/"
     @click.prevent="$emit('clickRemove')"
@@ -38,12 +38,19 @@ export default Vue.extend({
       default: 'Remove image',
       type: String,
     },
-    image: {
+    source: {
       default: '',
       type: String,
+    },
+    small: {
+      default: false,
+      type: Boolean,
+    },
+    removeBtn: {
+      default: false,
+      type: Boolean,
     }
-  },
-  methods: {}
+  }
 })
 </script>
 
@@ -53,6 +60,10 @@ export default Vue.extend({
   background-color: #f6f6f6;
   border: 1px solid #e5e5e5;
   box-sizing: border-box;
+
+  &._small {
+    height: 160px;
+  }
 
   flex-direction: column;
   display: flex;

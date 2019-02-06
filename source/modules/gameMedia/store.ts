@@ -7,8 +7,9 @@ const defaultMedia: Media = {
   coverImage: { en: '' },
   coverVideo: { en: '' },
   trailers: { en: [] },
+  screenshots: { en: [] },
   store: { special: { en: '' }, friends: { en: '' } },
-  capsule: { generic: { en: [] }, small: { en: [] } },
+  capsule: { generic: { en: '' }, small: { en: '' } },
 };
 
 export default function MediaStore(apiUrl: string) {

@@ -12,14 +12,15 @@ export interface MediaStore {
 }
 
 export interface MediaCapsule {
-  generic: LocalizedStringArray;
-  small: LocalizedStringArray;
+  generic: LocalizedString;
+  small: LocalizedString;
 }
 
 export interface Media {
   coverImage: LocalizedString;
   coverVideo: LocalizedString;
   trailers: LocalizedStringArray;
+  screenshots: LocalizedStringArray;
   store: MediaStore;
   capsule: MediaCapsule;
 }

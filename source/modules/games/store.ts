@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { GetterTree, ActionTree, MutationTree } from 'vuex';
-import {Vendor} from "./types";
+import {Vendor} from './types';
 
 export interface State {
   vendors: Vendor[]

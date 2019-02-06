@@ -43,7 +43,7 @@ export default Vue.extend({
           howManyProducts: this.$refs.step2.form.howManyProds,
         })
         .then(() => {
-          this.$router.push({path: '/vendor/games'});
+          this.$router.push({path: '/games'});
         });
     },
   },

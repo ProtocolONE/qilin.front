@@ -15,7 +15,7 @@
     @click="$emit('click')"
   />
   <a
-    v-if="!!source"
+    v-if="!!source || removeBtn"
     class="remove"
     href="/"
     @click.prevent="$emit('clickRemove')"
@@ -51,9 +51,12 @@ export default Vue.extend({
     small: {
       default: false,
       type: Boolean,
-    }
+    },
+    removeBtn: {
+      default: false,
+      type: Boolean,
+    },
   },
-  methods: {}
 })
 </script>
 

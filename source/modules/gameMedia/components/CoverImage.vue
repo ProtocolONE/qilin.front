@@ -9,7 +9,7 @@
     :upload-text="$t('upload_cover_image')"
     :replace-text="$t('replace_cover_image')"
     :remove-text="$t('remove_cover')"
-    :image="value[lang] || ''"
+    :source="value[lang] || ''"
     @click="upload"
     @clickRemove="clickRemove"
   />

@@ -1,7 +1,6 @@
 import MainStores from '@/stores';
 import routes from '@/routes';
 import config from '@/config';
-import MediaStore from '@/modules/gameMedia/store';
 import GameStore from '@/modules/game/store';
 import CreateGameStore from '@/modules/gameCreate/store';
 import GamesStore from '@/modules/games/store';
@@ -26,7 +25,6 @@ export default {
   // Modules by root store
   modules: {
     Game: GameStore(config.api),
-    Media: MediaStore(config.api),
     CreateGame: CreateGameStore(config.api),
     Games: GamesStore(config.api),
   },

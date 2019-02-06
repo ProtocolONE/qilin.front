@@ -27,6 +27,7 @@ const routes: RouteConfig[] = [
     component: Game,
     children: [
       {
+        name: 'GameMedia',
         path: 'media',
         component: GameMedia
       },

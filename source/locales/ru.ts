@@ -16,7 +16,7 @@ export default {
         description: 'Начните интеграцию',
       },
     },
-    vendorGames: {
+    Games: {
       title: 'Игры',
       meta: {
         title: 'Добро пожаловать в Qilin',
@@ -28,6 +28,13 @@ export default {
       meta: {
         title: 'Edit game',
         description: '',
+      },
+      Media: {
+        title: 'Edit media',
+        meta: {
+          title: 'Edit media',
+          description: '',
+        },
       },
     },
   },

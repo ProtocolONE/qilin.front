@@ -2,7 +2,7 @@
 <div class="addition-trailers">
   <LangsBar
     :value="lang"
-    :filled-list="Object.keys(value).filter(a => value[a].length)"
+    :filled-list="Object.keys(value).filter(a => value[a] && value[a].length)"
     @change="selectLang"
   />
   <div class="list">
@@ -11,9 +11,10 @@
       :key="index"
     >
       <VideoUpload
-        :upload-text="$t('upload_cover_video')"
-        :replace-text="$t('replace_cover_video')"
-        :remove-text="$t('remove_video')"
+        :upload-text="$t('upload_trailer')"
+        :replace-text="$t('replace_trailer')"
+        :remove-text="$t('remove_trailer')"
+        :remove-btn="true"
         :source="item"
         :small="true"
         @click="upload(index)"
@@ -23,8 +24,8 @@
     <span class="add-video">
       <div>
         <Button
-          :text="$t('add_video')"
-          @click="addVideo"
+          :text="$t('add_trailer')"
+          @click="clickAdd"
         />
       </div>
     </span>
@@ -60,7 +61,7 @@
       selectLang(lang) {
         this.lang = lang;
       },
-      addVideo() {
+      clickAdd() {
         this.$emit('change', {
           ...this.value,
           ...{[this.lang]: (this.value[this.lang] || []).concat('')}
@@ -74,6 +75,7 @@
       upload(index) {
         uploadVideo({}, (urls) => {
           const value = clone(this.value, true);
+          value[this.lang] = value[this.lang] || [];
           value[this.lang][index] = urls[0];
           this.$emit('change', value);
         });

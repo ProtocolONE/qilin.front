@@ -1,31 +1,70 @@
 <template>
 <div class="media-page">
-  <Headline>{{ $t('cover_image') }}</Headline>
-  <p class="top-descr">
-    {{ $t('cover_image_descr.0') }}<br>
-    {{ $t('cover_image_descr.1') }}
-  </p>
+  <Headline id="cover_image">
+    {{ $t('cover_image') }}
+  </Headline>
+  <p
+    class="top-descr"
+    v-html="$t('cover_image_descr')"
+  />
   <CoverImage
     :value="media.coverImage"
     @change="updateCover"
   />
-  <Headline>{{ $t('cover_video') }}</Headline>
-  <p class="top-descr">
-    {{ $t('cover_video_descr.0') }}<br>
-    {{ $t('cover_video_descr.1') }}
-  </p>
+  <Headline id="cover_video">
+    {{ $t('cover_video') }}
+  </Headline>
+  <p
+    class="top-descr"
+    v-html="$t('cover_video_descr')"
+  />
   <CoverVideo
     :value="media.coverVideo"
     @change="updateVideo"
   />
-  <Headline>{{ $t('addition_trailers') }}</Headline>
-  <p class="top-descr">
-    {{ $t('addition_trailers_descr.0') }}<br>
-    {{ $t('addition_trailers_descr.1') }}
-  </p>
-  <AdditionTrailers
+  <Headline id="trailers">
+    {{ $t('trailers') }}
+  </Headline>
+  <p
+    class="top-descr"
+    v-html="$t('trailers_descr')"
+  />
+  <Trailers
     :value="media.trailers"
     @change="updateTrailers"
+  />
+  <Headline id="screenshots">
+    {{ $t('screenshots') }}
+  </Headline>
+  <p
+    class="top-descr"
+    v-html="$t('screenshots_descr')"
+  />
+  <Screenshots
+    :value="media.screenshots"
+    @change="updateScreenshots"
+  />
+  <Headline id="store">
+    {{ $t('store') }}
+  </Headline>
+  <p
+    class="top-descr"
+    v-html="$t('store_descr')"
+  />
+  <Store
+    :value="media.store"
+    @change="updateStore"
+  />
+  <Headline id="capsule">
+    {{ $t('capsule') }}
+  </Headline>
+  <p
+    class="top-descr"
+    v-html="$t('capsule_descr')"
+  />
+  <Capsule
+    :value="media.capsule"
+    @change="updateCapsule"
   />
 </div>
 </template>
@@ -35,24 +74,34 @@ import { mapState, mapActions, mapMutations } from 'vuex';
 import i18n from './i18n'
 import CoverImage from './components/CoverImage'
 import CoverVideo from './components/CoverVideo'
-import AdditionTrailers from './components/AdditionTrailers'
+import Trailers from './components/Trailers'
+import Screenshots from './components/Screenshots'
+import Store from './components/Store'
+import Capsule from './components/Capsule'
 import Headline from '../../components/Headline'
 
 export default Vue.extend({
   i18n,
-  components: {CoverImage, CoverVideo, AdditionTrailers, Headline},
+  components: {CoverImage, CoverVideo, Trailers, Headline, Screenshots, Store, Capsule},
   computed: {
-    ...mapState('Media', ['media']),
+    ...mapState('Game/Media', ['media']),
   },
   mounted() {
     this.initState(this.$route.params.id);
+    this.updateContents(
+      ['cover_image', 'cover_video', 'trailers', 'screenshots', 'store', 'capsule']
+        .map(a => ({anchor: a,text: this.$t(a)})));
   },
   methods: {
-    ...mapActions('Media', ['initState', 'clickSave']),
-    ...mapMutations('Media', ['updateMedia']),
+    ...mapActions('Game/Media', ['initState', 'clickSave']),
+    ...mapMutations('Game/Media', ['updateMedia']),
+    ...mapMutations('Game', ['updateContents']),
     updateCover(value){this.updateMedia({...this.media, ...{coverImage: value}})},
     updateVideo(value){this.updateMedia({...this.media, ...{coverVideo: value}})},
     updateTrailers(value){this.updateMedia({...this.media, ...{trailers: value}})},
+    updateScreenshots(value){this.updateMedia({...this.media, ...{screenshots: value}})},
+    updateStore(value){this.updateMedia({...this.media, ...{store: value}})},
+    updateCapsule(value){this.updateMedia({...this.media, ...{capsule: value}})},
   },
 })
 </script>

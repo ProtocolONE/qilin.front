@@ -62,7 +62,7 @@
         type="email"
         :validate="val => val.length > 3 && val.indexOf('@') > 1"
         :placeholder="$t('login_place')"
-      ></ValidateInput>
+      />
     </b-form-group>
     <b-form-group
       :label="$t('pass_label')"
@@ -74,7 +74,7 @@
         type="password"
         :validate="val => val.length > 3"
         :placeholder="$t('pass_place')"
-      ></ValidateInput>
+      />
     </b-form-group>
 
     <small class="form-text q-have-acc">
@@ -91,7 +91,7 @@
       v-show="false"
       ref="submit"
       type="submit"
-    ></b-button>
+    />
   </b-form>
 
   <div
@@ -106,7 +106,7 @@
       {{ $t('submit_btn') }}
     </b-btn>
 
-    <div style="clear: both;" ></div>
+    <div style="clear: both;" />
 
     <small class="form-text text-muted q-policy">
       {{ $t('policy.0') }}

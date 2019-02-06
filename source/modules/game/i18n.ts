@@ -1,5 +1,3 @@
-import anchors from './anchors';
-
 export default {
   messages: {
     en: {
@@ -7,18 +5,22 @@ export default {
       tab_description: 'Description',
       tab_ratings: 'Ratings',
       tab_media: 'Media',
-      tab_price: 'Prices',
-      tab_sales: 'Sales',
-      ...anchors.messages.en,
+
+      all_games: 'All games',
+      save: 'Save',
+
+      contents: 'Contents',
     },
     ru: {
       tab_general: 'Основные',
       tab_description: 'Описание',
       tab_ratings: 'Ограничения',
       tab_media: 'Медиа',
-      tab_price: 'Цены',
-      tab_sales: 'Распродажи',
-      ...anchors.messages.ru,
+
+      all_games: 'Все игры',
+      save: 'Сохранить',
+
+      contents: 'Содержимое',
     },
   },
 };

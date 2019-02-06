@@ -29,8 +29,6 @@ export default Vue.extend({
   list-style: none;
   margin: 0;
   padding: 0;
-  width: 224px;
-  height: 3126px;
   background: #F6F6F6;
   box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.06);
   li {

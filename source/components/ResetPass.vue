@@ -60,7 +60,7 @@
         type="email"
         :validate="val => val.length > 3 && val.indexOf('@') > 1"
         :placeholder="$t('login_place')"
-      ></ValidateInput>
+      />
     </b-form-group>
 
     <small class="form-text q-have-acc">
