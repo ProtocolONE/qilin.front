@@ -5,7 +5,7 @@ export default {
     home: {
       title: 'Главная',
       meta: {
-        title: 'Протокол Один Qilin',
+        title: 'Protocol One Qilin',
         description: 'Мета описание',
       },
     },
@@ -16,11 +16,25 @@ export default {
         description: 'Начните интеграцию',
       },
     },
-    games: {
+    Games: {
       title: 'Игры',
       meta: {
         title: 'Добро пожаловать в Qilin',
         description: 'Начните интеграцию',
+      },
+    },
+    Game: {
+      title: 'Game',
+      meta: {
+        title: 'Edit game',
+        description: '',
+      },
+      Media: {
+        title: 'Edit media',
+        meta: {
+          title: 'Edit media',
+          description: '',
+        },
       },
     },
   },

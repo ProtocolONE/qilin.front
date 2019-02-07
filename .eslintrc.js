@@ -14,7 +14,7 @@ module.exports = {
   extends: ['airbnb-base', 'prettier', 'plugin:vue/recommended'],
   plugins: ['import', 'prettier', 'chai-friendly', 'mocha', 'eslint-comments', 'vue'],
   rules: {
-    'prettier/prettier': [
+    /*'prettier/prettier': [
       'error',
       {
         singleQuote: true,
@@ -23,7 +23,7 @@ module.exports = {
         // Подразумеваем, что наш код либо транспайлится, либо запускается в среде, где поддерживаются висящие запятые в функциях
         trailingComma: 'all',
       },
-    ],
+    ],*/
     'valid-jsdoc': [
       1,
       {

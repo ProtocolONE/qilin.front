@@ -111,6 +111,8 @@ module.exports = {
     new VueLoaderPlugin(),
     new webpack.DefinePlugin({
       'process.env.QILIN_API': JSON.stringify(process.env.QILIN_API),
+      'process.env.IMAGINARY_API': JSON.stringify(process.env.IMAGINARY_API),
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     }),
   ].concat(ENV_DEV ? [new webpack.HotModuleReplacementPlugin()] : []),
   resolve: {
@@ -128,7 +130,22 @@ module.exports = {
     proxy: {
       '/api/*': 'http://localhost:3001',
       '/auth-api/*': 'http://localhost:3001',
+      '/upload': {
+        target: {
+          host: "localhost",
+          protocol: 'http:',
+          port: 9000,
+        },
+        pathRewrite: {
+          '^/upload': ''
+        }
+      }
     },
     historyApiFallback: { index: 'index.html' },
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+      "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+    }
   },
 };

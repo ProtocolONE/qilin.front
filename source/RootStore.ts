@@ -1,7 +1,9 @@
-import config from '@/config';
 import routes from '@/routes';
 import MainStores from '@/stores';
 import GamesModule from '@/modules/games/store';
+import config from '@/config';
+import GameStore from '@/modules/game/store';
+import CreateGameStore from '@/modules/gameCreate/store';
 
 const apiUrl = config.api;
 const accessToken = localStorage.getItem('accessToken') || '';
@@ -26,6 +28,8 @@ export default {
 
   // Modules by root store
   modules: {
+    Game: GameStore(apiUrl),
+    CreateGame: CreateGameStore(apiUrl),
     Games: GamesModule(apiUrl),
   },
 };

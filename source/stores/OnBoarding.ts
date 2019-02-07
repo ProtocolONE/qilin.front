@@ -16,13 +16,13 @@ export default function OnBoardingStore(apiUrl: string) {
       const name = query.name;
       const email = `${domain3}@protocol.one`;
       const howManyProducts = query.howManyProds;
-      
+
       const vendor = await axios
         .post(
           `${apiUrl}/api/v1/vendors`,
           { name, domain3, email, howManyProducts }
         )
-        .then(res => res);
+        .then(res => res.data);
 
       if (vendor) {
         commit('vendor', vendor);

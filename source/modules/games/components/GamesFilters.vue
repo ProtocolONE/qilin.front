@@ -3,13 +3,21 @@
   <span
     class="name _active"
     @click="toggleSort('technicalName')"
-  >{{ $t('name') }}</span>
-  <span class="genre">{{ $t('genre') }}</span>
-  <span class="price">{{ $t('price') }}</span>
+  >
+    {{ $t('name') }}
+  </span>
+  <span class="genre">
+    {{ $t('genre') }}
+  </span>
+  <span class="price">
+    {{ $t('price') }}
+  </span>
   <span
     class="release _active"
     @click="toggleSort('releaseDate')"
-  >{{ $t('release') }}</span>
+  >
+    {{ $t('release') }}
+  </span>
 </div>
 </template>
 

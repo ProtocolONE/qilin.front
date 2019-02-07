@@ -7,22 +7,30 @@
     <div
       class="logo"
       :style="{ backgroundImage: `url(${game.icon})` }"
-    ></div>
-    <div class="title">{{ game.technicalName }}</div>
+    />
+    <div class="title">
+      {{ game.technicalName }}
+    </div>
     <div class="genres-box">
       <div class="genres">
         <div
           v-for="genre in game.genres"
-          class="genre"
           :key="genre.id"
-        >{{ i18nGenreTitle(genre.title) }}</div>
+          class="genre"
+        >
+          {{ i18nGenreTitle(genre.title) }}
+        </div>
       </div>
     </div>
-    <div class="price">{{ game.prices.currency }} {{ game.prices.price }}</div>
-    <div class="release">{{ game.releaseDate }}</div>
+    <div class="price">
+      {{ game.prices.currency }} {{ game.prices.price }}
+    </div>
+    <div class="release">
+      {{ game.releaseDate }}
+    </div>
   </div>
   <div class="etc">
-    <div class="dots"></div>
+    <div class="dots" />
   </div>
 </router-link>
 </template>

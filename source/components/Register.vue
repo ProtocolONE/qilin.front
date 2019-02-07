@@ -60,7 +60,7 @@
         id="reg-login"
         v-model="form.login"
         type="email"
-        :validate="(val) => val.length > 3 && val.indexOf('@') > 1"
+        :validate="val => val.length > 3 && val.indexOf('@') > 1"
         :placeholder="$t('login_place')"
       />
     </b-form-group>
@@ -72,7 +72,7 @@
         id="reg-password"
         v-model="form.password"
         type="password"
-        :validate="(val) => val.length > 3"
+        :validate="val => val.length > 3"
         :placeholder="$t('pass_place')"
       />
     </b-form-group>
@@ -127,7 +127,16 @@ import ValidateInput from '@/components/ValidateInput/ValidateInput.vue';
 
 export default Vue.extend({
   components: { ValidateInput },
-  props: ['id', 'openLogin'],
+  props: {
+    id: {
+      type: String,
+      required: true,
+    },
+    openLogin: {
+      type: Function,
+      required: true,
+    }
+  },
   data: () => ({
     form: {
       login: '',

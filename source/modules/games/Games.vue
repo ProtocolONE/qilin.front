@@ -1,8 +1,9 @@
 <template>
 <div class="games-wrapper">
   <GamesHeader
-    :hasGames="hasGames"
+    :has-games="hasGames"
     @search="filterByName"
+    @clickCreate="showModal = true"
   />
 
   <template v-if="hasGames">
@@ -10,12 +11,21 @@
 
     <GameItem
       v-for="game in innerGames"
-      v-bind="{ game }"
       :key="game.id"
+      v-bind="{ game }"
     />
   </template>
 
-  <CreateGameDummy v-else />
+  <CreateGameDummy
+    v-else
+    @clickCreate="showModal = true"
+  />
+  <CreateGame
+    v-if="showModal"
+    :vendor-id="vendorId"
+    @close="showModal = false"
+    @create="gameCreated"
+  />
 </div>
 </template>
 
@@ -25,27 +35,28 @@ import includes from 'lodash-es/includes';
 import orderBy from 'lodash-es/orderBy';
 import map from 'lodash-es/map';
 import { mapState, mapActions } from 'vuex';
+import CreateGame from '@/modules/gameCreate/CreateGame.vue';
 import CreateGameDummy from './components/CreateGameDummy.vue';
 import GamesFilters from './components/GamesFilters.vue';
 import GamesHeader from './components/GamesHeader.vue';
 import GameItem from './components/GameItem.vue';
 
 export default Vue.extend({
-  components: { CreateGameDummy, GamesFilters, GamesHeader, GameItem },
+  components: { CreateGameDummy, GamesFilters, GamesHeader, GameItem, CreateGame },
   data: () => ({
     innerGames: [],
     sortingProps: {},
+    showModal: false,
   }),
   computed: {
-    ...mapState('Games', ['games']),
+    ...mapState('Games', ['games', 'vendorId']),
 
     hasGames() {
       return !!this.games.length;
     },
   },
   mounted() {
-    // @TODO - add vendor data in user
-    this.initState({ vendorId: '' });
+    this.initState({router: this.$router});
   },
   methods: {
     ...mapActions('Games', ['initState']),
@@ -63,6 +74,9 @@ export default Vue.extend({
         map(this.sortingProps, prop => prop ? 'asc' : 'desc'),
       );
     },
+    gameCreated(gameId) {
+      this.$router.push({path: `/games/${gameId}/media`});
+    }
   },
   watch: {
     games(val) {

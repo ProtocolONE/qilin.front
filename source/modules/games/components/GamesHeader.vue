@@ -1,6 +1,8 @@
 <template>
 <header class="games-header">
-  <h1 class="title">{{ $t('title') }}</h1>
+  <h1 class="title">
+    {{ $t('title') }}
+  </h1>
   <template v-if="hasGames">
     <div class="search">
       <TextField
@@ -8,9 +10,13 @@
         @input="$emit('search', $event)"
       />
     </div>
-    <div class="info" v-html="$t('info')"></div>
+    <div
+      class="info"
+      v-html="$t('info')"
+    />
     <Button
       :text="$t('buttonText')"
+      @click="$emit('clickCreate')"
     />
   </template>
 </header>

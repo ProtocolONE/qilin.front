@@ -38,7 +38,28 @@ import Vue from 'vue';
 
 export default Vue.extend({
   name: 'ValidateInput',
-  props: ['value', 'id', 'type', 'placeholder', 'validate'],
+  props: {
+    value: {
+      type: String,
+      required: true,
+    },
+    id: {
+      type: String,
+      required: true,
+    },
+    type: {
+      type: String,
+      default: 'submit',
+    },
+    placeholder: {
+      type: String,
+      default: '',
+    },
+    validate: {
+      type: Function,
+      required: true,
+    }
+  },
   data: () => ({
     inputVal: '',
     is_valid: false,

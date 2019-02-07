@@ -5,7 +5,7 @@ import locales from '@/locales';
 
 Vue.use(VueI18n);
 
-const locale = (window.localStorage.lang || window.navigator.language).split('-')[0];
+const locale = (localStorage.getItem('lang') || navigator.language).split('-')[0];
 
 const i18n = new VueI18n({
   locale,

@@ -22,4 +22,5 @@ interface Game {
 
 export default interface State {
   games: Game[];
+  vendorId: string;
 }

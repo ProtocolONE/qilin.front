@@ -40,7 +40,8 @@ export default Vue.extend({
         name: this.vendorName,
         howManyProds,
       };
-      this.createVendor(query);
+      this.createVendor(query)
+        .then(() => this.$router.push({path: '/games'}));
     },
   },
 });

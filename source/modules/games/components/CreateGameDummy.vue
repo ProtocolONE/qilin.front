@@ -1,10 +1,16 @@
 <template>
 <div class="create-game-dummy">
   <IconDummy />
-  <span class="title">{{ $t('title') }}</span>
-  <span class="text" v-html="$t('text')"></span>
+  <span class="title">
+    {{ $t('title') }}
+  </span>
+  <span
+    class="text"
+    v-html="$t('text')"
+  />
   <Button
     :text="$t('buttonText')"
+    @click="$emit('clickCreate')"
   />
 </div>
 </template>

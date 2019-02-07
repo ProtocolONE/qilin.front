@@ -38,7 +38,7 @@ export default function MainStore(apiUrl: string, accessToken: string) {
         }
         if (newAccessToken && newAccessToken !== accessToken) {
           localStorage.setItem('accessToken', newAccessToken);
-          axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+          axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
           location.reload();
         }
