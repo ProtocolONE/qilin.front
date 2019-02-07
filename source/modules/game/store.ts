@@ -1,6 +1,6 @@
 import { GetterTree, ActionTree, MutationTree } from 'vuex';
 import axios from 'axios';
-import MediaStore from '../gameMedia/store';
+import MediaStore from '@/modules/gameMedia/store';
 import {GameInfo} from './types';
 
 export interface ContentsItem {

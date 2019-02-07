@@ -50,17 +50,17 @@ export default Vue.extend({
       this.lang = lang;
     },
     clickRemove() {
-      this.$emit('change', {
+      this.$emit('change',
         ...this.value,
         ...{[this.lang]: ''}
-      });
+      );
     },
     upload() {
       uploadImage({width: 1920, height: 800}, (urls) => {
-        this.$emit('change', {
+        this.$emit('change',
           ...this.value,
           ...{[this.lang]: urls[0]}
-        });
+        );
       });
     }
   }

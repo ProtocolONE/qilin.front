@@ -68,10 +68,10 @@
         this.lang = lang;
       },
       clickAdd() {
-        this.$emit('change', {
+        this.$emit('change',
           ...this.value,
           ...{[this.lang]: (this.value[this.lang] || []).concat([''])}
-        });
+        );
       },
       clickRemove(index) {
         const value = clone(this.value, true);

@@ -28,7 +28,7 @@
 import Vue from 'vue';
 import { mapState, mapActions } from 'vuex';
 import {Button} from '@protocol-one/ui-kit';
-import CreateGame from '../gameCreate/CreateGame';
+import CreateGame from '@/modules/gameCreate/CreateGame';
 import i18n from './i18n';
 
 export default Vue.extend({

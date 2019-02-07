@@ -78,7 +78,7 @@ import Trailers from './components/Trailers'
 import Screenshots from './components/Screenshots'
 import Store from './components/Store'
 import Capsule from './components/Capsule'
-import Headline from '../../components/Headline'
+import Headline from '@/components/Headline'
 
 export default Vue.extend({
   i18n,
