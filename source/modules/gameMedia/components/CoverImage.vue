@@ -2,7 +2,7 @@
 <div class="cover-image">
   <LangsBar
     :value="lang"
-    :filled-list="Object.keys(value).filter(a => value[a])"
+    :filled-list="filled"
     @change="selectLang"
   />
   <ImageUpload
@@ -38,17 +38,29 @@ export default Vue.extend({
       lang: 'en'
     }
   },
-  computed: {},
+  computed: {
+    filled() {
+      return Object
+        .keys(this.value)
+        .filter(a => this.value[a]);
+    }
+  },
   methods: {
     selectLang(lang) {
       this.lang = lang;
     },
-    clickRemove(){
-      this.$emit('change', {...this.value, ...{[this.lang]: ''}});
+    clickRemove() {
+      this.$emit('change', {
+        ...this.value,
+        ...{[this.lang]: ''}
+      });
     },
-    upload(){
+    upload() {
       uploadImage({width: 1920, height: 800}, (urls) => {
-        this.$emit('change', {...this.value, ...{[this.lang]: urls[0]}});
+        this.$emit('change', {
+          ...this.value,
+          ...{[this.lang]: urls[0]}
+        });
       });
     }
   }

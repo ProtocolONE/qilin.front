@@ -2,7 +2,7 @@
 <div class="addition-trailers">
   <LangsBar
     :value="lang"
-    :filled-list="Object.keys(value).filter(a => value[a] && value[a].length)"
+    :filled-list="filled"
     @change="selectLang"
   />
   <div class="list">
@@ -56,7 +56,13 @@
         lang: 'en'
       }
     },
-    computed: {},
+    computed: {
+      filled() {
+        return Object
+          .keys(this.value)
+          .filter(a => this.value[a] && this.value[a].length);
+      }
+    },
     methods: {
       selectLang(lang) {
         this.lang = lang;
@@ -64,7 +70,7 @@
       clickAdd() {
         this.$emit('change', {
           ...this.value,
-          ...{[this.lang]: (this.value[this.lang] || []).concat('')}
+          ...{[this.lang]: (this.value[this.lang] || []).concat([''])}
         });
       },
       clickRemove(index) {

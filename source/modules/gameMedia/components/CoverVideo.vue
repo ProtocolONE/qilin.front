@@ -2,7 +2,7 @@
 <div class="cover-video">
   <LangsBar
     :value="lang"
-    :filled-list="Object.keys(value).filter(a => value[a])"
+    :filled-list="filled"
     @change="selectLang"
   />
   <VideoUpload
@@ -38,17 +38,29 @@ export default Vue.extend({
       lang: 'en'
     }
   },
-  computed: {},
+  computed: {
+    filled() {
+      return Object
+        .keys(this.value)
+        .filter(a => this.value[a]);
+    }
+  },
   methods: {
     selectLang(lang) {
       this.lang = lang;
     },
     clickRemove() {
-      this.$emit('change', {...this.value, ...{[this.lang]: ''}});
+      this.$emit('change', {
+        ...this.value,
+        ...{[this.lang]: ''}
+      });
     },
     upload() {
       uploadVideo({debug: true}, (urls) => {
-        this.$emit('change', {...this.value, ...{[this.lang]: urls[0]}});
+        this.$emit('change', {
+          ...this.value,
+          ...{[this.lang]: urls[0]}
+        });
       });
     }
   }

@@ -96,12 +96,12 @@ export default Vue.extend({
     ...mapActions('Game/Media', ['initState', 'clickSave']),
     ...mapMutations('Game/Media', ['updateMedia']),
     ...mapMutations('Game', ['updateContents']),
-    updateCover(value){this.updateMedia({...this.media, ...{coverImage: value}})},
-    updateVideo(value){this.updateMedia({...this.media, ...{coverVideo: value}})},
-    updateTrailers(value){this.updateMedia({...this.media, ...{trailers: value}})},
-    updateScreenshots(value){this.updateMedia({...this.media, ...{screenshots: value}})},
-    updateStore(value){this.updateMedia({...this.media, ...{store: value}})},
-    updateCapsule(value){this.updateMedia({...this.media, ...{capsule: value}})},
+    updateCover(value) {this.updateMedia({...this.media, ...{coverImage: value}})},
+    updateVideo(value) {this.updateMedia({...this.media, ...{coverVideo: value}})},
+    updateTrailers(value) {this.updateMedia({...this.media, ...{trailers: value}})},
+    updateScreenshots(value) {this.updateMedia({...this.media, ...{screenshots: value}})},
+    updateStore(value) {this.updateMedia({...this.media, ...{store: value}})},
+    updateCapsule(value) {this.updateMedia({...this.media, ...{capsule: value}})},
   },
 })
 </script>

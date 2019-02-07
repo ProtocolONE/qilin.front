@@ -59,9 +59,8 @@ export default Vue.extend({
     ...mapState('CreateGame', ['gameId']),
   },
   watch: {
-    gameId(){
-      this.$emit('close');
-      this.$router.push({path: `/games/${this.gameId}/media`});
+    gameId() {
+      this.$emit('create', this.gameId);
     }
   },
   methods: {

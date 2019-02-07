@@ -2,7 +2,7 @@
 <div class="capsule">
   <LangsBar
     :value="lang"
-    :filled-list="Object.keys(value.generic).filter(a => value.generic[a] || value.small[a])"
+    :filled-list="filled"
     @change="selectLang"
   />
   <div class="list">
@@ -54,7 +54,13 @@
         lang: 'en'
       }
     },
-    computed: {},
+    computed: {
+      filled() {
+        return Object
+          .keys(this.value.generic)
+          .filter(a => this.value.generic[a] || this.value.small[a]);
+      }
+    },
     methods: {
       selectLang(lang) {
         this.lang = lang;

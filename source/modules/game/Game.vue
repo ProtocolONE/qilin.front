@@ -48,12 +48,12 @@ export default Vue.extend({
   computed: {
     ...mapState('Game', ['gameInfo', 'contents']),
   },
-  mounted(){
+  mounted() {
     this.initState(this.$route.params.id);
   },
   methods: {
     ...mapActions('Game', ['saveGame', 'initState']),
-    clickSave(){
+    clickSave() {
       this.saveGame(this.$route.params.id);
     }
   }

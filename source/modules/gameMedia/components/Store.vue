@@ -2,9 +2,7 @@
 <div class="store">
   <LangsBar
     :value="lang"
-    :filled-list="Object
-      .keys(value.special)
-      .filter(a => value.special[a] || value.friends[a])"
+    :filled-list="filled"
     @change="selectLang"
   />
   <div class="vert-file">
@@ -15,7 +13,7 @@
         :remove-text="$t('remove_store')"
         :source="value.special[lang] || ''"
         @click="upload('special')"
-        @clickRemove="clickRemove"
+        @clickRemove="clickRemove('special')"
       />
     </div>
     <div class="right">
@@ -30,7 +28,7 @@
       :remove-text="$t('remove_store')"
       :source="value.friends[lang] || ''"
       @click="upload('friends')"
-      @clickRemove="clickRemove"
+      @clickRemove="clickRemove('friends')"
     />
   </div>
 </div>
@@ -59,15 +57,24 @@
         lang: 'en'
       }
     },
-    computed: {},
+    computed: {
+      filled() {
+        return Object
+          .keys(this.value.special)
+          .concat(Object.keys(this.value.friends))
+          .filter(a => this.value.special[a] || this.value.friends[a]);
+      }
+    },
     methods: {
       selectLang(lang) {
         this.lang = lang;
       },
-      clickRemove(){
-        this.$emit('change', {...this.value, ...{[this.lang]: ''}});
+      clickRemove(type) {
+        const value = clone(this.value, true);
+        delete value[type][this.lang];
+        this.$emit('change', value);
       },
-      upload(type){
+      upload(type) {
         uploadImage({width: 1920, height: 800}, (urls) => {
           const value = clone(this.value, true);
           value[type][this.lang] = urls[0];

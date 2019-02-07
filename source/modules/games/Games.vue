@@ -19,6 +19,7 @@
     v-if="showModal"
     :vendor-id="vendors[0].id"
     @close="showModal = false"
+    @create="gameCreated"
   />
 </div>
 </template>
@@ -52,6 +53,9 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions('Games', ['preload']),
+    gameCreated(gameId) {
+      this.$router.push({path: `/games/${gameId}/media`});
+    }
   }
 });
 </script>
