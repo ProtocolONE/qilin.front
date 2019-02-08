@@ -9,11 +9,6 @@ export type FileReadyFunc = (urls: string[]) => any;
 
 export default function Uploader(opts: VideoTransferOptions, fileReady: FileReadyFunc) {
 
-  if (process.env.NODE_ENV === 'development') {
-    fileReady(['https://static.protocol.one/qilin/MOVIE.mp4']);
-    return;
-  }
-
   const input: HTMLInputElement = document.createElement('input');
   input.type = 'file';
   input.style.display = 'none';

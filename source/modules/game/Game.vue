@@ -11,10 +11,7 @@
             {{ $t('all_games') }}
           </router-link>
         </li><li
-          class="bcrumb-item active"
-        >
-          {{ gameInfo.internalName.trim() }}
-        </li>
+          class="bcrumb-item active">{{ gameInfo.internalName.trim() }}</li>
       </ul>
       <h1>Media</h1>
     </div>
