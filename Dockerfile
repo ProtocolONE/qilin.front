@@ -10,6 +10,7 @@ COPY . /app/
 RUN npm i -D
 ENV NODE_ENV=production
 ENV QILIN_API=https://qilinapi.tst.protocol.one
+ENV IMAGINARY_API=https://imaginary.tst.protocol.one
 RUN webpack
 
 FROM nginx:1.15.4
