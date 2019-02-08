@@ -8,10 +8,10 @@
     "build/main.css"
   ],
   "scripts": {
-    "serve": "set \"NODE_ENV=development\" && webpack-dev-server",
-    "build": "set \"NODE_ENV=production\" && webpack",
+    "serve": "cross-env NODE_ENV=development webpack-dev-server",
+    "build": "cross-env NODE_ENV=production webpack",
     "lint": "eslint \"./source/**/*.{js,ts,vue}\"",
-    "test": "set \"NODE_PATH=./source\" mocha './source/**/*.spec.js' --require babel-register"
+    "test": "cross-env NODE_PATH=./source mocha './source/**/*.spec.js' --require babel-register"
   },
   "author": "",
   "license": "ISC",
@@ -48,6 +48,7 @@
     "babel-loader": "^8.0.4",
     "babel-register": "^6.26.0",
     "chai": "^4.2.0",
+    "cross-env": "^5.2.0",
     "css-loader": "^2.0.1",
     "eslint": "^5.12.0",
     "eslint-config-airbnb-base": "^13.1.0",
