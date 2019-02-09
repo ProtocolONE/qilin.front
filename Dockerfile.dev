@@ -4,13 +4,13 @@ RUN apk update && apk add --no-cache --update make gcc g++ libc-dev libpng-dev a
 RUN npm i webpack webpack-cli -g
 
 WORKDIR /app
-COPY package.json  /app/
-COPY . /app/
+COPY package-lock.json package.json /app/
 
 RUN npm i -D && npm i -g webpack-dev-server
 ENV NODE_ENV=development
 ENV QILIN_API=http://localhost:3001
-RUN webpack
+ENV IMAGINARY_API=https://imaginary.tst.protocol.one
+
+EXPOSE 8080
 
 CMD webpack-dev-server
-EXPOSE 8080
