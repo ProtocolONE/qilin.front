@@ -149,6 +149,7 @@ $hover-font-color: #fff;
   z-index: 1;
   transition: width 0.2s ease-out 0.1s;
   color: $font-color;
+  z-index: 10;
 
   &:before {
     content: '';
