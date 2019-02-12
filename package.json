@@ -17,7 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
-    "@protocol-one/ui-kit": "^0.2.0",
+    "@protocol-one/ui-kit": "^1.1.2",
     "@types/axios": "^0.14.0",
     "@types/jquery": "^3.3.29",
     "@types/lodash-es": "^4.17.1",
@@ -108,6 +108,7 @@
     ]
   },
   "resolutions": {
-    "terser": "3.14.1"
+    "terser": "3.14.1",
+    "ajv": "6.8.1"
   }
 }
