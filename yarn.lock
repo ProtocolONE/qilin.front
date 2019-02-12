@@ -663,13 +663,16 @@
   resolved "https://registry.yarnpkg.com/@kazupon/vue-i18n-loader/-/vue-i18n-loader-0.3.0.tgz#e068de2d75d891275814ae28ad1fcaf1b537694f"
   integrity sha512-M2280E9PMxetu6mOdtyh1d6Dif7LwH4gvxD2dgsu7HOyzR26AUNok8DxZ1Y5YAexJvPfbBXC75Llui2myO05Hg==
 
-"@protocol-one/ui-kit@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@protocol-one/ui-kit/-/ui-kit-0.2.0.tgz#ab2299d8ec52ea84910f1b4f227105f96d4822c1"
-  integrity sha512-c7rskkRzXk6LmuCLdmFTzLGea1b29KQlRM5/uO2aeY80PevXsaPMMIi3XGTRw0Z37sFSUcWFQVLjj8+CFDU4RA==
+"@protocol-one/ui-kit@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@protocol-one/ui-kit/-/ui-kit-1.2.0.tgz#c2ab90c45a41b6269432bfc28b34ab7972f7c0cf"
+  integrity sha512-ZipVN0Py1r62U4ZYXjOfwNjKZ30QjNRHm8EoocpadzoWDGLnZR7v7ccHKFj3Dlm70uzwcBN8Loikca1AUG20mQ==
   dependencies:
+    date-fns "^v2.0.0-alpha.27"
     lodash-es "^4.17.11"
     vue "^2.5.21"
+    vue-clickaway "^2.2.2"
+    vuejs-datepicker "^1.5.4"
 
 "@types/axios@^0.14.0":
   version "0.14.0"
@@ -7797,6 +7800,11 @@ vue@*, vue@^2.5.21:
   version "2.6.3"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.3.tgz#180017ba25b94a9864b2921db8644e1062ea82a0"
   integrity sha512-yftjtahz4UTAtOlXXuw7UaYD86fWrMDAAzqTdqJJx2FIBqcPmBN6kPBHiBJFGaQELVblb5ijbFMXsx0i0F7q3g==
+
+vuejs-datepicker@^1.5.4:
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/vuejs-datepicker/-/vuejs-datepicker-1.5.4.tgz#dacdb5eb5ef44342c67cb59b93a0d5da9c1809b3"
+  integrity sha512-AVzgu3pb/fF/Sj3qu8YPnp7KhtsXkm8TSnBEcyYsWb1bMJr5FdPCxuIzISgw5kq0It7HkVJUGXQ4CiCwq9hhww==
 
 vuex@^3.0.1:
   version "3.1.0"
