@@ -1,7 +1,8 @@
 import { RouteConfig } from 'vue-router';
 import Home from '@/modules/home/Home.vue';
 import OnBoarding from '@/modules/onboarding/OnBoarding.vue';
-import Game from '@/modules/game/Game.vue';
+import GameNavigation from '@/modules/gameNavigation/GameNavigation.vue';
+import GameCommon from '@/modules/gameCommon/GameCommon.vue';
 import GameGeneral from '@/modules/gameGeneral/General.vue';
 import Games from '@/modules/games/Games.vue';
 import GameMedia from '@/modules/gameMedia/Media.vue';
@@ -26,16 +27,19 @@ const routes: RouteConfig[] = [
   {
     path: '/games/:id',
     name: 'game',
-    component: Game,
+    components: {
+      default: GameCommon,
+      navigation: GameNavigation,
+    },
     children: [
       {
-        name: 'GameGeneral',
+        name: 'gameGeneral',
         path: 'general',
         component: GameGeneral,
         meta: 'routes.game.general.meta'
       },
       {
-        name: 'GameMedia',
+        name: 'gameMedia',
         path: 'media',
         component: GameMedia,
         meta: 'routes.game.media.meta'
