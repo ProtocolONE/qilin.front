@@ -23,6 +23,7 @@ declare module '@protocol-one/ui-kit' {
   const Checkbox: any;
   const DateTimeInput: any;
   const Select: any;
+  const SwitchBox: any;
   const TagInput: any;
   const TextField: any;
   const Tip: any;
@@ -32,6 +33,7 @@ declare module '@protocol-one/ui-kit' {
     Checkbox,
     DateTimeInput,
     Select,
+    SwitchBox,
     TagInput,
     TextField,
     Tip,
