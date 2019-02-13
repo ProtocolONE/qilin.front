@@ -1,4 +1,4 @@
-import {LocalizedString} from "@/modules/gameMedia/types";
+import {LocalizedString} from '@/modules/gameMedia/types';
 
 export interface RatingAgency {
   displayOnlineNotice: boolean;
@@ -8,7 +8,7 @@ export interface RatingAgency {
   rating: string;
 }
 
-export type RatingIndex = 'ESRB'|'PEGI'|'BBFC'|'USK'|'CERO';
+export type RatingIndex = 'ESRB' | 'PEGI' | 'BBFC' | 'USK' | 'CERO';
 
 export interface Ratings {
   [key: RatingIndex]: RatingAgency;

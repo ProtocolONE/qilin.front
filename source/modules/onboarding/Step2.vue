@@ -90,7 +90,6 @@ import Vue from 'vue';
 export default Vue.extend({
   name: 'OnBoardingStep2',
   data: () => ({
-    enabled: true,
     form: {
       howManyProds: '1-10',
     },

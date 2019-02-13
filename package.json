@@ -17,7 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
-    "@protocol-one/ui-kit": "^1.1.2",
+    "@protocol-one/ui-kit": "1.2.0",
     "@sentry/browser": "^4.5.4",
     "@types/axios": "^0.14.0",
     "@types/jquery": "^3.3.29",
@@ -84,7 +84,7 @@
     "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.5.22",
     "vue-typescript-import-dts": "^4.0.0",
-    "webpack": "^4.27.1",
+    "webpack": "^4.29.3",
     "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10"

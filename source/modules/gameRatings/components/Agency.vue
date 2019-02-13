@@ -4,34 +4,34 @@
   <div class="item">
     <div class="left">
       <Select
-        @input="updateRating"
         :label="$t('rating_label')"
         :value="value.rating"
         :placeholder="$t('not_selected')"
         :options="options"
+        @input="updateRating"
       />
       <TagInput
         :label="$t('add_descriptor')"
         :tags="allDescriptors"
-        :selectedTags="selectedDescriptors"
+        :selected-tags="selectedDescriptors"
         @change="changeSelDescriptors"
       />
-      <label>
+      <label class="switch">
         <SwitchBox
           :checked="value.displayOnlineNotice"
           @change="changeDisplayNotice"
-        /> {{$t('display_notice')}}
+        /> {{ $t('display_notice') }}
       </label>
-      <br/>
+      <br>
       <label>
         <SwitchBox
           :checked="value.showAgeRestrict"
           @change="changeShowRestrict"
-        /> {{$t('age_gate')}}
+        /> {{ $t('age_gate') }}
       </label>
     </div>
     <div class="right">
-      <img :src="ratingIconUrl"/>
+      <img :src="getLogoUrl()"/>
     </div>
   </div>
 </div>
@@ -42,11 +42,12 @@
   import {Select, SwitchBox, TagInput} from '@protocol-one/ui-kit';
   import {mapState} from 'vuex';
   import Headline from '@/components/Headline'
-  import i18n from '../i18n';
   import {includes} from 'lodash-es';
+  import i18n from '../i18n';
 
   export default Vue.extend({
     i18n,
+    components: {Headline, Select, SwitchBox, TagInput},
     props: {
       value: {
         type: Object,
@@ -65,36 +66,29 @@
         required: true,
       },
     },
-    components: {Headline, Select, SwitchBox, TagInput},
     computed: {
       ...mapState('Game/Ratings', ['descriptors']),
       allDescriptors() {
-        return this.agency_descriptors()
+        return this.getAgencyDescriptors()
           .map(d => d.title.en);
       },
       selectedDescriptors() {
-        return this.agency_descriptors()
+        return this.getAgencyDescriptors()
           .filter(d => includes(this.value.descriptors || [], d.id))
           .map(d => d.title.en);
-      },
-      ratingIconUrl() {
-        // Using file_loader get url of the rating agency icon
-        return '/' +
-          require('../icons/'
-            + this.agency.toLowerCase()
-            + '/'
-            + (this.value.rating || this.defIcon)
-            + '.png'
-          );
-      },
+      }
     },
     methods: {
-      agency_descriptors() {
+      getLogoUrl() {
+        const url = require(`../icons/${this.agency.toLowerCase()}/${this.value.rating || this.defIcon}.png`);
+        return `/${url}`;
+      },
+      getAgencyDescriptors() {
         return (this.descriptors || [])
           .filter(d => d.system === this.agency);
       },
       changeSelDescriptors(tags) {
-        const ids = this.agency_descriptors().filter(d => includes(tags, d.title.en)).map(d => d.id);
+        const ids = this.getAgencyDescriptors().filter(d => includes(tags, d.title.en)).map(d => d.id);
         this.$emit('change', {
           ...this.value,
           ...{descriptors: ids}
@@ -128,33 +122,34 @@
   flex-direction: row;
   justify-content: flex-end;
   margin-bottom: 40px;
-  > .left {
-    flex: 1;
-    > .select-field {
-      display: block;
-      max-width: 300px;
-    }
-    .tag-input {
-      padding-bottom: 13px;
-      > .field {
-        margin-top: -15px;
-      }
-    }
-  }
-  > .right {
-    flex: 0 0 200px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-  }
-  label {
-    margin-bottom: 16px;
-    .switch-box {
-      margin-bottom: -15px;
-    }
-  }
 }
-h2 {
+.left {
+  flex: 1;
+}
+.select-field {
+  display: block;
+  max-width: 300px;
+}
+.tag-input {
+  padding-bottom: 13px;
+}
+.field {
+  margin-top: -15px;
+}
+.right {
+  flex: 0 0 200px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+label.switch {
+  margin-bottom: 16px;
+}
+.switch-box {
+  margin-bottom: -15px;
+  margin-right: 10px;
+}
+.headline {
   font-size: 20px;
 }
 </style>

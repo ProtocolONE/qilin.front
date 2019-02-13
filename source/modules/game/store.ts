@@ -2,6 +2,7 @@ import { GetterTree, ActionTree, MutationTree } from 'vuex';
 import axios from 'axios';
 import GeneralStore from '@/modules/gameGeneral/store';
 import MediaStore from '@/modules/gameMedia/store';
+import RatingsStore from '@/modules/gameRatings/store';
 import { GameInfo } from './types';
 
 export interface ContentsItem {
@@ -22,7 +23,8 @@ export default function GameStore(apiUrl: string) {
   const getters: GetterTree<State, any> = {};
   const actions: ActionTree<State, any> = {
     saveGame({ dispatch }, gameId) {
-      dispatch('Game/Media/clickSave', gameId);
+      dispatch('Media/clickSave', gameId);
+      dispatch('Ratings/clickSave', gameId);
     },
     initState({ commit }, gameId: string) {
       axios
@@ -45,6 +47,7 @@ export default function GameStore(apiUrl: string) {
     namespaced: true,
     modules: {
       General: GeneralStore(apiUrl),
+      Ratings: RatingsStore(apiUrl),
       Media: MediaStore(apiUrl),
     }
   };
