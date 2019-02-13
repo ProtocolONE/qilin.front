@@ -16,23 +16,37 @@ export default {
         description: 'Help us setup your first tenant and start untegration',
       },
     },
-    Games: {
+    games: {
       title: 'Games',
       meta: {
         title: 'Welcome to Qilin',
         description: 'Help us setup your first tenant and start untegration',
       },
     },
-    Game: {
+    game: {
       title: 'Game',
       meta: {
         title: 'Edit game',
         description: '',
       },
-      Media: {
-        title: 'Edit media',
+      media: {
+        title: 'Edit game media',
         meta: {
-          title: 'Edit media',
+          title: 'Edit game media',
+          description: '',
+        },
+      },
+      general: {
+        title: 'Edit game general',
+        meta: {
+          title: 'Edit game general',
+          description: '',
+        },
+      },
+      rating: {
+        title: 'Edit game rating',
+        meta: {
+          title: 'Edit game rating',
           description: '',
         },
       },

@@ -27,5 +27,5 @@ export interface Media {
 
 export interface State {
   media: Media;
-  wait: boolean;
+  hasChanges: Boolean;
 }

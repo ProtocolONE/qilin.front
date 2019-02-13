@@ -9,7 +9,7 @@
   />
   <CoverImage
     :value="media.coverImage"
-    @change="updateCover"
+    @change="updateMediaByProp('coverImage', $event)"
   />
   <Headline id="cover_video">
     {{ $t('cover_video') }}
@@ -20,7 +20,7 @@
   />
   <CoverVideo
     :value="media.coverVideo"
-    @change="updateVideo"
+    @change="updateMediaByProp('coverVideo', $event)"
   />
   <Headline id="trailers">
     {{ $t('trailers') }}
@@ -31,7 +31,7 @@
   />
   <Trailers
     :value="media.trailers"
-    @change="updateTrailers"
+    @change="updateMediaByProp('trailers', $event)"
   />
   <Headline id="screenshots">
     {{ $t('screenshots') }}
@@ -42,7 +42,7 @@
   />
   <Screenshots
     :value="media.screenshots"
-    @change="updateScreenshots"
+    @change="updateMediaByProp('screenshots', $event)"
   />
   <Headline id="store">
     {{ $t('store') }}
@@ -53,7 +53,7 @@
   />
   <Store
     :value="media.store"
-    @change="updateStore"
+    @change="updateMediaByProp('store', $event)"
   />
   <Headline id="capsule">
     {{ $t('capsule') }}
@@ -64,10 +64,11 @@
   />
   <Capsule
     :value="media.capsule"
-    @change="updateCapsule"
+    @change="updateMediaByProp('capsule', $event)"
   />
 </div>
 </template>
+
 <script type="ts">
 import Vue from 'vue'
 import { mapState, mapActions, mapMutations } from 'vuex';
@@ -82,29 +83,36 @@ import Headline from '@/components/Headline'
 
 export default Vue.extend({
   i18n,
-  components: {CoverImage, CoverVideo, Trailers, Headline, Screenshots, Store, Capsule},
+  components: { CoverImage, CoverVideo, Trailers, Headline, Screenshots, Store, Capsule },
   computed: {
     ...mapState('Game/Media', ['media']),
   },
   mounted() {
     this.initState(this.$route.params.id);
     this.updateContents(
-      ['cover_image', 'cover_video', 'trailers', 'screenshots', 'store', 'capsule']
-        .map(a => ({anchor: a,text: this.$t(a)})));
+      [
+        'cover_image',
+        'cover_video',
+        'trailers',
+        'screenshots',
+        'store',
+        'capsule',
+      ].map(a => ({ anchor: a, text: this.$t(a) }))
+    );
   },
   methods: {
-    ...mapActions('Game/Media', ['initState', 'clickSave']),
-    ...mapMutations('Game/Media', ['updateMedia']),
+    ...mapActions('Game/Media', ['initState']),
+    ...mapMutations('Game/Media', ['updateMedia', 'hasChanges']),
     ...mapMutations('Game', ['updateContents']),
-    updateCover(value) {this.updateMedia({...this.media, ...{coverImage: value}})},
-    updateVideo(value) {this.updateMedia({...this.media, ...{coverVideo: value}})},
-    updateTrailers(value) {this.updateMedia({...this.media, ...{trailers: value}})},
-    updateScreenshots(value) {this.updateMedia({...this.media, ...{screenshots: value}})},
-    updateStore(value) {this.updateMedia({...this.media, ...{store: value}})},
-    updateCapsule(value) {this.updateMedia({...this.media, ...{capsule: value}})},
+
+    updateMediaByProp(prop, value) {
+      this.updateMedia({ ...this.media, [prop]: value });
+      this.hasChanges(true);
+    },
   },
 })
 </script>
+
 <style scoped lang="scss">
 .media-page {
   min-width: 528px;

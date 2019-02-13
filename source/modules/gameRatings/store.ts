@@ -26,8 +26,8 @@ export default function RatingsStore(apiUrl: string) {
   };
   const getters: GetterTree<State, any> = {};
   const actions: ActionTree<State, any> = {
-    clickSave({ commit, state }, gameId) {
-      axios.put(`${apiUrl}/api/v1/games/${gameId}/ratings`, state.ratings);
+    async save({ state }, gameId) {
+      await axios.put(`${apiUrl}/api/v1/games/${gameId}/ratings`, state.ratings);
     },
     async initState({ commit }, gameId: string) {
       const descriptors = await axios

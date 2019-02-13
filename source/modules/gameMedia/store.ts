@@ -15,23 +15,30 @@ const defaultMedia: Media = {
 export default function MediaStore(apiUrl: string) {
   const state: State = {
     media: defaultMedia,
-    wait: false,
+    hasChanges: false,
   };
   const getters: GetterTree<State, any> = {};
   const actions: ActionTree<State, any> = {
-    clickSave({ commit, state }, gameId) {
-      axios.put(`${apiUrl}/api/v1/games/${gameId}/media`, state.media);
+    async save({ state }, gameId) {
+      if (state.hasChanges) {
+        await axios.put(`${apiUrl}/api/v1/games/${gameId}/media`, state.media);
+      }
     },
-    initState({ commit }, gameId: string) {
-      axios
+    async initState({ commit }, gameId: string) {
+      const media = await axios
         .get(`${apiUrl}/api/v1/games/${gameId}/media`)
-        .then(result => {
-          commit('updateMedia', mergeWith(defaultMedia, result.data, (a, b) => (b === null ? a : b)));
-        });
+        .then(({ data }) => data);
+        
+      commit('updateMedia', mergeWith(defaultMedia, media, (a, b) => (b === null ? a : b)));
     },
   };
   const mutations: MutationTree<State> = {
-    updateMedia: (state, value) => {state.media = value},
+    updateMedia: (state, value) => {
+      state.media = value;
+    },
+    hasChanges: (state, value) => {
+      state.hasChanges = value;
+    },
   };
   return {
     state,

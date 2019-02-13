@@ -64,7 +64,9 @@ export default function GeneralStore(apiUrl: string) {
       commit('tags', tags);
     },
     async save({ state }, gameId: string) {
-      await axios.put(`${apiUrl}/api/v1/games/${gameId}`, state.gameInfo);
+      if (state.gameInfo) {
+        await axios.put(`${apiUrl}/api/v1/games/${gameId}`, state.gameInfo);
+      }
     },
   };
   const mutations: MutationTree<State> = {

@@ -9,7 +9,7 @@
     <Button
       slot="right"
       :text="$t('save')"
-      @click="clickSave"
+      @click="saveGame"
     />
   </PageHeader>
   <div class="body">
@@ -24,15 +24,15 @@
 
 <script type="ts">
 import Vue from 'vue'
-import {mapActions, mapState} from 'vuex';
-import {Button, PageHeader} from '@protocol-one/ui-kit'
-import Menu from './components/Menu.vue'
-import Contents from './components/Contents.vue'
-import i18n from './i18n'
+import { mapActions, mapState } from 'vuex';
+import { Button, PageHeader } from '@protocol-one/ui-kit';
+import Menu from './components/Menu.vue';
+import Contents from './components/Contents.vue';
+import i18n from './i18n';
 
 export default Vue.extend({
   i18n,
-  components: {Menu, Contents, Button, PageHeader},
+  components: { Menu, Contents, Button, PageHeader },
   computed: {
     ...mapState('Game', ['gameInfo', 'contents']),
     breadcrumbs () {
@@ -55,9 +55,9 @@ export default Vue.extend({
     this.initState(this.$route.params.id);
   },
   methods: {
-    ...mapActions('Game', ['saveGame', 'initState']),
-    clickSave() {
-      this.saveGame(this.$route.params.id);
+    ...mapActions('Game', ['save', 'initState']),
+    saveGame() {
+      this.save(this.$route.params.id);
     }
   }
 })

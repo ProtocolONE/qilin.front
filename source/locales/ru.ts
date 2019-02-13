@@ -16,23 +16,37 @@ export default {
         description: 'Начните интеграцию',
       },
     },
-    Games: {
+    games: {
       title: 'Игры',
       meta: {
         title: 'Добро пожаловать в Qilin',
         description: 'Начните интеграцию',
       },
     },
-    Game: {
+    game: {
       title: 'Game',
       meta: {
-        title: 'Edit game',
+        title: 'Редактирование игры',
         description: '',
       },
-      Media: {
-        title: 'Edit media',
+      media: {
+        title: 'Редактирование раздела Media',
         meta: {
-          title: 'Edit media',
+          title: 'Редактирование раздела Media',
+          description: '',
+        },
+      },
+      general: {
+        title: 'Редактирование раздела General',
+        meta: {
+          title: 'Редактирование раздела General',
+          description: '',
+        },
+      },
+      rating: {
+        title: 'Edit game rating',
+        meta: {
+          title: 'Edit game rating',
           description: '',
         },
       },

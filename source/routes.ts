@@ -3,11 +3,9 @@ import Home from '@/modules/home/Home.vue';
 import OnBoarding from '@/modules/onboarding/OnBoarding.vue';
 import Game from '@/modules/game/Game.vue';
 import GameGeneral from '@/modules/gameGeneral/General.vue';
-import GameMedia from '@/modules/gameMedia/Media.vue';
 import Games from '@/modules/games/Games.vue';
 import GameMedia from '@/modules/gameMedia/Media.vue';
 import GameRatings from '@/modules/gameRatings/Ratings.vue';
-import Game from '@/modules/game/Game.vue';
 
 const routes: RouteConfig[] = [
   {
@@ -33,12 +31,14 @@ const routes: RouteConfig[] = [
       {
         name: 'GameGeneral',
         path: 'general',
-        component: GameGeneral
+        component: GameGeneral,
+        meta: 'routes.game.general.meta'
       },
       {
         name: 'GameMedia',
         path: 'media',
-        component: GameMedia
+        component: GameMedia,
+        meta: 'routes.game.media.meta'
       },
       {
         name: 'GameRatings',
