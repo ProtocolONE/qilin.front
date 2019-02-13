@@ -18,9 +18,9 @@ module.exports = {
   context: path.join(__dirname, 'source'),
   entry: (ENV_DEV
     ? [
-        'webpack-dev-server/client?http://0.0.0.0:8080', // WebpackDevServer host and port
-        'webpack/hot/only-dev-server', // 'only' prevents reload on syntax errors
-      ]
+      'webpack-dev-server/client?http://0.0.0.0:8080', // WebpackDevServer host and port
+      'webpack/hot/only-dev-server', // 'only' prevents reload on syntax errors
+    ]
     : []
   ).concat(['./main.ts']),
   output: {
@@ -40,6 +40,9 @@ module.exports = {
             ts: 'ts-loader',
           },
           esModule: true,
+          compilerOptions: {
+            whitespace: 'condense'
+          }
         },
       },
       {
@@ -91,19 +94,19 @@ module.exports = {
   optimization: !MINIFY
     ? { minimize: false }
     : {
-        minimizer: [
-          new OptimizeCSSAssetsPlugin({
-            cssProcessorPluginOptions: {
-              preset: ['default', { discardComments: { removeAll: true } }],
-            },
-          }),
-          new TerserPlugin({
-            cache: true,
-            parallel: true,
-            extractComments: true,
-          }),
-        ],
-      },
+      minimizer: [
+        new OptimizeCSSAssetsPlugin({
+          cssProcessorPluginOptions: {
+            preset: ['default', { discardComments: { removeAll: true } }],
+          },
+        }),
+        new TerserPlugin({
+          cache: true,
+          parallel: true,
+          extractComments: true,
+        }),
+      ],
+    },
 
   plugins: [
     new BundleAnalyzerPlugin({ analyzerMode: 'static', openAnalyzer: false }),
