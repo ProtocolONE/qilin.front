@@ -1,9 +1,10 @@
 import { RouteConfig } from 'vue-router';
 import Home from '@/modules/home/Home.vue';
 import OnBoarding from '@/modules/onboarding/OnBoarding.vue';
-import Games from '@/modules/games/Games.vue';
-import GameMedia from '@/modules/gameMedia/Media.vue';
 import Game from '@/modules/game/Game.vue';
+import GameGeneral from '@/modules/gameGeneral/General.vue';
+import GameMedia from '@/modules/gameMedia/Media.vue';
+import Games from '@/modules/games/Games.vue';
 
 const routes: RouteConfig[] = [
   {
@@ -26,6 +27,11 @@ const routes: RouteConfig[] = [
     name: 'game',
     component: Game,
     children: [
+      {
+        name: 'GameGeneral',
+        path: 'general',
+        component: GameGeneral
+      },
       {
         name: 'GameMedia',
         path: 'media',

@@ -146,9 +146,9 @@ $hover-font-color: #fff;
   left: 0;
   width: 80px;
   background-color: $navbar-color;
-  z-index: 1;
   transition: width 0.2s ease-out 0.1s;
   color: $font-color;
+  z-index: 10;
 
   &:before {
     content: '';
