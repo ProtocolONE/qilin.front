@@ -1,16 +1,17 @@
 FROM node:10.12-alpine AS node
 
 RUN apk update && apk add --no-cache --update make gcc g++ libc-dev libpng-dev automake autoconf libtool
-RUN npm i webpack webpack-cli -g
+RUN npm i webpack webpack-cli webpack-dev-server -g
 
 WORKDIR /app
-COPY package-lock.json package.json /app/
+COPY yarn.lock package.json /app/
 
-RUN npm i -D && npm i -g webpack-dev-server
 ENV NODE_ENV=development
 ENV QILIN_API=http://localhost:3001
 ENV IMAGINARY_API=https://imaginary.tst.protocol.one
 
+RUN yarn 
+
 EXPOSE 8080
 
-CMD webpack-dev-server
+CMD ["yarn", "serve"]

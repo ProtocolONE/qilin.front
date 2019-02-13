@@ -4,10 +4,10 @@ RUN apk update && apk add --no-cache --update make gcc g++ libc-dev libpng-dev a
 RUN npm i webpack webpack-cli -g
 
 WORKDIR /app
-COPY package.json  /app/
+COPY package.json yarn.lock /app/
 COPY . /app/
 
-RUN npm i -D
+RUN yarn
 ENV NODE_ENV=production
 ENV QILIN_API=https://qilinapi.tst.protocol.one
 ENV IMAGINARY_API=https://imaginary.tst.protocol.one
