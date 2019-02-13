@@ -62,6 +62,6 @@ export default Vue.extend({
   display: block;
   font-size: 20px;
   margin-bottom: 16px;
-  font-weight: 500;
+  font-weight: bold;
 }
 </style>

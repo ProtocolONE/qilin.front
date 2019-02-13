@@ -86,7 +86,7 @@ export default Vue.extend({
   display: block;
   font-size: 20px;
   margin-bottom: 16px;
-  font-weight: 500;
+  font-weight: bold;
 }
 .header {
   color: #b1b1b1;
@@ -102,8 +102,7 @@ export default Vue.extend({
   flex-basis: 180px;
   min-width: 100px;
 }
-.type,
-.checkbox {
+.type {
   display: inline-block;
   flex-basis: 120px;
   min-width: 80px;
@@ -118,6 +117,8 @@ export default Vue.extend({
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-basis: 120px;
+  text-align: center;
 }
 .check {
   height: 20px;

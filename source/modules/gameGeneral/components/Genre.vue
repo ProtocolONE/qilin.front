@@ -1,5 +1,5 @@
 <template>
-<div class="game-creators">
+<div class="game-genre">
   <span class="title">{{ $t('title') }}</span>
   <Select
     :label="$t('genreLabel')"
@@ -61,10 +61,13 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
+.game-genre {
+  max-width: 320px;
+}
 .title {
   display: block;
   font-size: 20px;
   margin-bottom: 24px;
-  font-weight: 500;
+  font-weight: bold;
 }
 </style>

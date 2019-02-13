@@ -1,19 +1,22 @@
 export default {
   messages: {
     de: {
-      title: 'Creators',
-      developers: 'Developers',
-      publisher: 'Publisher',
+      title: 'Supported features',
+      featuresTitle: 'Platform features',
+      singlePlayer: 'Single Player',
+      multiPlayer: 'Multi Player',
     },
     en: {
-      title: 'Creators',
-      developers: 'Developers',
-      publisher: 'Publisher',
+      title: 'Supported features',
+      featuresTitle: 'Platform features',
+      singlePlayer: 'Single Player',
+      multiPlayer: 'Multi Player',
     },
     ru: {
-      title: 'Разработчики',
-      developers: 'Компания-разработчик',
-      publisher: 'Компания-издатель',
+      title: 'Поддерживаемые возможности',
+      featuresTitle: 'Возможности платформы',
+      singlePlayer: 'Одиночный режим',
+      multiPlayer: 'Многопользовательский режим',
     },
   }
 }

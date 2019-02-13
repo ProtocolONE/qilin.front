@@ -1,5 +1,5 @@
 <template>
-<div class="game-creators">
+<div class="game-release">
   <span class="title">{{ $t('title') }}</span>
   <DateTimeInput
     :dateLabel="$t('dateLabel')"
@@ -37,8 +37,8 @@ export default Vue.extend({
   },
   methods: {
     changeReleaseDate(timestamp: number) {
-      const releaseDate = format(timestamp, 'yyyy-MM-ddTHH:mm:ssZ')
-      this.$emit('changeReleaseDate', releaseDate);
+      const releaseDate = format(timestamp, `yyyy-MM-dd'T'HH:mm:ssZ`)
+      this.$emit('change', releaseDate);
     },
   },
 });
@@ -49,6 +49,6 @@ export default Vue.extend({
   display: block;
   font-size: 20px;
   margin-bottom: 16px;
-  font-weight: 500;
+  font-weight: bold;
 }
 </style>
