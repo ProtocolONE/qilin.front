@@ -8,6 +8,7 @@ export default function GeneralStore(apiUrl: string) {
     gameInfo: null,
     genres: [],
     tags: [],
+    hasChanges: false,
   };
   const getters: GetterTree<State, any> = {
     creators: ({ gameInfo }) => ({
@@ -64,7 +65,7 @@ export default function GeneralStore(apiUrl: string) {
       commit('tags', tags);
     },
     async save({ state }, gameId: string) {
-      if (state.gameInfo) {
+      if (state.hasChanges) {
         await axios.put(`${apiUrl}/api/v1/games/${gameId}`, state.gameInfo);
       }
     },
@@ -78,6 +79,9 @@ export default function GeneralStore(apiUrl: string) {
     },
     tags(state, value) {
       state.tags = value;
+    },
+    hasChanges(state) {
+      state.hasChanges = true;
     },
 
     changeCreators(state, creators) {

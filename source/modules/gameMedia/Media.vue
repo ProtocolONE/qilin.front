@@ -107,7 +107,7 @@ export default Vue.extend({
 
     updateMediaByProp(prop, value) {
       this.updateMedia({ ...this.media, [prop]: value });
-      this.hasChanges(true);
+      this.hasChanges();
     },
   },
 })

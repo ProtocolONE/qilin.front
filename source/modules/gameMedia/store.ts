@@ -36,8 +36,8 @@ export default function MediaStore(apiUrl: string) {
     updateMedia: (state, value) => {
       state.media = value;
     },
-    hasChanges: (state, value) => {
-      state.hasChanges = value;
+    hasChanges: (state) => {
+      state.hasChanges = true;
     },
   };
   return {

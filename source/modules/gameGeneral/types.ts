@@ -60,4 +60,5 @@ export interface State {
   gameInfo: GameInfo;
   genres: GameTag[];
   tags: GameTag[];
+  hasChanges: Boolean;
 }

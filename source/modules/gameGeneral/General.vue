@@ -3,41 +3,41 @@
   <Creators
     v-bind="{ ...creators }"
     class="section"
-    @change="changeCreators"
+    @change="change('creators', $event)"
   />
   <SupportedLanguages
     class="section"
     :languages="languages"
-    @change="changeLanguages"
+    @change="change('languages', $event)"
   />
   <ReleaseDate
     class="section"
     :releaseDate="releaseDate"
-    @change="changeReleaseDate"
+    @change="change('releaseDate', $event)"
   />
   <Genre
     class="section"
     :genre="genre"
     :genres="genres"
-    @change="changeGenre"
+    @change="change('genre', $event)"
   />
   <Tags
     class="section"
     :selectedTags="selectedTags"
     :tags="tags"
-    @change="changeTags"
+    @change="change('tags', $event)"
   />
   <SupportedFeatures
     v-bind="features"
     class="section"
-    @change="changeFeatures"
+    @change="change('features', $event)"
   />
   <Platforms
     :platforms="platforms"
     :requirements="requirements"
     class="section"
-    @changePlatforms="changePlatforms"
-    @changeRequirements="changeRequirements"
+    @changePlatforms="change('platforms', $event)"
+    @changeRequirements="change('requirements', $event)"
   />
 </div>
 </template>
@@ -45,6 +45,7 @@
 <script type="ts">
 import Vue from 'vue'
 import { mapActions, mapState, mapGetters, mapMutations } from 'vuex';
+import capitalizeFirstLetter from '@/helpers/capitalizeFirstLetter';
 import Creators from './components/Creators.vue';
 import Genre from './components/Genre.vue';
 import Platforms from './components/Platforms.vue';
@@ -94,7 +95,12 @@ export default Vue.extend({
       'changeReleaseDate',
       'changeRequirements',
       'changeTags',
+      'hasChanges',
     ]),
+    change(prop, value) {
+      this[`change${capitalizeFirstLetter(prop)}`]();
+      this.hasChanges();
+    },
   }
 })
 </script>
