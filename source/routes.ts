@@ -5,6 +5,9 @@ import Game from '@/modules/game/Game.vue';
 import GameGeneral from '@/modules/gameGeneral/General.vue';
 import GameMedia from '@/modules/gameMedia/Media.vue';
 import Games from '@/modules/games/Games.vue';
+import GameMedia from '@/modules/gameMedia/Media.vue';
+import GameRatings from '@/modules/gameRatings/Ratings.vue';
+import Game from '@/modules/game/Game.vue';
 
 const routes: RouteConfig[] = [
   {
@@ -36,6 +39,11 @@ const routes: RouteConfig[] = [
         name: 'GameMedia',
         path: 'media',
         component: GameMedia
+      },
+      {
+        name: 'GameRatings',
+        path: 'ratings',
+        component: GameRatings
       },
     ],
   },

@@ -90,7 +90,6 @@ export default Vue.extend({
   name: 'OnBoardingStep1',
   components: { TextField },
   data: () => ({
-    enabled: true,
     form: {
       name: '',
     },

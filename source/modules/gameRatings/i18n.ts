@@ -1,0 +1,30 @@
+export default {
+  messages: {
+    en: {
+      ESRB: 'ESRB North America',
+      PEGI: 'PEGI Europe',
+      BBFC: 'BBFC United Kingdom',
+      USK: 'USK Germany',
+      CERO: 'CERO Japan',
+      warning_message: 'Don\'t make this up.<br/>You may only enter a rating below if your game has been rated by that rating agency.',
+      not_selected: 'Not selected',
+      rating_label: 'Rating',
+      add_descriptor: '+ Add descriptor',
+      display_notice: 'Display online rating notice',
+      age_gate: 'Age gate',
+    },
+    ru: {
+      ESRB: 'ESRB North America',
+      PEGI: 'PEGI Europe',
+      BBFC: 'BBFC United Kingdom',
+      USK: 'USK Germany',
+      CERO: 'CERO Japan',
+      warning_message: 'Не придумывайте сами.<br/>Вы можете выставить рейтинг, только если соответствующие агенство его подтвердило.',
+      not_selected: 'Не выбрано',
+      rating_label: 'Рейтинг',
+      add_descriptor: '+ Добавить',
+      display_notice: 'Отображать предупреждение',
+      age_gate: 'Запрашивать возраст',
+    },
+  },
+};

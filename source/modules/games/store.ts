@@ -2,7 +2,7 @@ import axios from 'axios';
 import cloneDeep from 'lodash-es/cloneDeep';
 import { GetterTree, ActionTree, MutationTree } from 'vuex';
 import formatDate from '@/helpers/formatDate';
-import { VueRouter } from "vue-router/types/router";
+import { VueRouter } from 'vue-router/types/router';
 import State from './types';
 // import testData from './testData';
 

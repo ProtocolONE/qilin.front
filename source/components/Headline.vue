@@ -1,5 +1,5 @@
 <template>
-<h2>
+<h2 class="headline">
   <slot />
   <svg
     width="12"
