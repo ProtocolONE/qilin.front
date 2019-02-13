@@ -1,5 +1,5 @@
-import { GetterTree, ActionTree, MutationTree } from 'vuex';
 import axios from 'axios';
+import { GetterTree, ActionTree, MutationTree } from 'vuex';
 import GeneralStore from '@/modules/gameGeneral/store';
 import MediaStore from '@/modules/gameMedia/store';
 import RatingsStore from '@/modules/gameRatings/store';
