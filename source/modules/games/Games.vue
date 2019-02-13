@@ -62,7 +62,9 @@ export default Vue.extend({
     ...mapActions('Games', ['initState']),
 
     filterByName(namePart) {
-      this.innerGames = this.games.filter(game => includes(game.technicalName, namePart));
+      this.innerGames = this.games.filter(
+        game => includes(game.internalName.toLowerCase(), namePart.toLowerCase())
+      );
     },
     toggleSort(propName) {
       this.sortingProps[propName] = !this.sortingProps[propName];
@@ -75,7 +77,7 @@ export default Vue.extend({
       );
     },
     gameCreated(gameId) {
-      this.$router.push({path: `/games/${gameId}/media`});
+      this.$router.push({ name: 'gameGeneral', params: { id: gameId } });
     }
   },
   watch: {
