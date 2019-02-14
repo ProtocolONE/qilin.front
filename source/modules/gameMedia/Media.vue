@@ -70,16 +70,16 @@
 </template>
 
 <script type="ts">
-import Vue from 'vue'
+import Vue from 'vue';
 import { mapState, mapActions, mapMutations } from 'vuex';
-import i18n from './i18n'
-import CoverImage from './components/CoverImage'
-import CoverVideo from './components/CoverVideo'
-import Trailers from './components/Trailers'
-import Screenshots from './components/Screenshots'
-import Store from './components/Store'
-import Capsule from './components/Capsule'
-import Headline from '@/components/Headline'
+import Headline from '@/components/Headline';
+import Capsule from './components/Capsule';
+import CoverImage from './components/CoverImage';
+import CoverVideo from './components/CoverVideo';
+import Screenshots from './components/Screenshots';
+import Store from './components/Store';
+import Trailers from './components/Trailers';
+import i18n from './i18n';
 
 export default Vue.extend({
   i18n,
@@ -101,13 +101,11 @@ export default Vue.extend({
     );
   },
   methods: {
-    ...mapActions('Game/Media', ['initState']),
-    ...mapMutations('Game/Media', ['updateMedia', 'hasChanges']),
+    ...mapActions('Game/Media', ['initState', 'updateMedia']),
     ...mapMutations('Game', ['updateContents']),
 
     updateMediaByProp(prop, value) {
       this.updateMedia({ ...this.media, [prop]: value });
-      this.hasChanges();
     },
   },
 })

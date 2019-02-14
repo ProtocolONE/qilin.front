@@ -64,9 +64,10 @@ export default function GeneralStore(apiUrl: string) {
         .then(response => response.data);
       commit('tags', tags);
     },
-    async save({ state }, gameId: string) {
+    async save({ state, commit }, gameId: string) {
       if (state.hasChanges) {
         await axios.put(`${apiUrl}/api/v1/games/${gameId}`, state.gameInfo);
+        commit('hasChanges', false);
       }
     },
   };
@@ -80,31 +81,58 @@ export default function GeneralStore(apiUrl: string) {
     tags(state, value) {
       state.tags = value;
     },
-    hasChanges(state) {
-      state.hasChanges = true;
+    hasChanges(state, value) {
+      state.hasChanges = value;
     },
 
     changeCreators(state, creators) {
-      state.gameInfo.developers = creators.developers;
-      state.gameInfo.publishers = creators.publishers;
+      state.gameInfo = {
+        ...state.gameInfo,
+        developers: creators.developers,
+      }
+      state.gameInfo = {
+        ...state.gameInfo,
+        publishers: creators.publishers,
+      }
     },
     changeLanguages(state, languages) {
-      state.gameInfo.languages = languages;
+      state.gameInfo = {
+        ...state.gameInfo,
+        languages,
+      }
     },
     changeReleaseDate(state, releaseDate) {
-      state.gameInfo.releaseDate = releaseDate;
+      state.gameInfo = {
+        ...state.gameInfo,
+        releaseDate,
+      }
     },
     changeGenre(state, genre) {
-      state.gameInfo.genre = genre;
+      state.gameInfo = {
+        ...state.gameInfo,
+        genre,
+      }
     },
     changeFeatures(state, features) {
-      state.gameInfo.features.common = features;
+      state.gameInfo = {
+        ...state.gameInfo,
+        features: {
+          common: features,
+          controllers: '',
+        },
+      }
     },
     changePlatforms(state, platforms) {
-      state.gameInfo.platforms = platforms;
+      state.gameInfo = {
+        ...state.gameInfo,
+        platforms,
+      }
     },
     changeRequirements(state, requirements) {
-      state.gameInfo.requirements = requirements;
+      state.gameInfo = {
+        ...state.gameInfo,
+        requirements,
+      }
     },
   };
 

@@ -1,6 +1,5 @@
 <template>
 <div class="game-creators">
-  <span class="title">{{ $t('title') }}</span>
   <TextField
     :label="$t('developers')"
     :value="localDevelopers"
@@ -56,12 +55,3 @@ export default Vue.extend({
   },
 });
 </script>
-
-<style scoped lang="scss">
-.title {
-  display: block;
-  font-size: 20px;
-  margin-bottom: 16px;
-  font-weight: bold;
-}
-</style>

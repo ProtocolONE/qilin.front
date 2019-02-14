@@ -9,7 +9,7 @@
       class="logo"
       :style="{ backgroundImage: `url(${game.icon})` }"
     />
-    <div :class="['title', game.icon ? '' : '_wthout-icon']">
+    <div :class="['title', { '_without-icon': !game.icon }]">
       {{ game.internalName }}
     </div>
     <div class="genres-box">
@@ -100,7 +100,7 @@ export default Vue.extend({
   max-width: 220px;
   margin-right: 16px;
 
-  &._wthout-icon {
+  &._without-icon {
     min-width: 276px;
     max-width: 276px;
   }

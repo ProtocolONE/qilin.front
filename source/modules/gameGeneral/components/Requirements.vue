@@ -1,6 +1,8 @@
 <template>
 <div class="platforms-requirements">
-  <span class="title">{{ title }}</span>
+  <div class="title">
+    <slot name="title"></slot>
+  </div>
   <div class="requirements-row">
     <TextField
       :label="$t('cpu')"
@@ -49,7 +51,6 @@
       @input="change('other', $event)"
     />
   </div>
-  
 </div>
 </template>
 
@@ -154,10 +155,7 @@ export default Vue.extend({
 
 <style scoped lang="scss">
 .title {
-  font-size: 18px;
-  font-weight: 500;
-  display: block;
-  margin: 24px 0 16px;
+  margin: 24px 0 32px;
 }
 .requirements-row {
   min-height: 80px;

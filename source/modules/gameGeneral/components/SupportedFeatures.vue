@@ -1,6 +1,5 @@
 <template>
 <div class="game-features">
-  <span class="title">{{ $t('title') }}</span>
   <span class="features-title">{{ $t('featuresTitle') }}</span>
   <label
     v-for="(feature, key) in listFeatures"
@@ -47,8 +46,8 @@ export default Vue.extend({
   computed: {
     listFeatures() {
       return {
-        [this.$t('singlePlayer')]: includes(this.localFeatures, 'singlePlayer'),
-        [this.$t('multiPlayer')]: includes(this.localFeatures, 'multiPlayer'),
+        [this.$t('singlePlayer')]: includes(this.localFeatures, this.$t('singlePlayer')),
+        [this.$t('multiPlayer')]: includes(this.localFeatures, this.$t('multiPlayer')),
       };
     },
   },
@@ -67,12 +66,6 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
-.title {
-  display: block;
-  font-size: 20px;
-  margin-bottom: 24px;
-  font-weight: bold;
-}
 .features-title {
   display: block;
   font-size: 18px;

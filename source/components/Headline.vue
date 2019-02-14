@@ -1,13 +1,18 @@
 <template>
-<h2 class="headline">
+<Header
+  :level="level"
+  :hasMargin="hasMargin"
+>
   <slot />
   <svg
+    v-if="info"
     width="12"
     height="12"
     viewBox="0 0 12 12"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
+    <title>{{ info }}</title>
     <path
       d="M6 0C2.6917 0 0 2.69157 0 6C0 9.30843 2.6917 12 6 12C9.30816 12 11.9997 9.30843 12 6C12 2.69157 9.30843 0 6 0ZM6 11.208C3.12824 11.208 0.792027 8.87162 0.792027 6C0.792027 3.12837 3.12824 0.792027 6 0.792027C8.87176 0.792027 11.208 3.12837 11.208 6C11.2077 8.87162 8.87149 11.208 6 11.208Z"
       fill="#B6B6B6"
@@ -21,21 +26,44 @@
       fill="#B6B6B6"
     />
   </svg>
-</h2>
+</Header>
 </template>
 
 <script type="ts">
-export default {}
+import Vue from 'vue';
+import { includes } from 'lodash-es';
+import { Header } from '@protocol-one/ui-kit';
+
+export default Vue.extend({
+  components: { Header },
+  props: {
+    hasMargin: {
+      default: true,
+      type: Boolean,
+    },
+    info: {
+      default: '',
+      type: String,
+    },
+    level: {
+      default: '2',
+      type: String,
+      validator(value) {
+        return includes(['1', '2', '3', '4'], value);
+      },
+    },
+  },
+});
 </script>
 
 <style scoped lang="scss">
 svg {
   cursor: pointer;
-  margin-left: 1px;
-  transition: all 0.2s ease;
-  transform: scale(1.0, 1.0);
+  transition: transform 0.2s ease-out;
+  margin-left: 8px;
+
   &:hover {
-    transform: scale(1.6, 1.6);
+    transform: scale(1.4, 1.4);
   }
 }
 </style>

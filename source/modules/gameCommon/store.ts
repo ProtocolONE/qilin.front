@@ -24,8 +24,8 @@ export default function GameStore(apiUrl: string) {
   const actions: ActionTree<State, any> = {
     async save({ dispatch }, gameId) {
       await dispatch('General/save', gameId);
-      await dispatch('Ratings/save', gameId);
       await dispatch('Media/save', gameId);
+      await dispatch('Ratings/save', gameId);
     },
     async initState({ commit }, gameId: string) {
       const gameInfo = await axios
