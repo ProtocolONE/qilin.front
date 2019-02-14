@@ -19,18 +19,18 @@ export default function MediaStore(apiUrl: string) {
   };
   const getters: GetterTree<State, any> = {};
   const actions: ActionTree<State, any> = {
-    async save({ state, commit }, gameId) {
-      if (state.hasChanges) {
-        await axios.put(`${apiUrl}/api/v1/games/${gameId}/media`, state.media);
-        commit('hasChanges', false);
-      }
-    },
     async initState({ commit }, gameId: string) {
       const media = await axios
         .get(`${apiUrl}/api/v1/games/${gameId}/media`)
         .then(({ data }) => data);
         
       commit('media', mergeWith(defaultMedia, media, (a, b) => (b === null ? a : b)));
+    },
+    async save({ state, commit }, gameId) {
+      if (state.hasChanges) {
+        await axios.put(`${apiUrl}/api/v1/games/${gameId}/media`, state.media);
+        commit('hasChanges', false);
+      }
     },
     updateMedia({ commit }, value) {
       commit('media', value);

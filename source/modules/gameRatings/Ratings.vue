@@ -18,7 +18,7 @@
 </template>
 <script type="ts">
 import Vue from 'vue'
-import {mapState, mapActions, mapMutations} from 'vuex';
+import { mapState, mapActions, mapMutations } from 'vuex';
 import i18n from './i18n'
 import WarningMessage from './components/WarningMessage'
 import Agency from './components/Agency.vue'
@@ -41,7 +41,7 @@ export default Vue.extend({
   },
   methods: {
     ...mapMutations('Game', ['updateContents']),
-    ...mapMutations('Game/Ratings', ['updateRating']),
+    ...mapActions('Game/Ratings', ['updateRating']),
     ...mapActions('Game/Ratings', ['initState']),
   },
 })

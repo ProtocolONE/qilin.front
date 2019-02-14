@@ -23,4 +23,5 @@ export interface RatingDescriptor {
 export interface State {
   ratings: Ratings;
   descriptors: RatingDescriptor[];
+  hasChanges: Boolean;
 }

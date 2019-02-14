@@ -43,10 +43,10 @@ export default {
           description: '',
         },
       },
-      rating: {
-        title: 'Edit game rating',
+      ratings: {
+        title: 'Редактирование раздела Rating',
         meta: {
-          title: 'Edit game rating',
+          title: 'Редактирование раздела Rating',
           description: '',
         },
       },
