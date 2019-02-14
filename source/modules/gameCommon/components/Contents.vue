@@ -1,16 +1,18 @@
 <template>
 <div class="table-of">
-  <h3>{{ $t('contents') }}</h3>
-  <ul>
-    <li
-      v-for="item in contents"
-      :key="item.anchor"
-    >
-      <a :href="'#' + item.anchor">
-        {{ item.text }}
-      </a>
-    </li>
-  </ul>
+  <div class="borders">
+    <h3>{{ $t('contents') }}</h3>
+    <ul>
+      <li
+        v-for="item in contents"
+        :key="item.anchor"
+      >
+        <a :href="'#' + item.anchor">
+          {{ item.text }}
+        </a>
+      </li>
+    </ul>
+  </div>
 </div>
 </template>
 
@@ -28,29 +30,28 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
-.table-of {
+.borders {
   box-shadow: 0px 15px 36px #d4d4d4;
   margin: 25px;
-  h3 {
-    font-size: 16px;
-    height: 40px;
-    background: #f6f6f6;
-    border: 1px solid #ededed;
-    box-sizing: border-box;
-    padding-left: 24px;
-    padding-top: 9px;
-  }
-  ul {
-    list-style: none;
-    margin-left: 24px;
-    margin-bottom: 14px;
-    padding: 0;
-    li {
-      font-size: 14px;
-      margin-top:17px;
-      a {
-        color: #999999;
-      }
+}
+h3 {
+  font-size: 16px;
+  height: 40px;
+  background: #f6f6f6;
+  border: 1px solid #ededed;
+  box-sizing: border-box;
+  padding-left: 24px;
+  padding-top: 9px;
+}
+ul {
+  list-style: none;
+  margin-left: 24px;
+  padding: 0 0 14px 0;
+  li {
+    font-size: 14px;
+    margin-top:17px;
+    a {
+      color: #999999;
     }
   }
 }

@@ -18,20 +18,22 @@
       />
       <label class="switch">
         <SwitchBox
-          :checked="value.displayOnlineNotice"
+          :disabled="!value.rating"
+          :checked="value.displayOnlineNotice && !!value.rating"
           @change="changeDisplayNotice"
         /> {{ $t('display_notice') }}
       </label>
       <br>
       <label>
         <SwitchBox
-          :checked="value.showAgeRestrict"
+          :disabled="!value.rating"
+          :checked="value.showAgeRestrict && !!value.rating"
           @change="changeShowRestrict"
         /> {{ $t('age_gate') }}
       </label>
     </div>
     <div class="right">
-      <img :src="getLogoUrl()"/>
+      <img :src="`${staticPath}/images/ratings/${agency.toLowerCase()}/${value.rating || defIcon}.png`"/>
     </div>
   </div>
 </div>
@@ -44,9 +46,15 @@
   import Headline from '@/components/Headline'
   import {includes} from 'lodash-es';
   import i18n from '../i18n';
+  import config from '@/config';
 
   export default Vue.extend({
     i18n,
+    data() {
+      return {
+        staticPath: config.static,
+      }
+    },
     components: {Headline, Select, SwitchBox, TagInput},
     props: {
       value: {
@@ -79,10 +87,6 @@
       }
     },
     methods: {
-      getLogoUrl() {
-        const url = require(`../icons/${this.agency.toLowerCase()}/${this.value.rating || this.defIcon}.png`);
-        return `/${url}`;
-      },
       getAgencyDescriptors() {
         return (this.descriptors || [])
           .filter(d => d.system === this.agency);
@@ -97,7 +101,11 @@
       updateRating(value) {
         this.$emit('change', {
           ...this.value,
-          ...{rating: value}
+          ...{
+            rating: value,
+            displayOnlineNotice: value ? this.value.displayOnlineNotice : false,
+            showAgeRestrict: value ? this.value.showAgeRestrict : false,
+          }
         });
       },
       changeDisplayNotice(value) {
