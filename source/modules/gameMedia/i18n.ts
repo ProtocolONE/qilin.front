@@ -54,7 +54,7 @@ export default {
 
       cover_video: 'Видео обложка',
       cover_video_descr: "1920х800 (aspect 1.77) in PNG or JPEG format.<br>Please avoid duplicating your project's screenshots here.",
-      upload_cover_video: 'Загрузить видое',
+      upload_cover_video: 'Загрузить видео',
       replace_cover_video: 'Заменить',
       remove_video: 'Удалить видео',
 
