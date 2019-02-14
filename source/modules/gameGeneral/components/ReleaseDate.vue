@@ -1,6 +1,5 @@
 <template>
 <div class="game-release">
-  <span class="title">{{ $t('title') }}</span>
   <DateTimeInput
     :dateLabel="$t('dateLabel')"
     :locale="$i18n.locale"
@@ -43,12 +42,3 @@ export default Vue.extend({
   },
 });
 </script>
-
-<style scoped lang="scss">
-.title {
-  display: block;
-  font-size: 20px;
-  margin-bottom: 16px;
-  font-weight: bold;
-}
-</style>

@@ -1,5 +1,5 @@
-import { GetterTree, ActionTree, MutationTree } from 'vuex';
 import axios from 'axios';
+import { GetterTree, ActionTree, MutationTree } from 'vuex';
 import GeneralStore from '@/modules/gameGeneral/store';
 import MediaStore from '@/modules/gameMedia/store';
 import RatingsStore from '@/modules/gameRatings/store';
@@ -22,16 +22,17 @@ export default function GameStore(apiUrl: string) {
   };
   const getters: GetterTree<State, any> = {};
   const actions: ActionTree<State, any> = {
-    saveGame({ dispatch }, gameId) {
-      dispatch('Media/clickSave', gameId);
-      dispatch('Ratings/clickSave', gameId);
+    async save({ dispatch }, gameId) {
+      await dispatch('General/save', gameId);
+      await dispatch('Media/save', gameId);
+      await dispatch('Ratings/save', gameId);
     },
-    initState({ commit }, gameId: string) {
-      axios
+    async initState({ commit }, gameId: string) {
+      const gameInfo = await axios
         .get(`${apiUrl}/api/v1/games/${gameId}`)
-        .then(result => {
-          commit('updateGame', result.data);
-        });
+        .then(({ data }) => data);
+
+      commit('updateGame', gameInfo);
     },
   };
   const mutations: MutationTree<State> = {
@@ -47,8 +48,8 @@ export default function GameStore(apiUrl: string) {
     namespaced: true,
     modules: {
       General: GeneralStore(apiUrl),
-      Ratings: RatingsStore(apiUrl),
       Media: MediaStore(apiUrl),
+      Ratings: RatingsStore(apiUrl),
     }
   };
 }

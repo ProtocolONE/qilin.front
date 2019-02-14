@@ -1,7 +1,5 @@
 <template>
 <div class="game-langs">
-  <span class="title">{{ $t('title') }}</span>
-
   <div class="table">
     <div class="header">
       <span class="title-lang">{{ $t('language') }}</span>
@@ -82,12 +80,6 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
-.title {
-  display: block;
-  font-size: 20px;
-  margin-bottom: 16px;
-  font-weight: bold;
-}
 .header {
   color: #b1b1b1;
   display: flex;

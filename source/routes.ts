@@ -1,13 +1,12 @@
 import { RouteConfig } from 'vue-router';
 import Home from '@/modules/home/Home.vue';
 import OnBoarding from '@/modules/onboarding/OnBoarding.vue';
-import Game from '@/modules/game/Game.vue';
+import GameCommon from '@/modules/gameCommon/GameCommon.vue';
 import GameGeneral from '@/modules/gameGeneral/General.vue';
-import GameMedia from '@/modules/gameMedia/Media.vue';
-import Games from '@/modules/games/Games.vue';
+import GameNavigation from '@/modules/gameNavigation/GameNavigation.vue';
 import GameMedia from '@/modules/gameMedia/Media.vue';
 import GameRatings from '@/modules/gameRatings/Ratings.vue';
-import Game from '@/modules/game/Game.vue';
+import Games from '@/modules/games/Games.vue';
 
 const routes: RouteConfig[] = [
   {
@@ -28,22 +27,30 @@ const routes: RouteConfig[] = [
   {
     path: '/games/:id',
     name: 'game',
-    component: Game,
+    // @TODO - remove redirect when GameNavigation is implemented
+    redirect: '/games/:id/general',
+    components: {
+      default: GameCommon,
+      navigation: GameNavigation,
+    },
     children: [
       {
-        name: 'GameGeneral',
+        name: 'gameGeneral',
         path: 'general',
-        component: GameGeneral
+        component: GameGeneral,
+        meta: 'routes.game.general.meta'
       },
       {
-        name: 'GameMedia',
+        name: 'gameMedia',
         path: 'media',
-        component: GameMedia
+        component: GameMedia,
+        meta: 'routes.game.media.meta'
       },
       {
         name: 'GameRatings',
         path: 'ratings',
-        component: GameRatings
+        component: GameRatings,
+        meta: 'routes.game.ratings.meta'
       },
     ],
   },

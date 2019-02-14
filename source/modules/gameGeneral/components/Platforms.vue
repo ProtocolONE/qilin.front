@@ -1,7 +1,7 @@
 <template>
 <div class="game-platforms">
   <span class="title">
-    {{ $t('title') }}
+    <slot name="title"></slot>
     <div
       v-clickaway="blurSettings"
       class="settings"
@@ -47,7 +47,7 @@
 
   <div class="requirements-box">
     <div
-      v-for="(requirements, os) in localRequirements"
+      v-for="(value, os) in localRequirements"
       v-show="currentPlatform == os"
       class="requirements"
       :key="os"
@@ -55,17 +55,23 @@
       <Requirements
         class="minimal"
         :os="os"
-        :requirements="localRequirements.minimal"
-        :title="$t('minimal')"
+        :requirements="value.minimal"
         @change="changeMinimal(os, $event)"
-      />
+      >
+        <Headline slot="title" level='3'>
+          {{ $t('minimal') }}
+        </Headline>
+      </Requirements>
       <Requirements
         class="recommended"
         :os="os"
-        :requirements="localRequirements.recommended"
-        :title="$t('recommended')"
+        :requirements="value.recommended"
         @change="changeRecommended(os, $event)"
-      />
+      >
+        <Headline slot="title" level='3'>
+          {{ $t('recommended') }}
+        </Headline>
+      </Requirements>
     </div>
   </div>
 </div>
@@ -73,8 +79,9 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { filter } from 'lodash-es';
+import { get } from 'lodash-es';
 import { SwitchBox, Tip } from '@protocol-one/ui-kit';
+import Headline from '@/components/Headline.vue';
 import LinuxIcon from './LinuxIcon.vue';
 import MacOsIcon from './MacOsIcon.vue';
 import Requirements from './Requirements.vue';
@@ -82,14 +89,18 @@ import SettingsIcon from './SettingsIcon.vue';
 import WindowsIcon from './WindowsIcon.vue';
 import i18n from './i18nPlatforms';
 
-function getCurrentPlatform(platforms: Object): string {
-  const activePlatforms = filter(platforms, val => val);
-  return  Object.keys(activePlatforms)[0] || '';
+function getCurrentPlatform(platforms: any): string {
+  const activePlatforms = Object.keys(platforms)
+    .map(key => ({ key, value: platforms[key] }))
+    .filter(({ value }) => value);
+
+  return get(activePlatforms, '[0].value', false) ? activePlatforms[0].key : '';
 }
 
 export default Vue.extend({
   i18n,
   components: {
+    Headline,
     LinuxIcon,
     MacOsIcon,
     Requirements,
@@ -183,9 +194,7 @@ export default Vue.extend({
 <style scoped lang="scss">
 .title {
   display: flex;
-  font-size: 20px;
-  margin-bottom: 24px;
-  font-weight: bold;
+  margin-bottom: 32px;
 }
 .settings {
   margin-left: 12px;

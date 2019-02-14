@@ -1,6 +1,5 @@
 <template>
 <div class="game-tags">
-  <span class="title">{{ $t('title') }}</span>
   <TagInput
     :label="$t('labelTags')"
     :tags="tags"
@@ -28,12 +27,3 @@ export default Vue.extend({
   },
 });
 </script>
-
-<style scoped lang="scss">
-.title {
-  display: block;
-  font-size: 20px;
-  margin-bottom: 24px;
-  font-weight: bold;
-}
-</style>

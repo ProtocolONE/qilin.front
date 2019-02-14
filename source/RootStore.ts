@@ -2,7 +2,7 @@ import routes from '@/routes';
 import MainStores from '@/stores';
 import GamesModule from '@/modules/games/store';
 import config from '@/config';
-import GameStore from '@/modules/game/store';
+import GameStore from '@/modules/gameCommon/store';
 import CreateGameStore from '@/modules/gameCreate/store';
 
 const apiUrl = config.api;
