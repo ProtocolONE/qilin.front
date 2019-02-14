@@ -68,18 +68,16 @@ export default Vue.extend({
   .body {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
-    height: 100vh;
+    align-items: stretch;
     width: 100%;
     .menu {
       flex: 0 0 230px;
-      height: 3126px;
     }
     .content {
       width: 100%;
     }
     .table-of {
-      flex: 0 0 230px;
+      flex: 0 0 280px;
     }
   }
 }
