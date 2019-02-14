@@ -3,7 +3,7 @@ import cloneDeep from 'lodash-es/cloneDeep';
 import { GetterTree, ActionTree, MutationTree } from 'vuex';
 import formatDate from '@/helpers/formatDate';
 import { VueRouter } from "vue-router/types/router";
-import State from './types';
+import { Game, State } from './types';
 // import testData from './testData';
 
 export default function GamesStore(apiUrl: string) {
@@ -17,7 +17,7 @@ export default function GamesStore(apiUrl: string) {
       // const games = testData;
 
       const vendors = await axios
-        .get(`${apiUrl}/api/v1/vendors`, {params: {limit: 1}})
+        .get(`${apiUrl}/api/v1/vendors`, { params: { limit: 1 } })
         .then(res => res.data || []);
       if (!vendors.length) {
         router.push({path: '/vendor/on-boarding'});
@@ -29,9 +29,9 @@ export default function GamesStore(apiUrl: string) {
         .get(`${apiUrl}/api/v1/vendor/${vendors[0].id}/games`)
         .then(res => res.data || []);
 
-      const preparedGames = games.map(game => ({
+      const preparedGames = games.map((game: Game) => ({
         ...cloneDeep(game),
-        releaseDate: formatDate(game.releaseDate, 'dd LLLL yyyy, HH:mm'),
+        releaseDate: formatDate(new Date(game.releaseDate), 'dd LLLL yyyy, HH:mm'),
       }))
 
       commit('games', preparedGames);

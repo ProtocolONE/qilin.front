@@ -20,9 +20,26 @@ declare module 'vue-clickaway' {
 
 declare module '@protocol-one/ui-kit' {
   const Button: any;
+  const Checkbox: any;
+  const DateTimeInput: any;
+  const Header: any;
+  const Select: any;
+  const SwitchBox: any;
+  const TagInput: any;
   const TextField: any;
+  const Tip: any;
 
-  export { Button, TextField };
+  export {
+    Button,
+    Checkbox,
+    DateTimeInput,
+    Header,
+    Select,
+    SwitchBox,
+    TagInput,
+    TextField,
+    Tip,
+  };
 }
 
 declare interface NodeModule {

@@ -5,11 +5,12 @@
 >
   <div class="item-container">
     <div
+      v-if="game.icon"
       class="logo"
       :style="{ backgroundImage: `url(${game.icon})` }"
     />
-    <div class="title">
-      {{ game.technicalName }}
+    <div :class="['title', { '_without-icon': !game.icon }]">
+      {{ game.internalName }}
     </div>
     <div class="genres-box">
       <div class="genres">
@@ -98,6 +99,11 @@ export default Vue.extend({
   min-width: 220px;
   max-width: 220px;
   margin-right: 16px;
+
+  &._without-icon {
+    min-width: 276px;
+    max-width: 276px;
+  }
 }
 // @TODO - Fix scrolling for genres
 .genres-box {

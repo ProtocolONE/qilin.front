@@ -11,16 +11,16 @@ interface Price {
   currency: string;
 }
 
-interface Game {
+export interface Game {
   id: string;
-  technicalName: string;
+  internalName: string;
   icon: string;
   genres: Genre[];
   releaseDate: Date;
   prices: Price;
 }
 
-export default interface State {
+export interface State {
   games: Game[];
   vendorId: string;
 }

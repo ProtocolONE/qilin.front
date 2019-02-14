@@ -107,8 +107,8 @@ module.exports = {
       'error',
       2,
       {
-        'baseIndent': 0,
-        'ignores': []
+        baseIndent: 0,
+        ignores: [],
       }
     ],
 

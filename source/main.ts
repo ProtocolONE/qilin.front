@@ -3,12 +3,19 @@ import '@babel/polyfill';
 import axios from 'axios';
 import Vue from 'vue';
 import Vuex from 'vuex';
+import * as Sentry from '@sentry/browser';
 import { directive as onClickaway } from 'vue-clickaway';
 import RootStore from './RootStore';
 import router from './router';
 import i18n from './i18n';
 import MainLayout from './layouts/Main.vue';
 
+if (process.env.NODE_ENV === 'production') {
+    Sentry.init({
+        dsn: 'https://cf58349faae345a29d8e62e457824532@sentry.tst.protocol.one/5',
+        integrations: [new Sentry.Integrations.Vue()]
+    });
+}
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common['Accept-Language'] = localStorage.getItem('lang') || navigator.language;
 if (localStorage.getItem('access_token')) {
