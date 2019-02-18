@@ -23,6 +23,10 @@ export default {
         description: 'Help us setup your first tenant and start untegration',
       },
     },
+    prices: {
+      title: 'Sales',
+      description: ''
+    },
     game: {
       title: 'Game',
       meta: {
@@ -49,7 +53,7 @@ export default {
           title: 'Edit game ratings',
           description: '',
         },
-      },
+      }
     },
   },
 };

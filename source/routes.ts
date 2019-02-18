@@ -67,17 +67,13 @@ const routes: RouteConfig[] = [
         name: 'gamePricesTable',
         path: 'table',
         component: GamePricesTable,
-        meta: {
-          renderType: 'table'
-        }
+        meta: 'routes.prices'
       },
       {
         name: 'gamePricesCalendar',
         path: 'calendar',
         component: GamePricesCalendar,
-        meta: {
-          renderType: 'calendar'
-        }
+        meta: 'routes.prices'
       }
     ]
   }

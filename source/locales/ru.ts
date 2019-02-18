@@ -23,6 +23,10 @@ export default {
         description: 'Начните интеграцию',
       },
     },
+    prices: {
+      title: 'Продажи',
+      description: ''
+    },
     game: {
       title: 'Game',
       meta: {
@@ -49,7 +53,7 @@ export default {
           title: 'Редактирование раздела Rating',
           description: '',
         },
-      },
+      }
     },
   },
 };

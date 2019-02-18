@@ -1,5 +1,5 @@
 <template>
-<div id="game-prices" class="game-prices">
+<div id="game-prices" class="prices" :class="$style.prices">
 
   <ui-header :title="$t('sales')" :breadcrumbs="breadcrumbs">
 
@@ -9,37 +9,35 @@
       @input="handlerSearch"
     />
 
-    <template slot="hint">
-      <ul class="switcher-list">
-        <li>
-          <input
-            id="switcher-table"
-            name="render-type"
-            type="radio"
-            class="switcher-list__radio"
-            @change="$router.replace({ name: 'gamePricesTable' })"
-            checked
-            hidden
-          >
-          <label for="switcher-table">
-            <icon v-bind="iconOptions" name="table"/>
-          </label>
-        </li>
-        <li>
-          <input
-            id="switcher-calendar"
-            name="render-type"
-            type="radio"
-            class="switcher-list__radio"
-            @change="$router.replace({ name: 'gamePricesCalendar' })"
-            hidden
-          >
-          <label for="switcher-calendar">
-            <icon v-bind="iconOptions" name="calendar"/>
-          </label>
-        </li>
-      </ul>
-    </template>
+    <ul slot="hint" class="switcher-list">
+      <li>
+        <input
+          id="switcher-table"
+          name="render-type"
+          type="radio"
+          class="switcher-list__radio"
+          @change="$router.replace({ name: 'gamePricesTable' })"
+          checked
+          hidden
+        >
+        <label for="switcher-table">
+          <icon v-bind="iconOptions" name="table"/>
+        </label>
+      </li>
+      <li>
+        <input
+          id="switcher-calendar"
+          name="render-type"
+          type="radio"
+          class="switcher-list__radio"
+          @change="$router.replace({ name: 'gamePricesCalendar' })"
+          hidden
+        >
+        <label for="switcher-calendar">
+          <icon v-bind="iconOptions" name="calendar"/>
+        </label>
+      </li>
+    </ul>
 
     <ui-button
       slot="right"
@@ -194,6 +192,19 @@ export default {
         fill: #C4C4C4;
       }
     }
+  }
+}
+</style>
+
+<style lang="scss" module>
+.prices {
+  [class^="search"] {
+    margin-left: auto;
+  }
+
+  [class^="hint"] {
+    margin-right: 33px;
+    margin-left: auto;
   }
 }
 </style>
