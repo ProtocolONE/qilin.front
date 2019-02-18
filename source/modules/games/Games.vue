@@ -12,7 +12,7 @@
     <GameItem
       v-for="game in innerGames"
       :key="game.id"
-      v-bind="{ game }"
+      v-bind="{ game, genres }"
     />
   </template>
 
@@ -49,7 +49,7 @@ export default Vue.extend({
     showModal: false,
   }),
   computed: {
-    ...mapState('Games', ['games', 'vendorId']),
+    ...mapState('Games', ['games', 'vendorId', 'genres']),
 
     hasGames() {
       return !!this.games.length;

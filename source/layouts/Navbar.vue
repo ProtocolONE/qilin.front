@@ -37,12 +37,12 @@
 
 <script type="ts">
 import Vue from 'vue';
+import { PageNavbar } from '@protocol-one/ui-kit'
 import IconLogo from '@/components/IconLogo.vue';
 import LocaleChanger from '@/components/LocaleChanger.vue';
 import Login from '@/components/Login.vue';
 import Register from '@/components/Register.vue';
 import ResetPass from '@/components/ResetPass.vue';
-import {PageNavbar} from '@protocol-one/ui-kit'
 
 export default Vue.extend({
   components: { IconLogo, LocaleChanger, Login, Register, ResetPass, PageNavbar },

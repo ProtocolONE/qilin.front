@@ -15,47 +15,31 @@ export default function GeneralStore(apiUrl: string) {
       developers: get(gameInfo, 'developers', ''),
       publishers: get(gameInfo, 'publishers', ''),
     }),
-    languages: ({ gameInfo }) => get(gameInfo, 'languages', {
-      en: {
-        'voice': false,
-        'interface': false,
-        'subtitles': false,
-      },
-      ru: {
-        'voice': false,
-        'interface': false,
-        'subtitles': false,
-      },
-      de: {
-        'voice': false,
-        'interface': false,
-        'subtitles': false,
-      },
-    }),
+    languages: ({ gameInfo }) => get(gameInfo, 'languages', {}),
     releaseDate: ({ gameInfo }) => get(gameInfo, 'releaseDate', ''),
-    genre: ({ gameInfo }) => get(gameInfo, 'genre[0]', {}),
+    selectedGenres: ({ gameInfo }) => get(gameInfo, 'genres', {
+      addition: [],
+      main: '',
+    }),
     selectedTags: ({ gameInfo }) => get(gameInfo, 'tags', []),
-    features: ({ gameInfo }) => get(gameInfo, 'features.common', []),
+    features: ({ gameInfo }) => get(gameInfo, 'features', {}),
     platforms: ({ gameInfo }) => get(gameInfo, 'platforms', {
       windows: true,
       macOs: false,
       linux: false
     }),
-    requirements: ({ gameInfo }) => get(gameInfo, 'requirements', {
-      windows: {},
-      macOs: {},
-      linux: {}
-    }),
+    requirements: ({ gameInfo }) => get(gameInfo, 'requirements', {}),
   };
   const actions: ActionTree<State, any> = {
     async initState({ commit }, gameId: string) {
       const gameInfo = await axios
         .get(`${apiUrl}/api/v1/games/${gameId}`)
         .then(response => response.data);
+
       commit('gameInfo', gameInfo);
-        
+
       const genres = await axios
-        .get(`${apiUrl}/api/v1/genre`)
+        .get(`${apiUrl}/api/v1/genres`)
         .then(response => response.data);
       commit('genres', genres);
 
@@ -89,11 +73,8 @@ export default function GeneralStore(apiUrl: string) {
       state.gameInfo = {
         ...state.gameInfo,
         developers: creators.developers,
-      }
-      state.gameInfo = {
-        ...state.gameInfo,
         publishers: creators.publishers,
-      }
+      };
     },
     changeLanguages(state, languages) {
       state.gameInfo = {
@@ -107,25 +88,28 @@ export default function GeneralStore(apiUrl: string) {
         releaseDate,
       }
     },
-    changeGenre(state, genre) {
+    changeGenre(state, genres) {
       state.gameInfo = {
         ...state.gameInfo,
-        genre,
+        genres,
       }
     },
     changeFeatures(state, features) {
       state.gameInfo = {
         ...state.gameInfo,
-        features: {
-          common: features,
-          controllers: '',
-        },
+        features,
       }
     },
     changePlatforms(state, platforms) {
       state.gameInfo = {
         ...state.gameInfo,
         platforms,
+      }
+    },
+    changeTags(state, tags) {
+      state.gameInfo = {
+        ...state.gameInfo,
+        tags,
       }
     },
     changeRequirements(state, requirements) {

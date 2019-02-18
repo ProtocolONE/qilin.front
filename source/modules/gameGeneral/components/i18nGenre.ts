@@ -1,13 +1,16 @@
 export default {
   messages: {
     de: {
-      genreLabel: 'Primary Genre',
+      mainGenreLabel: 'Primary Genre',
+      AdditionGenresLabel: 'Additional Genres',
     },
     en: {
-      genreLabel: 'Primary Genre',
+      mainGenreLabel: 'Primary Genre',
+      AdditionGenresLabel: 'Additional Genres',
     },
     ru: {
-      genreLabel: 'Основной Жанр',
+      mainGenreLabel: 'Основной жанр',
+      AdditionGenresLabel: 'Дополнительные жанры',
     },
   }
 }

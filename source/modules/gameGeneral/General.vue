@@ -27,8 +27,8 @@
   <Headline id="genre">{{ $t('genre') }}</Headline>
   <Genre
     class="section"
-    :genre="genre"
     :genres="genres"
+    :selectedGenres="selectedGenres"
     @change="change('genre', $event)"
   />
   
@@ -94,16 +94,26 @@ export default Vue.extend({
     SupportedLanguages,
     Tags,
   },
+  watch: {
+    '$i18n.locale': function(value) {
+      this.updateContents(
+        map(
+          i18n.messages[value],
+          (text, anchor) => ({ anchor, text }),
+        ),
+      );
+    },
+  },
   computed: {
     ...mapState('Game/General', ['genres', 'tags']),
     ...mapGetters('Game/General', [
       'creators',
       'features',
-      'genre',
       'languages',
       'platforms',
       'releaseDate',
       'requirements',
+      'selectedGenres',
       'selectedTags',
     ]),
   },

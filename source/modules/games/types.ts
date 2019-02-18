@@ -15,12 +15,13 @@ export interface Game {
   id: string;
   internalName: string;
   icon: string;
-  genres: Genre[];
+  genres: string[];
   releaseDate: Date;
   prices: Price;
 }
 
 export interface State {
   games: Game[];
+  genres: Genre[];
   vendorId: string;
 }

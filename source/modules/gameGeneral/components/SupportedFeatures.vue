@@ -1,27 +1,66 @@
 <template>
 <div class="game-features">
-  <span class="features-title">{{ $t('featuresTitle') }}</span>
-  <label
-    v-for="(feature, key) in listFeatures"
-    class="checkbox"
-    :key="key"
-  >
-    <Checkbox
-      class="check"
-      :checked="feature"
-      @change="changeFeature(key)"
-    />
-    <span class="label">
-      {{ key }}
-    </span>
-  </label>
+  <span class="features-title">{{ $t('titles.numberOfPlayers') }}</span>
+  <div class="box">
+    <label
+      v-for="(value, key) in listNumbers"
+      class="checkbox"
+      :key="key"
+    >
+      <Checkbox
+        class="check"
+        :checked="value"
+        @change="changeFeatures('numbers', key)"
+      />
+      <span class="label">
+        {{ $t(`numbers.${key}`) }}
+      </span>
+    </label>
+  </div>
+
+  <span class="features-title">{{ $t('titles.platformFeatures') }}</span>
+  <div class="box">
+    <label
+      v-for="(feature, key) in listFeatures"
+      class="checkbox"
+      :key="key"
+    >
+      <Checkbox
+        class="check"
+        :checked="feature"
+        @change="changeFeatures('features', key)"
+      />
+      <span class="label">
+        {{ $t(`features.${key}`) }}
+      </span>
+    </label>
+  </div>
+
+  <span class="features-title">{{ $t('titles.controllersSupport') }}</span>
+  <div class="box">
+    <label
+      v-for="(feature, key) in listControllers"
+      class="checkbox"
+      :key="key"
+    >
+      <Checkbox
+        class="check"
+        :checked="feature"
+        @change="changeControllers(key)"
+      />
+      <span class="label">
+        {{ $t(`controllers.${key}`) }}
+      </span>
+    </label>
+  </div>
 </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import { concat, includes, without } from 'lodash-es';
+import { concat, includes, reduce, without } from 'lodash-es';
 import { Checkbox } from '@protocol-one/ui-kit';
+import capitalizeFirstLetter from '@/helpers/capitalizeFirstLetter';
 import i18n from './i18nSupportedFeatures';
 
 export default Vue.extend({
@@ -29,8 +68,11 @@ export default Vue.extend({
   components: { Checkbox },
   props: {
     features: {
-      default: () => [],
-      type: Array,
+      default: () => ({
+        controllers: '',
+        common: [],
+      }),
+      type: Object,
     },
   },
   data() {
@@ -44,20 +86,60 @@ export default Vue.extend({
     },
   },
   computed: {
+    listNumbers() {
+      const list = this.$i18n.messages[this.$i18n.locale].numbers;
+      const common = this.localFeatures.common;
+
+      return reduce(
+        list,
+        (result, value, key) => ({
+          ...result,
+          [key]: includes(common, key),
+        }),
+        {},
+      );
+    },
     listFeatures() {
-      return {
-        [this.$t('singlePlayer')]: includes(this.localFeatures, this.$t('singlePlayer')),
-        [this.$t('multiPlayer')]: includes(this.localFeatures, this.$t('multiPlayer')),
-      };
+      const list = this.$i18n.messages[this.$i18n.locale].features;
+      const common = this.localFeatures.common;
+
+      return reduce(
+        list,
+        (result, value, key) => ({
+          ...result,
+          [key]: includes(common, key),
+        }),
+        {},
+      );
+    },
+    listControllers() {
+      const list = this.$i18n.messages[this.$i18n.locale].controllers;
+      const controllers = this.localFeatures.controllers;
+
+      return reduce(
+        list,
+        (result, value, key) => ({
+          ...result,
+          [key]: controllers === key,
+        }),
+        {},
+      );
     },
   },
   methods: {
-    changeFeature(key: string) {
-      if (this.listFeatures[key]) {
-        this.localFeatures = without(this.localFeatures, key);
+    changeFeatures(type: string, key: string) {
+      const common = this.localFeatures.common;
+
+      if (this[`list${capitalizeFirstLetter(type)}`][key]) {
+        this.localFeatures.common = without(common, key);
       } else {
-        this.localFeatures = concat(this.localFeatures, key);
+        this.localFeatures.common = concat(common, key);
       }
+
+      this.$emit('change', this.localFeatures);
+    },
+    changeControllers(key: string) {
+      this.localFeatures.controllers = key;
 
       this.$emit('change', this.localFeatures);
     },
@@ -72,11 +154,15 @@ export default Vue.extend({
   font-weight: 900;
   margin-bottom: 16px;
 }
+.box {
+  margin-bottom: 24px;
+  max-height: 400px;
+  max-width: 600px;
+}
 .checkbox {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  flex-basis: 180px;
-  max-width: 300px;
+  width: 260px;
   padding: 8px 0;
   cursor: pointer;
 }

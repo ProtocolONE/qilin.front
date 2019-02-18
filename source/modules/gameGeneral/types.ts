@@ -1,6 +1,20 @@
-export interface GameTag {
+export interface Genre {
   id: string;
-  title: any;
+  title: {
+    en: string,
+    ru: string,
+  };
+}
+export interface Tag {
+  id: string;
+  title: {
+    en: string,
+    ru: string,
+  };
+}
+export interface GameGenres {
+  main: string;
+  addition: string[];
 }
 export interface GameFeatures {
   common: string[];
@@ -53,12 +67,12 @@ export interface GameInfo {
   platforms: GamePlatforms;
   requirements: GameRequirements;
   languages: GameLangs;
-  genre: GameTag[];
-  tags: GameTag[];
+  genres: GameGenres;
+  tags: string[];
 }
 export interface State {
   gameInfo: GameInfo;
-  genres: GameTag[];
-  tags: GameTag[];
+  genres: Genre[];
+  tags: Tag[];
   hasChanges: Boolean;
 }
