@@ -112,6 +112,12 @@ module.exports = {
       }
     ],
 
+    'no-void': 0,
+
     'vue/no-use-v-if-with-v-for': 'off',
+    'vue/max-attributes-per-line': 'off',
+    'vue/multiline-html-element-content-newline': 'off',
+    'vue/html-self-closing': 'off',
+    'vue/html-closing-bracket-spacing': 'off'
   },
 };

@@ -1,7 +1,7 @@
 <template>
 <div class="game">
   <PageHeader
-    :breadcrumbs="breadcrumbs" 
+    :breadcrumbs="breadcrumbs"
   >
     <span slot="title">
       Media

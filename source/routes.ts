@@ -6,6 +6,9 @@ import GameGeneral from '@/modules/gameGeneral/General.vue';
 import GameNavigation from '@/modules/gameNavigation/GameNavigation.vue';
 import GameMedia from '@/modules/gameMedia/Media.vue';
 import GameRatings from '@/modules/gameRatings/Ratings.vue';
+import GamePrices from '@/modules/gamePrices/Prices.vue';
+import GamePricesTable from '@/modules/gamePrices/PricesTable.vue';
+import GamePricesCalendar from '@/modules/gamePrices/PricesCalendar.vue';
 import Games from '@/modules/games/Games.vue';
 
 const routes: RouteConfig[] = [
@@ -54,6 +57,30 @@ const routes: RouteConfig[] = [
       },
     ],
   },
+  {
+    name: 'gamePrices',
+    path: '/games/:id/prices',
+    redirect: '/games/:id/prices/table',
+    component: GamePrices,
+    children: [
+      {
+        name: 'gamePricesTable',
+        path: 'table',
+        component: GamePricesTable,
+        meta: {
+          renderType: 'table'
+        }
+      },
+      {
+        name: 'gamePricesCalendar',
+        path: 'calendar',
+        component: GamePricesCalendar,
+        meta: {
+          renderType: 'calendar'
+        }
+      }
+    ]
+  }
 ].map(route => ({ ...route, meta: `routes.${route.name}.meta` }));
 
 export default routes;
