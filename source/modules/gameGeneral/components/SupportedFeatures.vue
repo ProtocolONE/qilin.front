@@ -1,6 +1,6 @@
 <template>
 <div class="game-features">
-  <span class="features-title">{{ $t('titles.numberOfPlayers') }}</span>
+  <Header level="3" :hasMargin="true">{{ $t('titles.numberOfPlayers') }}</Header>
   <div class="box">
     <label
       v-for="(value, key) in listNumbers"
@@ -18,7 +18,7 @@
     </label>
   </div>
 
-  <span class="features-title">{{ $t('titles.platformFeatures') }}</span>
+  <Header level="3" :hasMargin="true">{{ $t('titles.platformFeatures') }}</Header>
   <div class="box">
     <label
       v-for="(feature, key) in listFeatures"
@@ -36,7 +36,7 @@
     </label>
   </div>
 
-  <span class="features-title">{{ $t('titles.controllersSupport') }}</span>
+  <Header level="3" :hasMargin="true">{{ $t('titles.controllersSupport') }}</Header>
   <div class="box">
     <label
       v-for="(feature, key) in listControllers"
@@ -59,13 +59,13 @@
 <script lang="ts">
 import Vue from 'vue';
 import { concat, includes, reduce, without } from 'lodash-es';
-import { Checkbox } from '@protocol-one/ui-kit';
+import { Checkbox, Header } from '@protocol-one/ui-kit';
 import capitalizeFirstLetter from '@/helpers/capitalizeFirstLetter';
 import i18n from './i18nSupportedFeatures';
 
 export default Vue.extend({
   i18n,
-  components: { Checkbox },
+  components: { Checkbox, Header },
   props: {
     features: {
       default: () => ({
@@ -148,21 +148,17 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
-.features-title {
-  display: block;
-  font-size: 18px;
-  font-weight: 900;
-  margin-bottom: 16px;
+.game-features {
+  padding-top: 16px;
 }
 .box {
   margin-bottom: 24px;
-  max-height: 400px;
-  max-width: 600px;
+  max-width: 640px;
 }
 .checkbox {
   display: inline-flex;
   align-items: center;
-  width: 260px;
+  width: 320px;
   padding: 8px 0;
   cursor: pointer;
 }

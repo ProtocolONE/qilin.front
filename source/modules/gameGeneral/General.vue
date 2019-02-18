@@ -57,7 +57,6 @@
     <Headline
       slot="title"
       id="platforms"
-      :hasMargin="false"
     >
       {{ $t('platforms') }}
     </Headline>
@@ -156,5 +155,6 @@ export default Vue.extend({
 }
 .section {
   margin-bottom: 40px;
+  max-width: 640px;
 }
 </style>
