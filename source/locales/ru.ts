@@ -23,8 +23,8 @@ export default {
         description: 'Начните интеграцию',
       },
     },
-    prices: {
-      title: 'Продажи',
+    sales: {
+      title: 'Распродажи',
       description: ''
     },
     game: {

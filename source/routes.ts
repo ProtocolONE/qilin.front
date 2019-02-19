@@ -6,9 +6,9 @@ import GameGeneral from '@/modules/gameGeneral/General.vue';
 import GameNavigation from '@/modules/gameNavigation/GameNavigation.vue';
 import GameMedia from '@/modules/gameMedia/Media.vue';
 import GameRatings from '@/modules/gameRatings/Ratings.vue';
-import GamePrices from '@/modules/gamePrices/Prices.vue';
-import GamePricesTable from '@/modules/gamePrices/PricesTable.vue';
-import GamePricesCalendar from '@/modules/gamePrices/PricesCalendar.vue';
+import GameSales from '@/modules/gameSales/Sales.vue';
+import GameSalesTable from '@/modules/gameSales/SalesTable.vue';
+import GameSalesCalendar from '@/modules/gameSales/SalesCalendar.vue';
 import Games from '@/modules/games/Games.vue';
 
 const routes: RouteConfig[] = [
@@ -58,22 +58,22 @@ const routes: RouteConfig[] = [
     ],
   },
   {
-    name: 'gamePrices',
-    path: '/games/:id/prices',
-    redirect: '/games/:id/prices/table',
-    component: GamePrices,
+    name: 'gameSales',
+    path: '/games/:id/sales',
+    redirect: '/games/:id/sales/table',
+    component: GameSales,
     children: [
       {
-        name: 'gamePricesTable',
+        name: 'gameSalesTable',
         path: 'table',
-        component: GamePricesTable,
-        meta: 'routes.prices'
+        component: GameSalesTable,
+        meta: 'routes.sales'
       },
       {
-        name: 'gamePricesCalendar',
+        name: 'gameSalesCalendar',
         path: 'calendar',
-        component: GamePricesCalendar,
-        meta: 'routes.prices'
+        component: GameSalesCalendar,
+        meta: 'routes.sales'
       }
     ]
   }

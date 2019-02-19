@@ -1,11 +1,12 @@
 <template>
-<div id="game-prices" class="prices" :class="$style.prices">
+<div id="game-sales" class="sales" :class="$style.sales">
 
   <ui-header :title="$t('sales')" :breadcrumbs="breadcrumbs">
 
     <ui-searcher
       slot="search"
       :label="$t('search')"
+      :value="$route.query.search"
       @input="handlerSearch"
     />
 
@@ -16,7 +17,7 @@
           name="render-type"
           type="radio"
           class="switcher-list__radio"
-          @change="$router.replace({ name: 'gamePricesTable' })"
+          @change="$router.replace({ name: 'gameSalesTable' })"
           checked
           hidden
         >
@@ -30,7 +31,7 @@
           name="render-type"
           type="radio"
           class="switcher-list__radio"
-          @change="$router.replace({ name: 'gamePricesCalendar' })"
+          @change="$router.replace({ name: 'gameSalesCalendar' })"
           hidden
         >
         <label for="switcher-calendar">
@@ -48,14 +49,22 @@
   </ui-header>
 
   <keep-alive>
-    <router-view v-if="discounts.length" :items="discounts"/>
-    <dummy v-else @create="createSaleModal = true"/>
+    <dummy v-if="!discounts.length" @create="createSaleModal = true"/>
+    <router-view
+      v-else-if="filteredItems.length"
+      :items="filteredItems"
+      @edit="editSale"
+      @remove="removeSale"
+    />
+    <search-empty v-else @reset-search="handlerSearch"/>
   </keep-alive>
 
   <create-sale
     v-if="createSaleModal"
-    @hide="createSaleModal = false"
+    :data="saleModalData"
     @create="createSale"
+    @update="updateSale"
+    @hide="hideSaleModal"
   />
 
 </div>
@@ -65,9 +74,11 @@
 import axios from 'axios'
 import config from '@/config'
 import i18n from './i18n'
+import { find } from 'lodash'
 
 import CreateSale from './components/CreateSale'
 import Dummy from './components/Dummy'
+import SearchEmpty from './components/SearchEmpty'
 import Icon from './components/Icon'
 
 import {
@@ -77,8 +88,25 @@ import {
   Button as UiButton
 } from '@protocol-one/ui-kit'
 
+function getDays ({ start, end }) {
+  let day = 24 * 60 * 60 * 1000
+
+  start = new Date(start)
+  end = new Date(end)
+
+  return Math.round(
+    Math.abs(
+      (start.getTime() - end.getTime()) / day
+    )
+  )
+}
+
+function calculateSalePrice (price, rate) {
+  return Math.trunc(price * rate) / 100
+}
+
 export default {
-  name: 'GamePrices',
+  name: 'GameSales',
 
   i18n,
 
@@ -86,6 +114,7 @@ export default {
     CreateSale,
     Icon,
     Dummy,
+    SearchEmpty,
     UiHeader,
     UiSearcher,
     UiSwitcher,
@@ -95,14 +124,17 @@ export default {
   data () {
     return {
       game: {},
+      prices: {},
       discounts: [],
       iconOptions: {
         width: '18px',
         height: '18px',
         fill: '#333333'
       },
+      currency: 'USD',
       searchTimeout: null,
-      createSaleModal: false
+      createSaleModal: false,
+      saleModalData: {}
     }
   },
 
@@ -123,6 +155,10 @@ export default {
       return `${ config.api }/api/v1/games/${ this.gameId }`
     },
 
+    pricesUrl () {
+      return `${ this.gameUrl }/prices/`
+    },
+
     discountsUrl () {
       return `${ this.gameUrl }/discounts/`
     },
@@ -130,11 +166,24 @@ export default {
     breadcrumbs () {
       let crumb = { url: this.gameUrl, label: this.$t('allGames'), router: true }
       return [crumb, { label: this.game.internalName }]
+    },
+
+    USDPrice () {
+      let { price } = find(this.prices.prices, { currency: this.currency }) || {}
+      return price
+    },
+
+    filteredItems () {
+      let query = (this.$route.query.search || '').toLowerCase()
+      return this.discounts
+        .map(this.fillPriceItem)
+        .filter(({ title }) => title.toLowerCase().includes(query))
     }
   },
 
-  created () {
+  async created () {
     void this.loadData(this.gameUrl, 'game')
+    void this.loadData(this.pricesUrl, 'prices')
     void this.loadData(this.discountsUrl, 'discounts')
   },
 
@@ -147,14 +196,30 @@ export default {
       this[prop] = data
     },
 
-    handlerSearch (search) {
+    fillPriceItem (item) {
+      let locale = this.locale
+      return {
+        ...item,
+        title: item.title[locale],
+        description: item.description[locale],
+        days: getDays(item.date),
+        price: calculateSalePrice(this.USDPrice, item.rate)
+      }
+    },
+
+    handlerSearch (search, timeout = 300) {
       clearTimeout(this.searchTimeout)
       this.searchTimeout = setTimeout(() => {
         this.$router.replace({
           ...this.$route,
-          query: { search }
+          query: { ...this.$route.query, search }
         })
-      }, 300)
+      }, timeout)
+    },
+
+    hideSaleModal () {
+      this.createSaleModal = false
+      this.saleModalData = {}
     },
 
     getSaleData ({ label, start, end, rate, description }) {
@@ -170,18 +235,37 @@ export default {
     createSale (data) {
       axios
         .post(this.discountsUrl, this.getSaleData(data))
-        .then(() => { void this.loadData(this.gameUrl, 'game') })
-        .then(() => { this.createSaleModal = false })
+        .then(() => { this.loadData(this.discountsUrl, 'discounts') })
+        .then(this.hideSaleModal)
+    },
+
+    updateSale (data) {
+      let url = this.discountsUrl + this.saleModalData.id
+      axios
+        .put(url, this.getSaleData(data))
+        .then(() => { this.loadData(this.discountsUrl, 'discounts') })
+        .then(this.hideSaleModal)
+    },
+
+    editSale (item) {
+      this.saleModalData = item
+      this.createSaleModal = true
+    },
+
+    removeSale (item) {
+      let url = this.discountsUrl + item.id
+      axios.delete(url).then(() => { this.loadData(this.discountsUrl, 'discounts') })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.prices {
+.sales {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .switcher-list {
@@ -236,8 +320,8 @@ export default {
 </style>
 
 <style lang="scss" module>
-.prices {
-  [class^="search"] {
+.sales {
+  [class^="search"]:not([class~="search-empty"]) {
     margin-left: auto;
   }
 

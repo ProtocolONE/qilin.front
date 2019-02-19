@@ -11,6 +11,6 @@
 
 <script lang="ts">
 export default {
-  name: 'PricesIconTable'
+  name: 'SalesIconTable'
 }
 </script>

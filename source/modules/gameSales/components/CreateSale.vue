@@ -6,7 +6,9 @@
       <form class="modal-container" @submit.prevent="submit" @reset.prevent="hideModal">
 
         <header class="modal-header">
-          <h2>{{ $t('createNewSale') }}</h2>
+          <h2>
+            {{ (isEdit) ? $t('editSale') : $t('createNewSale') }}
+          </h2>
           <a href="javascript:void(0)" class="close" @click="hideModal">
             <icon name="times" width="10px" height="10px" fill="#C4C4C4"/>
           </a>
@@ -69,7 +71,7 @@
 
         <footer class="modal-footer">
           <ui-button :text="$t('cancel')" type="reset"/>
-          <ui-button :text="$t('create')" :disabled="emptyFields" type="submit"/>
+          <ui-button :text="getSubmitText" :disabled="emptyFields" type="submit"/>
         </footer>
 
       </form>
@@ -91,23 +93,38 @@ import {
 } from '@protocol-one/ui-kit'
 
 export default {
-  name: 'PricesCreateSale',
+  name: 'SalesCreateSale',
 
   i18n,
 
   components: { Icon, Datepicker, UiInput, UiButton },
 
+  props: {
+    data: Object
+  },
+
   data () {
-    return {
-      label: '',
-      description: '',
-      rate: 50,
-      start: new Date(),
-      end: null
-    }
+    let {
+      description = '',
+      rate = 50,
+      title: label = '',
+      date: {
+        start = new Date(),
+        end = null
+      } = {}
+    } = this.data
+    return { label, description, rate, start, end }
   },
 
   computed: {
+    isEdit () {
+      return Object.keys(this.data).length
+    },
+
+    getSubmitText () {
+      return (this.isEdit) ? this.$t('save') : this.$t('create')
+    },
+
     emptyFields () {
       return !(this.label && this.start && this.end)
     }
@@ -119,7 +136,7 @@ export default {
     },
 
     submit () {
-      this.$emit('create', this.$data)
+      this.$emit((this.isEdit) ? 'update' : 'create', this.$data)
     }
   }
 }

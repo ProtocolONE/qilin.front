@@ -23,7 +23,7 @@ export default {
         description: 'Help us setup your first tenant and start untegration',
       },
     },
-    prices: {
+    sales: {
       title: 'Sales',
       description: ''
     },

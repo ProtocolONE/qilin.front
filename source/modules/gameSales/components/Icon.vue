@@ -6,13 +6,21 @@
 import IconTable from './IconTable'
 import IconCalendar from './IconCalendar'
 import IconTimes from './IconTimes'
+import IconSort from './IconSort'
+import IconDots from './IconDots'
 
-const ICONS = ['table', 'calendar', 'times']
+const ICONS = ['table', 'calendar', 'times', 'sort', 'dots']
 
 export default {
   name: 'PriceIcon',
 
-  components: { IconTable, IconCalendar, IconTimes },
+  components: {
+    IconTable,
+    IconCalendar,
+    IconTimes,
+    IconSort,
+    IconDots
+  },
 
   props: {
     name: {
