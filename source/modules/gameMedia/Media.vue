@@ -1,6 +1,10 @@
 <template>
 <div class="media-page">
-  <Headline id="cover_image">
+  <Headline
+    id="cover_image"
+    :title="$t('cover_image_hint_title')"
+    :info="$t('cover_image_hint')"
+  >
     {{ $t('cover_image') }}
   </Headline>
   <p
@@ -97,7 +101,7 @@ export default Vue.extend({
         'screenshots',
         'store',
         'capsule',
-      ].map(a => ({ anchor: a, text: this.$t(a) }))
+      ].map(a => ({ anchor: a, text: () => this.$t(a) }))
     );
   },
   methods: {

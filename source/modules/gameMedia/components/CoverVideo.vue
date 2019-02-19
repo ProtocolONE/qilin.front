@@ -50,10 +50,10 @@ export default Vue.extend({
       this.lang = lang;
     },
     clickRemove() {
-      this.$emit('change',
+      this.$emit('change', {
         ...this.value,
         ...{[this.lang]: ''}
-      );
+      });
     },
     upload() {
       uploadVideo({debug: true}, (urls) => {

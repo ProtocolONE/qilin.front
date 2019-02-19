@@ -2,6 +2,8 @@ export default {
   messages: {
     en: {
       cover_image: 'Cover image',
+      cover_image_hint_title: 'Cover image',
+      cover_image_hint: 'Main picture for store, illustrate main game sense.',
       cover_image_descr: "1920х800 (aspect 1.77) in PNG or JPEG format.<br>Please avoid duplicating your project's screenshots here.",
       upload_cover_image: 'Upload cover image',
       replace_cover_image: 'Replace cover image',
@@ -47,6 +49,9 @@ export default {
     },
     ru: {
       cover_image: 'Обложка',
+      cover_image_hint_title: 'Обложка',
+      cover_image_hint: 'Основное изображение игры в магазине.',
+
       cover_image_descr: "1920х800 (aspect 1.77) in PNG or JPEG format.<br>Please avoid duplicating your project's screenshots here.",
       upload_cover_image: 'Загрузить обложку',
       replace_cover_image: 'Заменить обложку',

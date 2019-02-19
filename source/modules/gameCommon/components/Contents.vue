@@ -8,7 +8,7 @@
         :key="item.anchor"
       >
         <a :href="'#' + item.anchor">
-          {{ item.text }}
+          {{ item.text() }}
         </a>
       </li>
     </ul>
