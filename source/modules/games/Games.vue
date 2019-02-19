@@ -53,6 +53,16 @@ export default Vue.extend({
     ...mapGetters(['currentVendorId']),
     ...mapState('Games', ['games', 'genres']),
 
+    gameParts() {
+      return [
+        { width: 40, minWidth: 40, maxWidth: 40 },
+        { width: 276, minWidth: 240, maxWidth: 300 },
+        { width: 200, minWidth: 180, maxWidth: 220 },
+        { width: 110, minWidth: 80, maxWidth: 140 },
+        { width: 200, minWidth: 190, maxWidth: 240 },
+      ];
+    },
+
     hasGames() {
       return !!this.games.length;
     },
