@@ -21,6 +21,12 @@
             required
           />
 
+          <ui-input
+            v-model.number="rate"
+            :label="$t('rate')"
+            :additional-info="$t('discountRate')"
+          />
+
           <div class="dates">
             <datepicker
               v-model="start"
@@ -29,7 +35,7 @@
               :not-before="new Date()"
               :lang="$i18n.locale"
               :time-picker-options="{ start: '00:00', step: '00:30', end: '23:30' }"
-              value-type="timestamp"
+              value-type="date"
               format="YYYY-MM-DD hh:mm:ss a"
               type="datetime"
               width="auto"
@@ -45,7 +51,7 @@
               :disabled="!start"
               :lang="$i18n.locale"
               :time-picker-options="{ start: '00:00', step: '00:30', end: '23:30' }"
-              value-type="timestamp"
+              value-type="date"
               format="YYYY-MM-DD hh:mm:ss a"
               type="datetime"
               width="auto"
@@ -95,7 +101,8 @@ export default {
     return {
       label: '',
       description: '',
-      start: null,
+      rate: 50,
+      start: new Date(),
       end: null
     }
   },

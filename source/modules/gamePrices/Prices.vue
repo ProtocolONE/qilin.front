@@ -48,7 +48,8 @@
   </ui-header>
 
   <keep-alive>
-    <router-view/>
+    <router-view v-if="discounts.length" :items="discounts"/>
+    <dummy v-else @create="createSaleModal = true"/>
   </keep-alive>
 
   <create-sale
@@ -66,6 +67,7 @@ import config from '@/config'
 import i18n from './i18n'
 
 import CreateSale from './components/CreateSale'
+import Dummy from './components/Dummy'
 import Icon from './components/Icon'
 
 import {
@@ -83,6 +85,7 @@ export default {
   components: {
     CreateSale,
     Icon,
+    Dummy,
     UiHeader,
     UiSearcher,
     UiSwitcher,
@@ -92,7 +95,7 @@ export default {
   data () {
     return {
       game: {},
-      prices: {},
+      discounts: [],
       iconOptions: {
         width: '18px',
         height: '18px',
@@ -104,6 +107,10 @@ export default {
   },
 
   computed: {
+    locale () {
+      return this.$i18n.locale
+    },
+
     meta () {
       return this.$route.meta
     },
@@ -116,8 +123,8 @@ export default {
       return `${ config.api }/api/v1/games/${ this.gameId }`
     },
 
-    pricesUrl () {
-      return `${ this.gameUrl }/prices/`
+    discountsUrl () {
+      return `${ this.gameUrl }/discounts/`
     },
 
     breadcrumbs () {
@@ -127,8 +134,8 @@ export default {
   },
 
   created () {
-    this.loadData(this.gameUrl, 'game')
-    this.loadData(this.pricesUrl, 'prices')
+    void this.loadData(this.gameUrl, 'game')
+    void this.loadData(this.discountsUrl, 'discounts')
   },
 
   methods: {
@@ -150,15 +157,33 @@ export default {
       }, 300)
     },
 
+    getSaleData ({ label, start, end, rate, description }) {
+      let key = this.locale
+      return {
+        title: { [key]: label },
+        description: { [key]: description },
+        date: { start, end },
+        rate
+      }
+    },
+
     createSale (data) {
-      console.log(data)
-      this.createSaleModal = false
+      axios
+        .post(this.discountsUrl, this.getSaleData(data))
+        .then(() => { void this.loadData(this.gameUrl, 'game') })
+        .then(() => { this.createSaleModal = false })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.prices {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .switcher-list {
   $switcher-color: #EAEAEA;
 
