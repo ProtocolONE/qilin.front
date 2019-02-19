@@ -177,7 +177,7 @@ export default {
       let query = (this.$route.query.search || '').toLowerCase()
       return this.discounts
         .map(this.fillPriceItem)
-        .filter(({ title }) => title.toLowerCase().includes(query))
+        .filter(({ title = '' }) => title.toLowerCase().includes(query))
     }
   },
 

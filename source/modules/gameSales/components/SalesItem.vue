@@ -1,6 +1,10 @@
 <template>
 <tr v-if="type === 'table'" class="item-table">
-  <td width="200">{{ title }}</td>
+  <td width="200">
+    <a href="javascript:void(0)" class="item-table__title" @click="$emit('edit')">
+      {{ title }}
+    </a>
+  </td>
   <td>{{ localize(start) }} - {{ localize(end) }}</td>
   <td width="120">{{ days }}</td>
   <td width="100">{{ rate }}%</td>
@@ -66,7 +70,7 @@ export default {
 
   methods: {
     localize (date) {
-      return date || moment(date).locale(this.locale).format('LLL')
+      return  moment(date).locale(this.$i18n.locale).format('LLL')
     },
 
     hideActions () {
@@ -84,6 +88,10 @@ export default {
     padding: 10px;
     padding-left: 15px;
     vertical-align: top;
+  }
+
+  &__title {
+    color: #333;
   }
 }
 
