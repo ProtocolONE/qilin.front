@@ -42,7 +42,7 @@
     <ui-button
       slot="right"
       :text="$t('createNewSale')"
-      @click=""
+      @click="createSaleModal = true"
     />
 
   </ui-header>
@@ -50,6 +50,12 @@
   <keep-alive>
     <router-view/>
   </keep-alive>
+
+  <create-sale
+    v-if="createSaleModal"
+    @hide="createSaleModal = false"
+    @create="createSale"
+  />
 
 </div>
 </template>
@@ -59,6 +65,7 @@ import axios from 'axios'
 import config from '@/config'
 import i18n from './i18n'
 
+import CreateSale from './components/CreateSale'
 import Icon from './components/Icon'
 
 import {
@@ -74,6 +81,7 @@ export default {
   i18n,
 
   components: {
+    CreateSale,
     Icon,
     UiHeader,
     UiSearcher,
@@ -90,7 +98,8 @@ export default {
         height: '18px',
         fill: '#333333'
       },
-      searchTimeout: null
+      searchTimeout: null,
+      createSaleModal: false
     }
   },
 
@@ -139,6 +148,11 @@ export default {
           query: { search }
         })
       }, 300)
+    },
+
+    createSale (data) {
+      console.log(data)
+      this.createSaleModal = false
     }
   }
 }

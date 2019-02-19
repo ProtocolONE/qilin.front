@@ -5,13 +5,14 @@
 <script lang="ts">
 import IconTable from './IconTable'
 import IconCalendar from './IconCalendar'
+import IconTimes from './IconTimes'
 
-const ICONS = ['table', 'calendar']
+const ICONS = ['table', 'calendar', 'times']
 
 export default {
   name: 'PriceIcon',
 
-  components: { IconTable, IconCalendar },
+  components: { IconTable, IconCalendar, IconTimes },
 
   props: {
     name: {

@@ -774,6 +774,13 @@
   dependencies:
     vue-router "*"
 
+"@types/vue2-datepicker@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@types/vue2-datepicker/-/vue2-datepicker-2.0.0.tgz#95db8a67fbd791ee13d95f1dbc9f67e2077b3335"
+  integrity sha512-7QPBHj52luRgIfdJrLkcZevBTgazLaGVqkY8hZXT1n1FjYwr3v5Dlipbn8P1sBxqbVEYyT7Ek2whY7OlK16m6Q==
+  dependencies:
+    vue ">=2.0.0"
+
 "@types/vue@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@types/vue/-/vue-2.0.0.tgz#ec77b3d89591deb9ca5cb052368aa9c32be088e7"
@@ -3321,6 +3328,11 @@ faye-websocket@~0.11.1:
   integrity sha1-8O/hjE9W5PQK/H4Gxxn9XuYYjzg=
   dependencies:
     websocket-driver ">=0.5.1"
+
+fecha@^2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/fecha/-/fecha-2.3.3.tgz#948e74157df1a32fd1b12c3a3c3cdcb6ec9d96cd"
+  integrity sha512-lUGBnIamTAwk4znq5BcqsDaxSmZ9nDVJaij6NvRt/Tg4R69gERA+otPKbS86ROw9nxVMw2/mp1fnaiWqbs6Sdg==
 
 figgy-pudding@^3.5.1:
   version "3.5.1"
@@ -7862,7 +7874,14 @@ vue-typescript-import-dts@^4.0.0:
   resolved "https://registry.yarnpkg.com/vue-typescript-import-dts/-/vue-typescript-import-dts-4.0.0.tgz#2ddb5354f61cff69ef2997ca9da1a3183041a880"
   integrity sha1-LdtTVPYc/2nvKZfKnaGjGDBBqIA=
 
-vue@*, vue@^2.5.21:
+vue2-datepicker@^2.10.0:
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/vue2-datepicker/-/vue2-datepicker-2.10.0.tgz#1db711912d04979a8bff0d8b8b47038cee846ac9"
+  integrity sha512-WGL7ou0TdBiJQuHVp29BtBw3rSkLrIYwXWU/ELmaLdnAerI0EdGVAu7DvZV2iIxY4lsHyjqocApxdvXTmwLrAw==
+  dependencies:
+    fecha "^2.3.3"
+
+vue@*, vue@>=2.0.0, vue@^2.5.21:
   version "2.6.6"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.6.tgz#dde41e483c11c46a7bf523909f4f2f816ab60d25"
   integrity sha512-Y2DdOZD8sxApS+iUlwv1v8U1qN41kq6Kw45lM6nVZKhygeWA49q7VCCXkjXqeDBXgurrKWkYQ9cJeEJwAq0b9Q==
