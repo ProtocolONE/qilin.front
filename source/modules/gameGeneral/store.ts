@@ -19,7 +19,7 @@ export default function GeneralStore(apiUrl: string) {
     releaseDate: ({ gameInfo }) => get(gameInfo, 'releaseDate', ''),
     selectedGenres: ({ gameInfo }) => get(gameInfo, 'genres', {
       addition: [],
-      main: '',
+      main: 0,
     }),
     selectedTags: ({ gameInfo }) => get(gameInfo, 'tags', []),
     features: ({ gameInfo }) => get(gameInfo, 'features', {}),

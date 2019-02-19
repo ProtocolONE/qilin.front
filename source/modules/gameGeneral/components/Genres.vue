@@ -3,7 +3,7 @@
   <Select
     class="main-genre"
     :label="$t('mainGenreLabel')"
-    :value="mainGenre"
+    :value="(mainGenre || '').toString()"
     :options="mainGenres"
     @input="changeMainGenre"
   />
@@ -33,7 +33,7 @@ export default Vue.extend({
     selectedGenres: {
       default: () => ({
         addition: [],
-        main: '',
+        main: 0,
       }),
       type: Object,
     },
@@ -55,12 +55,12 @@ export default Vue.extend({
     mainGenres() {
       return this.genres.map((genre: any) => ({
         label: this.getGenreTitle(genre),
-        value: genre.id,
+        value: `${genre.id}`,
       }));
     },
     additionGenres() {
       const additionGenres = this.genres.filter(
-        ({ id }: { id: string }) => id !== this.mainGenre,
+        ({ id }: { id: number }) => id !== this.mainGenre,
       );
 
       return additionGenres.map(
@@ -69,11 +69,11 @@ export default Vue.extend({
     },
     additionSelectedGenres() {
       const additionSelectedGenres = this.localSelectedGenres.addition.filter(
-        (id: string) => id !== this.mainGenre,
+        (id: number) => id !== this.mainGenre,
       );
 
       return additionSelectedGenres.map(
-        (selectedGenre: string) => this.getGenreTitle(
+        (selectedGenre: number) => this.getGenreTitle(
           this.findSelectedGenreById(selectedGenre),
         ),
       );
@@ -82,23 +82,24 @@ export default Vue.extend({
   methods: {
     changeMainGenre(genre: string) {
       const addition = this.localSelectedGenres.addition;
+      const preparedGenre = parseInt(genre);
 
-      this.localSelectedGenres.main = genre;
-      this.localSelectedGenres.addition = without(addition, genre);
+      this.localSelectedGenres.main = preparedGenre;
+      this.localSelectedGenres.addition = without(addition, preparedGenre);
 
       this.$emit('change', this.localSelectedGenres);
     },
-    changeAdditionGenres(genres: string[]) {
+    changeAdditionGenres(genres: number[]) {
       this.localSelectedGenres.addition = genres.map(
         selectedGenre => this.findSelectedGenreByTitle(selectedGenre).id
       );
 
       this.$emit('change', this.localSelectedGenres);
     },
-    findSelectedGenreById(selectedGenre: string) {
+    findSelectedGenreById(selectedGenre: number) {
       return this.genres.find((genre: any) => genre.id === selectedGenre);
     },
-    findSelectedGenreByTitle(selectedGenre: string) {
+    findSelectedGenreByTitle(selectedGenre: number) {
       return this.genres.find((genre: any) => this.getGenreTitle(genre) === selectedGenre);
     },
     getGenreTitle(genre: any) {

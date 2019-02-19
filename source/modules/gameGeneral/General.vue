@@ -25,7 +25,7 @@
   />
   
   <Headline id="genre">{{ $t('genre') }}</Headline>
-  <Genre
+  <Genres
     class="section"
     :genres="genres"
     :selectedGenres="selectedGenres"
@@ -71,7 +71,7 @@ import { mapActions, mapState, mapGetters, mapMutations } from 'vuex';
 import Headline from '@/components/Headline.vue';
 import capitalizeFirstLetter from '@/helpers/capitalizeFirstLetter';
 import Creators from './components/Creators.vue';
-import Genre from './components/Genre.vue';
+import Genres from './components/Genres.vue';
 import Platforms from './components/Platforms.vue';
 import ReleaseDate from './components/ReleaseDate.vue';
 import Requirements from './components/Requirements.vue';
@@ -84,7 +84,7 @@ export default Vue.extend({
   i18n,
   components: {
     Creators,
-    Genre,
+    Genres,
     Headline,
     Platforms,
     ReleaseDate,

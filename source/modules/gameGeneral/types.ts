@@ -1,20 +1,20 @@
 export interface Genre {
-  id: string;
+  id: number;
   title: {
     en: string,
     ru: string,
   };
 }
 export interface Tag {
-  id: string;
+  id: number;
   title: {
     en: string,
     ru: string,
   };
 }
 export interface GameGenres {
-  main: string;
-  addition: string[];
+  main: number;
+  addition: number[];
 }
 export interface GameFeatures {
   common: string[];
@@ -68,7 +68,7 @@ export interface GameInfo {
   requirements: GameRequirements;
   languages: GameLangs;
   genres: GameGenres;
-  tags: string[];
+  tags: number[];
 }
 export interface State {
   gameInfo: GameInfo;

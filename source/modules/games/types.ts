@@ -1,5 +1,5 @@
 interface Genre {
-  id: string;
+  id: number;
   title: {
     en: string,
     ru: string,
@@ -15,7 +15,7 @@ export interface Game {
   id: string;
   internalName: string;
   icon: string;
-  genres: string[];
+  genres: number[];
   releaseDate: Date;
   prices: Price;
 }
