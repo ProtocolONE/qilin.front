@@ -13,7 +13,7 @@
         class="lang-row"
         :key="key"
       >
-        <span class="lang">{{ langLabels[key] }}</span>
+        <span class="lang">{{ $t(`languages.${key}`) }}</span>
         <div class="checkbox">
           <Checkbox
             class="check"
@@ -58,11 +58,6 @@ export default Vue.extend({
   data() {
     return {
       localLanguages: this.languages,
-      langLabels: {
-        'de': 'German',
-        'en': 'English',
-        'ru': 'Russian',
-      }
     };
   },
   watch: {

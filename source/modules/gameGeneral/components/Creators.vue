@@ -37,6 +37,14 @@ export default Vue.extend({
       localPublishers: this.publishers,
     };
   },
+  watch: {
+    developers(value) {
+      this.localDevelopers = value;
+    },
+    publishers(value) {
+      this.localPublishers = value;
+    },
+  },
   methods: {
     changeDevelopers(developers: string) {
       this.localDevelopers = developers;

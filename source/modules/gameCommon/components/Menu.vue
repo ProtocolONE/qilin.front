@@ -34,8 +34,8 @@ export default Vue.extend({
   li {
     display: block;
     padding-left: 30px;
-    padding-top: 8px;
-    padding-bottom: 14px;
+    padding-top: 12px;
+    padding-bottom: 12px;
     &.select {
       background: #bcd6f4;
     }

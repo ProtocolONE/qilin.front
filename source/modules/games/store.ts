@@ -4,18 +4,16 @@ import { GetterTree, ActionTree, MutationTree } from 'vuex';
 import formatDate from '@/helpers/formatDate';
 import { VueRouter } from "vue-router/types/router";
 import { Game, State } from './types';
-// import testData from './testData';
 
 export default function GamesStore(apiUrl: string) {
   const state: State = {
     games: [],
+    genres: [],
     vendorId: '',
   };
   const getters: GetterTree<State, any> = {};
   const actions: ActionTree<State, any> = {
     async initState({ commit }, {router}: {router: VueRouter}) {
-      // const games = testData;
-
       const vendors = await axios
         .get(`${apiUrl}/api/v1/vendors`, { params: { limit: 1 } })
         .then(res => res.data || []);
@@ -35,10 +33,16 @@ export default function GamesStore(apiUrl: string) {
       }))
 
       commit('games', preparedGames);
+
+      const genres = await axios
+        .get(`${apiUrl}/api/v1/genres`)
+        .then(response => response.data);
+      commit('genres', genres);
     },
   };
   const mutations: MutationTree<State> = {
     games: (state, value) => state.games = value,
+    genres: (state, value) => state.genres = value,
     vendorId: (state, value) => state.vendorId = value,
   };
 
