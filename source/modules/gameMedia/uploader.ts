@@ -7,11 +7,12 @@ export interface Options {
 }
 
 export type FileReadyFunc = (urls: string[]) => any;
-export type FileSelectFunc = (file: File) => any;
+export type OpenFileFunc = (file: File) => any;
 
-export function Select(select: FileSelectFunc) {
+export function OpenFileDialog(accept: string, select: OpenFileFunc) {
   const input: HTMLInputElement = document.createElement('input');
   input.type = 'file';
+  input.accept = accept;
   input.style.display = 'none';
   document.body.appendChild(input);
   input.addEventListener('change', () =>

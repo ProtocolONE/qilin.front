@@ -12,13 +12,15 @@ Please avoid duplicating your project's screenshots here.`,
       remove_cover: 'Remove cover image',
 
       cover_video: 'Cover video',
-      cover_video_descr: `The cover video is used on the main game page on the store by replacing cover image and used as default video in any video feature blocks on the store. 
+      cover_video_descr: [
+        `The cover video is used on the main game page on the store by replacing cover image and used as default video in any video feature blocks on the store. 
 <p>The video file must have the highest resolution you have up to 1920 x 1080, a frame rate of 30 / 29.97 or 60 / 59.94, a high bitrate (5000 kbps or more), and a format .mov or .wmv. 
 Preferred standard is H. 264 video compression and AAC audio compression, but we can make a transcoding from any format. 
 A 16:9 screen ratio is preferred but a 4:3 ratio is also acceptable. 
-Note: the sound will be filtered to the normal stereo level when the video is recorded.</p>
-<p class="warning">WARNING! In the first video it is necessary to go to the gameplay or action as quickly as possible. 
-Slow theatrical performances are suitable for a cinematic trailer on YouTube, but buyers are much more important to see what is the gameplay.</p>`,
+Note: the sound will be filtered to the normal stereo level when the video is recorded.</p>`,
+        `WARNING! In the first video it is necessary to go to the gameplay or action as quickly as possible. 
+Slow theatrical performances are suitable for a cinematic trailer on YouTube, but buyers are much more important to see what is the gameplay.`
+    ],
       upload_cover_video: 'Upload cover video',
       replace_cover_video: 'Replace cover video',
       remove_video: 'Remove video',
@@ -34,13 +36,15 @@ We also would use this video for play it after the cover video ends.`,
       add_trailer: 'Add video',
 
       screenshots: 'Screenshots',
-      screenshots_descr: `Screenshots will appear on your game's page. Upload 5 to 7 for best results. 
+      screenshots_descr: [
+        `Screenshots will appear on your game's page. Upload 5 to 7 for best results. 
 Upload high-resolution widescreen screenshots in 1920x1080. 
 All images uploaded here would be used on your game page in the store and should show your game. 
 It is not necessary to use images of concept art or frames from pre-prepared videos, as well as images of awards, marketing materials or written descriptions of the goods.
-<p></p> 
-<p class="warning">WARNING! Screenshots should show only the gameplay. It is not necessary to use images of concept art or frames from pre-prepared videos, as well as images of awards, marketing materials or written descriptions of the goods. 
+<p></p>`,
+        `WARNING! Screenshots should show only the gameplay. It is not necessary to use images of concept art or frames from pre-prepared videos, as well as images of awards, marketing materials or written descriptions of the goods. 
 Show your customers what the gameplay is. Screenshots of the menu should be downloaded only if they are a unique component of the game.</p>`,
+      ],
       upload_screenshot: 'Upload image',
       replace_screenshot: 'Replace',
       remove_screenshot: 'Remove',
@@ -77,12 +81,15 @@ Show your customers what the gameplay is. Screenshots of the menu should be down
       remove_cover: 'Удалить обложку',
 
       cover_video: 'Видео обложка',
-      cover_video_descr: `Обложка видео используется на главной странице игры в магазине и используется в качестве видео по умолчанию в любых фич-блоках магазина.
+      cover_video_descr: [
+        `Обложка видео используется на главной странице игры в магазине и используется в качестве видео по умолчанию в любых фич-блоках магазина.
 <p>Видеофайл должен иметь  высокое разрешение до 1920 x 1080, частоту кадров 30 / 29,97 или 60 / 59,94, высокую скорость передачи данных (5000 кбит / с или более) и формат .mov или .wmv.
 Предпочтительным форматом сжатия является H. 264 и AAC для аудио, но мы можем сделать транскодирование из любого формата. 
 Соотношение сторон 16:9 является предпочтительным, но также приемлемо соотношение 4:3. 
-Примечание: при записи видео звук будет отфильтрован до нормального стереофонического уровня.</p>
-<p class="warning">ВНИМАНИЕ! В первом видео необходимо перейти к игровому процессу или "экшену" как можно быстрее. Медленные театральные постановки подходят для кинематографического трейлера на YouTube, но покупателям гораздо важнее понять, что такое геймплей.</p>`,
+Примечание: при записи видео звук будет отфильтрован до нормального стереофонического уровня.</p>`,
+        `ВНИМАНИЕ! В первом видео необходимо перейти к игровому процессу или "экшену" как можно быстрее. 
+Медленные театральные постановки подходят для кинематографического трейлера на YouTube, но покупателям гораздо важнее понять, что такое геймплей.`,
+      ],
       upload_cover_video: 'Загрузить видео',
       replace_cover_video: 'Заменить',
       remove_video: 'Удалить видео',
@@ -98,12 +105,15 @@ Show your customers what the gameplay is. Screenshots of the menu should be down
       add_trailer: 'Добавить',
 
       screenshots: 'Скриншоты',
-      screenshots_descr: `Скриншоты появятся на странице вашей игры. Загрузите 5-7 файлов для лучших результатов. 
+      screenshots_descr: [
+        `Скриншоты появятся на странице вашей игры. Загрузите 5-7 файлов для лучших результатов. 
 Загрузите широкоформатные скриншоты в высоком разрешении 1920x1080. 
 Все загруженные здесь изображения будут использоваться на странице вашей игры в магазине и должны показывать вашу игру. 
 Нет необходимости использовать изображения концепт-арта или кадры из заранее подготовленных видеороликов, а также изображения наград, маркетинговых материалов или письменных описаний товаров.
-<p></р><p class="warning">ВНИМАНИЕ! На скриншотах должен отображаться только игровой процесс. Нет необходимости использовать изображения концепт-арта или кадры из заранее подготовленных видеороликов, а также изображения наград, маркетинговых материалов или письменных описаний товаров. 
-Покажите своим клиентам, что такое геймплей. Скриншоты меню следует загружать только в том случае, если они являются уникальным компонентом игры.</p>`,
+<p></р>`,
+        `ВНИМАНИЕ! На скриншотах должен отображаться только игровой процесс. Нет необходимости использовать изображения концепт-арта или кадры из заранее подготовленных видеороликов, а также изображения наград, маркетинговых материалов или письменных описаний товаров. 
+Покажите своим клиентам, что такое геймплей. Скриншоты меню следует загружать только в том случае, если они являются уникальным компонентом игры.`,
+      ],
       upload_screenshot: 'Загрузить скриншот',
       replace_screenshot: 'Заменить',
       remove_screenshot: 'Удалить',

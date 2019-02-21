@@ -7,7 +7,7 @@ import { GameInfo } from './types';
 
 export interface ContentsItem {
   anchor: string;
-  text: () => string;
+  text: string;
 }
 
 export interface State {
@@ -18,7 +18,7 @@ export interface State {
 export default function GameStore(apiUrl: string) {
   const state: State = {
     gameInfo: null,
-    contents: [{text: () => 'Cover', anchor: 'cover'}],
+    contents: [{text: 'Cover', anchor: 'cover'}],
   };
   const getters: GetterTree<State, any> = {};
   const actions: ActionTree<State, any> = {

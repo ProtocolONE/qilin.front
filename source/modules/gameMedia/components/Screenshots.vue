@@ -10,14 +10,14 @@
       v-for="(item, index) in (value[lang] || []).concat([''])"
       :key="index"
     >
-      <ImageUpload
+      <UploadItem
         :upload-text="$t('upload_screenshot')"
         :replace-text="$t('replace_screenshot')"
         :remove-text="$t('remove_screenshot')"
-        :remove-btn="index !== (value[lang] || []).length"
-        :upload-btn="!(value[lang] || [])[index]"
+        :has-remove-btn="index !== (value[lang] || []).length"
+        :has-upload-btn="!(value[lang] || [])[index]"
         :source="item"
-        :small="true"
+        :is-small="true"
         @click="selectFile(index)"
         @dropFile="file => uploadFile(index, file)"
         @clickRemove="clickRemove(index)"
@@ -31,13 +31,13 @@
   import Vue from 'vue'
   import {clone} from 'lodash-es'
   import {LangsBar, Button} from '@protocol-one/ui-kit'
-  import ImageUpload from './ImageUploader.vue'
-  import {Select, UploadImage} from '../uploader'
+  import UploadItem from './UploadItem.vue'
+  import {OpenFileDialog, UploadImage} from '../uploader'
   import i18n from '../i18n'
 
   export default Vue.extend({
     i18n,
-    components: {ImageUpload, LangsBar, Button},
+    components: {UploadItem, LangsBar, Button},
     props: {
       value: {
         type: Object,
@@ -75,7 +75,7 @@
         });
       },
       selectFile(index) {
-        Select(file => this.uploadFile(index, file));
+        OpenFileDialog('image/*', file => this.uploadFile(index, file));
       },
     }
   })

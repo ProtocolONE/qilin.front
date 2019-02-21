@@ -7,23 +7,23 @@
   />
   <div class="list">
     <span>
-      <ImageUpload
+      <UploadItem
         :upload-text="$t('upload_capsule')"
         :replace-text="$t('replace_capsule')"
         :remove-text="$t('remove_capsule')"
         :source="value.generic[lang] || ''"
-        :small="true"
+        :is-small="true"
         @click="selectFile('generic')"
         @dropFile="file => uploadFile('generic', file)"
         @clickRemove="clickRemove('generic')"
       />
     </span><span>
-      <ImageUpload
+      <UploadItem
         :upload-text="$t('upload_capsule')"
         :replace-text="$t('replace_capsule')"
         :remove-text="$t('remove_capsule')"
         :source="value.small[lang] || ''"
-        :small="true"
+        :is-small="true"
         @click="selectFile('small')"
         @dropFile="file => uploadFile('small', file)"
         @clickRemove="clickRemove('small')"
@@ -37,13 +37,13 @@
   import Vue from 'vue'
   import {clone} from 'lodash-es'
   import {LangsBar} from '@protocol-one/ui-kit'
-  import ImageUpload from './ImageUploader.vue'
-  import {Select, UploadImage} from '../uploader'
+  import UploadItem from './UploadItem.vue'
+  import {OpenFileDialog, UploadImage} from '../uploader'
   import i18n from '../i18n'
 
   export default Vue.extend({
     i18n,
-    components: {ImageUpload, LangsBar},
+    components: {UploadItem, LangsBar},
     props: {
       value: {
         type: Object,
@@ -80,7 +80,7 @@
         });
       },
       selectFile(type) {
-        Select(file => this.uploadFile(type, file));
+        OpenFileDialog('image/*', file => this.uploadFile(type, file));
       },
     }
   })

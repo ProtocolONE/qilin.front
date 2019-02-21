@@ -1,19 +1,31 @@
 <template>
 <div
-  :class="['uploader', small ? '_small' : '', dragOver ? 'drag-over' : '']"
-  :style="`background-image: url(${source})`"
-  @dragover.prevent="dragOver = true"
-  @dragleave="dragOver = false"
+  :class="['uploader', {_small: isSmall, _dragover: isDragOver}]"
+  @dragover.prevent="isDragOver = true"
+  @dragleave="isDragOver = false"
   @drop.prevent="dropFile"
 >
+  <img
+    v-if="!isVideo && !!source"
+    class="source"
+    :src="source"
+  >
+  <video
+    v-if="isVideo && !!source"
+    class="source"
+    width="400"
+    height="300"
+    preload
+    :src="source"
+  />
   <div class="blank" />
   <Button
-    v-if="uploadBtn"
+    v-if="hasUploadBtn"
     :text="source ? replaceText : uploadText"
     @click="$emit('click')"
   />
   <Button
-    v-if="!!source || removeBtn"
+    v-if="!!source || hasRemoveBtn"
     :text="removeText"
     color="orange"
     @click="$emit('clickRemove')"
@@ -44,27 +56,31 @@ export default Vue.extend({
       default: '',
       type: String,
     },
-    small: {
+    isSmall: {
       default: false,
       type: Boolean,
     },
-    removeBtn: {
+    hasRemoveBtn: {
       default: false,
       type: Boolean,
     },
-    uploadBtn: {
+    hasUploadBtn: {
       default: true,
+      type: Boolean,
+    },
+    isVideo: {
+      default: false,
       type: Boolean,
     },
   },
   data: () => ({
-      dragOver: false,
+      isDragOver: false,
     }),
   methods: {
     dropFile(event) {
       event.stopPropagation();
       event.preventDefault();
-      this.dragOver = false;
+      this.isDragOver = false;
       this.$emit('dropFile', event.dataTransfer.files[0]);
     }
   },
@@ -77,11 +93,7 @@ export default Vue.extend({
   background-color: #f6f6f6;
   border: 1px solid #e5e5e5;
   box-sizing: border-box;
-
-  &._small {
-    height: 160px;
-  }
-
+  overflow: hidden;
   flex-direction: column;
   display: flex;
   align-items: center;
@@ -91,6 +103,19 @@ export default Vue.extend({
   background-position: center center;
   position: relative;
 
+  &._small {
+    height: 160px;
+  }
+
+  .source {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    object-fit: cover;
+  }
+
   .blank {
     opacity: 0.5;
     background-color: #f6f6f6;
@@ -99,7 +124,7 @@ export default Vue.extend({
     position: absolute;
   }
 
-  &.drag-over .blank {
+  &._dragover .blank {
     background-color: red;
   }
 
