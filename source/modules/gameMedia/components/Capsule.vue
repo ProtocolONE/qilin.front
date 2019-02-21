@@ -7,23 +7,25 @@
   />
   <div class="list">
     <span>
-      <ImageUpload
+      <UploadItem
         :upload-text="$t('upload_capsule')"
         :replace-text="$t('replace_capsule')"
         :remove-text="$t('remove_capsule')"
         :source="value.generic[lang] || ''"
-        :small="true"
-        @click="upload('generic')"
+        :is-small="true"
+        @click="selectFile('generic')"
+        @dropFile="file => uploadFile('generic', file)"
         @clickRemove="clickRemove('generic')"
       />
     </span><span>
-      <ImageUpload
+      <UploadItem
         :upload-text="$t('upload_capsule')"
         :replace-text="$t('replace_capsule')"
         :remove-text="$t('remove_capsule')"
         :source="value.small[lang] || ''"
-        :small="true"
-        @click="upload('small')"
+        :is-small="true"
+        @click="selectFile('small')"
+        @dropFile="file => uploadFile('small', file)"
         @clickRemove="clickRemove('small')"
       />
     </span>
@@ -35,13 +37,13 @@
   import Vue from 'vue'
   import {clone} from 'lodash-es'
   import {LangsBar} from '@protocol-one/ui-kit'
-  import ImageUpload from './ImageUploader.vue'
-  import uploadImage from '../uploaderImage'
+  import UploadItem from './UploadItem.vue'
+  import {OpenFileDialog, UploadImage} from '../uploader'
   import i18n from '../i18n'
 
   export default Vue.extend({
     i18n,
-    components: {ImageUpload, LangsBar},
+    components: {UploadItem, LangsBar},
     props: {
       value: {
         type: Object,
@@ -70,13 +72,16 @@
         delete value[type][this.lang];
         this.$emit('change', value);
       },
-      upload(type) {
-        uploadImage({width: 1920, height: 800}, (urls) => {
+      uploadFile(type, file) {
+        UploadImage(file, {width: 1920, height: 800}, urls => {
           const value = clone(this.value, true);
           value[type][this.lang] = urls[0];
           this.$emit('change', value);
         });
-      }
+      },
+      selectFile(type) {
+        OpenFileDialog('image/*', file => this.uploadFile(type, file));
+      },
     }
   })
 </script>

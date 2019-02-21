@@ -17,7 +17,16 @@ export default function MediaStore(apiUrl: string) {
     media: defaultMedia,
     hasChanges: false,
   };
-  const getters: GetterTree<State, any> = {};
+  const getters: GetterTree<State, any> = {
+    contents: () => [
+      'cover_image',
+      'cover_video',
+      'trailers',
+      'screenshots',
+      'store',
+      'capsule',
+    ],
+  };
   const actions: ActionTree<State, any> = {
     async initState({ commit }, gameId: string) {
       const media = await axios

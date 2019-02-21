@@ -5,12 +5,13 @@
     :filled-list="filled"
     @change="selectLang"
   />
-  <ImageUpload
+  <UploadItem
     :upload-text="$t('upload_cover_image')"
     :replace-text="$t('replace_cover_image')"
     :remove-text="$t('remove_cover')"
     :source="value[lang] || ''"
-    @click="upload"
+    @click="selectFile"
+    @dropFile="uploadFile"
     @clickRemove="clickRemove"
   />
 </div>
@@ -19,13 +20,13 @@
 <script type="ts">
 import Vue from 'vue'
 import {LangsBar} from '@protocol-one/ui-kit'
-import ImageUpload from './ImageUploader.vue'
-import uploadImage from '../uploaderImage'
+import UploadItem from './UploadItem.vue'
+import {OpenFileDialog, UploadImage} from '../uploader'
 import i18n from '../i18n'
 
 export default Vue.extend({
   i18n,
-  components: {ImageUpload, LangsBar},
+  components: {UploadItem, LangsBar},
   props: {
     value: {
       type: Object,
@@ -55,14 +56,17 @@ export default Vue.extend({
         ...{[this.lang]: ''}
       });
     },
-    upload() {
-      uploadImage({width: 1920, height: 800}, (urls) => {
+    uploadFile(file) {
+      UploadImage(file, {width: 1920, height: 800}, urls =>
         this.$emit('change', {
           ...this.value,
           ...{[this.lang]: urls[0]},
-        });
-      });
-    }
+        })
+      );
+    },
+    selectFile() {
+      OpenFileDialog('image/*', this.uploadFile.bind(this));
+    },
   }
 })
 </script>
