@@ -87,7 +87,7 @@ Show your customers what the gameplay is. Screenshots of the menu should be down
       replace_cover_video: 'Заменить',
       remove_video: 'Удалить видео',
 
-      trailers: 'Дополнитьельные трейлеры',
+      trailers: 'Дополнительные трейлеры',
       trailers_descr: `Вы можете добавить больше трейлеров на страницу игры. 
 Они будут размещены в блоке скриншотов на странице игры. 
 Видео всегда имеет приоритет перед скриншотами и будет показано перед ними. 
