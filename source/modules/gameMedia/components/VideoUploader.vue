@@ -21,8 +21,8 @@
   <Button
     v-if="!!source || removeBtn"
     :text="removeText"
-    @click="$emit('clickRemove')"
     color="orange"
+    @click="$emit('clickRemove')"
   />
 </div>
 </template>
@@ -33,11 +33,6 @@ import {Button} from '@protocol-one/ui-kit'
 
 export default Vue.extend({
   components: {Button},
-  data: () => {
-    return {
-      dragOver: false,
-    };
-  },
   props: {
     uploadText: {
       default: 'Upload',
@@ -68,6 +63,9 @@ export default Vue.extend({
       type: Boolean,
     },
   },
+  data: () => ({
+      dragOver: false,
+    }),
   methods: {
     dropFile(event) {
       event.stopPropagation();

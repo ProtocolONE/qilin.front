@@ -1,10 +1,13 @@
 <template>
 <Header
   :level="level"
-  :hasMargin="hasMargin"
+  :has-margin="hasMargin"
 >
   <slot />
-  <span class="header-point" v-if="info">
+  <span
+    v-if="info"
+    class="header-point"
+  >
     <svg
       width="12"
       height="12"
