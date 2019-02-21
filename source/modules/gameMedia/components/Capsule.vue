@@ -13,7 +13,8 @@
         :remove-text="$t('remove_capsule')"
         :source="value.generic[lang] || ''"
         :small="true"
-        @click="upload('generic')"
+        @click="selectFile('generic')"
+        @dropFile="file => uploadFile('generic', file)"
         @clickRemove="clickRemove('generic')"
       />
     </span><span>
@@ -23,7 +24,8 @@
         :remove-text="$t('remove_capsule')"
         :source="value.small[lang] || ''"
         :small="true"
-        @click="upload('small')"
+        @click="selectFile('small')"
+        @dropFile="file => uploadFile('small', file)"
         @clickRemove="clickRemove('small')"
       />
     </span>
@@ -36,7 +38,7 @@
   import {clone} from 'lodash-es'
   import {LangsBar} from '@protocol-one/ui-kit'
   import ImageUpload from './ImageUploader.vue'
-  import uploadImage from '../uploaderImage'
+  import {Select, UploadImage} from '../uploader'
   import i18n from '../i18n'
 
   export default Vue.extend({
@@ -70,13 +72,16 @@
         delete value[type][this.lang];
         this.$emit('change', value);
       },
-      upload(type) {
-        uploadImage({width: 1920, height: 800}, (urls) => {
+      uploadFile(type, file) {
+        UploadImage(file, {width: 1920, height: 800}, urls => {
           const value = clone(this.value, true);
           value[type][this.lang] = urls[0];
           this.$emit('change', value);
         });
-      }
+      },
+      selectFile(type) {
+        Select(file => this.uploadFile(type, file));
+      },
     }
   })
 </script>

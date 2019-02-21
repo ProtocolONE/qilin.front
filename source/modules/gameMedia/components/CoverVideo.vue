@@ -10,7 +10,8 @@
     :replace-text="$t('replace_cover_video')"
     :remove-text="$t('remove_video')"
     :source="value[lang] || ''"
-    @click="upload"
+    @click="selectFile"
+    @dropFile="uploadFile"
     @clickRemove="clickRemove"
   />
 </div>
@@ -20,7 +21,7 @@
 import Vue from 'vue'
 import {LangsBar} from '@protocol-one/ui-kit'
 import VideoUpload from './VideoUploader.vue'
-import uploadVideo from '../uploaderVideo'
+import {Select, UploadVideo} from '../uploader'
 import i18n from '../i18n'
 
 export default Vue.extend({
@@ -55,14 +56,17 @@ export default Vue.extend({
         ...{[this.lang]: ''}
       });
     },
-    upload() {
-      uploadVideo({debug: true}, (urls) => {
+    uploadFile(file) {
+      UploadVideo(file, urls =>
         this.$emit('change', {
           ...this.value,
           ...{[this.lang]: urls[0]}
-        });
-      });
-    }
+        })
+      );
+    },
+    selectFile() {
+      Select(this.uploadFile.bind(this));
+    },
   }
 })
 </script>

@@ -128,10 +128,10 @@ h2 {
 p {
   color: #b1b1b1;
   font-size: 14px;
-  &.top-descr {
-    margin-bottom: 4px;
-  }
-  &.warning {
+}
+p.top-descr {
+  margin-bottom: 4px;
+  /deep/ p.warning {
     color: #ea7e00;
   }
 }

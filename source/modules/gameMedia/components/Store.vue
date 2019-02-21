@@ -12,7 +12,8 @@
         :replace-text="$t('replace_store')"
         :remove-text="$t('remove_store')"
         :source="value.special[lang] || ''"
-        @click="upload('special')"
+        @click="selectFile('special')"
+        @dropFile="file => uploadFile('special', file)"
         @clickRemove="clickRemove('special')"
       />
     </div>
@@ -27,7 +28,8 @@
       :replace-text="$t('replace_store')"
       :remove-text="$t('remove_store')"
       :source="value.friends[lang] || ''"
-      @click="upload('friends')"
+      @click="selectFile('friends')"
+      @dropFile="file => uploadFile('friends', file)"
       @clickRemove="clickRemove('friends')"
     />
   </div>
@@ -39,7 +41,7 @@
   import {clone} from 'lodash-es'
   import {LangsBar} from '@protocol-one/ui-kit'
   import ImageUpload from './ImageUploader.vue'
-  import uploadImage from '../uploaderImage'
+  import {Select, UploadImage} from '../uploader'
   import i18n from '../i18n'
 
   export default Vue.extend({
@@ -74,13 +76,16 @@
         delete value[type][this.lang];
         this.$emit('change', value);
       },
-      upload(type) {
-        uploadImage({width: 1920, height: 800}, (urls) => {
+      uploadFile(type, file) {
+        UploadImage(file, {width: 1920, height: 800}, urls => {
           const value = clone(this.value, true);
           value[type][this.lang] = urls[0];
           this.$emit('change', value);
         });
-      }
+      },
+      selectFile(type) {
+        Select(file => this.uploadFile(type, file));
+      },
     }
   })
 </script>
@@ -105,6 +110,7 @@
     }
   }
   .right {
+    margin-left: 30px;
     flex: 1;
     display: flex;
     justify-content: center;

@@ -7,27 +7,21 @@
   />
   <div class="list">
     <span
-      v-for="(item, index) in value[lang]"
+      v-for="(item, index) in (value[lang] || []).concat([''])"
       :key="index"
     >
       <VideoUpload
         :upload-text="$t('upload_trailer')"
         :replace-text="$t('replace_trailer')"
         :remove-text="$t('remove_trailer')"
-        :remove-btn="true"
+        :remove-btn="index !== (value[lang] || []).length"
+        :upload-btn="!(value[lang] || [])[index]"
         :source="item"
         :small="true"
-        @click="upload(index)"
+        @click="selectFile(index)"
+        @dropFile="file => uploadFile(index, file)"
         @clickRemove="clickRemove(index)"
       />
-    </span>
-    <span class="add-video">
-      <div>
-        <Button
-          :text="$t('add_trailer')"
-          @click="clickAdd"
-        />
-      </div>
     </span>
   </div>
 </div>
@@ -38,7 +32,7 @@
   import {clone} from 'lodash-es'
   import {LangsBar, Button} from '@protocol-one/ui-kit'
   import VideoUpload from './VideoUploader.vue'
-  import uploadVideo from '../uploaderVideo'
+  import {Select, UploadVideo} from '../uploader'
   import i18n from '../i18n'
 
   export default Vue.extend({
@@ -67,25 +61,22 @@
       selectLang(lang) {
         this.lang = lang;
       },
-      clickAdd() {
-        this.$emit('change', {
-          ...this.value,
-          ...{[this.lang]: (this.value[this.lang] || []).concat([''])}
-        });
-      },
       clickRemove(index) {
         const value = clone(this.value, true);
         value[this.lang].splice(index, 1);
         this.$emit('change', value);
       },
-      upload(index) {
-        uploadVideo({}, (urls) => {
+      uploadFile(index, file) {
+        UploadVideo(file, urls => {
           const value = clone(this.value, true);
           value[this.lang] = value[this.lang] || [];
           value[this.lang][index] = urls[0];
           this.$emit('change', value);
         });
-      }
+      },
+      selectFile(index) {
+        Select(file => this.uploadFile(index, file));
+      },
     }
   })
 </script>

@@ -10,7 +10,8 @@
     :replace-text="$t('replace_cover_image')"
     :remove-text="$t('remove_cover')"
     :source="value[lang] || ''"
-    @click="upload"
+    @click="selectFile"
+    @dropFile="uploadFile"
     @clickRemove="clickRemove"
   />
 </div>
@@ -20,7 +21,7 @@
 import Vue from 'vue'
 import {LangsBar} from '@protocol-one/ui-kit'
 import ImageUpload from './ImageUploader.vue'
-import uploadImage from '../uploaderImage'
+import {Select, UploadImage} from '../uploader'
 import i18n from '../i18n'
 
 export default Vue.extend({
@@ -55,14 +56,17 @@ export default Vue.extend({
         ...{[this.lang]: ''}
       });
     },
-    upload() {
-      uploadImage({width: 1920, height: 800}, (urls) => {
+    uploadFile(file) {
+      UploadImage(file, {width: 1920, height: 800}, urls =>
         this.$emit('change', {
           ...this.value,
           ...{[this.lang]: urls[0]},
-        });
-      });
-    }
+        })
+      );
+    },
+    selectFile() {
+      Select(this.uploadFile.bind(this));
+    },
   }
 })
 </script>

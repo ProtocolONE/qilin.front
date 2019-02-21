@@ -1,6 +1,9 @@
 <template>
 <div
-  :class="['uploader', small ? '_small' : '']"
+  :class="['uploader', small ? '_small' : '', dragOver ? 'drag-over' : '']"
+  @dragover.prevent="dragOver = true"
+  @dragleave="dragOver = false"
+  @drop.prevent="dropFile"
 >
   <video
     v-if="!!source"
@@ -11,17 +14,16 @@
   />
   <div class="blank" />
   <Button
+    v-if="uploadBtn"
     :text="source ? replaceText : uploadText"
     @click="$emit('click')"
   />
-  <a
+  <Button
     v-if="!!source || removeBtn"
-    class="remove"
-    href="/"
-    @click.prevent="$emit('clickRemove')"
-  >
-    {{ removeText }}
-  </a>
+    :text="removeText"
+    @click="$emit('clickRemove')"
+    color="orange"
+  />
 </div>
 </template>
 
@@ -31,6 +33,11 @@ import {Button} from '@protocol-one/ui-kit'
 
 export default Vue.extend({
   components: {Button},
+  data: () => {
+    return {
+      dragOver: false,
+    };
+  },
   props: {
     uploadText: {
       default: 'Upload',
@@ -56,6 +63,18 @@ export default Vue.extend({
       default: false,
       type: Boolean,
     },
+    uploadBtn: {
+      default: true,
+      type: Boolean,
+    },
+  },
+  methods: {
+    dropFile(event) {
+      event.stopPropagation();
+      event.preventDefault();
+      this.dragOver = false;
+      this.$emit('dropFile', event.dataTransfer.files[0]);
+    }
   },
 })
 </script>
@@ -90,20 +109,20 @@ export default Vue.extend({
     object-fit: cover;
   }
 
-  .remove {
-    margin-top: 10px;
-    font-size: 15px;
-    color: black;
-    cursor: pointer;
-    z-index: 1;
-  }
-
   .blank {
     opacity: 0.6;
     background-color: #f6f6f6;
     width: 100%;
     height: 100%;
     position: absolute;
+  }
+
+  &.drag-over .blank {
+    background-color: red;
+  }
+
+  button {
+    margin: 4px;
   }
 }
 </style>
