@@ -170,7 +170,7 @@ export default {
     }
   },
 
-  async created () {
+  created () {
     void this.loadData(this.gameUrl, 'game')
     void this.loadData(this.pricesUrl, 'prices')
     void this.loadData(this.discountsUrl, 'discounts')
