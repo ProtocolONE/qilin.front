@@ -121,7 +121,7 @@ export default Vue.extend({
     this.updateContents(
       map(
         i18n.messages[this.$i18n.locale],
-        (text, anchor) => ({ anchor, text: () => this.$t(anchor) }),
+        (text, anchor) => ({ anchor, text }),
       ),
     );
   },
