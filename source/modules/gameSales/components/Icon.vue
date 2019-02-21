@@ -8,8 +8,9 @@ import IconCalendar from './IconCalendar'
 import IconTimes from './IconTimes'
 import IconSort from './IconSort'
 import IconDots from './IconDots'
+import IconEdit from './IconEdit'
 
-const ICONS = ['table', 'calendar', 'times', 'sort', 'dots']
+const ICONS = ['table', 'calendar', 'times', 'sort', 'dots', 'edit']
 
 export default {
   name: 'PriceIcon',
@@ -19,7 +20,8 @@ export default {
     IconCalendar,
     IconTimes,
     IconSort,
-    IconDots
+    IconDots,
+    IconEdit
   },
 
   props: {

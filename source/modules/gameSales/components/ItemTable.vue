@@ -8,6 +8,7 @@
   <td>{{ localize(start) }} - {{ localize(end) }}</td>
   <td width="120">{{ days }}</td>
   <td width="100">{{ rate }}%</td>
+  <!-- TODO: hardcode for currency -->
   <td width="100">$ {{ price }}</td>
   <td width="50" class="actions">
     <a
@@ -19,7 +20,7 @@
       <icon name="dots" height="10" fill="#C4C4C4"/>
     </a>
     <transition name="fade">
-      <ul v-show="showActions" class="actions__list">
+      <ul v-show="showActions" class="shadow actions__list">
         <li @click="$emit('edit')">{{ $t('edit') }}</li>
         <li @click="$emit('remove')">{{ $t('delete') }}</li>
       </ul>
@@ -35,7 +36,7 @@ import i18n from '../i18n'
 import Icon from './Icon'
 
 export default {
-  name: 'SalesItem',
+  name: 'SalesItemTable',
 
   i18n,
 
@@ -49,6 +50,7 @@ export default {
     date: Object,
     days: Number,
     price: [Number, String],
+    defaultPrice: [Number, String],
     rate: Number
   },
 

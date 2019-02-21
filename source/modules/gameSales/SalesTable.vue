@@ -30,7 +30,7 @@
         </tr>
       </thead>
       <tbody>
-        <sales-item
+        <item-table
           v-for="item in sortedItems"
           v-bind="item"
           :key="item.id"
@@ -49,7 +49,7 @@
 import i18n from './i18n'
 
 import Icon from './components/Icon'
-import SalesItem from './components/SalesItem'
+import ItemTable from './components/ItemTable'
 
 import { orderBy } from 'lodash'
 
@@ -58,7 +58,7 @@ export default {
 
   i18n,
 
-  components: { Icon, SalesItem },
+  components: { Icon, ItemTable },
 
   props: {
     items: Array

@@ -17,9 +17,9 @@
           name="render-type"
           type="radio"
           class="switcher-list__radio"
-          @change="$router.replace({ name: 'gameSalesTable' })"
-          checked
+          :checked="$route.name === 'gameSalesCalendar'"
           hidden
+          @change="$router.replace({ name: 'gameSalesCalendar' })"
         >
         <label for="switcher-table">
           <icon v-bind="iconOptions" name="table"/>
@@ -31,8 +31,9 @@
           name="render-type"
           type="radio"
           class="switcher-list__radio"
-          @change="$router.replace({ name: 'gameSalesCalendar' })"
+          :checked="$route.name === 'gameSalesTable'"
           hidden
+          @change="$router.replace({ name: 'gameSalesTable' })"
         >
         <label for="switcher-calendar">
           <icon v-bind="iconOptions" name="calendar"/>
@@ -72,6 +73,7 @@
 
 <script lang="ts">
 import axios from 'axios'
+import moment from 'moment'
 import config from '@/config'
 import i18n from './i18n'
 import { find } from 'lodash'
@@ -87,19 +89,6 @@ import {
   SwitchBox as UiSwitcher,
   Button as UiButton
 } from '@protocol-one/ui-kit'
-
-function getDays ({ start, end }) {
-  let day = 24 * 60 * 60 * 1000
-
-  start = new Date(start)
-  end = new Date(end)
-
-  return Math.round(
-    Math.abs(
-      (start.getTime() - end.getTime()) / day
-    )
-  )
-}
 
 function calculateSalePrice (price, rate) {
   return Math.trunc(price * rate) / 100
@@ -202,8 +191,9 @@ export default {
         ...item,
         title: item.title[locale],
         description: item.description[locale],
-        days: getDays(item.date),
-        price: calculateSalePrice(this.USDPrice, item.rate)
+        days: Math.ceil(moment(item.date.end).diff(item.date.start, 'days', true)),
+        price: calculateSalePrice(this.USDPrice, item.rate),
+        defaultPrice: this.USDPrice
       }
     },
 

@@ -49,7 +49,7 @@
               v-model="end"
               :editable="false"
               :placeholder="$t('end')"
-              :not-before="start"
+              :not-before="addDaysToDate(start)"
               :disabled="!start"
               :lang="$i18n.locale"
               :time-picker-options="{ start: '00:00', step: '00:30', end: '23:30' }"
@@ -131,6 +131,11 @@ export default {
   },
 
   methods: {
+    addDaysToDate (date, days = 1) {
+      date = new Date(date)
+      return date.setDate(date.getDate() + days)
+    },
+
     hideModal () {
       this.$emit('hide')
     },

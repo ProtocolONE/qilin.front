@@ -60,7 +60,7 @@ const routes: RouteConfig[] = [
   {
     name: 'gameSales',
     path: '/games/:id/sales',
-    redirect: '/games/:id/sales/table',
+    redirect: '/games/:id/sales/calendar',
     component: GameSales,
     children: [
       {
