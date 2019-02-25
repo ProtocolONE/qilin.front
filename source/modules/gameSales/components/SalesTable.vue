@@ -14,6 +14,7 @@
             :label="head"
             @sort="handlerSort"
           />
+          <th width="50"></th>
         </tr>
       </thead>
 
@@ -122,5 +123,6 @@ export default {
 .sales-table {
   width: 100%;
   min-width: 1000px;
+  table-layout: fixed;
 }
 </style>

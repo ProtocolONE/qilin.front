@@ -2,6 +2,7 @@
 <th
   class="table-head-item"
   :class="[query.order, { sorted: label === query.sort }]"
+  :width="getWidth(label)"
 >
 
   <icon
@@ -45,6 +46,20 @@ export default {
   computed: {
     query () {
       return this.$route.query
+    }
+  },
+
+  methods: {
+    getWidth (label: string) {
+      console.log(label)
+      switch (label) {
+        case 'name': return '25%'
+        case 'period': return '35%'
+        case 'duration': return '15%'
+        case 'rate': return '15%'
+        case 'price': return '15%'
+        default: return 'auto'
+      }
     }
   }
 }
