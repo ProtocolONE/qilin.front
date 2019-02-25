@@ -1,5 +1,4 @@
 <template>
-<!-- TODO: breadcrumbs -->
 <ui-page-header :title="$t('sales')" class="page-header">
 
   <ui-text-field

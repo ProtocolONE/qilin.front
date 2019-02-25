@@ -1,8 +1,8 @@
 <template>
 <section class="sales-dummy">
-  <icon-dummy class="dummy__icon"/>
-  <h2 class="dummy__title">{{ $t('dummyTitle') }}</h2>
-  <a href="#" class="dummy__create" @click.prevent="$emit('create')">
+  <icon-dummy/>
+  <h2>{{ $t('dummyTitle') }}</h2>
+  <a href="#" @click.prevent="$emit('create')">
     {{ $t('createNewSale') }}
   </a>
 </section>
