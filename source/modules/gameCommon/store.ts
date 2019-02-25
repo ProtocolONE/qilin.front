@@ -49,7 +49,7 @@ export default function GameStore(apiUrl: string) {
     modules: {
       General: GeneralStore(apiUrl),
       Media: MediaStore(apiUrl),
-      Ratings: RatingsStore(apiUrl),
+      Ratings: RatingsStore(apiUrl)
     }
   };
 }

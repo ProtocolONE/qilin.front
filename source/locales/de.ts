@@ -25,9 +25,12 @@ export default {
     },
     sales: {
       title: 'Sales',
-      description: ''
+      meta: {
+        title: 'Welcome to Qilin',
+        description: 'Help us setup your first tenant and start untegration',
+      }
     },
-    game: {
+    gameSales: {
       title: 'Game',
       meta: {
         title: 'Edit game',

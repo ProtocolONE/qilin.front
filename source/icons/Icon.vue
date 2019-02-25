@@ -1,5 +1,8 @@
 <template>
-<component :is="icon" v-bind="{ ...$props, ...$attrs }"/>
+<component
+  :is="component"
+  v-bind="{ ...$props, ...$attrs }"
+/>
 </template>
 
 <script lang="ts">
@@ -10,7 +13,14 @@ import IconSort from './IconSort'
 import IconDots from './IconDots'
 import IconEdit from './IconEdit'
 
-const ICONS = ['table', 'calendar', 'times', 'sort', 'dots', 'edit']
+const ICONS = [
+  'table',
+  'calendar',
+  'times',
+  'sort',
+  'dots',
+  'edit'
+]
 
 export default {
   name: 'PriceIcon',
@@ -33,9 +43,9 @@ export default {
   },
 
   computed: {
-    icon () {
+    component () {
       let name = this.name.replace(/^\w/, c => c.toUpperCase())
-      return `Icon${ name }`
+      return 'Icon' + name
     }
   }
 }

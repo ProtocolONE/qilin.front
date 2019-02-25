@@ -3,66 +3,49 @@
   <div class="modal-mask">
     <div class="modal-wrapper">
 
-      <form class="modal-container" @submit.prevent="submit" @reset.prevent="hideModal">
+      <form class="modal-container" @submit.prevent="submit" @reset.prevent="closeModal">
 
         <header class="modal-header">
-          <h2>
+          <h2 class="modal-title">
             {{ (isEdit) ? $t('editSale') : $t('createNewSale') }}
           </h2>
-          <a href="javascript:void(0)" class="close" @click="hideModal">
+          <a href="#" class="close" @click.prevent="closeModal">
             <icon name="times" width="10px" height="10px" fill="#C4C4C4"/>
           </a>
         </header>
 
         <div class="modal-body">
 
-          <ui-input
+          <ui-text-field
             v-model="label"
             :label="$t('saleLabel')"
             :additional-info="$t('notVisibleForUsers')"
             required
           />
 
-          <ui-input
+          <ui-text-field
             v-model.number="rate"
             :label="$t('rate')"
             :additional-info="$t('discountRate')"
           />
 
+
           <div class="dates">
-            <datepicker
+            <ui-date-time-input
               v-model="start"
-              :editable="false"
-              :placeholder="$t('start')"
-              :not-before="new Date()"
-              :lang="$i18n.locale"
-              :time-picker-options="{ start: '00:00', step: '00:30', end: '23:30' }"
-              value-type="date"
-              format="YYYY-MM-DD hh:mm:ss a"
-              type="datetime"
-              width="auto"
-              required
-              class="datepicker"
-              @input="end = null"
+              :timestamp="start && new Date(start).getTime() || 0"
+              :date-label="$t('start')"
+              :locale="$i18n.locale"
             />
-            <datepicker
+            <ui-date-time-input
               v-model="end"
-              :editable="false"
-              :placeholder="$t('end')"
-              :not-before="addDaysToDate(start)"
-              :disabled="!start"
-              :lang="$i18n.locale"
-              :time-picker-options="{ start: '00:00', step: '00:30', end: '23:30' }"
-              value-type="date"
-              format="YYYY-MM-DD hh:mm:ss a"
-              type="datetime"
-              width="auto"
-              required
-              class="datepicker"
+              :timestamp="end && new Date(end).getTime() || 0"
+              :date-label="$t('end')"
+              :locale="$i18n.locale"
             />
           </div>
 
-          <ui-input
+          <ui-text-field
             v-model="description"
             :label="$t('description')"
           />
@@ -81,23 +64,21 @@
 </transition>
 </template>
 
-<script lang="ts">
-import i18n from '../i18n'
-
-import Icon from './Icon'
-import Datepicker from 'vue2-datepicker'
+<script>
+import Icon from '@/icons'
 
 import {
-  TextField as UiInput,
+  TextField as UiTextField,
+  DateTimeInput as UiDateTimeInput,
   Button as UiButton
 } from '@protocol-one/ui-kit'
-
+  
 export default {
-  name: 'SalesCreateSale',
+  name: 'SalesDiscountModal',
 
-  i18n,
-
-  components: { Icon, Datepicker, UiInput, UiButton },
+  inject: ['$i18n'],
+  
+  components: { Icon, UiTextField, UiDateTimeInput, UiButton },
 
   props: {
     data: Object
@@ -113,7 +94,7 @@ export default {
         end = null
       } = {}
     } = this.data
-    return { label, description, rate, start, end }
+    return { ...this.data, label, description, rate, start, end }
   },
 
   computed: {
@@ -136,8 +117,8 @@ export default {
       return date.setDate(date.getDate() + days)
     },
 
-    hideModal () {
-      this.$emit('hide')
+    closeModal () {
+      this.$emit('close')
     },
 
     submit () {
@@ -169,7 +150,7 @@ export default {
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
       border-radius: 4px;
 
-      margin: 0px auto;
+      margin: 0 auto;
       padding: 20px 30px;
       transition: all 0.3s ease;
       font-family: Helvetica, Arial, sans-serif;
@@ -202,7 +183,7 @@ export default {
 
 .modal-container {
   *,
-  h2 {
+  .modal-title {
     font-size: 18px;
   }
 }
@@ -219,36 +200,5 @@ export default {
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
-}
-</style>
-
-<style lang="scss">
-.datepicker {
-  .mx-input {
-    height: 32px;
-    padding: 0;
-    border: 0;
-    border-radius: 0;
-    border-bottom: 1px solid #e5e5e5;
-    box-shadow: none;
-    font-size: 16px;
-    line-height: 32px;
-    color: #333;
-    transition: border-color .2s ease-out;
-
-    &::placeholder {
-      color: #b1b1b3;
-    }
-
-    &:focus {
-      border-color: #3787ff;
-    }
-
-    &-append {
-      svg {
-        height: auto;
-      }
-    }
-  }
 }
 </style>

@@ -1,29 +1,28 @@
 <template>
-<section class="dummy">
+<section class="sales-dummy">
   <icon-dummy class="dummy__icon"/>
   <h2 class="dummy__title">{{ $t('dummyTitle') }}</h2>
-  <a href="javascript:void(0)" class="dummy__create" @click="$emit('create')">
+  <a href="#" class="dummy__create" @click.prevent="$emit('create')">
     {{ $t('createNewSale') }}
   </a>
 </section>
 </template>
 
 <script lang="ts">
-import i18n from '../i18n'
 import IconDummy from '@/components/IconDummy'
 import { Button as UiButton } from '@protocol-one/ui-kit'
 
 export default {
-  name: 'Dummy',
+  name: 'SalesDummy',
 
-  i18n,
+  inject: ['$i18n'],
 
   components: { IconDummy, UiButton }
 }
 </script>
 
 <style lang="scss" scoped>
-.dummy {
+.sales-dummy {
   display: flex;
   flex-direction: column;
   align-items: center;

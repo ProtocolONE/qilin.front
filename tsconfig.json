@@ -20,7 +20,7 @@
     "experimentalDecorators": true,
     "baseUrl": "./",
     "paths": {
-      "@/*": [ "./source/*" ],
+      "@/*": [ "./source/*" ]
     }
   },
   "exclude": [

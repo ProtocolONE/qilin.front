@@ -29,7 +29,6 @@
     "date-fns": "^v2.0.0-alpha.27",
     "jquery": "^3.3.1",
     "lodash-es": "^4.17.11",
-    "moment": "^2.24.0",
     "querystring": "^0.2.0",
     "terser": "^3.14.1",
     "vue": "^2.5.21",

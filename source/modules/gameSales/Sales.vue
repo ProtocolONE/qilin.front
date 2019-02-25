@@ -1,251 +1,212 @@
 <template>
-<div id="game-sales" class="sales" :class="$style.sales">
+<article id="game-sales" class="sales">
 
-  <ui-header :title="$t('sales')" :breadcrumbs="breadcrumbs">
-
-    <ui-searcher
-      slot="search"
-      :label="$t('search')"
-      :value="$route.query.search"
-      @input="handlerSearch"
-    />
-
-    <ul slot="hint" class="switcher-list">
-      <li>
-        <input
-          id="switcher-table"
-          name="render-type"
-          type="radio"
-          class="switcher-list__radio"
-          :checked="$route.name === 'gameSalesCalendar'"
-          hidden
-          @change="$router.replace({ name: 'gameSalesCalendar' })"
-        >
-        <label for="switcher-table">
-          <icon v-bind="iconOptions" name="table"/>
-        </label>
-      </li>
-      <li>
-        <input
-          id="switcher-calendar"
-          name="render-type"
-          type="radio"
-          class="switcher-list__radio"
-          :checked="$route.name === 'gameSalesTable'"
-          hidden
-          @change="$router.replace({ name: 'gameSalesTable' })"
-        >
-        <label for="switcher-calendar">
-          <icon v-bind="iconOptions" name="calendar"/>
-        </label>
-      </li>
-    </ul>
-
-    <ui-button
-      slot="right"
-      :text="$t('createNewSale')"
-      @click="createSaleModal = true"
-    />
-
-  </ui-header>
-
-  <keep-alive>
-    <dummy v-if="!discounts.length" @create="createSaleModal = true"/>
-    <router-view
-      v-else-if="filteredItems.length"
-      :items="filteredItems"
-      @edit="editSale"
-      @remove="removeSale"
-    />
-    <search-empty v-else @reset-search="handlerSearch"/>
-  </keep-alive>
-
-  <create-sale
-    v-if="createSaleModal"
-    :data="saleModalData"
-    @create="createSale"
-    @update="updateSale"
-    @hide="hideSaleModal"
+  <sales-page-header
+    @search="handlerSearch"
+    @rerender="replaceRouteQuery({ type: $event.trim() })"
+    @show-modal="modal = true"
   />
 
-</div>
+  <keep-alive>
+    <sales-dummy v-if="!discountsList.length" @create="modal = true"/>
+    <component v-else-if="discounts.length" :is="renderComponent" :items="discounts"/>
+    <sales-search-empty v-else @reset-search="handlerSearch"/>
+  </keep-alive>
+
+  <sales-discount-modal
+    v-if="modal"
+    :data="modalData"
+    @create="handlerCreateDiscount"
+    @update="handlerUpdateDiscount"
+    @close="closeModal"
+  />
+
+</article>
 </template>
 
 <script lang="ts">
-import axios from 'axios'
-import moment from 'moment'
-import config from '@/config'
 import i18n from './i18n'
-import { find } from 'lodash'
 
-import CreateSale from './components/CreateSale'
-import Dummy from './components/Dummy'
-import SearchEmpty from './components/SearchEmpty'
-import Icon from './components/Icon'
+import SalesPageHeader from './components/SalesPageHeader'
+import SalesTable from './components/SalesTable'
+import SalesCalendar from './components/SalesCalendar'
+import SalesDiscountModal from './components/SalesDiscountModal'
+import SalesDummy from './components/SalesDummy'
+import SalesSearchEmpty from './components/SalesSearchEmpty'
 
-import {
-  PageHeader as UiHeader,
-  TextField as UiSearcher,
-  SwitchBox as UiSwitcher,
-  Button as UiButton
-} from '@protocol-one/ui-kit'
+import Discounts from './types/discounts'
+import { DiscountsDate } from './types/discounts'
 
-function calculateSalePrice (price, rate) {
+import { differenceInDays } from 'date-fns'
+import { find } from 'lodash-es'
+import { mapState, mapActions } from 'vuex'
+
+const DEFAULT_RENDER_TYPE = 'table'
+
+function getDiffInDays (date: DiscountsDate) {
+  return differenceInDays(
+    new Date(date.end),
+    new Date(date.start)
+  )
+}
+
+function calculateDiscount (price: number, rate: number) {
   return Math.trunc(price * rate) / 100
 }
 
 export default {
-  name: 'GameSales',
+  name: 'Sales',
 
   i18n,
 
+  provide () {
+    return {
+      $i18n: this.$i18n,
+      replaceRouteQuery: this.replaceRouteQuery,
+      editDiscount: this.editDiscount,
+      removeDiscount: this.removeDiscount
+    }
+  },
+
   components: {
-    CreateSale,
-    Icon,
-    Dummy,
-    SearchEmpty,
-    UiHeader,
-    UiSearcher,
-    UiSwitcher,
-    UiButton
+    SalesPageHeader,
+    SalesTable,
+    SalesCalendar,
+    SalesDiscountModal,
+    SalesDummy,
+    SalesSearchEmpty
   },
 
   data () {
     return {
-      game: {},
-      prices: {},
-      discounts: [],
-      iconOptions: {
-        width: '18px',
-        height: '18px',
-        fill: '#333333'
-      },
-      currency: 'USD',
       searchTimeout: null,
-      createSaleModal: false,
-      saleModalData: {}
+      currency: 'USD',
+      modal: false,
+      modalData: {}
     }
   },
 
   computed: {
-    locale () {
-      return this.$i18n.locale
-    },
-
-    meta () {
-      return this.$route.meta
-    },
+    ...mapState('Game', ['gameInfo']),
+    ...mapState('Sales', {
+      pricesList: 'prices',
+      discountsList: 'discounts'
+    }),
 
     gameId () {
       return this.$route.params.id
     },
 
-    gameUrl () {
-      return `${ config.api }/api/v1/games/${ this.gameId }`
+    routeQuery () {
+      return this.$route.query
     },
 
-    pricesUrl () {
-      return `${ this.gameUrl }/prices/`
+    renderType () {
+      return this.routeQuery.type
     },
 
-    discountsUrl () {
-      return `${ this.gameUrl }/discounts/`
+    renderComponent () {
+      let component = this.renderType.replace(/^\w/, c => c.toUpperCase())
+      return 'Sales' + component
     },
 
-    breadcrumbs () {
-      let crumb = { url: this.gameUrl, label: this.$t('allGames'), router: true }
-      return [crumb, { label: this.game.internalName }]
+    prices () {
+      return this.pricesList.prices
     },
 
-    USDPrice () {
-      let { price } = find(this.prices.prices, { currency: this.currency }) || {}
-      return price
+    discounts () {
+      return this.discountsList
+        .map(this.getDiscountItem)
+        .filter(this.searchDiscountItems)
     },
 
-    filteredItems () {
-      let query = (this.$route.query.search || '').toLowerCase()
-      return this.discounts
-        .map(this.fillPriceItem)
-        .filter(({ title = '' }) => title.toLowerCase().includes(query))
-    }
+    usdPrice () {
+      let { price } = find(this.prices, { currency: this.currency }) || {}
+      return price || 0
+    },
   },
 
-  created () {
-    void this.loadData(this.gameUrl, 'game')
-    void this.loadData(this.pricesUrl, 'prices')
-    void this.loadData(this.discountsUrl, 'discounts')
+  async created () {
+    if (!this.renderType) {
+      void this.replaceRouteQuery({ type: DEFAULT_RENDER_TYPE })
+    }
+    void await this.initGameState(this.gameId)
+    void await this.initSalesState(this.gameId)
   },
 
   methods: {
-    loadData (url, prop) {
-      axios.get(url).then(({ data }) => this.fillData(data, prop))
+    ...mapActions('Game', { initGameState: 'initState' }),
+    ...mapActions('Sales', { initSalesState: 'initState' }),
+    ...mapActions('Sales', ['createDiscount', 'updateDiscount', 'removeDiscount']),
+
+    replaceRouteQuery (query) {
+      this.$router.replace({
+        ...this.$route,
+        query: {
+          ...this.$route.query,
+          ...query
+        }
+      })
     },
 
-    fillData (data, prop) {
-      this[prop] = data
+    handlerSearch (search: string, timeout: number = 300) {
+      void clearTimeout(this.searchTimeout)
+      this.searchTimeout = setTimeout(this.replaceRouteQuery, timeout, { search })
     },
 
-    fillPriceItem (item) {
-      let locale = this.locale
+    getDiscountItem (discount: Discounts) {
+      let locale = this.$i18n.locale
+      let currencyPrice = this.usdPrice
       return {
-        ...item,
-        title: item.title[locale],
-        description: item.description[locale],
-        days: Math.ceil(moment(item.date.end).diff(item.date.start, 'days', true)),
-        price: calculateSalePrice(this.USDPrice, item.rate),
-        defaultPrice: this.USDPrice
+        ...discount,
+        title: discount.title[locale],
+        description: discount.description[locale],
+        days: getDiffInDays(discount.date),
+        price: {
+          default: currencyPrice,
+          discount: calculateDiscount(currencyPrice, discount.rate)
+        }
       }
     },
 
-    handlerSearch (search, timeout = 300) {
-      clearTimeout(this.searchTimeout)
-      this.searchTimeout = setTimeout(() => {
-        this.$router.replace({
-          ...this.$route,
-          query: { ...this.$route.query, search }
-        })
-      }, timeout)
+    searchDiscountItems (discount: Discounts) {
+      let search = (this.routeQuery.search || '').toLowerCase()
+      return discount.title.includes(search)
     },
 
-    hideSaleModal () {
-      this.createSaleModal = false
-      this.saleModalData = {}
+    handlerCreateDiscount (data: object) {
+      this.createDiscount(this.getDiscountData(data))
+      this.closeModal()
     },
 
-    getSaleData ({ label, start, end, rate, description }) {
-      let key = this.locale
+    handlerUpdateDiscount (data: object) {
+      this.updateDiscount(this.getDiscountData(data))
+      this.closeModal()
+    },
+
+    getDiscountData (data: object) {
+      let locale = this.$i18n.locale
       return {
-        title: { [key]: label },
-        description: { [key]: description },
-        date: { start, end },
-        rate
+        ...data,
+        title: { [locale]: data.label },
+        description: { [locale]: data.description },
+        date: {
+          start: new Date(data.start),
+          end: new Date(data.end)
+        },
+        rate: data.rate
       }
     },
 
-    createSale (data) {
-      axios
-        .post(this.discountsUrl, this.getSaleData(data))
-        .then(() => { this.loadData(this.discountsUrl, 'discounts') })
-        .then(this.hideSaleModal)
+    editDiscount (data: object) {
+      this.modalData = data
+      this.modal = true
     },
 
-    updateSale (data) {
-      let url = this.discountsUrl + this.saleModalData.id
-      axios
-        .put(url, this.getSaleData(data))
-        .then(() => { this.loadData(this.discountsUrl, 'discounts') })
-        .then(this.hideSaleModal)
+    closeModal () {
+      this.modal = false
+      this.modalData = {}
     },
-
-    editSale (item) {
-      this.saleModalData = item
-      this.createSaleModal = true
-    },
-
-    removeSale (item) {
-      let url = this.discountsUrl + item.id
-      axios.delete(url).then(() => { this.loadData(this.discountsUrl, 'discounts') })
-    }
   }
 }
 </script>
@@ -256,68 +217,5 @@ export default {
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
-}
-
-.switcher-list {
-  $switcher-color: #EAEAEA;
-
-  display: flex;
-  align-items: center;
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-
-  li {
-    label {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      height: 32px;
-      margin-bottom: 0;
-      padding: 0 15px;
-      border: 1px solid $switcher-color;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: background-color .2s ease;
-
-      svg {
-        transition: fill .2s ease;
-      }
-    }
-
-    &:first-child label {
-      padding-right: 10px;
-      border-bottom-right-radius: 0;
-      border-top-right-radius: 0;
-    }
-
-    &:last-child label {
-      padding-left: 10px;
-      border-bottom-left-radius: 0;
-      border-top-left-radius: 0;
-    }
-  }
-
-  input[type="radio"] {
-    &:checked + label {
-      background-color: $switcher-color;
-      svg {
-        fill: #C4C4C4;
-      }
-    }
-  }
-}
-</style>
-
-<style lang="scss" module>
-.sales {
-  [class^="search"]:not([class~="search-empty"]) {
-    margin-left: auto;
-  }
-
-  [class^="hint"] {
-    margin-right: 33px;
-    margin-left: auto;
-  }
 }
 </style>

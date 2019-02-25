@@ -23,9 +23,12 @@ export default {
         description: 'Начните интеграцию',
       },
     },
-    sales: {
+    gameSales: {
       title: 'Распродажи',
-      description: ''
+      meta: {
+        title: 'Добро пожаловать в Qilin',
+        description: 'Начните интеграцию',
+      }
     },
     game: {
       title: 'Game',

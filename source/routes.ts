@@ -1,14 +1,14 @@
 import { RouteConfig } from 'vue-router';
+
 import Home from '@/modules/home/Home.vue';
 import OnBoarding from '@/modules/onboarding/OnBoarding.vue';
+
 import GameCommon from '@/modules/gameCommon/GameCommon.vue';
 import GameGeneral from '@/modules/gameGeneral/General.vue';
 import GameNavigation from '@/modules/gameNavigation/GameNavigation.vue';
 import GameMedia from '@/modules/gameMedia/Media.vue';
 import GameRatings from '@/modules/gameRatings/Ratings.vue';
 import GameSales from '@/modules/gameSales/Sales.vue';
-import GameSalesTable from '@/modules/gameSales/SalesTable.vue';
-import GameSalesCalendar from '@/modules/gameSales/SalesCalendar.vue';
 import Games from '@/modules/games/Games.vue';
 
 const routes: RouteConfig[] = [
@@ -60,22 +60,7 @@ const routes: RouteConfig[] = [
   {
     name: 'gameSales',
     path: '/games/:id/sales',
-    redirect: '/games/:id/sales/calendar',
-    component: GameSales,
-    children: [
-      {
-        name: 'gameSalesTable',
-        path: 'table',
-        component: GameSalesTable,
-        meta: 'routes.sales'
-      },
-      {
-        name: 'gameSalesCalendar',
-        path: 'calendar',
-        component: GameSalesCalendar,
-        meta: 'routes.sales'
-      }
-    ]
+    component: GameSales
   }
 ].map(route => ({ ...route, meta: `routes.${route.name}.meta` }));
 
