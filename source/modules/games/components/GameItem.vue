@@ -1,17 +1,17 @@
 <template>
-<router-link
-  class="games-item"
-  :to="gameUrl"
+<UiTableRow
+  class="item-container"
+  :link="gameUrl"
 >
-  <div class="item-container">
+  <UiTableCell>
     <div
       v-if="game.icon"
       class="logo"
       :style="{ backgroundImage: `url(${game.icon})` }"
     />
-    <div :class="['title', { '_without-icon': !game.icon }]">
-      {{ game.internalName }}
-    </div>
+    {{ game.internalName }}
+  </UiTableCell>
+  <UiTableCell>
     <div class="genres-box">
       <div class="genres">
         <div
@@ -23,25 +23,20 @@
         </div>
       </div>
     </div>
-    <div class="price">
-      {{ game.prices.currency }} {{ game.prices.price }}
-    </div>
-    <div class="release">
-      {{ formatReleaseDate }}
-    </div>
-  </div>
-  <div class="etc">
-    <div class="dots" />
-  </div>
-</router-link>
+  </UiTableCell>
+  <UiTableCell>{{ game.prices.currency }} {{ game.prices.price }}</UiTableCell>
+  <UiTableCell>{{ formatReleaseDate }}</UiTableCell>
+</UiTableRow>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import { filter, get, includes, map } from 'lodash-es';
+import { UiTableRow, UiTableCell } from '@protocol-one/ui-kit';
 import formatDate from '@/helpers/formatDate';
 
 export default Vue.extend({
+  components: { UiTableRow, UiTableCell },
   props: {
     genres: {
       default: () => [],
@@ -54,7 +49,12 @@ export default Vue.extend({
   },
   computed: {
     formatReleaseDate() {
-      return formatDate(new Date(this.game.releaseDate), 'dd LLLL yyyy, HH:mm');
+      return formatDate(
+        new Date(this.game.releaseDate),
+        'dd LLLL yyyy, HH:mm',
+        this.$i18n.locale,
+        this.$i18n.fallbackLocale
+      );
     },
     gameUrl(): string {
       return `/games/${this.game.id}`;
@@ -77,25 +77,9 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.games-item {
-  display: flex;
-  padding: 12px 32px;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.07);
-  text-decoration: none;
-  color: #0c2441;
-  font-size: 16px;
-
-  &:hover {
-    background-color: #e3eeff;
-  }
-}
 .item-container {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  line-height: 28px;
+  cursor: pointer;
 }
 .logo {
   width: 40px;
@@ -104,27 +88,11 @@ export default Vue.extend({
   margin-right: 16px;
   background-position: center;
 }
-.title {
-  overflow-x: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  min-width: 220px;
-  max-width: 220px;
-  margin-right: 16px;
-
-  &._without-icon {
-    min-width: 276px;
-    max-width: 276px;
-  }
-}
 // @TODO - Fix scrolling for genres
 .genres-box {
   position: relative;
   overflow: hidden;
-  min-width: 200px;
-  max-width: 200px;
   height: 28px;
-  margin-right: 16px;
 }
 .genres {
   position: absolute;
@@ -133,8 +101,7 @@ export default Vue.extend({
   height: 54px;
   overflow-x: auto;
   white-space: nowrap;
-  min-width: 200px;
-  max-width: 200px;
+  max-width: 100%;
 }
 .genre {
   display: inline-block;
@@ -152,16 +119,16 @@ export default Vue.extend({
     margin-right: 0;
   }
 }
-.price {
-  min-width: 90px;
-  max-width: 90px;
-  margin-right: 16px;
-}
-.release {
-  min-width: 200px;
-  max-width: 200px;
-  margin-right: 16px;
-}
+// .price {
+//   min-width: 90px;
+//   max-width: 90px;
+//   margin-right: 16px;
+// }
+// .release {
+//   min-width: 200px;
+//   max-width: 200px;
+//   margin-right: 16px;
+// }
 .etc {
   height: 40px;
   width: 40px;
