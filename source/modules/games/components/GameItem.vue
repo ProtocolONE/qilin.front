@@ -1,7 +1,5 @@
 <template>
-<UiTableRow
-  :link="gameUrl"
->
+<UiTableRow :link="gameUrl">
   <UiTableCell>
     <div
       v-if="game.icon"
