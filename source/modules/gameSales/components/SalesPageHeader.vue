@@ -67,12 +67,9 @@ export default {
 $switcher-color: #EAEAEA;
 
 .page-header {
-  /deep/
   .search {
     margin-left: auto;
   }
-
-  /deep/
   .hint  {
     margin-right: 33px;
     margin-left: auto;

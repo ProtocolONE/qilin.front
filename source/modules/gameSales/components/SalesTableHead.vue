@@ -51,7 +51,6 @@ export default {
 
   methods: {
     getWidth (label: string) {
-      console.log(label)
       switch (label) {
         case 'name': return '25%'
         case 'period': return '35%'
