@@ -1,7 +1,7 @@
 <template>
 <th
   class="table-head-item"
-  :class="[query.order, { sorted: label === query.sort }]"
+  :class="[query.order, { 'table-head-item--sorted': label === query.sort }]"
   :width="getWidth(label)"
 >
 
@@ -84,7 +84,7 @@ export default {
     cursor: pointer;
   }
 
-  &.sorted {
+  &--sorted {
     color: #0C2441;
 
     &.desc .table-head-item__icon {
