@@ -1,36 +1,40 @@
 <template>
 <ui-page-header :title="$t('sales')" class="page-header">
 
-  <ui-text-field
-    slot="search"
-    :value="$route.query.search"
-    :label="$t('search')"
-    @input="$emit('search', $event)"
-  />
+  <div slot="search" class="search">
+    <ui-text-field
+      :value="$route.query.search"
+      :label="$t('search')"
+      @input="$emit('search', $event)"
+    />
+  </div>
 
-  <ul slot="hint" class="switcher-list">
-    <li
-      v-for="type in renderTypes"
-      :key="type"
-      :class="{ active: type === $route.query.type }"
-      class="switcher-list__item"
-      @click="$emit('rerender', type)"
-    >
-      <icon
-        :name="type"
-        width="18"
-        height="18"
-        fill="#333"
-        class="switcher-list__icon"
-      />
-    </li>
-  </ul>
+  <div slot="hint" class="hint">
+    <ul class="switcher-list">
+      <li
+        v-for="type in renderTypes"
+        :key="type"
+        :class="{ active: type === $route.query.type }"
+        class="switcher-list__item"
+        @click="$emit('rerender', type)"
+      >
+        <icon
+          :name="type"
+          width="18"
+          height="18"
+          fill="#333"
+          class="switcher-list__icon"
+        />
+      </li>
+    </ul>
+  </div>
 
-  <ui-button
-    slot="right"
-    :text="$t('createNewSale')"
-    @click="$emit('show-modal')"
-  />
+  <div slot="right" class="right">
+    <ui-button
+      :text="$t('createNewSale')"
+      @click="$emit('show-modal')"
+    />
+  </div>
 
 </ui-page-header>
 </template>

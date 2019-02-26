@@ -8,6 +8,7 @@
     </span>
     <Button
       slot="right"
+      class="game-save-btn"
       :text="$t('save')"
       @click="saveGame"
     />
@@ -65,6 +66,9 @@ export default Vue.extend({
 
 <style scoped lang="scss">
 .game {
+  &-save-btn {
+    align-self: center;
+  }
   .body {
     display: flex;
     flex-direction: row;

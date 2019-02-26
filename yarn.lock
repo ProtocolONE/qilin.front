@@ -663,10 +663,10 @@
   resolved "https://registry.yarnpkg.com/@kazupon/vue-i18n-loader/-/vue-i18n-loader-0.3.0.tgz#e068de2d75d891275814ae28ad1fcaf1b537694f"
   integrity sha512-M2280E9PMxetu6mOdtyh1d6Dif7LwH4gvxD2dgsu7HOyzR26AUNok8DxZ1Y5YAexJvPfbBXC75Llui2myO05Hg==
 
-"@protocol-one/ui-kit@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@protocol-one/ui-kit/-/ui-kit-1.3.0.tgz#a8e36aa07b75ffc768682a90aa8538815f81dc4b"
-  integrity sha512-PLXEcsZdVkomunHYcIqJAipkPfxowLO+Z+8QavROCMllA9jM6W2WeWI0hn1hQEyC2rDRSCv1D5/f36LvHoT2Zg==
+"@protocol-one/ui-kit@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@protocol-one/ui-kit/-/ui-kit-1.7.0.tgz#2415de4d6452e8101f819a09b639927670a3f666"
+  integrity sha512-Yjh1U/Brim6JW6Y86Tlc9mtwLuJz4Qs2ACx+eR2Dso/J7vrYUm85+RQtZZLZ2zvTCeGKVnPsmirrnitetOoUUw==
   dependencies:
     date-fns "^v2.0.0-alpha.27"
     lodash-es "^4.17.11"
@@ -5035,11 +5035,6 @@ mocha@^5.2.0:
     minimatch "3.0.4"
     mkdirp "0.5.1"
     supports-color "5.4.0"
-
-moment@^2.24.0:
-  version "2.24.0"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
-  integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
 
 move-concurrently@^1.0.1:
   version "1.0.1"
