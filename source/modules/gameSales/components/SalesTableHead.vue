@@ -71,6 +71,9 @@ export default {
   padding-left: 15px;
   color: #B1B1B1;
   transition: color .2s linear;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 
   &__icon {
     position: absolute;

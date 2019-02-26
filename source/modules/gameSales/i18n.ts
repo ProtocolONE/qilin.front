@@ -45,7 +45,7 @@ export default {
       create: 'Создать',
       name: 'Название',
       period: 'Период',
-      duration: 'Прод. (дней)',
+      duration: 'Продолжительность (дней)',
       rate: 'Ставка',
       price: 'Цена',
       edit: 'Редактировать',
