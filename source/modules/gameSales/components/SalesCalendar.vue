@@ -63,7 +63,7 @@ export default {
       let year = getYear(this.startDate)
 
       let firstMonth = [{
-        month: format(new Date(year, month), 'MMMM'),
+        month: format(new Date(year, month), 'MMMM') + ` - ${ year }`,
         days: this.getDays(month, year)
       }]
 
@@ -77,7 +77,7 @@ export default {
           let nextMonth = (month + i + 1)
           let nextYear = getYear(new Date(year, nextMonth))
           return {
-            month: format(new Date(year, nextMonth), 'MMMM'),
+            month: format(new Date(year, nextMonth), 'MMMM') + ` - ${ nextYear }`,
             days: this.getDays(nextMonth, nextYear)
           }
         })
