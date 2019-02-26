@@ -68,6 +68,7 @@ export default {
   components: { Icon },
 
   props: {
+    startDate: Date,
     months: Array,
     items: Discounts
   },
@@ -98,10 +99,11 @@ export default {
   methods: {
     getDiscountStyles (item: Discounts) {
       let date = item.date
+      let startDate = new Date(getYear(this.startDate), getMonth(this.startDate))
       let [start, end] = [new Date(date.start), new Date(date.end)]
       return {
         width: differenceInDays(end, start) * this.cellWidth + 'px',
-        left: differenceInDays(start, new Date(getYear(start), getMonth(start), 1)) * this.cellWidth + 'px'
+        left: differenceInDays(start, startDate) * this.cellWidth + 'px'
       }
     }
   }

@@ -12,7 +12,7 @@
   </aside>
 
   <div class="sales-calendar__content" @scroll="handlerScroll">
-    <sales-calendar-table v-bind="{ months, items }"/>
+    <sales-calendar-table v-bind="{ startDate, months, items }"/>
   </div>
 
 </section>
@@ -25,7 +25,6 @@ import Discounts from '../types/discounts'
 import { map, min, max } from 'lodash-es'
 import {
   differenceInCalendarMonths,
-  startOfMonth,
   getDaysInMonth,
   getYear,
   getMonth,
@@ -64,7 +63,7 @@ export default {
       let year = getYear(this.startDate)
 
       let firstMonth = [{
-        month: format(startOfMonth(month), 'MMMM'),
+        month: format(new Date(year, month), 'MMMM'),
         days: this.getDays(month, year)
       }]
 
