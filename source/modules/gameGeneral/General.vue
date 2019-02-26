@@ -25,10 +25,10 @@
   />
   
   <Headline id="genre">{{ $t('genre') }}</Headline>
-  <Genre
+  <Genres
     class="section"
-    :genre="genre"
     :genres="genres"
+    :selectedGenres="selectedGenres"
     @change="change('genre', $event)"
   />
   
@@ -57,7 +57,6 @@
     <Headline
       slot="title"
       id="platforms"
-      :hasMargin="false"
     >
       {{ $t('platforms') }}
     </Headline>
@@ -72,7 +71,7 @@ import { mapActions, mapState, mapGetters, mapMutations } from 'vuex';
 import Headline from '@/components/Headline.vue';
 import capitalizeFirstLetter from '@/helpers/capitalizeFirstLetter';
 import Creators from './components/Creators.vue';
-import Genre from './components/Genre.vue';
+import Genres from './components/Genres.vue';
 import Platforms from './components/Platforms.vue';
 import ReleaseDate from './components/ReleaseDate.vue';
 import Requirements from './components/Requirements.vue';
@@ -85,7 +84,7 @@ export default Vue.extend({
   i18n,
   components: {
     Creators,
-    Genre,
+    Genres,
     Headline,
     Platforms,
     ReleaseDate,
@@ -94,16 +93,26 @@ export default Vue.extend({
     SupportedLanguages,
     Tags,
   },
+  watch: {
+    '$i18n.locale': function(value) {
+      this.updateContents(
+        map(
+          i18n.messages[value],
+          (text, anchor) => ({ anchor, text }),
+        ),
+      );
+    },
+  },
   computed: {
     ...mapState('Game/General', ['genres', 'tags']),
     ...mapGetters('Game/General', [
       'creators',
       'features',
-      'genre',
       'languages',
       'platforms',
       'releaseDate',
       'requirements',
+      'selectedGenres',
       'selectedTags',
     ]),
   },
@@ -146,5 +155,6 @@ export default Vue.extend({
 }
 .section {
   margin-bottom: 40px;
+  max-width: 640px;
 }
 </style>

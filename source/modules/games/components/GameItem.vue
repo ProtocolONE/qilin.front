@@ -15,11 +15,11 @@
     <div class="genres-box">
       <div class="genres">
         <div
-          v-for="genre in game.genres"
-          :key="genre.id"
+          v-for="genre in genresTitles"
+          :key="genre"
           class="genre"
         >
-          {{ i18nGenreTitle(genre.title) }}
+          {{ genre }}
         </div>
       </div>
     </div>
@@ -27,7 +27,7 @@
       {{ game.prices.currency }} {{ game.prices.price }}
     </div>
     <div class="release">
-      {{ game.releaseDate }}
+      {{ formatReleaseDate }}
     </div>
   </div>
   <div class="etc">
@@ -38,27 +38,39 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import get from 'lodash-es/get';
+import { filter, get, includes, map } from 'lodash-es';
+import formatDate from '@/helpers/formatDate';
 
 export default Vue.extend({
   props: {
+    genres: {
+      default: () => [],
+      type: Array,
+    },
     game: {
       required: true,
       type: Object,
     },
   },
   computed: {
+    formatReleaseDate() {
+      return formatDate(new Date(this.game.releaseDate), 'dd LLLL yyyy, HH:mm');
+    },
     gameUrl(): string {
       return `/games/${this.game.id}`;
     },
-  },
-  methods: {
-    /**
-     * @TODO - Move to main logic and fix types for title
-     * @return {string}
-     */
-    i18nGenreTitle(title: any) {
-      return get(title, this.$i18n.locale, title[this.$i18n.fallbackLocale]);
+    genresTitles() {
+      const genresIds = [ this.game.genres.main, ...this.game.genres.addition ];
+      const genres = filter(this.genres, genre => includes(genresIds, genre.id));
+
+      return map(
+        genres,
+        genre => get(
+          genre,
+          `title.${this.$i18n.locale}`,
+          get(genre, `title.${this.$i18n.fallbackLocale}`, ''),
+        ),
+      );
     },
   },
 });

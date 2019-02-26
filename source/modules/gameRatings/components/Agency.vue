@@ -33,7 +33,7 @@
       </label>
     </div>
     <div class="right">
-      <img :src="`${staticPath}/images/ratings/${agency.toLowerCase()}/${value.rating || defIcon}.png`"/>
+      <img :src="`${staticPath}/images/ratings/${agency.toLowerCase()}/${value.rating || defIcon}.png`">
     </div>
   </div>
 </div>
@@ -50,11 +50,6 @@
 
   export default Vue.extend({
     i18n,
-    data() {
-      return {
-        staticPath: config.static,
-      }
-    },
     components: {Headline, Select, SwitchBox, TagInput},
     props: {
       value: {
@@ -73,6 +68,11 @@
         type: Array,
         required: true,
       },
+    },
+    data() {
+      return {
+        staticPath: config.static,
+      }
     },
     computed: {
       ...mapState('Game/Ratings', ['descriptors']),

@@ -7,27 +7,21 @@
   />
   <div class="list">
     <span
-      v-for="(item, index) in value[lang]"
+      v-for="(item, index) in (value[lang] || []).concat([''])"
       :key="index"
     >
-      <ImageUpload
+      <UploadItem
         :upload-text="$t('upload_screenshot')"
         :replace-text="$t('replace_screenshot')"
         :remove-text="$t('remove_screenshot')"
-        :remove-btn="true"
+        :has-remove-btn="index !== (value[lang] || []).length"
+        :has-upload-btn="!(value[lang] || [])[index]"
         :source="item"
-        :small="true"
-        @click="upload(index)"
+        :is-small="true"
+        @click="selectFile(index)"
+        @dropFile="file => uploadFile(index, file)"
         @clickRemove="clickRemove(index)"
       />
-    </span>
-    <span class="add-item">
-      <div>
-        <Button
-          :text="$t('add_screenshot')"
-          @click="clickAdd"
-        />
-      </div>
     </span>
   </div>
 </div>
@@ -37,13 +31,13 @@
   import Vue from 'vue'
   import {clone} from 'lodash-es'
   import {LangsBar, Button} from '@protocol-one/ui-kit'
-  import ImageUpload from './ImageUploader.vue'
-  import uploadImage from '../uploaderImage'
+  import UploadItem from './UploadItem.vue'
+  import {OpenFileDialog, UploadImage} from '../uploader'
   import i18n from '../i18n'
 
   export default Vue.extend({
     i18n,
-    components: {ImageUpload, LangsBar, Button},
+    components: {UploadItem, LangsBar, Button},
     props: {
       value: {
         type: Object,
@@ -67,25 +61,22 @@
       selectLang(lang) {
         this.lang = lang;
       },
-      clickAdd() {
-        this.$emit('change', {
-          ...this.value,
-          ...{[this.lang]: (this.value[this.lang] || []).concat([''])}
-        });
-      },
       clickRemove(index) {
         const value = clone(this.value, true);
         value[this.lang].splice(index, 1);
         this.$emit('change', value);
       },
-      upload(index) {
-        uploadImage({width: 1920, height: 800}, (urls) => {
+      uploadFile(index, file) {
+        UploadImage(file, {width: 1920, height: 800}, urls => {
           const value = clone(this.value, true);
           value[this.lang] = value[this.lang] || [];
           value[this.lang][index] = urls[0];
           this.$emit('change', value);
         });
-      }
+      },
+      selectFile(index) {
+        OpenFileDialog('image/*', file => this.uploadFile(index, file));
+      },
     }
   })
 </script>

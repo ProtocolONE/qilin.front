@@ -1,10 +1,14 @@
 <template>
 <div class="media-page">
-  <Headline id="cover_image">
+  <Headline
+    id="cover_image"
+    :title="$t('cover_image_hint_title')"
+    :info="$t('cover_image_hint')"
+  >
     {{ $t('cover_image') }}
   </Headline>
   <p
-    class="top-descr"
+    class="no-margin"
     v-html="$t('cover_image_descr')"
   />
   <CoverImage
@@ -14,9 +18,10 @@
   <Headline id="cover_video">
     {{ $t('cover_video') }}
   </Headline>
+  <p v-html="$t('cover_video_descr.0')" />
   <p
-    class="top-descr"
-    v-html="$t('cover_video_descr')"
+    class="warning no-margin"
+    v-text="$t('cover_video_descr.1')"
   />
   <CoverVideo
     :value="media.coverVideo"
@@ -26,7 +31,7 @@
     {{ $t('trailers') }}
   </Headline>
   <p
-    class="top-descr"
+    class="no-margin"
     v-html="$t('trailers_descr')"
   />
   <Trailers
@@ -36,9 +41,10 @@
   <Headline id="screenshots">
     {{ $t('screenshots') }}
   </Headline>
+  <p v-html="$t('screenshots_descr.0')" />
   <p
-    class="top-descr"
-    v-html="$t('screenshots_descr')"
+    class="warning no-margin"
+    v-text="$t('screenshots_descr.1')"
   />
   <Screenshots
     :value="media.screenshots"
@@ -48,7 +54,7 @@
     {{ $t('store') }}
   </Headline>
   <p
-    class="top-descr"
+    class="no-margin"
     v-html="$t('store_descr')"
   />
   <Store
@@ -59,7 +65,7 @@
     {{ $t('capsule') }}
   </Headline>
   <p
-    class="top-descr"
+    class="no-margin"
     v-html="$t('capsule_descr')"
   />
   <Capsule
@@ -71,7 +77,7 @@
 
 <script type="ts">
 import Vue from 'vue';
-import { mapState, mapActions, mapMutations } from 'vuex';
+import { mapState, mapActions, mapMutations, mapGetters } from 'vuex';
 import Headline from '@/components/Headline';
 import Capsule from './components/Capsule';
 import CoverImage from './components/CoverImage';
@@ -86,19 +92,16 @@ export default Vue.extend({
   components: { CoverImage, CoverVideo, Trailers, Headline, Screenshots, Store, Capsule },
   computed: {
     ...mapState('Game/Media', ['media']),
+    ...mapGetters('Game/Media', ['contents']),
+  },
+  watch: {
+    '$i18n.locale': function(value) {
+      this.updateContents(this.contents.map(anchor => ({ anchor, text: this.$t(anchor) })));
+    },
   },
   mounted() {
     this.initState(this.$route.params.id);
-    this.updateContents(
-      [
-        'cover_image',
-        'cover_video',
-        'trailers',
-        'screenshots',
-        'store',
-        'capsule',
-      ].map(a => ({ anchor: a, text: this.$t(a) }))
-    );
+    this.updateContents(this.contents.map(anchor => ({ anchor, text: this.$t(anchor) })));
   },
   methods: {
     ...mapActions('Game/Media', ['initState', 'updateMedia']),
@@ -124,11 +127,11 @@ h2 {
 p {
   color: #b1b1b1;
   font-size: 14px;
-  &.top-descr {
-    margin-bottom: 4px;
-  }
   &.warning {
     color: #ea7e00;
+  }
+  &.no-margin {
+    margin-bottom: 4px;
   }
 }
 </style>

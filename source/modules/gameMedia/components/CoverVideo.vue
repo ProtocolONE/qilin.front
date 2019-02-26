@@ -5,12 +5,14 @@
     :filled-list="filled"
     @change="selectLang"
   />
-  <VideoUpload
+  <UploadItem
+    :is-video="true"
     :upload-text="$t('upload_cover_video')"
     :replace-text="$t('replace_cover_video')"
     :remove-text="$t('remove_video')"
     :source="value[lang] || ''"
-    @click="upload"
+    @click="selectFile"
+    @dropFile="uploadFile"
     @clickRemove="clickRemove"
   />
 </div>
@@ -19,13 +21,13 @@
 <script type="ts">
 import Vue from 'vue'
 import {LangsBar} from '@protocol-one/ui-kit'
-import VideoUpload from './VideoUploader.vue'
-import uploadVideo from '../uploaderVideo'
+import UploadItem from './UploadItem.vue'
+import {OpenFileDialog, UploadVideo} from '../uploader'
 import i18n from '../i18n'
 
 export default Vue.extend({
   i18n,
-  components: {VideoUpload, LangsBar},
+  components: {UploadItem, LangsBar},
   props: {
     value: {
       type: Object,
@@ -50,19 +52,22 @@ export default Vue.extend({
       this.lang = lang;
     },
     clickRemove() {
-      this.$emit('change',
+      this.$emit('change', {
         ...this.value,
         ...{[this.lang]: ''}
-      );
+      });
     },
-    upload() {
-      uploadVideo({debug: true}, (urls) => {
+    uploadFile(file) {
+      UploadVideo(file, urls =>
         this.$emit('change', {
           ...this.value,
           ...{[this.lang]: urls[0]}
-        });
-      });
-    }
+        })
+      );
+    },
+    selectFile() {
+      OpenFileDialog('video/*', this.uploadFile.bind(this));
+    },
   }
 })
 </script>

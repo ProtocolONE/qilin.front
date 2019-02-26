@@ -7,27 +7,22 @@
   />
   <div class="list">
     <span
-      v-for="(item, index) in value[lang]"
+      v-for="(item, index) in (value[lang] || []).concat([''])"
       :key="index"
     >
-      <VideoUpload
+      <UploadItem
+        :is-video="true"
         :upload-text="$t('upload_trailer')"
         :replace-text="$t('replace_trailer')"
         :remove-text="$t('remove_trailer')"
-        :remove-btn="true"
+        :has-remove-btn="index !== (value[lang] || []).length"
+        :has-upload-btn="!(value[lang] || [])[index]"
         :source="item"
-        :small="true"
-        @click="upload(index)"
+        :is-small="true"
+        @click="selectFile(index)"
+        @dropFile="file => uploadFile(index, file)"
         @clickRemove="clickRemove(index)"
       />
-    </span>
-    <span class="add-video">
-      <div>
-        <Button
-          :text="$t('add_trailer')"
-          @click="clickAdd"
-        />
-      </div>
     </span>
   </div>
 </div>
@@ -37,13 +32,13 @@
   import Vue from 'vue'
   import {clone} from 'lodash-es'
   import {LangsBar, Button} from '@protocol-one/ui-kit'
-  import VideoUpload from './VideoUploader.vue'
-  import uploadVideo from '../uploaderVideo'
+  import UploadItem from './UploadItem.vue'
+  import {OpenFileDialog, UploadVideo} from '../uploader'
   import i18n from '../i18n'
 
   export default Vue.extend({
     i18n,
-    components: {VideoUpload, LangsBar, Button},
+    components: {UploadItem, LangsBar, Button},
     props: {
       value: {
         type: Object,
@@ -67,25 +62,22 @@
       selectLang(lang) {
         this.lang = lang;
       },
-      clickAdd() {
-        this.$emit('change', {
-          ...this.value,
-          ...{[this.lang]: (this.value[this.lang] || []).concat([''])}
-        });
-      },
       clickRemove(index) {
         const value = clone(this.value, true);
         value[this.lang].splice(index, 1);
         this.$emit('change', value);
       },
-      upload(index) {
-        uploadVideo({}, (urls) => {
+      uploadFile(index, file) {
+        UploadVideo(file, urls => {
           const value = clone(this.value, true);
           value[this.lang] = value[this.lang] || [];
           value[this.lang][index] = urls[0];
           this.$emit('change', value);
         });
-      }
+      },
+      selectFile(index) {
+        OpenFileDialog('video/*', file => this.uploadFile(index, file));
+      },
     }
   })
 </script>

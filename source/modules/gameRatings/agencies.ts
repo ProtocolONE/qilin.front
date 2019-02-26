@@ -8,7 +8,7 @@ interface AgentIface {
 const result: AgentIface[] = [
   {
     name: 'ESRB',
-    defRating: 'A',
+    defRating: 'AO',
     ratings: [
       {label: '', value: ''},
       {label: 'Early childhood (EC)', value: 'EC'},
