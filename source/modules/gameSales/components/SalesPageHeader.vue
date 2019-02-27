@@ -9,7 +9,7 @@
     />
   </div>
 
-  <div slot="hint" class="hint">
+  <div slot="right" class="right">
     <ul class="switcher-list">
       <li
         v-for="type in renderTypes"
@@ -27,9 +27,7 @@
         />
       </li>
     </ul>
-  </div>
 
-  <div slot="right" class="right">
     <ui-button
       :text="$t('createNewSale')"
       @click="$emit('show-modal')"
@@ -61,7 +59,7 @@ export default {
 
   data () {
     return {
-      renderTypes: ['calendar', 'table']
+      renderTypes: ['table', 'calendar']
     }
   }
 }
@@ -70,25 +68,20 @@ export default {
 <style lang="scss" scoped>
 $switcher-color: #EAEAEA;
 
-.page-header {
-  .search {
-    margin-left: auto;
-  }
-  .hint  {
-    margin-right: 33px;
-    margin-left: auto;
-  }
+.search {
+  width: 192px;
 }
 
 .switcher-list {
   display: flex;
   align-items: center;
-  margin: 0;
+  margin: 0 33px 0 0;
   padding: 0;
   list-style-type: none;
+  height: 32px;
 
   &__item {
-    padding: 6px 15px;
+    padding: 2px 15px 4px;
     border: 1px solid $switcher-color;
     border-radius: 25px;
     cursor: pointer;
