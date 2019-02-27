@@ -24,6 +24,7 @@ declare module '@protocol-one/ui-kit' {
   const DateTimeInput: any;
   const FormByStep: any;
   const Header: any;
+  const PageHeader: any;
   const Select: any;
   const SwitchBox: any;
   const TagInput: any;
@@ -41,6 +42,7 @@ declare module '@protocol-one/ui-kit' {
     DateTimeInput,
     FormByStep,
     Header,
+    PageHeader,
     Select,
     SwitchBox,
     TagInput,
