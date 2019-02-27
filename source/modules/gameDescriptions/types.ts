@@ -25,3 +25,8 @@ export interface State {
   descriptions: Descriptions;
   hasChanges: Boolean;
 }
+
+export interface ScoreOption {
+  value: string;
+  label: string;
+}

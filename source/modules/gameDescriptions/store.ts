@@ -33,7 +33,7 @@ export default function DescriptionStore(apiUrl: string) {
     ],
     socials: (state) => ({
       ...state.descriptions.socials,
-      ...{game: state.descriptions.gameSite},
+      game: state.descriptions.gameSite,
     }),
   };
   const actions: ActionTree<State, any> = {
@@ -59,11 +59,9 @@ export default function DescriptionStore(apiUrl: string) {
     changeLangProp(state, {prop, lang, value}) {
       state.descriptions = {
         ...state.descriptions,
-        ...{
-          [prop]: {
-            ...(state.descriptions as any)[prop],
-            [lang]: value
-          }
+        [prop]: {
+          ...(state.descriptions as any)[prop],
+          [lang]: value
         }
       };
       state.hasChanges = true;
@@ -71,14 +69,14 @@ export default function DescriptionStore(apiUrl: string) {
     changeProp(state, {prop, value}) {
       state.descriptions = {
         ...state.descriptions,
-        ...{[prop]: value}
+        [prop]: value
       };
       state.hasChanges = true;
     },
     changeReview(state, {index, review}) {
       state.descriptions = {
         ...state.descriptions,
-        ...{reviews: state.descriptions.reviews.map((r, i) => i === index ? review : r)}
+        reviews: state.descriptions.reviews.map((r, i) => i === index ? review : r)
       };
       state.hasChanges = true;
     },
@@ -89,10 +87,8 @@ export default function DescriptionStore(apiUrl: string) {
     updateSocials: (state, value) => {
       state.descriptions = {
         ...state.descriptions,
-        ...{
-          gameSite: value.game,
-          socials: omit(value, 'game')
-        }
+        gameSite: value.game,
+        socials: omit(value, 'game'),
       };
       state.hasChanges = true;
     },

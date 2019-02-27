@@ -21,15 +21,13 @@
   />
 </div>
 </template>
-
 <script type="ts">
   import Vue from 'vue';
-  import { mapState, mapActions, mapMutations, mapGetters } from 'vuex';
-  import { TextField } from '@protocol-one/ui-kit';
+  import { mapState, mapMutations } from 'vuex';
+  import { TextField, Textarea } from '@protocol-one/ui-kit';
   import Headline from '@/components/Headline';
   import i18n from '../i18n';
   import Review from './Review.vue';
-  import Textarea from './Textarea.vue';
 
   export default Vue.extend({
     i18n,

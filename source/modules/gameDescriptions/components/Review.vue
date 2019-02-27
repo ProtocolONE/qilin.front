@@ -10,38 +10,27 @@
         class="press_name"
         :label="$t('press_name')"
         :value="review.pressName"
-        @input="value => change('pressName', value)"
+        @input="change('pressName', $event)"
       />
       <TextField
         class="link"
         :label="$t('link')"
         :value="review.link"
-        @input="value => change('link', value)"
+        @input="change('link', $event)"
       />
       <Select
         class="score"
         :label="$t('score')"
         :value="review.score"
-        :options="[
-          {value: '1', label: '1'},
-          {value: '2', label: '2'},
-          {value: '3', label: '3'},
-          {value: '4', label: '4'},
-          {value: '5', label: '5'},
-          {value: '6', label: '6'},
-          {value: '7', label: '7'},
-          {value: '8', label: '8'},
-          {value: '9', label: '9'},
-          {value: '10', label: '10'},
-        ]"
-        @input="value => change('score', value)"
+        :options="scoreOptions"
+        @input="change('score', $event)"
       />
     </div>
     <TextField
       class="quote"
       :label="$t('quote')"
       :value="review.quote"
-      @input="value => change('quote', value)"
+      @input="change('quote', $event)"
     />
   </div>
 </div>
@@ -50,11 +39,17 @@
 <script type="ts">
   import Vue from 'vue';
   import { TextField, Select } from '@protocol-one/ui-kit';
+  import { scoreOptions } from './score_options';
   import i18n from '../i18n';
 
   export default Vue.extend({
     i18n,
     components: { TextField, Select },
+    data() {
+      return {
+        scoreOptions
+      }
+    },
     props: {
       number: {
         type: Number,
@@ -65,7 +60,6 @@
         required: true,
       },
     },
-    computed: {},
     methods: {
       change(field, value){
         this.$emit('input', {

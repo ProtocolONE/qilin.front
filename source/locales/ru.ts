@@ -50,6 +50,13 @@ export default {
           description: '',
         },
       },
+      descriptions: {
+        title: 'Редактирование раздела Описание',
+        meta: {
+          title: 'Редактирование раздела Описание',
+          description: '',
+        },
+      },
     },
   },
 };

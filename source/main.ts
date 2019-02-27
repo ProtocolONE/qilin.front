@@ -9,9 +9,6 @@ import RootStore from './RootStore';
 import router from './router';
 import i18n from './i18n';
 import MainLayout from './layouts/Main.vue';
-import wysiwyg from "vue-wysiwyg";
-
-Vue.use(wysiwyg);
 
 if (process.env.NODE_ENV === 'production') {
     Sentry.init({

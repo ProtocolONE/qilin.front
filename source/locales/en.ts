@@ -50,6 +50,13 @@ export default {
           description: '',
         },
       },
+      descriptions: {
+        title: 'Edit game descriptions',
+        meta: {
+          title: 'Edit game descriptions',
+          description: '',
+        },
+      },
     },
   },
 };

@@ -1,6 +1,7 @@
 <template>
 <div class="description-page">
   <Tagline />
+  <Description />
   <Reviews />
   <ExternalLinks />
 </div>
@@ -10,13 +11,14 @@
 import Vue from 'vue';
 import { mapState, mapActions, mapMutations, mapGetters } from 'vuex';
 import Tagline from './components/Tagline';
+import Description from './components/Description';
 import Reviews from './components/Reviews';
 import ExternalLinks from './components/ExternalLinks';
 import i18n from './i18n';
 
 export default Vue.extend({
   i18n,
-  components: { Tagline, Reviews, ExternalLinks },
+  components: { Tagline, Description, Reviews, ExternalLinks },
   computed: {
     ...mapState('Game/Descriptions', ['descriptions']),
     ...mapGetters('Game/Descriptions', ['contents']),

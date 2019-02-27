@@ -55,7 +55,7 @@ const routes: RouteConfig[] = [
       },
       {
         name: 'GameDescriptions',
-        path: 'description',
+        path: 'descriptions',
         component: GameDescriptions,
         meta: 'routes.game.descriptions.meta'
       },
