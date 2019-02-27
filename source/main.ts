@@ -11,23 +11,7 @@ import i18n from './i18n';
 import MainLayout from './layouts/Main.vue';
 import wysiwyg from "vue-wysiwyg";
 
-Vue.use(wysiwyg, {
-  hideModules: {
-    justifyLeft: true,
-    justifyCenter: true,
-    justifyRight: true,
-    headings: true,
-    link: true,
-    code: true,
-    orderedList: true,
-    unorderedList: true,
-    image: true,
-    table: true,
-    removeFormat: true,
-    separator: true,
-  },
-  forcePlainTextOnPaste: true
-});
+Vue.use(wysiwyg);
 
 if (process.env.NODE_ENV === 'production') {
     Sentry.init({
