@@ -13,7 +13,7 @@
     :number="index + 1"
     @input="review => changeReview({index, review})"
   />
-  <Textarea
+  <UiTextarea
     class="own_review"
     :label="$t('own_review')"
     :value="descriptions.additionalDescription"
@@ -24,14 +24,14 @@
 <script type="ts">
   import Vue from 'vue';
   import { mapState, mapMutations } from 'vuex';
-  import { TextField, Textarea } from '@protocol-one/ui-kit';
+  import { TextField, UiTextarea } from '@protocol-one/ui-kit';
   import Headline from '@/components/Headline';
   import i18n from '../i18n';
   import Review from './Review.vue';
 
   export default Vue.extend({
     i18n,
-    components: { TextField, Textarea, Headline, Review },
+    components: { TextField, UiTextarea, Headline, Review },
     computed: {
       ...mapState('Game/Descriptions', ['descriptions']),
     },

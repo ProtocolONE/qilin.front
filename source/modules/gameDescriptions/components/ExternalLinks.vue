@@ -8,11 +8,6 @@
     @checked="checkedOpt"
   >
     {{ $t('links') }}
-
-    <Tip
-      :visible="true"
-    />
-
   </Headline>
 
   <div

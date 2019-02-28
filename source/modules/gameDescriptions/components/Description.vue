@@ -11,7 +11,7 @@
     :filled-list="filled"
     @change="value => lang = value"
   />
-  <RichTextarea
+  <UiRichTextarea
     class="editor"
     placeholder=""
     :value="descriptions.description[lang] || ''"
@@ -23,13 +23,13 @@
 <script type="ts">
   import Vue from 'vue';
   import { mapState, mapMutations } from 'vuex';
-  import { LangsBar, RichTextarea } from '@protocol-one/ui-kit';
+  import { LangsBar, UiRichTextarea } from '@protocol-one/ui-kit';
   import Headline from '@/components/Headline';
   import i18n from '../i18n';
 
   export default Vue.extend({
     i18n,
-    components: { Headline, LangsBar, RichTextarea },
+    components: { Headline, LangsBar, UiRichTextarea },
     data() {
       return {
         lang: 'en',
