@@ -1,24 +1,29 @@
-export interface Role {
-  id: number;
-  title: any;
+export interface Recource {
+  id: string;
+  type: string;
+  meta: {
+    preview: string,
+    internalName: string,
+  };
 }
 
-export interface Game {
-  id: string;
-  internalName: string;
-  roles: number[];
+export interface Role {
+  role: string;
+  domain: string;
+  resource: Recource;
 }
 
 export interface User {
-  email: string;
-  games: Game[];
-  icon: string;
   id: number;
-  lastSean: Date;
+  email: string;
   name: string;
+  lastSeen: string;
+  roles: Role[];
 }
 
 export interface State {
+  rowsLimit: number;
   users: User[];
-  roles: Role[];
+  usersCount: number;
+  vendorId: string,
 }
