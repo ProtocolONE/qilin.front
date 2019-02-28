@@ -58,5 +58,12 @@ export default {
         },
       },
     },
+    documents: {
+      title: 'Документы',
+      meta: {
+        title: 'Документы вендора',
+        description: 'Документы вендора',
+      },
+    },
   },
 };

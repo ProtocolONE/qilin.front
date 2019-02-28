@@ -51,5 +51,12 @@ export default {
         },
       },
     },
+    documents: {
+      title: 'Documents',
+      meta: {
+        title: 'Documents for vendor',
+        description: 'Documents for vendor',
+      },
+    },
   },
 };
