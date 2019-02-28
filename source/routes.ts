@@ -17,6 +17,7 @@ import OnBoarding from '@/modules/onBoarding/OnBoarding.vue';
 import Notifications from '@/modules/notifications/Notifications.vue';
 import Requests from '@/modules/requests/Requests.vue';
 import Request from '@/modules/request/Request.vue';
+import Users from '@/modules/users/Users.vue';
 
 const routes: RouteConfig[] = [
   {
@@ -131,6 +132,12 @@ const routes: RouteConfig[] = [
         meta: { i18n: 'routes.admin.history.meta', permissions: 'admin.vendors.*' },
       },
     ],
+  },
+  {
+    path: '/users',
+    name: 'users',
+    component: Users,
+    meta: { permissions: 'vendors.memberships' },
   },
 ].map(route => ({
   ...route,

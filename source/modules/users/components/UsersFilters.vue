@@ -1,31 +1,17 @@
 <template>
 <UiTableRow
   class="users-filters"
+  :isClickable="false"
   :isHead="true"
 >
   <UiTableCell
-    class="name _active"
-    @click="toggleSort('name')"
+    v-for="(isSortable, column) in userColumns"
+    :key="column"
+    :isSortable="isSortable"
+    :sortDirection="sortDirection(column)"
+    @click.native="toggleSort(column)"
   >
-    {{ $t('name') }}
-  </UiTableCell>
-  <UiTableCell
-    class="email _active"
-    @click="toggleSort('email')"
-  >
-    {{ $t('email') }}
-  </UiTableCell>
-  <UiTableCell>
-    {{ $t('genres') }}
-  </UiTableCell>
-  <UiTableCell>
-    {{ $t('roles') }}
-  </UiTableCell>
-  <UiTableCell
-    class="last-seen _active"
-    @click="toggleSort('lastSeen')"
-  >
-    {{ $t('lastSeen') }}
+    {{ $t(column) }}
   </UiTableCell>
 </UiTableRow>
 </template>
@@ -38,20 +24,36 @@ import i18n from './i18nFilters';
 export default Vue.extend({
   i18n,
   components: { UiTableRow, UiTableCell },
+  props: {
+    sortingProps: {
+      default: () => ({}),
+      type: Object,
+    },
+  },
+  computed: {
+    userColumns() {
+      return {
+        name: true,
+        email: true,
+        games: false,
+        roles: false,
+        lastSeen: true,
+      };
+    },
+  },
   methods: {
+    sortDirection(propName: string) {
+      if (this.sortingProps[propName] === undefined) {
+        return null;
+      }
+
+      return this.sortingProps[propName] ? 'asc' : 'desc';
+    },
     toggleSort(propName: string) {
-      this.$emit('toggleSort', propName);
-    }
+      if (this.userColumns[propName]) {
+        this.$emit('toggleSort', propName);
+      }
+    },
   },
 });
 </script>
-
-<style lang="scss" scoped>
-.name,
-.release {
-  &._active {
-    color: #0c2441;
-    cursor: pointer;
-  }
-}
-</style>

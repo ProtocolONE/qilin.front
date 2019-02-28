@@ -58,7 +58,7 @@ export default Vue.extend({
     };
   },
   computed: {
-    ...mapState('Requests', ['requests', 'rowsLimit', 'requestsCount']),
+    ...mapState('Requests', ['requests', 'requestsCount', 'rowsLimit']),
 
     hasRequests() {
       return !!get(this.requests, 'length', 0);
