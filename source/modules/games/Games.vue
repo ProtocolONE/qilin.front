@@ -58,7 +58,7 @@ export default Vue.extend({
     this.initState({ router: this.$router });
   },
   methods: {
-    ...mapActions('Games', ['initState']),
+    ...mapActions('Games', ['initState', 'fetchGames']),
 
     filterByName(namePart) {
       this.innerGames = this.games.filter(
@@ -71,12 +71,7 @@ export default Vue.extend({
     toggleSort(propName) {
       this.sortingProps[propName] = !this.sortingProps[propName];
 
-      // @TODO - add sorting by genres and price
-      this.innerGames = orderBy(
-        this.games,
-        propName,
-        this.sortingProps[propName] ? 'asc' : 'desc',
-      );
+      this.fetchGames(`${this.sortingProps[propName] ? '+' : '-'}${propName}`);
     },
   },
   watch: {
