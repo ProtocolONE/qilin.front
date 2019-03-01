@@ -64,8 +64,8 @@
     border-radius: 4px;
     position: absolute;
     z-index: 10;
-    top: -10px;
-    left: 90px;
+    top: -20px;
+    left: 55px;
     box-shadow: 0 0 40px #ddd;
     padding: 22px 15px 22px 22px;
     font-size: 14px;
@@ -97,7 +97,7 @@
     > .tooltip {
       visibility: visible;
       opacity: 1;
-      left: 60px;
+      left: 45px;
     }
   }
 }
