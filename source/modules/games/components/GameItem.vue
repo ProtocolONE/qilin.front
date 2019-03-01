@@ -119,48 +119,4 @@ export default Vue.extend({
     margin-right: 0;
   }
 }
-// .price {
-//   min-width: 90px;
-//   max-width: 90px;
-//   margin-right: 16px;
-// }
-// .release {
-//   min-width: 200px;
-//   max-width: 200px;
-//   margin-right: 16px;
-// }
-.etc {
-  height: 40px;
-  width: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.dots {
-  position: relative;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: #c4c4c4;
-
-  &:before,
-  &:after {
-    content: '';
-    display: inline-block;
-    position: absolute;
-    top: 0;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background-color: #c4c4c4;
-  }
-
-  &:before {
-    left: -10px;
-  }
-
-  &:after {
-    right: -10px;
-  }
-}
 </style>
