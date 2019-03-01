@@ -1,16 +1,60 @@
-version: '3'
+version: "3.6"
+
 services:
-  p1qilinfront:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    container_name: p1qilinfront
-    networks:
-    - p1devnet
-    ports:
-    - "8080:8080"
-    restart: unless-stopped
+    paysuper-nginx:
+        image: nginx
+        container_name: pausuper-nginx
+        depends_on:
+            - paysuper-app
+        networks:
+            - p1devnet
+        ports:
+            - "80:80"
+        environment:
+            - NGINX_HOST=localhost
+            - NGINX_PORT=80
+            - APP=http://paysuper-app:80
+        volumes:
+            - ./etc/nginx/default.template:/etc/nginx/conf.d/default.template
+            - ./app/build:/var/www/static
+        command: bin/bash -c "envsubst < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
+        restart: unless-stopped
+
+    paysuper-redis:
+        image: redis:5.0.3
+        container_name: paysuper-redis
+        restart: unless-stopped
+        networks:
+            - p1devnet
+
+    paysuper-app:
+        container_name: paysuper-app
+        build: .
+        restart: unless-stopped
+        depends_on:
+            - paysuper-redis
+        networks:
+            - p1devnet
+        environment:
+            - NODE_ENV=production
+            - AUTH1_CLIENT_ID=${AUTH1_CLIENT_ID}
+            - AUTH1_CLIENT_SCOPE="openid,offline"
+            - AUTH1_CLIENT_SECRET=${AUTH1_CLIENT_SECRET}
+            - AUTH1_ISSUER_URL=${AUTH1_ISSUER_URL}
+            - CORS_VALID_ORIGINS="*"
+            - POST_MESSAGE_TARGET_ORIGIN="*"
+            - PUBLIC_HOST=${PUBLIC_HOST}
+            - REDIS_HOST=paysuper-redis
+            - REDIS_PORT=6379
+            - ROUTES_PREFIX=''
+            - SENTRY_DSN=${SENTRY_DSN}
+            - SERVER_PORT=80
+            - SESSION_COOKIE_NAME="qlsid"
+            - SESSION_COOKIE_SIGN_KEY="default"
+            - SESSION_MAX_AGE=21600
+            - QILIN_API=https://qilinapi.tst.protocol.one
+            - IMAGINARY_API=https://imaginary.tst.protocol.one
 
 networks:
-  p1devnet:
-    external: true
+    p1devnet:
+        external: true
