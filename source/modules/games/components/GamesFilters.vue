@@ -1,34 +1,37 @@
 <template>
-<div class="games-filters">
-  <span
+<UiTableRow
+  class="games-filters"
+  :isHead="true"
+>
+  <UiTableCell
     class="name _active"
-    @click="toggleSort('technicalName')"
+    @click.native="toggleSort('internalName')"
   >
     {{ $t('name') }}
-  </span>
-  <span class="genre">
+  </UiTableCell>
+  <UiTableCell>
     {{ $t('genre') }}
-  </span>
-  <span class="price">
+  </UiTableCell>
+  <UiTableCell>
     {{ $t('price') }}
-  </span>
-  <span
+  </UiTableCell>
+  <UiTableCell
     class="release _active"
-    @click="toggleSort('releaseDate')"
+    @click.native="toggleSort('releaseDate')"
   >
     {{ $t('release') }}
-  </span>
-</div>
+  </UiTableCell>
+</UiTableRow>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import { Button, TextField } from '@protocol-one/ui-kit';
+import { UiTableRow, UiTableCell } from '@protocol-one/ui-kit';
 import i18n from './i18nGamesFilters';
 
 export default Vue.extend({
   i18n,
-  components: { Button, TextField },
+  components: { UiTableRow, UiTableCell },
   methods: {
     toggleSort(propName: string) {
       this.$emit('toggleSort', propName);
@@ -38,42 +41,11 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.games-filters {
-  height: 40px;
-  padding: 0 32px;
-  width: 100%;
-  display: flex;
-  box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.07);
-  color: #b1b1b1;
-  background-color: #f6f6f6;
-  font-size: 14px;
-}
 .name,
-.genre,
-.price,
 .release {
-  display: inline-block;
-  line-height: 40px;
-
   &._active {
     color: #0c2441;
     cursor: pointer;
   }
-}
-.name {
-  min-width: 292px;
-  max-width: 292px;
-}
-.genre {
-  min-width: 216px;
-  max-width: 216px;
-}
-.price {
-  min-width: 106px;
-  max-width: 106px;
-}
-.release {
-  min-width: 216px;
-  max-width: 216px;
 }
 </style>

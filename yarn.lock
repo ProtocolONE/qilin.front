@@ -679,15 +679,16 @@
     consola "^2.3.0"
     node-fetch "^2.3.0"
 
-"@protocol-one/ui-kit@^1.3.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@protocol-one/ui-kit/-/ui-kit-1.4.0.tgz#b13ff19073399ddfc81ee7df23e9a46e8ebbccd2"
-  integrity sha512-g8Y9v5kiZJGBwNUbPusR9Swjg0eKnfzDafK4U+JKVIQkC1kNwOsPRgVASncTuVdczbok/W6KWWqw5MR3MCMmQg==
+"@protocol-one/ui-kit@^1.9.0":
+  version "1.9.2"
+  resolved "https://registry.yarnpkg.com/@protocol-one/ui-kit/-/ui-kit-1.9.2.tgz#81b53ffcc79ba44f75f89346e4f39b4e5bcf3874"
+  integrity sha512-e6ZbzVUf1WbZDDJ3q62WhcJsZZUFX42YNHyGGMlYuY+iB9waHXKFmulMpvse5MQPQjQftQMAX7P9dr2ZMGmfNA==
   dependencies:
     date-fns "^v2.0.0-alpha.27"
     lodash-es "^4.17.11"
     vue "^2.5.21"
     vue-clickaway "^2.2.2"
+    vue-wysiwyg "^1.7.2"
     vuejs-datepicker "^1.5.4"
 
 "@sentry/browser@^4.5.4":
@@ -2508,6 +2509,11 @@ de-indent@^1.0.2:
   resolved "https://registry.yarnpkg.com/de-indent/-/de-indent-1.0.2.tgz#b2038e846dc33baa5796128d0804b455b8c1e21d"
   integrity sha1-sgOOhG3DO6pXlhKNCAS0VbjB4h0=
 
+debounce@^1.1.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/debounce/-/debounce-1.2.0.tgz#44a540abc0ea9943018dc0eaa95cce87f65cd131"
+  integrity sha512-mYtLl1xfZLi1m4RtQYlZgJUNQjl4ZxVnHzIR8nLLgi4q1YT8o/WM+MK/f8yfcc9s5Ir5zRaPZyZU6xs1Syoocg==
+
 debug@2.6.9, debug@^2.1.2, debug@^2.2.0, debug@^2.3.3, debug@^2.6.8, debug@^2.6.9:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
@@ -2755,6 +2761,11 @@ dot-prop@^4.1.1:
   integrity sha512-tUMXrxlExSW6U2EXiiKGSBVdYgtV8qlHL+C10TsW4PURY/ic+eaysnSkwB4kA/mBlCyy/IKDJ+Lc3wbWeaXtuQ==
   dependencies:
     is-obj "^1.0.0"
+
+dropzone@^5.5.0:
+  version "5.5.1"
+  resolved "https://registry.yarnpkg.com/dropzone/-/dropzone-5.5.1.tgz#06e2f513e61d6aa363d4b556f18574f47cf7ba26"
+  integrity sha512-3VduRWLxx9hbVr42QieQN25mx/I61/mRdUSuxAmDGdDqZIN8qtP7tcKMa3KfpJjuGjOJGYYUzzeq6eGDnkzesA==
 
 duplexer@^0.1.1:
   version "0.1.1"
@@ -7790,10 +7801,31 @@ vue-typescript-import-dts@^4.0.0:
   resolved "https://registry.yarnpkg.com/vue-typescript-import-dts/-/vue-typescript-import-dts-4.0.0.tgz#2ddb5354f61cff69ef2997ca9da1a3183041a880"
   integrity sha1-LdtTVPYc/2nvKZfKnaGjGDBBqIA=
 
+vue-wysiwyg@^1.7.2:
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/vue-wysiwyg/-/vue-wysiwyg-1.7.2.tgz#8f5ffe46e95e984c1f36874cc42ede5213e3b2d8"
+  integrity sha512-ypj9vqmGJTuM/YYC30+vRPWm6+UizBqvNHnIJr1l6k92eHA33q5ubE+WPfij8Qr8mK+wbaCwaVBO7dQqvxzSTQ==
+  dependencies:
+    debounce "^1.1.0"
+    vue "^2.5.13"
+    vue2-dropzone "^3.0.4"
+
+vue2-dropzone@^3.0.4:
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/vue2-dropzone/-/vue2-dropzone-3.5.2.tgz#602630b1577d861810555646b72338de69feebe2"
+  integrity sha512-cigwZLe2USiIdxHEUKHNuJcbrGDNwuyqSE/FnYXQpG27cxCFtbyo1b8ZxRTa0sTY3czcrFtIZTox67VMahA7cg==
+  dependencies:
+    dropzone "^5.5.0"
+
 vue@*, vue@^2.5.21:
   version "2.6.6"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.6.tgz#dde41e483c11c46a7bf523909f4f2f816ab60d25"
   integrity sha512-Y2DdOZD8sxApS+iUlwv1v8U1qN41kq6Kw45lM6nVZKhygeWA49q7VCCXkjXqeDBXgurrKWkYQ9cJeEJwAq0b9Q==
+
+vue@^2.5.13:
+  version "2.6.8"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.8.tgz#f21cbc536bfc14f7d1d792a137bb12f69e60ea91"
+  integrity sha512-+vp9lEC2Kt3yom673pzg1J7T1NVGuGzO9j8Wxno+rQN2WYVBX2pyo/RGQ3fXCLh2Pk76Skw/laAPCuBuEQ4diw==
 
 vuejs-datepicker@^1.5.4:
   version "1.5.4"
