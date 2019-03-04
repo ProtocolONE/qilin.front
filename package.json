@@ -12,7 +12,7 @@
     "build": "cross-env NODE_ENV=production webpack",
     "lint": "eslint \"./source/**/*.{js,ts,vue}\"",
     "test": "cross-env NODE_PATH=./source mocha './source/**/*.spec.js' --require babel-register",
-    "start-app:local": "cross-env NODE_ENV=local nodemon --ignore './node_modules' -w ./ ./index.js"
+    "start-app:local": "cross-env NODE_ENV=local nodemon --watch './backend' -w ./*.js ./index.js"
   },
   "author": "",
   "license": "ISC",
