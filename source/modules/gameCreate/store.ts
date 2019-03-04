@@ -13,7 +13,7 @@ export default function CreateGameStore(apiUrl: string) {
   const actions: ActionTree<State, any> = {
     createGame({commit}, payload) {
       axios
-        .post(`${apiUrl}/api/v1/games`, payload)
+        .post(`${apiUrl}/games`, payload)
         .then(res => commit('updateGameId', res.data.id));
     },
   };

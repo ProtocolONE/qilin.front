@@ -12,7 +12,7 @@ export default function MainStore(apiUrl: string, accessToken: string) {
   const actions: ActionTree<State, any> = {
     async initUser({ commit }) {
       const user = await axios
-        .get(`${apiUrl}/api/v1/me`)
+        .get(`${apiUrl}/me`)
         .then(res => res.data.user);
 
       if (user) {

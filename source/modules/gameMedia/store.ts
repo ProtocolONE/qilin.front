@@ -30,14 +30,14 @@ export default function MediaStore(apiUrl: string) {
   const actions: ActionTree<State, any> = {
     async initState({ commit }, gameId: string) {
       const media = await axios
-        .get(`${apiUrl}/api/v1/games/${gameId}/media`)
+        .get(`${apiUrl}/games/${gameId}/media`)
         .then(({ data }) => data);
         
       commit('media', mergeWith(defaultMedia, media, (a, b) => (b === null ? a : b)));
     },
     async save({ state, commit }, gameId) {
       if (state.hasChanges) {
-        await axios.put(`${apiUrl}/api/v1/games/${gameId}/media`, state.media);
+        await axios.put(`${apiUrl}/games/${gameId}/media`, state.media);
         commit('hasChanges', false);
       }
     },

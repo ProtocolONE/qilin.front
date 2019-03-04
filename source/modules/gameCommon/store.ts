@@ -31,7 +31,7 @@ export default function GameStore(apiUrl: string) {
     },
     async initState({ commit }, gameId: string) {
       const gameInfo = await axios
-        .get(`${apiUrl}/api/v1/games/${gameId}`)
+        .get(`${apiUrl}/games/${gameId}`)
         .then(({ data }) => data);
 
       commit('updateGame', gameInfo);
