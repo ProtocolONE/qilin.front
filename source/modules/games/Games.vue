@@ -1,12 +1,12 @@
 <template>
 <div class="games-wrapper">
   <GamesHeader
-    :has-games="hasGames"
+    :hasGames="hasGames"
     @search="filterByName"
     @clickCreate="showModal = true"
   />
 
-  <template v-if="hasGames">
+  <UiTable v-if="hasGames">
     <GamesFilters @toggleSort="toggleSort" />
 
     <GameItem
@@ -14,7 +14,7 @@
       :key="game.id"
       v-bind="{ game, genres }"
     />
-  </template>
+  </UiTable>
 
   <CreateGameDummy
     v-else
@@ -22,7 +22,7 @@
   />
   <CreateGame
     v-if="showModal"
-    :vendor-id="vendorId"
+    :vendorId="vendorId"
     @close="showModal = false"
     @create="gameCreated"
   />
@@ -31,10 +31,9 @@
 
 <script type="ts">
 import Vue from 'vue';
-import includes from 'lodash-es/includes';
-import orderBy from 'lodash-es/orderBy';
-import map from 'lodash-es/map';
 import { mapState, mapActions } from 'vuex';
+import { includes, map, orderBy } from 'lodash-es';
+import { UiTable } from '@protocol-one/ui-kit';
 import CreateGame from '@/modules/gameCreate/CreateGame.vue';
 import CreateGameDummy from './components/CreateGameDummy.vue';
 import GamesFilters from './components/GamesFilters.vue';
@@ -42,7 +41,7 @@ import GamesHeader from './components/GamesHeader.vue';
 import GameItem from './components/GameItem.vue';
 
 export default Vue.extend({
-  components: { CreateGameDummy, GamesFilters, GamesHeader, GameItem, CreateGame },
+  components: { CreateGame, CreateGameDummy, GamesFilters, GamesHeader, GameItem, UiTable },
   data: () => ({
     innerGames: [],
     sortingProps: {},
@@ -56,29 +55,24 @@ export default Vue.extend({
     },
   },
   mounted() {
-    this.initState({router: this.$router});
+    this.initState({ router: this.$router });
   },
   methods: {
-    ...mapActions('Games', ['initState']),
+    ...mapActions('Games', ['initState', 'fetchGames']),
 
     filterByName(namePart) {
       this.innerGames = this.games.filter(
         game => includes(game.internalName.toLowerCase(), namePart.toLowerCase())
       );
     },
+    gameCreated(gameId) {
+      this.$router.push({ name: 'game', params: { id: gameId } });
+    },
     toggleSort(propName) {
       this.sortingProps[propName] = !this.sortingProps[propName];
 
-      // @TODO - add sorting by genres and price
-      this.innerGames = orderBy(
-        this.games,
-        Object.keys(this.sortingProps),
-        map(this.sortingProps, prop => prop ? 'asc' : 'desc'),
-      );
+      this.fetchGames(`${this.sortingProps[propName] ? '+' : '-'}${propName}`);
     },
-    gameCreated(gameId) {
-      this.$router.push({ name: 'gameGeneral', params: { id: gameId } });
-    }
   },
   watch: {
     games(val) {

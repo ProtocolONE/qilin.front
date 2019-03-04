@@ -1,9 +1,8 @@
 import axios from 'axios';
-import cloneDeep from 'lodash-es/cloneDeep';
+import { includes } from 'lodash-es';
 import { GetterTree, ActionTree, MutationTree } from 'vuex';
-import formatDate from '@/helpers/formatDate';
 import { VueRouter } from "vue-router/types/router";
-import { Game, State } from './types';
+import { State } from './types';
 
 export default function GamesStore(apiUrl: string) {
   const state: State = {
@@ -13,7 +12,7 @@ export default function GamesStore(apiUrl: string) {
   };
   const getters: GetterTree<State, any> = {};
   const actions: ActionTree<State, any> = {
-    async initState({ commit }, {router}: {router: VueRouter}) {
+    async initState({ commit, dispatch }, { router }: { router: VueRouter }) {
       const vendors = await axios
         .get(`${apiUrl}/api/v1/vendors`, { params: { limit: 1 } })
         .then(res => res.data || []);
@@ -23,21 +22,20 @@ export default function GamesStore(apiUrl: string) {
       }
       commit('vendorId', vendors[0].id);
 
-      const games = await axios
-        .get(`${apiUrl}/api/v1/vendor/${vendors[0].id}/games`)
-        .then(res => res.data || []);
-
-      const preparedGames = games.map((game: Game) => ({
-        ...cloneDeep(game),
-        releaseDate: formatDate(new Date(game.releaseDate), 'dd LLLL yyyy, HH:mm'),
-      }))
-
-      commit('games', preparedGames);
+      dispatch('fetchGames');
 
       const genres = await axios
         .get(`${apiUrl}/api/v1/genres`)
         .then(response => response.data);
       commit('genres', genres);
+    },
+
+    async fetchGames({ commit, state }, sort = '') {
+      const games = await axios
+        .get(`${apiUrl}/api/v1/vendor/${state.vendorId}/games${sort && '?sort='}${sort}`)
+        .then(res => res.data || []);
+
+      commit('games', games);
     },
   };
   const mutations: MutationTree<State> = {
