@@ -3,22 +3,23 @@
   <Headline
     id="links"
     level="2"
-    :options="options"
-    :option-labels="socialMap.map(name => $t(`socials.${name}`))"
-    @checked="checkedOpt"
   >
     {{ $t('links') }}
+    <TipWithFeatures
+      :features="features"
+      @switch="featureSwitch"
+    />
   </Headline>
-
   <div
-    v-for="(name, idx) in socialMap"
+    v-for="(f, idx) in features"
+    :key="idx"
     class="item"
   >
     <TextField
-      v-if="options[idx]"
-      :label="$t('socials.' + name)"
-      :value="socials[name]"
-      @input="value => changeSocials(name, value)"
+      v-if="f.checked"
+      :label="$t(`socials.${f.name}`)"
+      :value="socials[f.name]"
+      @input="value => changeSocials(f.name, value)"
     />
   </div>
 </div>
@@ -27,24 +28,31 @@
 <script type="ts">
   import Vue from 'vue';
   import { mapState, mapMutations, mapGetters } from 'vuex';
-  import { TextField, Tip } from '@protocol-one/ui-kit';
+  import { TextField, SwitchBox } from '@protocol-one/ui-kit';
+  import TipWithFeatures from '@/components/TipWithFeatures.vue';
   import Headline from '@/components/Headline';
   import i18n from '../i18n';
 
   export default Vue.extend({
     i18n,
-    components: { TextField, Headline, Tip },
+    components: {
+      TextField,
+      Headline,
+      SwitchBox,
+      TipWithFeatures,
+    },
     data() {
       return {
-        socialMap: Object.keys(this.$t('socials')),
-        options: [],
+        features: [],
       };
     },
     watch: {
+      '$i18n.locale'() {
+        this.updateFeatures();
+      },
       descriptions() {
-        if (!this.options.length) {
-          this.options = this.socialMap
-            .map(name => !!this.socials[name]);
+        if (!this.features.length) {
+          this.updateFeatures();
         }
       },
     },
@@ -54,10 +62,18 @@
     },
     methods: {
       ...mapMutations('Game/Descriptions', ['updateSocials']),
-      checkedOpt(index) {
-        this.options = this.options.map((ch, i) => i === index ? !ch : ch);
-        if (!this.options[index]) {
-          this.changeSocials(this.socialMap[index], '');
+      updateFeatures() {
+        this.features = Object.keys(this.$t('socials'))
+          .map(name => ({
+            name,
+            label: this.$t(`socials.${name}`),
+            checked: !!this.socials[name],
+          }));
+      },
+      featureSwitch(idx) {
+        this.features[idx].checked = !this.features[idx].checked;
+        if (!this.features[idx].checked) {
+          this.changeSocials(this.features[idx].name, '');
         }
       },
       changeSocials(prop, value) {

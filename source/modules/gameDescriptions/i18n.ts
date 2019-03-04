@@ -29,7 +29,7 @@ export default {
       own_review: 'Свое ревью',
       links: 'Внешние ссылки',
       socials: {
-        game: 'Сайт',
+        game: 'Сайт игры',
         facebook: 'Facebook',
         twitter: 'Twitter',
       },

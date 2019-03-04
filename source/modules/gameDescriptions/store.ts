@@ -29,7 +29,9 @@ export default function DescriptionStore(apiUrl: string) {
   const getters: GetterTree<State, any> = {
     contents: () => [
       'tagline',
-      'reviews'
+      'description',
+      'reviews',
+      'links',
     ],
     socials: (state) => ({
       ...state.descriptions.socials,

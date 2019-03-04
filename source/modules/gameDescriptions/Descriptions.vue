@@ -18,22 +18,29 @@ import i18n from './i18n';
 
 export default Vue.extend({
   i18n,
-  components: { Tagline, Description, Reviews, ExternalLinks },
+  components: {
+    Tagline,
+    Description,
+    Reviews,
+    ExternalLinks,
+  },
   computed: {
     ...mapState('Game/Descriptions', ['descriptions']),
     ...mapGetters('Game/Descriptions', ['contents']),
   },
   watch: {
-    '$i18n.locale': () => this.updateConts(),
+    '$i18n.locale'() {
+      this.updateGameContents();
+    },
   },
   mounted() {
     this.initState(this.$route.params.id);
-    this.updateConts();
+    this.updateGameContents();
   },
   methods: {
     ...mapActions('Game/Descriptions', ['initState', 'update']),
     ...mapMutations('Game', ['updateContents']),
-    updateConts() {
+    updateGameContents() {
       this.updateContents(this.contents.map(
         anchor => ({
           anchor,
