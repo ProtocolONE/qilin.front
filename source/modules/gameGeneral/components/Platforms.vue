@@ -85,7 +85,7 @@ import Headline from '@/components/Headline.vue';
 import LinuxIcon from './LinuxIcon.vue';
 import MacOsIcon from './MacOsIcon.vue';
 import Requirements from './Requirements.vue';
-import SettingsIcon from './SettingsIcon.vue';
+import SettingsIcon from '@/components/SettingsIcon.vue';
 import WindowsIcon from './WindowsIcon.vue';
 import i18n from './i18nPlatforms';
 
