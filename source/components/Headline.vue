@@ -35,10 +35,10 @@
 <script type="ts">
 import Vue from 'vue';
 import { includes } from 'lodash-es';
-import { Header } from '@protocol-one/ui-kit';
+import { Checkbox, Header } from '@protocol-one/ui-kit';
 
 export default Vue.extend({
-  components: { Header },
+  components: { Header, Checkbox },
   props: {
     hasMargin: {
       default: true,
@@ -71,14 +71,15 @@ export default Vue.extend({
   display: inline-block;
   position: relative;
   svg {
-    fill: #B1B1B1;
+    fill: #b1b1b1;
     transition: fill 0.2s ease-out;
   }
   &:hover {
     svg {
-      fill: #2275D7;
+      fill: #2275d7;
     }
-    .header-tooltop {
+    > .header-tooltop {
+      visibility: visible;
       opacity: 1;
       left: 30px;
     }
@@ -86,6 +87,7 @@ export default Vue.extend({
 }
 .header-tooltop {
   transition: all 0.2s ease-out;
+  visibility: hidden;
   opacity: 0;
   width: 293px;
   min-height: 80px;
