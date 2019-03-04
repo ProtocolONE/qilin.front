@@ -1,6 +1,6 @@
 import { RouteConfig } from 'vue-router';
 import Home from '@/modules/home/Home.vue';
-import OnBoarding from '@/modules/onboarding/OnBoarding.vue';
+import OnBoarding from '@/modules/onBoarding/OnBoarding.vue';
 import GameCommon from '@/modules/gameCommon/GameCommon.vue';
 import GameGeneral from '@/modules/gameGeneral/General.vue';
 import GameNavigation from '@/modules/gameNavigation/GameNavigation.vue';

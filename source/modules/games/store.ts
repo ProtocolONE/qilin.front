@@ -31,11 +31,8 @@ export default function GamesStore(apiUrl: string) {
     },
 
     async fetchGames({ commit, state }, sort = '') {
-      // @TODO - Remove hack for different props names for sorting and filtering
-      const prepareSort = sort.replace('internalName', 'name');
-
       const games = await axios
-        .get(`${apiUrl}/api/v1/vendor/${state.vendorId}/games${sort && '?sort='}${prepareSort}`)
+        .get(`${apiUrl}/api/v1/vendor/${state.vendorId}/games${sort && '?sort='}${sort}`)
         .then(res => res.data || []);
 
       commit('games', games);

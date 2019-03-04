@@ -1,6 +1,5 @@
 <template>
 <UiTableRow
-  class="item-container"
   :link="gameUrl"
 >
   <UiTableCell>
@@ -77,16 +76,14 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.item-container {
-  line-height: 28px;
-  cursor: pointer;
-}
 .logo {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   margin-right: 16px;
   background-position: center;
+  display: inline-block;
+  vertical-align: middle;
 }
 // @TODO - Fix scrolling for genres
 .genres-box {
