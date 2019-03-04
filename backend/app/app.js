@@ -37,7 +37,6 @@ const publicUrl = urlParse(config.publicHost);
 app.keys = [config.sessionCookieSignKey];
 const sessionParams = {
   key: config.sessionCookieName,
-  store: new RedisStore(config.redisPort, config.redisHost),
   signed: true,
   httpOnly: true,
   domain: publicUrl.host,
@@ -89,7 +88,7 @@ app.use(cacheControl({
 // server
 const port = config.serverPort;
 const server = app.listen(port, () => {
-  console.log(`Server listening on port: ${port}`);
+    console.log(JSON.stringify({ hello_message: `Server listening on port: ${port}` }));
 });
 
 module.exports = server;

@@ -1,13 +1,14 @@
 server {
-    listen 80;
-    root /var/www;
+    listen ${NGINX_PORT} default_server;
+    server_name ${NGINX_HOST};
+
+    charset utf-8;
+    server_tokens off;
+
+    root /var/www/static;
     index index.html;
 
-    # No any 404 handlers!
-#    error_page 404 /404.html;
-#    location = /404.html {
-#        internal;
-#    }
+    client_max_body_size 30m;
 
     # Add 1 week expires header for static assets
     location ~* \.(js|css|png|jpg|jpeg|gif|ico|txt)$ {
@@ -16,13 +17,7 @@ server {
         expires 1w;
     }
 
-    client_max_body_size 30m;
-
     location ~* ^/auth1/(login|logout|refresh|callback)(.*)$ {
         proxy_pass ${APP};
-    }
-
-    location / {
-        try_files $uri /index.html;
     }
 }

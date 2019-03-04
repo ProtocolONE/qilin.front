@@ -6,9 +6,9 @@ const getEnvVariable = envUtils.getEnvVariable;
 const getEnvVariableArray = envUtils.getEnvVariableArray;
 
 const config = {
-  serverPort: +getEnvVariable('SERVER_PORT', 80),
+  serverPort: +getEnvVariable('SERVER_PORT', 8080),
 
-  redisHost: getEnvVariable('REDIS_HOST', 'localhost'),
+  redisHost: getEnvVariable('REDIS_HOST', ''),
   redisPort: +getEnvVariable('REDIS_PORT', '6379'),
 
   sessionMaxAge: +getEnvVariable('SESSION_MAX_AGE', '21600'), // 6 hours, in seconds
