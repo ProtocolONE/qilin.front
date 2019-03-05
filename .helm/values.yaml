@@ -3,13 +3,17 @@
 # Declare variables to be passed into your templates.
 
 enableCertIssuer: true
+enableRedis: true
 
 # to release to production environment set prodRelease = true
 prodRelease: false
 
 ingress:
   hostname: qilin.tst.protocol.one
-  path: /
+  pathBackend: 
+   - /auth1/
+  pathFrontend: 
+   - / 
 
 certIssuer:
   email: admin@protocol.one
@@ -25,9 +29,36 @@ frontend:
     type: ClusterIP
     port: 80
     protocol: TCP
-#  configMap: 
-#    mountPath: /etc/nginx/conf.d/
-  
+  configMap: 
+    mountPath: /etc/nginx/conf.d/
+
+backend:
+  name: nodejs
+  role: backend
+  image: "p1hub/qilinfront.protocol.one"
+  imageTag: latest
+  port: 80
+  replicas: 1
+  service: 
+    type: ClusterIP
+    port: 80
+    protocol: TCP
+  env:
+  - NODE_ENV
+  - AUTH1_CLIENT_ID
+  - AUTH1_CLIENT_SCOPE
+  - AUTH1_CLIENT_SECRET
+  - AUTH1_ISSUER_URL
+  - CORS_VALID_ORIGINS
+  - POST_MESSAGE_TARGET_ORIGIN
+  - PUBLIC_HOST
+  - REDIS_PORT
+  - ROUTES_PREFIX
+  - SENTRY_DSN
+  - SERVER_PORT
+  - SESSION_COOKIE_NAME
+  - SESSION_COOKIE_SIGN_KEY
+
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
