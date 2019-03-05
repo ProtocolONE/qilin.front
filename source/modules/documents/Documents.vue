@@ -7,13 +7,6 @@
     >
       {{ $t('title') }}
     </Header>
-
-    <Button
-      v-if="isFormComplete"
-      slot="right"
-      :text="$t('submit')"
-      @click="saveDocuments"
-    />
   </PageHeader>
 
   <FormByStep
@@ -24,20 +17,35 @@
     <KeepAlive>
       <Company
         v-if="currentStep === 'company'"
+        class="main"
+        :countries="countries"
         :fields="companyFields"
         @change="changeFields('company', $event)"
       />
-      <Contacts
-        v-if="currentStep === 'contacts'"
-        :fields="contactsFields"
-        @change="changeFields('contacts', $event)"
+      <Contact
+        v-if="currentStep === 'contact'"
+        class="main"
+        :fields="contactFields"
+        @change="changeFields('contact', $event)"
       />
       <Banking
         v-if="currentStep === 'banking'"
+        class="main"
+        :currencies="currencies"
         :fields="bankingFields"
         @change="changeFields('banking', $event)"
       />
     </KeepAlive>
+
+    <div slot="side-footer" v-if="isFormComplete">
+      {{ $t(`status.${documentsStatus}.title`) }}
+      <div class="submit-box">
+        <Button
+          :text="$t(`status.${documentsStatus}.submit`)"
+          @click="saveDocuments"
+        />
+      </div>
+    </div>
   </FormByStep>
 </div>
 </template>
@@ -49,41 +57,46 @@ import { mapActions, mapGetters, mapMutations, mapState } from 'vuex';
 import { Button, FormByStep, Header, PageHeader } from '@protocol-one/ui-kit';
 import Banking from './components/Banking.vue';
 import Company from './components/Company.vue';
-import Contacts from './components/Contacts.vue';
+import Contact from './components/Contact.vue';
 import i18n from './i18n';
 
 export default Vue.extend({
   i18n,
-  components: { Banking, Button, Company, Contacts, FormByStep, Header, PageHeader },
+  components: { Banking, Button, Company, Contact, FormByStep, Header, PageHeader },
   data() {
     return {
       currentStep: 'company',
     };
   },
   computed: {
-    ...mapState('Documents', ['documents', 'requiredFields']),
-    ...mapGetters('Documents', ['disabled', 'steps']),
+    ...mapState('Documents', ['countries', 'currencies', 'documents', 'requiredFields']),
+    ...mapGetters('Documents', [
+      'disabled',
+      'steps',
+      'isStepFieldsEmpty',
+      'isStepRequiredFieldsFilled',
+    ]),
 
+    documentsStatus() {
+      return get(this.documents, 'status', 'draft');
+    },
     bankingFields() {
       return this.fields('banking');
     },
-
     companyFields() {
       return this.fields('company');
     },
-
-    contactsFields() {
+    contactFields() {
       return {
-        authorized: this.fields('contacts.authorized'),
-        technical: this.fields('contacts.technical'),
+        authorized: this.fields('contact.authorized'),
+        technical: this.fields('contact.technical'),
       };
     },
-
     formSteps() {
       return this.steps.map(step => ({
         value: step,
         label: this.$i18n.t(step),
-        status: 'initial',
+        status: this.stepStatus(step),
       }));
     },
     isFormComplete() {
@@ -95,10 +108,10 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions('Documents', ['save', 'initState']),
-    ...mapMutations('Documents', ['banking', 'company', 'contacts']),
+    ...mapMutations('Documents', ['banking', 'company', 'contact']),
 
     changeFields(step, fields) {
-      const preparedFields = step === 'contacts'
+      const preparedFields = step === 'contact'
         ? {
           authorized: this.prepareFields(fields.authorized),
           technical: this.prepareFields(fields.technical),
@@ -106,9 +119,7 @@ export default Vue.extend({
 
       this[step](preparedFields);
     },
-
     fields(path) {
-      console.error(this.documents);
       return reduce(
         get(this.documents, path, {}),
         (preValue, value, key) => ({
@@ -119,21 +130,25 @@ export default Vue.extend({
             value,
           },
         }),
+        {},
       );
     },
-
     prepareFields(fields) {
       return reduce(fields, (preFields, field, key) => ({
         ...preFields,
         [key]: field.value,
       }), {});
     },
-
     saveDocuments() {
       this.save(this.$route.params.vendorId);
-    }
+    },
+    stepStatus(step) {
+      return this.isStepFieldsEmpty(step)
+        ? 'initial'
+        : this.isStepRequiredFieldsFilled(step) ? 'complete' : 'incomplete';
+    },
   }
-})
+});
 </script>
 
 <style scoped lang="scss">
@@ -144,5 +159,12 @@ export default Vue.extend({
 }
 .content {
   flex-grow: 1;
+}
+.main {
+  max-width: 600px;
+}
+.submit-box {
+  margin-top: 20px;
+  text-align: center;
 }
 </style>

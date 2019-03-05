@@ -33,7 +33,7 @@ export interface Company {
   zip: string;
 }
 
-export interface Contacts {
+export interface Contact {
   authorized: Authorized;
   technical: Technical;
 }
@@ -41,20 +41,31 @@ export interface Contacts {
 export interface Documents {
   banking: Banking;
   company: Company;
-  contacts: Contacts;
+  contact: Contact;
   status: string;
 }
 
 export interface RequiredFields {
   banking: string[];
   company: string[];
-  contacts: {
+  contact: {
     authorized: string[],
     technical: string[],
   };
 }
 
+export interface Country {
+  name: string;
+}
+
+export interface Currency {
+  name: string;
+  value: string;
+}
+
 export interface State {
   documents: Documents;
+  countries: Country[];
+  currencies: Currency[];
   requiredFields: RequiredFields;
 }

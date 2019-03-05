@@ -1,13 +1,49 @@
 export default {
   messages: {
     de: {
-      title: 'Company'
+      title: 'Company',
+      countriesPlaceholder: 'Empty',
+      name: 'Company name',
+      alternativeName: 'Doing business as (alternative name)',
+      website: 'Website',
+      country: 'Country',
+      region: 'State / Province / Region',
+      zip: 'ZIP code',
+      city: 'City',
+      address: 'Address',
+      additionalAddress: 'Address line 2',
+      registrationNumber: 'Registration number',
+      taxId: 'Tax ID / EIN / TIN',
     },
     en: {
-      title: 'Company'
+      title: 'Company',
+      countriesPlaceholder: 'Empty',
+      name: 'Company name',
+      alternativeName: 'Doing business as (alternative name)',
+      website: 'Website',
+      country: 'Country',
+      region: 'State / Province / Region',
+      zip: 'ZIP code',
+      city: 'City',
+      address: 'Address',
+      additionalAddress: 'Address line 2',
+      registrationNumber: 'Registration number',
+      taxId: 'Tax ID / EIN / TIN',
     },
     ru: {
-      title: 'Компания'
+      title: 'Компания',
+      countriesPlaceholder: 'Пусто',
+      name: 'Название компании',
+      alternativeName: 'Бизнесс-имя (альтернативное название)',
+      website: 'Веб-сайт',
+      country: 'Страна',
+      region: 'Штат / Провинция / Регион',
+      zip: 'ZIP код',
+      city: 'Город',
+      address: 'Адрес',
+      additionalAddress: 'Дополнительный адрес',
+      registrationNumber: 'Регистрационный номер',
+      taxId: 'Tax ID / EIN / TIN',
     },
   },
 };

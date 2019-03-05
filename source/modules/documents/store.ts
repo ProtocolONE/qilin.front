@@ -1,22 +1,70 @@
 import axios from 'axios';
+import { filter, includes, some } from 'lodash-es';
 import { GetterTree, ActionTree, MutationTree } from 'vuex';
+import defaultCountries from './defaultCountries';
+import defaultCurrencies from './defaultCurrencies';
 import { State } from './types';
+
+type Field = string | number | boolean;
+
+function isFieldsEmpty(fields: Field[]): boolean {
+  return !some(fields, field => field);
+}
+
+function isRequiredFieldsFilled(fields: Field[], requiredFieldsArray: string[]): boolean {
+  const requiredFields: Field[] = filter(
+    fields,
+    (field: Field, key: string) => includes(requiredFieldsArray, key),
+  );
+
+  return !some(requiredFields, field => !field);
+}
 
 export default function DocumentsStore(apiUrl: string) {
   const state: State = {
     documents: null,
+    countries: defaultCountries,
+    currencies: defaultCurrencies,
     requiredFields: {
-      banking: ['accountNumber', 'address', 'currency', 'details', 'name', 'swift'],
-      company: ['address', 'city', 'country', 'name', 'registrationNumber', 'taxId', 'zip'],
-      contacts: {
-        authorized: ['email', 'fullName', 'position'],
+      banking: ['accountNumber', 'address', 'currency', 'name', 'swift'],
+      company: ['address', 'city', 'country', 'name', 'region', 'registrationNumber', 'taxId', 'zip'],
+      contact: {
+        authorized: ['email', 'fullName', 'phone', 'position'],
         technical: [],
       },
     },
   };
   const getters: GetterTree<State, any> = {
-    steps: ({ documents }) => documents ? ['company', 'contacts', 'banking'] : [],
-    disabled: ({ documents }) => documents.status !== 'new',
+    steps: ({ documents }) => documents ? ['company', 'contact', 'banking'] : [],
+    disabled: ({ documents }) => documents.status !== 'draft',
+    isStepFieldsEmpty: ({ documents }) => (step: string) => {
+      const stepFields = documents[step];
+
+      if (step === 'contact') {
+        return isFieldsEmpty(stepFields.authorized) && isFieldsEmpty(stepFields.technical);
+      }
+
+      return isFieldsEmpty(stepFields);
+    },
+    isStepRequiredFieldsFilled: ({ documents, requiredFields }) => (step: string) => {
+      const requiredStepFields = requiredFields[step];
+      const stepFields = documents[step];
+
+      if (step === 'contact') {
+        const isAuthorizedFieldsFilled = isRequiredFieldsFilled(
+          stepFields.authorized,
+          requiredStepFields.authorized,
+        );
+        const isTechnicalFieldsFilled = isRequiredFieldsFilled(
+          stepFields.technical,
+          requiredStepFields.technical,
+        );
+
+        return isAuthorizedFieldsFilled && isTechnicalFieldsFilled;
+      }
+
+      return isRequiredFieldsFilled(stepFields, requiredStepFields);
+    },
   };
   const actions: ActionTree<State, any> = {
     async initState({ commit }, vendorId) {
@@ -26,25 +74,40 @@ export default function DocumentsStore(apiUrl: string) {
 
       commit('documents', documents);
     },
-    async save({}, vendorId) {
+    async save({ state }, vendorId) {
       await axios
-        .get(`${apiUrl}/vendors/${vendorId}/documents`)
+        .put(`${apiUrl}/vendors/${vendorId}/documents`, state.documents)
         .then(response => response.data);
     },
   };
   const mutations: MutationTree<State> = {
     documents: (state, value) => state.documents = value,
+    documentsToDraft: (state) => {
+      if (state.documents.status === 'on_review') {
+        state.documents.status = 'draft';
+      }
+    },
+    
     banking: (state, banking) => state.documents = {
       ...state.documents,
-      banking,
+      banking: {
+        ...state.documents.banking,
+        ...banking,
+      },
     },
     company: (state, company) => state.documents = {
       ...state.documents,
-      company,
+      company: {
+        ...state.documents.company,
+        ...company,
+      },
     },
-    contacts: (state, contacts) => state.documents = {
+    contact: (state, contact) => state.documents = {
       ...state.documents,
-      contacts,
+      contact: {
+        ...state.documents.contact,
+        ...contact,
+      },
     },
   };
 

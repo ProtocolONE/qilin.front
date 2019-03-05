@@ -36,7 +36,12 @@ export default Vue.extend({
   },
   methods: {
     changeReleaseDate(timestamp: number) {
-      const releaseDate = format(timestamp, `yyyy-MM-dd'T'HH:mm:ssZ`)
+      if (timestamp === 0) {
+        this.$emit('change', '');
+        return;
+      }
+
+      const releaseDate = format(timestamp, `yyyy-MM-dd'T'HH:mm:ssZ`);
       this.$emit('change', releaseDate);
     },
   },
