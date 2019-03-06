@@ -4,6 +4,7 @@ import GamesModule from '@/modules/games/store';
 import config from '@/config';
 import GameStore from '@/modules/gameCommon/store';
 import CreateGameStore from '@/modules/gameCreate/store';
+import NotificationsStore from '@/modules/notifications/store';
 
 const apiUrl = config.api;
 const accessToken = localStorage.getItem('accessToken') || '';
@@ -31,5 +32,6 @@ export default {
     Game: GameStore(apiUrl),
     CreateGame: CreateGameStore(apiUrl),
     Games: GamesModule(apiUrl),
+    Notifications: NotificationsStore(apiUrl),
   },
 };

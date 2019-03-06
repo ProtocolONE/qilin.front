@@ -5,21 +5,21 @@
     @login="login"
     @logout="logout"
   />
+  <TipWithNotifications />
   <router-view />
 </div>
 </template>
 
 <script lang="ts">
-  import axios from 'axios';
   import Vue from 'vue';
   import { mapState, mapActions } from 'vuex';
-  import config from '@/config';
   import Navbar from './Navbar.vue';
+  import TipWithNotifications from '@/components/TipWithNotifications.vue';
 
   import './bootstrap';
 
   export default Vue.extend({
-    components: { Navbar },
+    components: { Navbar, TipWithNotifications },
     computed: {
       ...mapState(['navbarLinks', 'user']),
 

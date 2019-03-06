@@ -6,14 +6,17 @@ interface NotificationShort {
   title: string;
   createdAt: Date;
   isRead: boolean;
+  haveMsg: boolean;
 }
 
 interface State {
+  isShowNotifyTip: boolean;
   notifications: NotificationShort[],
 }
 
 export default function NotificationsStore(apiUrl: string)  {
   const state: State = {
+    isShowNotifyTip: false,
     notifications: [],
   };
   const getters: GetterTree<State, any> = {};
@@ -32,14 +35,17 @@ export default function NotificationsStore(apiUrl: string)  {
         .get(`${apiUrl}/api/v1/vendors/${vendors[0].id}/messages/short`);
 
       if (resp.data) {
-        commit('addNotifications', resp.data);
+        commit('addNotifications', resp.data || []);
       }
     }
   };
   const mutations: MutationTree<State> = {
     addNotifications: (state, value) => {
-      state.notifications.concat(value);
-    }
+      state.notifications = state.notifications.concat(value);
+    },
+    showNotifyTip: (state, value) => {
+      state.isShowNotifyTip = value;
+    },
   };
 
   return {
