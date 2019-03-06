@@ -9,6 +9,7 @@ import GameRatings from '@/modules/gameRatings/Ratings.vue';
 import GameDescriptions from '@/modules/gameDescriptions/Descriptions.vue';
 import Games from '@/modules/games/Games.vue';
 import OnBoarding from '@/modules/onBoarding/OnBoarding.vue';
+import Notifications from '@/modules/notifications/Notifications.vue';
 
 const routes: RouteConfig[] = [
   {
@@ -61,6 +62,11 @@ const routes: RouteConfig[] = [
         meta: 'routes.game.descriptions.meta'
       },
     ],
+  },
+  {
+    path: '/notifications',
+    name: 'notifications',
+    component: Notifications,
   },
   {
     path: '/documents/:vendorId',

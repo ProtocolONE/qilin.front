@@ -15,7 +15,7 @@ export default function MainStores(apiUrl: string, accessToken: string, routes: 
       ...Main.state,
       ...Navbar.state,
       ...OnBoarding.state,
-      ...Notifications.getters,
+      ...Notifications.state,
     },
     getters: {
       ...Main.getters,
