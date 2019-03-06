@@ -8,4 +8,5 @@ export interface Notification {
 
 export interface State {
   notifications: Notification[];
+  vendorId: string;
 }
