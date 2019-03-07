@@ -40,81 +40,11 @@
   <p style="padding-top: 0;">
     {{ $t('body') }}
   </p>
-
-  <b-form
-    method="post"
-    @submit.prevent="submit"
-  >
-    <b-form-group
-      :label="$t('login_name')"
-      label-for="login-login"
-    >
-      <ValidateInput
-        id="login-login"
-        v-model="form.login"
-        type="email"
-        :validate="(val) => !!val.match(/.+?@.+?\..+/)"
-        :placeholder="$t('login_place')"
-      />
-    </b-form-group>
-    <b-form-group label-for="login-password">
-      <ValidateInput
-        id="login-password"
-        v-model="form.password"
-        type="password"
-        :validate="(val) => val.length > 3"
-        :placeholder="$t('pass_place')"
-      />
-      <!--
-              <b-tooltip target="password" placement="right">
-                  Hello <strong>World!</strong>
-              </b-tooltip>
-              -->
-    </b-form-group>
-
-    <small class="form-text q-have-acc">
-      {{ $t('have-acc.0') }} <a
-        href="/"
-        @click.prevent="goto_reg"
-      >
-        {{ $t('have-acc.1') }}
-      </a> | <a
-        href="/"
-        @click.prevent="goto_reset"
-      >
-        {{ $t('have-acc.2') }}
-      </a>
-    </small>
-
-    <b-button
-      v-show="false"
-      ref="submit"
-      type="submit"
-    />
-  </b-form>
-
-  <div
-    slot="modal-footer"
-    class="w-100"
-  >
-    <b-btn
-      class="float-left"
-      variant="primary"
-      @click="clickOk"
-    >
-      {{ $t('submit_btn') }}
-    </b-btn>
-
-    <div style="clear: both;" />
-
-    <small class="form-text text-muted q-policy">
-      {{ $t('policy.0') }} <a href="/">
-        {{ $t('policy.1') }}
-      </a> {{ $t('policy.2') }} <a href="/">
-        {{ $t('policy.3') }}
-      </a>.
-    </small>
-  </div>
+  <iframe
+    src="/auth1/login"
+    class="auth1"
+    @message="message"
+  />
 </b-modal>
 </template>
 
@@ -132,6 +62,9 @@
       },
     }),
     methods: {
+      message(event){
+        console.log(event);
+      },
       goto_reg() {
         this.$refs.modal.hide();
         this.openReg();
@@ -152,15 +85,8 @@
 </script>
 
 <style scoped lang="scss">
-  .q-have-acc {
-    font-size: 16px;
-  }
-  .q-policy {
-    margin-top: 90px;
-    font-size: 12px;
-    a {
-      font-weight: bold;
-      color: #757575;
-    }
-  }
+.auth1 {
+  width: 358px;
+  height: 455px;
+}
 </style>

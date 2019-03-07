@@ -126,7 +126,8 @@ module.exports = {
   },
   devtool: ENV_DEV ? 'inline-source-map' : '',
   devServer: {
-    stats: 'verbose',
+    noInfo: true,
+    stats: 'errors-only',
     hot: true,
     host: '0.0.0.0',
     port: 8080,
