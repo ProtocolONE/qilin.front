@@ -74,20 +74,48 @@ export default function DocumentsStore(apiUrl: string) {
 
       commit('documents', documents);
     },
-    async save({ state }, vendorId) {
-      await axios
+    async save({ commit, state }, vendorId) {
+      const documents = await axios
         .put(`${apiUrl}/vendors/${vendorId}/documents`, state.documents)
         .then(response => response.data);
+
+      commit('documents', documents);
+    },
+    async toReview({ dispatch, commit }, vendorId) {
+      await dispatch('save', vendorId);
+
+      await axios
+        .post(`${apiUrl}/vendors/${vendorId}/documents/reviews`)
+        .then(response => response.data);
+
+      commit('documentsToReview');
+    },
+    async toDraft({ commit }, vendorId) {
+      await axios
+        .delete(`${apiUrl}/vendors/${vendorId}/documents/reviews`)
+        .then(response => response.data);
+
+      commit('documentsToDraft');
     },
   };
   const mutations: MutationTree<State> = {
-    documents: (state, value) => state.documents = value,
     documentsToDraft: (state) => {
       if (state.documents.status === 'on_review') {
-        state.documents.status = 'draft';
+        state.documents = {
+          ...state.documents,
+          status: 'draft',
+        };
       }
     },
-    
+    documentsToReview: (state) => {
+      if (state.documents.status === 'draft') {
+        state.documents = {
+          ...state.documents,
+          status: 'on_review',
+        };
+      }
+    },
+    documents: (state, value) => state.documents = value,
     banking: (state, banking) => state.documents = {
       ...state.documents,
       banking: {

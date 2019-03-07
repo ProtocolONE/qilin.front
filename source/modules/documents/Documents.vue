@@ -7,6 +7,13 @@
     >
       {{ $t('title') }}
     </Header>
+
+    <Button
+      slot="right"
+      :disabled="!isFormComplete"
+      :text="$t('save')"
+      @click="saveDocuments"
+    />
   </PageHeader>
 
   <FormByStep
@@ -42,7 +49,7 @@
       <div class="submit-box">
         <Button
           :text="$t(`status.${documentsStatus}.submit`)"
-          @click="saveDocuments"
+          @click="submit"
         />
       </div>
     </div>
@@ -107,7 +114,7 @@ export default Vue.extend({
     this.initState(this.$route.params.vendorId);
   },
   methods: {
-    ...mapActions('Documents', ['save', 'initState']),
+    ...mapActions('Documents', ['initState', 'toDraft', 'toReview', 'save']),
     ...mapMutations('Documents', ['banking', 'company', 'contact']),
 
     changeFields(step, fields) {
@@ -141,6 +148,15 @@ export default Vue.extend({
     },
     saveDocuments() {
       this.save(this.$route.params.vendorId);
+    },
+    submit() {
+      if (this.documentsStatus === 'draft') {
+        this.toReview(this.$route.params.vendorId);
+      } else if (this.documentsStatus === 'on_review') {
+        this.toDraft(this.$route.params.vendorId);
+      } else if (this.documentsStatus === 'approved') {
+        // @TODO - When we will create contact page, we should add routerlink for it
+      }
     },
     stepStatus(step) {
       return this.isStepFieldsEmpty(step)

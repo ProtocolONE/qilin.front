@@ -5,6 +5,7 @@ export default {
       contact: 'Contacts',
       banking: 'Banking Info',
       title: 'Documents',
+      save: 'Save',
       status: {
         draft: {
           title: 'You have finished filling out company details, send them for review',
@@ -25,6 +26,7 @@ export default {
       contact: 'Contacts',
       banking: 'Banking Info',
       title: 'Documents',
+      save: 'Save',
       status: {
         draft: {
           title: 'You have finished filling out company details, send them for review',
@@ -45,6 +47,7 @@ export default {
       contact: 'Контакты',
       banking: 'Банковская информация',
       title: 'Документы',
+      save: 'Сохранить',
       status: {
         draft: {
           title: 'Вы закончили заполнение данных вашей компании, отправте их нам на проверку',
@@ -52,7 +55,7 @@ export default {
         },
         on_review: {
           title: 'Данные вашей компании проходят проверку',
-          submit: 'Внести изменения',
+          submit: 'Внести правки',
         },
         approved: {
           title: 'Данные вашей компании проверены. Свяжитесь с нами, если хотите внести изменения',

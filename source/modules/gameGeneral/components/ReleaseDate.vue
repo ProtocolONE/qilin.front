@@ -35,8 +35,8 @@ export default Vue.extend({
     },
   },
   methods: {
-    changeReleaseDate(timestamp: number) {
-      if (timestamp === 0) {
+    changeReleaseDate(timestamp: ?number) {
+      if (!timestamp) {
         this.$emit('change', '');
         return;
       }
