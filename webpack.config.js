@@ -112,11 +112,20 @@ module.exports = {
     new BundleAnalyzerPlugin({ analyzerMode: 'static', openAnalyzer: false }),
     new MiniCssExtractPlugin({ filename: '[name].css', chunkFilename: '[id].css' }),
     new VueLoaderPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.QILIN_API': JSON.stringify(process.env.QILIN_API),
-      'process.env.IMAGINARY_API': JSON.stringify(process.env.IMAGINARY_API),
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-    }),
+    new webpack.DefinePlugin(
+      [
+        'QILIN_API',
+        'IMAGINARY_API',
+        'NODE_ENV',
+        'AUTH1_ISSUER_URL',
+        'AUTH1_CLIENT_ID',
+        'POST_MESSAGE_TARGET_ORIGIN',
+      ]
+        .reduce((acc, item) => ({
+          ...acc,
+          ['process.env.' + item]: JSON.stringify(process.env[item])
+        }), {})
+    ),
   ].concat(ENV_DEV ? [new webpack.HotModuleReplacementPlugin()] : []),
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.vue'],

@@ -6,12 +6,12 @@ RUN npm i webpack webpack-cli -g
 WORKDIR /application
 COPY package.json yarn.lock /application/
 COPY . /application/
+COPY ./public/*.* ./build/
 
 RUN yarn
 
+ENV NODE_ENV=production
 RUN webpack
-
-COPY ./public/*.* ./build/
 
 EXPOSE 8080
 
