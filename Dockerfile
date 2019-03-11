@@ -18,6 +18,6 @@ FROM nginx:1.15.4
 WORKDIR /var/www
 COPY --from=node /app/build /app/public /var/www/
 #COPY --from=node /app/public /var/www
-COPY ./etc/nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY /app/etc/nginx/default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
