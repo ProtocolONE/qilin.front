@@ -4,6 +4,11 @@ import i18n from '@/i18n';
 import { GetterTree, ActionTree, MutationTree } from 'vuex';
 import State from './mainTypes';
 
+// @TODO - remove this, when integrate with auth1
+function getAuthApiUrl(apiUrl: string): string {
+  return apiUrl.substr(0, apiUrl.indexOf('/') || apiUrl.length - 1);
+}
+
 export default function MainStore(apiUrl: string, accessToken: string) {
   const state: State = {
     user: null,
@@ -25,7 +30,7 @@ export default function MainStore(apiUrl: string, accessToken: string) {
      */
     async login({ commit }, query: any) {
       const { user, newAccessToken } = await axios
-        .post(`${apiUrl}/auth-api/login`, qs.stringify(query))
+        .post(`${getAuthApiUrl(apiUrl)}/auth-api/login`, qs.stringify(query))
         .then(res => ({
           user: res.data.user,
           newAccessToken: res.data.access_token,
