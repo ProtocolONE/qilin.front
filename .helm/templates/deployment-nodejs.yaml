@@ -48,7 +48,7 @@ spec:
         - containerPort: {{ $deployment.port }}
         livenessProbe:
           httpGet:
-            path: /
+            path: /_healthz
             port: {{ $deployment.port }}
           initialDelaySeconds: 5
           timeoutSeconds: 3
