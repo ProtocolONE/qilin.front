@@ -1,6 +1,6 @@
 import axios, {AxiosResponse} from 'axios';
 import {ActionTree, GetterTree, MutationTree} from 'vuex';
-import Centrifuge = require("centrifuge");
+import Centrifuge from "centrifuge";
 
 interface NotificationShort {
   id: string;
@@ -39,7 +39,12 @@ export default function NotificationsStore(apiUrl: string)  {
         commit('addNotifications', resp.data || []);
       }
 
-      console.log(resp.headers['X-Centrifugo-Token']);
+      const centrifuge = new Centrifuge(process.env.AUTH1_ISSUER_URL);
+      centrifuge.setToken(resp.headers['X-Centrifugo-Token']);
+      centrifuge.subscribe("message", message => {
+        console.log(message);
+      });
+      centrifuge.connect();
     }
   };
   const mutations: MutationTree<State> = {
