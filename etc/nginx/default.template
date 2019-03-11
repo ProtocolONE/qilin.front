@@ -1,0 +1,23 @@
+server {
+    listen ${NGINX_PORT} default_server;
+    server_name ${NGINX_HOST};
+
+    charset utf-8;
+    server_tokens off;
+
+    root /var/www/static;
+    index index.html;
+
+    client_max_body_size 30m;
+
+    # Add 1 week expires header for static assets
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|txt)$ {
+        autoindex off;
+        access_log off;
+        expires 1w;
+    }
+
+    location ~* ^/auth1/(login|logout|refresh|callback)(.*)$ {
+        proxy_pass ${APP};
+    }
+}
