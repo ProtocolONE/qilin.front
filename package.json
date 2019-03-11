@@ -46,7 +46,6 @@
     "nodemon": "^1.18.10",
     "os": "^0.1.1",
     "path": "^0.12.7",
-    "payone-js-sdk": "github:ProtocolONE/auth-web-sdk-embedded#master",
     "querystring": "^0.2.0",
     "terser": "^3.14.1",
     "url-join": "^4.0.0",
