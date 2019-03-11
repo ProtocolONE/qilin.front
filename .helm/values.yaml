@@ -52,13 +52,15 @@ backend:
   - CORS_VALID_ORIGINS
   - POST_MESSAGE_TARGET_ORIGIN
   - PUBLIC_HOST
+  - REDIS_HOST
   - REDIS_PORT
   - ROUTES_PREFIX
   - SENTRY_DSN
   - SERVER_PORT
   - SESSION_COOKIE_NAME
   - SESSION_COOKIE_SIGN_KEY
-
+  - SESSION_MAX_AGE
+  
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
