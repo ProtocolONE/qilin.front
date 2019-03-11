@@ -8,6 +8,6 @@
 
 <script lang="ts">
 export default {
-  name: 'SalesIconCalendar'
+  name: 'IconCalendar'
 }
 </script>

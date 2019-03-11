@@ -2,6 +2,7 @@ import axios from 'axios';
 import { GetterTree, ActionTree, MutationTree } from 'vuex';
 import GeneralStore from '@/modules/gameGeneral/store';
 import MediaStore from '@/modules/gameMedia/store';
+import PricesStore from '@/modules/gamePrices/store';
 import RatingsStore from '@/modules/gameRatings/store';
 import DescriptionsStore from '@/modules/gameDescriptions/store';
 import { GameInfo } from './types';
@@ -26,6 +27,7 @@ export default function GameStore(apiUrl: string) {
     async save({ dispatch }, gameId) {
       await dispatch('General/save', gameId);
       await dispatch('Media/save', gameId);
+      await dispatch('Prices/save', gameId);
       await dispatch('Ratings/save', gameId);
       await dispatch('Descriptions/save', gameId);
     },
@@ -51,6 +53,7 @@ export default function GameStore(apiUrl: string) {
     modules: {
       General: GeneralStore(apiUrl),
       Media: MediaStore(apiUrl),
+      Prices: PricesStore(apiUrl),
       Ratings: RatingsStore(apiUrl),
       Descriptions: DescriptionsStore(apiUrl),
     }

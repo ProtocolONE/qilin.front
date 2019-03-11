@@ -43,6 +43,13 @@ export default {
           description: '',
         },
       },
+      prices: {
+        title: 'Редактирование раздела Prices',
+        meta: {
+          title: 'Редактирование раздела Prices',
+          description: '',
+        },
+      },
       general: {
         title: 'Редактирование раздела General',
         meta: {

@@ -6,6 +6,7 @@ import GameCommon from '@/modules/gameCommon/GameCommon.vue';
 import GameGeneral from '@/modules/gameGeneral/General.vue';
 import GameNavigation from '@/modules/gameNavigation/GameNavigation.vue';
 import GameMedia from '@/modules/gameMedia/Media.vue';
+import GamePrices from '@/modules/gamePrices/Prices.vue';
 import GameRatings from '@/modules/gameRatings/Ratings.vue';
 import GameSales from '@/modules/gameSales/Sales.vue';
 import GameDescriptions from '@/modules/gameDescriptions/Descriptions.vue';
@@ -48,6 +49,12 @@ const routes: RouteConfig[] = [
         path: 'media',
         component: GameMedia,
         meta: 'routes.game.media.meta'
+      },
+      {
+        name: 'gamePrices',
+        path: 'prices',
+        component: GamePrices,
+        meta: 'routes.game.prices.meta'
       },
       {
         name: 'GameRatings',

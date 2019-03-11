@@ -12,6 +12,9 @@ import IconTimes from './IconTimes'
 import IconSort from './IconSort'
 import IconDots from './IconDots'
 import IconEdit from './IconEdit'
+import IconCheck from './IconCheck'
+import IconEye from './IconEye'
+import IconEyeSlash from './IconEyeSlash'
 
 const ICONS = [
   'table',
@@ -19,7 +22,10 @@ const ICONS = [
   'times',
   'sort',
   'dots',
-  'edit'
+  'edit',
+  'check',
+  'eye',
+  'eye-slash'
 ]
 
 export default {
@@ -31,7 +37,10 @@ export default {
     IconTimes,
     IconSort,
     IconDots,
-    IconEdit
+    IconEdit,
+    IconCheck,
+    IconEye,
+    IconEyeSlash
   },
 
   props: {

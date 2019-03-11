@@ -6,6 +6,6 @@
 
 <script lang="ts">
 export default {
-  name: 'SalesIconSort'
+  name: 'IconSort'
 }
 </script>

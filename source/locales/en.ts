@@ -43,6 +43,13 @@ export default {
           description: '',
         },
       },
+      prices: {
+        title: 'Edit game prices',
+        meta: {
+          title: 'Edit game prices',
+          description: '',
+        },
+      },
       general: {
         title: 'Edit game general',
         meta: {
