@@ -3,6 +3,7 @@ import { GetterTree, ActionTree, MutationTree } from 'vuex';
 import GeneralStore from '@/modules/gameGeneral/store';
 import MediaStore from '@/modules/gameMedia/store';
 import RatingsStore from '@/modules/gameRatings/store';
+import DescriptionsStore from '@/modules/gameDescriptions/store';
 import { GameInfo } from './types';
 
 export interface ContentsItem {
@@ -26,6 +27,7 @@ export default function GameStore(apiUrl: string) {
       await dispatch('General/save', gameId);
       await dispatch('Media/save', gameId);
       await dispatch('Ratings/save', gameId);
+      await dispatch('Descriptions/save', gameId);
     },
     async initState({ commit }, gameId: string) {
       const gameInfo = await axios
@@ -49,7 +51,8 @@ export default function GameStore(apiUrl: string) {
     modules: {
       General: GeneralStore(apiUrl),
       Media: MediaStore(apiUrl),
-      Ratings: RatingsStore(apiUrl)
+      Ratings: RatingsStore(apiUrl),
+      Descriptions: DescriptionsStore(apiUrl),
     }
   };
 }

@@ -19,7 +19,7 @@ import i18n from '../i18n'
 export default Vue.extend({
   i18n,
   data: () => ({
-    items: ['general', 'description', 'ratings', 'media'],
+    items: ['general', 'descriptions', 'ratings', 'media'],
   }),
 })
 </script>

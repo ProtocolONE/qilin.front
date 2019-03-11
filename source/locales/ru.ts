@@ -56,7 +56,14 @@ export default {
           title: 'Редактирование раздела Rating',
           description: '',
         },
-      }
+      },
+      descriptions: {
+        title: 'Редактирование раздела Описание',
+        meta: {
+          title: 'Редактирование раздела Описание',
+          description: '',
+        },
+      },
     },
   },
 };

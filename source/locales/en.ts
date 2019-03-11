@@ -56,7 +56,14 @@ export default {
           title: 'Edit game ratings',
           description: '',
         },
-      }
+      },
+      descriptions: {
+        title: 'Edit game descriptions',
+        meta: {
+          title: 'Edit game descriptions',
+          description: '',
+        },
+      },
     },
   },
 };

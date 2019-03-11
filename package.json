@@ -17,8 +17,8 @@
   "license": "ISC",
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
-    "@protocol-one/ui-kit": "^1.7.4",
     "@babel/runtime": "^7.3.1",
+    "@protocol-one/ui-kit": "^1.9.2",
     "@sentry/browser": "^4.5.4",
     "@types/axios": "^0.14.0",
     "@types/jquery": "^3.3.29",

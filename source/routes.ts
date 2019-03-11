@@ -1,14 +1,14 @@
 import { RouteConfig } from 'vue-router';
 
 import Home from '@/modules/home/Home.vue';
-import OnBoarding from '@/modules/onboarding/OnBoarding.vue';
-
+import OnBoarding from '@/modules/onBoarding/OnBoarding.vue';
 import GameCommon from '@/modules/gameCommon/GameCommon.vue';
 import GameGeneral from '@/modules/gameGeneral/General.vue';
 import GameNavigation from '@/modules/gameNavigation/GameNavigation.vue';
 import GameMedia from '@/modules/gameMedia/Media.vue';
 import GameRatings from '@/modules/gameRatings/Ratings.vue';
 import GameSales from '@/modules/gameSales/Sales.vue';
+import GameDescriptions from '@/modules/gameDescriptions/Descriptions.vue';
 import Games from '@/modules/games/Games.vue';
 
 const routes: RouteConfig[] = [
@@ -54,6 +54,12 @@ const routes: RouteConfig[] = [
         path: 'ratings',
         component: GameRatings,
         meta: 'routes.game.ratings.meta'
+      },
+      {
+        name: 'GameDescriptions',
+        path: 'descriptions',
+        component: GameDescriptions,
+        meta: 'routes.game.descriptions.meta'
       },
     ],
   },

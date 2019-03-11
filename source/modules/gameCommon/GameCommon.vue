@@ -6,12 +6,12 @@
     <span slot="title">
       Media
     </span>
-    <Button
-      slot="right"
-      class="game-save-btn"
-      :text="$t('save')"
-      @click="saveGame"
-    />
+    <div slot="right">
+      <Button
+        :text="$t('save')"
+        @click="saveGame"
+      />
+    </div>
   </PageHeader>
   <div class="body">
     <Menu />
