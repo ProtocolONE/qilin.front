@@ -10,7 +10,7 @@
 
     <Button
       slot="right"
-      :disabled="!isFormComplete"
+      :disabled="!isFormComplete || documentsStatus !== 'draft'"
       :text="$t('save')"
       @click="saveDocuments"
     />
