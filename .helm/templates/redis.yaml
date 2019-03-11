@@ -1,0 +1,49 @@
+{{- if .Values.enableRedis }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-redis
+  labels:
+    app: {{ .Chart.Name }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    role: redis
+spec:
+  ports:
+  - port: 6379
+    protocol: TCP
+  selector:
+    app: {{ .Chart.Name }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    role: redis
+---
+apiVersion: apps/v1
+#kind: StatefulSet
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-redis
+spec:
+#  serviceName: mongo
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+      release: {{ .Release.Name }}
+      heritage: {{ .Release.Service }}
+      role: redis
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+        release: {{ .Release.Name }}
+        heritage: {{ .Release.Service }}
+        role: redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:3.2.12-alpine
+        args: ["--appendonly","yes", "--save", "900", "1", "--save", "30", "2"]
+        ports:
+        - containerPort: 6379
+{{- end }}
