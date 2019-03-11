@@ -18,10 +18,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common['Accept-Language'] = localStorage.getItem('lang') || navigator.language;
-if (localStorage.getItem('access_token')) {
-  axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('access_token')}`;
-}
-
 const accessToken = localStorage.getItem('accessToken') || '';
 
 if (accessToken) {

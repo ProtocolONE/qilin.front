@@ -1,8 +1,8 @@
 <template>
 <div class="main-wrapper">
   <Navbar
+    :hasAuth="hasAuth"
     :links="links"
-    @login="login"
     @logout="logout"
   />
   <router-view />
@@ -10,10 +10,8 @@
 </template>
 
 <script lang="ts">
-  import axios from 'axios';
   import Vue from 'vue';
-  import { mapState, mapActions } from 'vuex';
-  import config from '@/config';
+  import { mapState, mapActions, mapGetters } from 'vuex';
   import Navbar from './Navbar.vue';
 
   import './bootstrap';
@@ -21,6 +19,7 @@
   export default Vue.extend({
     components: { Navbar },
     computed: {
+      ...mapGetters(['hasAuth']),
       ...mapState(['navbarLinks', 'user']),
 
       links() {
@@ -36,11 +35,7 @@
       this.initUser();
     },
     methods: {
-      ...mapActions(['initUser', 'login']),
-
-      logout() {
-        document.location.reload();
-      },
+      ...mapActions(['initUser', 'logout']),
     },
   });
 </script>

@@ -117,9 +117,6 @@ module.exports = {
         'QILIN_API',
         'IMAGINARY_API',
         'NODE_ENV',
-        'AUTH1_ISSUER_URL',
-        'AUTH1_CLIENT_ID',
-        'POST_MESSAGE_TARGET_ORIGIN',
       ]
         .reduce((acc, item) => ({
           ...acc,
