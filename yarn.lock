@@ -679,10 +679,10 @@
     consola "^2.3.0"
     node-fetch "^2.3.0"
 
-"@protocol-one/ui-kit@^1.12.0":
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/@protocol-one/ui-kit/-/ui-kit-1.13.0.tgz#9d8cd0a2d33cbff87a2a918ecc0719679d1e94d8"
-  integrity sha512-VHqSmdUPzD7fOJ8Ajd4lCxJlHIdkjWQT80TlqnIE2aWc3bTfmpkAGNkoTF3plTUENNWiSiTj1D7xpyhLwD+u/g==
+"@protocol-one/ui-kit@^1.14.0":
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/@protocol-one/ui-kit/-/ui-kit-1.14.0.tgz#de37e806ad3af5f58a96d4069d2433187c0ddec8"
+  integrity sha512-1hCPpfD2RHDch2e10jg6NPB2sigmeQJi4Vxd+6Kwn0vQR3WPBGLBylSuUXNgWBApt7w/XOyROpvFZy6PTcdWoQ==
   dependencies:
     date-fns "^v2.0.0-alpha.27"
     lodash-es "^4.17.11"

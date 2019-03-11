@@ -74,19 +74,12 @@ export default function DocumentsStore(apiUrl: string) {
 
       commit('documents', documents);
     },
-    async save({ commit, state }, vendorId) {
-      const documents = await axios
-        .put(`${apiUrl}/vendors/${vendorId}/documents`, state.documents)
-        .then(response => response.data);
-
-      commit('documents', documents);
+    async save({ state }, vendorId) {
+      await axios.put(`${apiUrl}/vendors/${vendorId}/documents`, state.documents);
     },
     async toReview({ dispatch, commit }, vendorId) {
       await dispatch('save', vendorId);
-
-      await axios
-        .post(`${apiUrl}/vendors/${vendorId}/documents/reviews`)
-        .then(response => response.data);
+      await axios.post(`${apiUrl}/vendors/${vendorId}/documents/reviews`);
 
       commit('documentsToReview');
     },
