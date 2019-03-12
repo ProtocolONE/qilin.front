@@ -39,7 +39,7 @@ export default function NotificationsStore(apiUrl: string)  {
         commit('addNotifications', resp.data || []);
       }
 
-      const centrifuge = new Centrifuge(process.env.AUTH1_ISSUER_URL);
+      const centrifuge = new Centrifuge(process.env.CENTRIFUGO_URL);
       centrifuge.setToken(resp.headers['X-Centrifugo-Token']);
       centrifuge.subscribe("message", message => {
         console.log(message);
