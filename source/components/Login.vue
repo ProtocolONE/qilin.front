@@ -37,11 +37,11 @@ export default Vue.extend({
   methods: {
     listenFrame () {
       window.addEventListener('message', (e) => {
-        let data: Auth1Message;
+        let data: any;
         try {
           data = JSON.parse(e.data);
         } catch (e) { }
-        if (data.access_token && data.success) {
+        if ('access_token' in data && 'success' in data) {
           localStorage.setItem('accessToken', data.access_token);
           location.reload();
         }
