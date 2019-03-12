@@ -30,7 +30,7 @@
         :key="item.currency"
         :default-currency="defaultCurrency"
         @set-default="$emit('set-default', item.defaultCurrency)"
-        @save-price="$emit('save-price', { currency: item.defaultCurrency, price: $event })"
+        @save-price="$emit('save-price', { currency: item.defaultCurrency, ...$event })"
       />
     </tbody>
   </table>
@@ -77,7 +77,7 @@ export default {
   computed: {
     mappedItems () {
       let currency = this.defaultCurrency
-      return cloneDeep(this.items).map(item => {
+      let mappedItems = cloneDeep(this.items).map(item => {
         item.defaultCurrency = item.currency
         item.userPrice = parseFloat((item.price - item.price * item.vat / 100).toFixed(2))
         if (currency === item.currency) {
@@ -85,10 +85,8 @@ export default {
         }
         return item
       })
-    },
 
-    sortedItems () {
-      return orderBy(this.mappedItems, this.sort, this.order)
+      return orderBy(mappedItems, this.sort, this.order)
     }
   },
 

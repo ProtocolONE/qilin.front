@@ -45,7 +45,7 @@ const ru = {
   endUserPrice: 'Конечная цена',
 
   notifyRateJumps: 'Уведомлять об изменении тарифов',
-  default: 'По ум.',
+  default: 'По умолчанию',
   edit: 'Редактировать',
   asDefault: 'Установить по умолчанию'
 }

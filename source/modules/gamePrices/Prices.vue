@@ -20,7 +20,7 @@
       <ui-text-field
         v-model="currencyPrice"
         :label="$t('priceInDefaultCurrency')"
-        :disabled="!defaultCurrency"
+        disabled
         class="price-setting__item"
       />
     </div>
@@ -83,7 +83,7 @@
     :items="prices.prices"
     :default-currency="(prices.common || {}).currency"
     @set-default="setDefaultCurrency"
-    @save-price="savePrice"
+    @save-price="handleSavePrice"
   />
 
 </article>
@@ -180,7 +180,7 @@ export default {
   },
 
   methods: {
-    ...mapActions('Game/Prices', ['loadPrices'],),
+    ...mapActions('Game/Prices', ['loadPrices', 'savePrice'],),
     ...mapMutations('Game/Prices', ['updatePrices']),
     ...mapMutations('Game', ['updateContents']),
 
@@ -204,16 +204,20 @@ export default {
       return (currency || {}).value
     },
 
-    savePrice ({ currency, price }) {
+    handleSavePrice ({ currency, price, vat }) {
       this.updatePrices({
         prices: this.prices.prices.map(item => {
           if (item.currency === currency) {
             item.price = Number(price)
+            item.vat = Number(vat)
           }
           return item
         })
       })
-      this.setDefaultCurrency(currency)
+      if (this.defaultCurrency === currency) {
+        this.setDefaultCurrency(currency)
+      }
+      this.savePrice({ gameId: this.gameId, currency })
     }
   }
 }

@@ -3,7 +3,7 @@ import axios from 'axios'
 import { State } from './types'
 import { ActionTree, MutationTree, GetterTree } from 'vuex'
 
-import { merge } from 'lodash-es'
+import { omit, merge } from 'lodash-es'
 
 async function sendRequest (url: string, method: string = 'get', config: object = {}) {
   try {
@@ -15,6 +15,9 @@ async function sendRequest (url: string, method: string = 'get', config: object 
   }
 }
 
+// access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkFtcmJCaEpXUmdlUnVRK1d0RTlzYXc9PSJ9.5AmFvsgIdEojBrwXTA5jtpi-UZJ4ZpeehKICd-f_Hj8"
+// 026adb06-1256-4607-91b9-0f96b44f6c6b
+
 export default function PricesStore (apiUrl: string) {
   const state: State = {
     contents: ['defaultCurrency', 'preorders', 'prices'],
@@ -25,8 +28,17 @@ export default function PricesStore (apiUrl: string) {
     loadPrices: async ({ commit, getters }, gameId: string) =>
       commit('savePrices', await sendRequest(getters.getUrl('prices', gameId))),
 
-    save: async ({ state, dispatch, commit, getters }, gameId: string) =>
-      sendRequest(getters.getUrl('prices', gameId), 'put', { data: state.prices })
+    save: ({ state, dispatch, commit, getters }, gameId: string) =>
+      sendRequest(getters.getUrl('prices', gameId), 'put', { data: omit(state.prices, 'prices') }),
+
+    savePrice: ({ state, dispatch, commit, getters }, { gameId, currency }) => {
+      let data = getters.getCurrencyPrice(currency)
+      if (!data) {
+        console.warn('no price data')
+        return
+      }
+      sendRequest(getters.getUrl(`prices/${ currency }`, gameId), 'put', { data })
+    }
   }
 
   const mutations: MutationTree<State> = {
@@ -36,7 +48,10 @@ export default function PricesStore (apiUrl: string) {
 
   const getters: GetterTree<State, any> = {
     getUrl: () => (value: string, id: string) =>
-      `${ apiUrl }/api/v1/games/${ id }/${ value }/`
+      `${ apiUrl }/api/v1/games/${ id }/${ value }/`,
+
+    getCurrencyPrice: ({ prices }) => (value: string) =>
+      (prices.prices || []).find(({ currency }) => currency === value)
   }
 
   return {

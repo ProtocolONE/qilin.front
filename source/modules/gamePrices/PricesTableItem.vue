@@ -12,7 +12,16 @@
       {{ price }}
     </template>
   </td>
-  <td class="cell">{{ vat }}</td>
+  <td class="cell">
+    <ui-text-field
+      v-if="edit"
+      v-model="editedVat"
+      class="cell__text-field"
+    />
+    <template v-else>
+      {{ vat }}
+    </template>
+  </td>
   <td class="cell">{{ userPrice }}</td>
   <td class="cell cell--actions">
     <div v-if="edit" class="controls">
@@ -75,6 +84,7 @@ export default {
   data () {
     return {
       editedPrice: this.price,
+      editedVat: this.vat,
       edit: false,
       actions: false
     }
@@ -93,10 +103,11 @@ export default {
     cancelEdit () {
       this.edit = false
       this.editedPrice = this.price
+      this.editedVat = this.vat
     },
 
     savePrice () {
-      this.$emit('save-price', this.editedPrice)
+      this.$emit('save-price', { price: this.editedPrice, vat: this.editedVat })
       this.edit = false
     }
   }
