@@ -36,7 +36,7 @@ export default function DocumentsStore(apiUrl: string) {
   };
   const getters: GetterTree<State, any> = {
     steps: ({ documents }) => documents ? ['company', 'contact', 'banking'] : [],
-    disabled: ({ documents }) => documents.status !== 'draft',
+    disabled: ({ documents }) => documents && documents.status !== 'draft',
     isStepFieldsEmpty: ({ documents }) => (step: string) => {
       const stepFields = documents[step];
 
