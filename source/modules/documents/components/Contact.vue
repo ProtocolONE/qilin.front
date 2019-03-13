@@ -14,10 +14,14 @@
   />
   <TextField
     v-bind="authorizedFields.email"
+    :errorText="$t('invalidEmail')"
+    :hasError="hasErrors.authorized.email"
     @input="change('authorized', 'email', $event)"
   />
   <TextField
     v-bind="authorizedFields.phone"
+    :errorText="$t('invalidPhone')"
+    :hasError="hasErrors.authorized.phone"
     @input="change('authorized', 'phone', $event)"
   />
 
@@ -27,10 +31,14 @@
   />
   <TextField
     v-bind="technicalFields.email"
+    :errorText="$t('invalidEmail')"
+    :hasError="hasErrors.technical.email"
     @input="change('technical', 'email', $event)"
   />
   <TextField
     v-bind="technicalFields.phone"
+    :errorText="$t('invalidPhone')"
+    :hasError="hasErrors.technical.phone"
     @input="change('technical', 'phone', $event)"
   />
 </div>
@@ -51,6 +59,20 @@ export default Vue.extend({
       type: Object,
     },
   },
+  data() {
+    return {
+      hasErrors: {
+        authorized: {
+          email: false,
+          phone: false,
+        },
+        technical: {
+          email: false,
+          phone: false,
+        },
+      }
+    };
+  },
   computed: {
     authorizedFields() {
       return this.preparedFields('authorized');
@@ -63,6 +85,16 @@ export default Vue.extend({
     change(path, fieldName, value) {
       const field = this.fields[path][fieldName];
 
+      if (fieldName === 'email' || fieldName === 'phone') {
+        if (this.isFieldValid(fieldName, value) || (!field.required && value === '')) {
+          this.hasErrors[path][fieldName] = false;
+        } else {
+          this.hasErrors[path][fieldName] = true;
+
+          return;
+        }
+      }
+
       this.$emit('change', {
         ...this.fields,
         [path]: {
@@ -71,7 +103,18 @@ export default Vue.extend({
         },
       });
     },
+    isFieldValid(fieldName, value) {
+      if (fieldName === 'email') {
+        const regex = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,11})$/;
+        return regex.test(value);
+      }
+      if (fieldName === 'phone') {
+        const regex = /^[+]{0,1}[0-9]{0,1}[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
+        return regex.test(value);
+      }
 
+      return true;
+    },
     preparedFields(path) {
       return mapValues(
         this.fields[path],

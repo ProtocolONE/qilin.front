@@ -13,6 +13,8 @@ export default {
         fullName: 'Technical specialist',
         phone: 'Technical specialist phone',
       },
+      invalidEmail: 'Email is invalid',
+      invalidPhone: 'Phone is invalid',
     },
     en: {
       title: 'Contact',
@@ -27,6 +29,8 @@ export default {
         fullName: 'Technical specialist',
         phone: 'Technical specialist phone',
       },
+      invalidEmail: 'Email is invalid',
+      invalidPhone: 'Phone is invalid',
     },
     ru: {
       title: 'Контакты',
@@ -41,6 +45,8 @@ export default {
         fullName: 'Технический специалист',
         phone: 'Номер телефона технического специалиста',
       },
+      invalidEmail: 'Email не валиден',
+      invalidPhone: 'Телефон не валиден',
     },
   },
 };

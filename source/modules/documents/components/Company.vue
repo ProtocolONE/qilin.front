@@ -79,7 +79,7 @@ export default Vue.extend({
       return mapValues(this.fields, (field, key) => ({ ...field, label: this.$i18n.t(key) }));
     },
     preparedCountries() {
-      return this.countries.map(({ name }) => ({ label: name, value: name }));
+      return this.countries.map(({ name }) => ({ label: name, value: name.toLowerCase() }));
     },
   },
   methods: {
