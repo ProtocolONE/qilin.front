@@ -19,7 +19,7 @@
   />
 
   <Login
-    v-if="isShowLogin"
+    v-show="isShowLogin"
     @close="isShowLogin = false"
     @login="$emit('login', $event)"
   />

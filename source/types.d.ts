@@ -29,9 +29,10 @@ declare module '@protocol-one/ui-kit' {
   const TagInput: any;
   const TextField: any;
   const Tip: any;
+  const UiModal: any;
   const UiTable: any;
-  const UiTableRow: any;
   const UiTableCell: any;
+  const UiTableRow: any;
 
   export {
     Button,
@@ -44,9 +45,10 @@ declare module '@protocol-one/ui-kit' {
     TagInput,
     TextField,
     Tip,
+    UiModal,
     UiTable,
-    UiTableRow,
     UiTableCell,
+    UiTableRow,
   };
 }
 
