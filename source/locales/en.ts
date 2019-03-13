@@ -58,6 +58,13 @@ export default {
         },
       },
     },
+    notifications: {
+      title: 'Notifications',
+      meta: {
+        title: 'Notifications',
+        description: 'Here you can look at latest vendor events',
+      },
+    },
     documents: {
       title: 'Documents',
       meta: {
