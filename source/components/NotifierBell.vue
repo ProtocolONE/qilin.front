@@ -2,7 +2,7 @@
 <div class="notifier">
   <router-link
     to="/notifications"
-    :class="['bell', {_new: isNew}]"
+    :class="['bell', {_new: hasNew}]"
     @mouseenter.native="hoverBell"
     @mouseleave.native="leaveBell"
   >
@@ -27,8 +27,8 @@ import { mapState, mapMutations } from 'vuex';
 export default Vue.extend({
   computed: {
     ...mapState(['notifications']),
-    isNew() {
-      return this.notifications.filter(n => !n.isRead).length > 0;
+    hasNew() {
+      return this.notifications.slice(-3).filter(n => !n.isRead).length > 0;
     }
   },
   methods: {

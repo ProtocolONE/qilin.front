@@ -18,7 +18,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "@babel/runtime": "^7.3.1",
-    "@protocol-one/ui-kit": "^1.9.2",
+    "@protocol-one/ui-kit": "^1.15.0",
     "@sentry/browser": "^4.5.4",
     "@types/axios": "^0.14.0",
     "@types/jquery": "^3.3.29",
