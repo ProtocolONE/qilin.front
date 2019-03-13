@@ -125,6 +125,11 @@ import Vue from 'vue';
 import config from '@/config';
 import ValidateInput from '@/components/ValidateInput/ValidateInput.vue';
 
+// @TODO - remove this, when integrate with auth1
+function getAuthApiUrl(apiUrl: string): string {
+  return apiUrl.substr(0, apiUrl.indexOf('/') || apiUrl.length - 1);
+}
+
 export default Vue.extend({
   components: { ValidateInput },
   props: {
@@ -150,7 +155,7 @@ export default Vue.extend({
     },
     submit() {
       axios
-        .post(`${config.api}/auth-api/register`, qs.stringify(this.form))
+        .post(`${getAuthApiUrl(config.api)}/auth-api/register`, qs.stringify(this.form))
         .then(() => {
           this.goto_login();
         })

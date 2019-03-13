@@ -33,24 +33,24 @@ export default function GeneralStore(apiUrl: string) {
   const actions: ActionTree<State, any> = {
     async initState({ commit }, gameId: string) {
       const gameInfo = await axios
-        .get(`${apiUrl}/api/v1/games/${gameId}`)
+        .get(`${apiUrl}/games/${gameId}`)
         .then(response => response.data);
 
       commit('gameInfo', gameInfo);
 
       const genres = await axios
-        .get(`${apiUrl}/api/v1/genres`)
+        .get(`${apiUrl}/genres`)
         .then(response => response.data);
       commit('genres', genres);
 
       const tags = await axios
-        .get(`${apiUrl}/api/v1/tags`)
+        .get(`${apiUrl}/tags`)
         .then(response => response.data);
       commit('tags', tags);
     },
     async save({ state, commit }, gameId: string) {
       if (state.hasChanges) {
-        await axios.put(`${apiUrl}/api/v1/games/${gameId}`, state.gameInfo);
+        await axios.put(`${apiUrl}/games/${gameId}`, state.gameInfo);
         commit('hasChanges', false);
       }
     },
