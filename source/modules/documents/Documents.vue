@@ -47,13 +47,37 @@
     <div slot="side-footer" v-if="isFormComplete">
       {{ $t(`status.${documentsStatus}.title`) }}
       <div class="submit-box">
-        <Button
-          :text="$t(`status.${documentsStatus}.submit`)"
-          @click="submit"
-        />
+        <Button @click="submit">
+          {{ $t(`status.${documentsStatus}.submit`) }}
+        </Button>
       </div>
     </div>
   </FormByStep>
+
+  <UiModal
+    v-if="hasModal"
+    @close="hasModal = false"
+  >
+    <Header
+      slot="header"
+      level="1"
+    >
+      {{ $t(`modal.${modalType}.title`) }}
+    </Header>
+    <div
+      slot="main"
+      class="ui-modal-main"
+      v-html="$t(`modal.${modalType}.text`)"
+    />
+    <div
+      slot="footer"
+      class="ui-modal-footer"
+    >
+      <Button @click="hasModal = false">
+        {{ $t(`modal.${modalType}.button`) }}
+      </Button>
+    </div>
+  </UiModal>
 </div>
 </template>
 
@@ -61,7 +85,7 @@
 import Vue from 'vue';
 import { get, includes, reduce } from 'lodash-es';
 import { mapActions, mapGetters, mapMutations, mapState } from 'vuex';
-import { Button, FormByStep, Header, PageHeader } from '@protocol-one/ui-kit';
+import { Button, FormByStep, Header, PageHeader, UiModal } from '@protocol-one/ui-kit';
 import Banking from './components/Banking.vue';
 import Company from './components/Company.vue';
 import Contact from './components/Contact.vue';
@@ -69,10 +93,12 @@ import i18n from './i18n';
 
 export default Vue.extend({
   i18n,
-  components: { Banking, Button, Company, Contact, FormByStep, Header, PageHeader },
+  components: { Banking, Button, Company, Contact, FormByStep, Header, PageHeader, UiModal },
   data() {
     return {
       currentStep: 'company',
+      hasModal: false,
+      modalType: 'welcome'
     };
   },
   computed: {
@@ -112,6 +138,16 @@ export default Vue.extend({
   },
   mounted() {
     this.initState(this.$route.params.vendorId);
+
+    const hasWelcomeBoardAlreadySeen = localStorage.getItem('hasWelcomeBoardAlreadySeen');
+
+    if (hasWelcomeBoardAlreadySeen !== 'true' && this.documentsStatus === 'draft') {
+      localStorage.setItem('hasWelcomeBoardAlreadySeen', 'true');
+      this.modalType = 'welcome';
+      this.hasModal = true;
+    } else if (hasWelcomeBoardAlreadySeen !== 'true') {
+      localStorage.setItem('hasWelcomeBoardAlreadySeen', 'true');
+    }
   },
   methods: {
     ...mapActions('Documents', ['initState', 'toDraft', 'toReview', 'save']),
@@ -182,5 +218,13 @@ export default Vue.extend({
 .submit-box {
   margin-top: 20px;
   text-align: center;
+}
+.ui-modal-main {
+  color: #b1b1b1;
+  max-width: 480px;
+}
+.ui-modal-footer {
+  display: flex;
+  justify-content: flex-end;
 }
 </style>

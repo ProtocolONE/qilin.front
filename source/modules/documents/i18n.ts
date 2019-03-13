@@ -4,7 +4,13 @@ export default {
       company: 'Company',
       contact: 'Contacts',
       banking: 'Banking Info',
-      title: 'Documents',
+      modal: {
+        welcome: {
+          button: 'Let`s do it!',
+          text: 'Thanks fo singnin up and welcome to Super.com partner’s dashboard.<br><br>To get started, we ask you to fill out your company and bank details in order for us to prepare your contract.<br><br>As soon as our manager checks everything, we will be ready to sign a contract and open all the functions of the portal to you.<br><br>Feel free to contact us if you have any questions.',
+          title: 'Welcome aboard!',
+        },
+      },
       save: 'Save',
       status: {
         draft: {
@@ -20,12 +26,19 @@ export default {
           submit: 'Contact us',
         },
       },
+      title: 'Documents',
     },
     en: {
       company: 'Company',
       contact: 'Contacts',
       banking: 'Banking Info',
-      title: 'Documents',
+      modal: {
+        welcome: {
+          button: 'Let`s do it!',
+          text: 'Thanks fo singnin up and welcome to Super.com partner’s dashboard.<br><br>To get started, we ask you to fill out your company and bank details in order for us to prepare your contract.<br><br>As soon as our manager checks everything, we will be ready to sign a contract and open all the functions of the portal to you.<br><br>Feel free to contact us if you have any questions.',
+          title: 'Welcome aboard!',
+        },
+      },
       save: 'Save',
       status: {
         draft: {
@@ -41,12 +54,19 @@ export default {
           submit: 'Contact us',
         },
       },
+      title: 'Documents',
     },
     ru: {
       company: 'Компания',
       contact: 'Контакты',
       banking: 'Банковская информация',
-      title: 'Документы',
+      modal: {
+        welcome: {
+          button: 'Начните!',
+          text: 'Thanks fo singnin up and welcome to Super.com partner’s dashboard.<br><br>To get started, we ask you to fill out your company and bank details in order for us to prepare your contract.<br><br>As soon as our manager checks everything, we will be ready to sign a contract and open all the functions of the portal to you.<br><br>Feel free to contact us if you have any questions.',
+          title: 'Добро пожаловать в onBoarding!',
+        },
+      },
       save: 'Сохранить',
       status: {
         draft: {
@@ -62,6 +82,7 @@ export default {
           submit: 'Связаться с нами',
         },
       },
+      title: 'Документы',
     },
   },
 };
