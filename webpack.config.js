@@ -117,7 +117,7 @@ module.exports = {
         'QILIN_API',
         'IMAGINARY_API',
         'NODE_ENV',
-        'CENTRIFUGO_URL',
+        'CENTRIFUGE_URL',
       ]
         .reduce((acc, item) => ({
           ...acc,

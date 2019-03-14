@@ -41,7 +41,7 @@ export default function DescriptionStore(apiUrl: string) {
   const actions: ActionTree<State, any> = {
     async initState({ commit }, gameId: string) {
       const descr = await axios
-        .get(`${apiUrl}/api/v1/games/${gameId}/descriptions`)
+        .get(`${apiUrl}/games/${gameId}/descriptions`)
         .then(({ data }) => data);
       descr.reviews = [
         descr.reviews[0] || defaultReview,
@@ -52,7 +52,7 @@ export default function DescriptionStore(apiUrl: string) {
     },
     async save({ state, commit }, gameId) {
       if (state.hasChanges) {
-        await axios.put(`${apiUrl}/api/v1/games/${gameId}/descriptions`, state.descriptions);
+        await axios.put(`${apiUrl}/games/${gameId}/descriptions`, state.descriptions);
         commit('hasChanges', false);
       }
     },

@@ -17,7 +17,11 @@
         @selectNotify="selectNotify"
       />
     </UiTable>
-    <div v-if="noAnyNotification" class="no-results">
+    <div
+      v-if="noAnyNotification"
+      class="no-results"
+      :style="{ height: `${57 * NUM_ROWS}px` }"
+    >
       <div class="no-results-warning">
         <svg width="130" height="92" viewBox="0 0 130 92" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M76.5586 60.376H53.4472C52.6475 60.376 52.002 61.02 52.002 61.8143C52.002 62.6086 52.6475 63.2526 53.4472 63.2526H76.5586C77.3582 63.2526 78.0038 62.6086 78.0038 61.8143C78.0038 61.02 77.3582 60.376 76.5586 60.376Z" fill="#B1B1B1"/>
@@ -30,7 +34,7 @@
       </div>
     </div>
     <UiPaginator
-      :count="NUM_ROWS * 10"
+      :count="itemsCount"
       :limit="NUM_ROWS"
       :offset="page * NUM_ROWS"
       @pageChanged="pageChanged"
@@ -46,7 +50,7 @@
   import NotifyItem from './components/NotifyItem.vue';
   import NotifysHeader from './components/NotifysHeader.vue';
   import NotifyFilters from './components/NotifyFilters.vue';
-  import { NUM_ROWS } from './types';
+  import { NUM_ROWS } from './constants';
   import i18n from './i18n';
 
   export default Vue.extend({
@@ -58,7 +62,7 @@
       searchTimeout: null,
     }),
     computed: {
-      ...mapState('Notifications', ['notifications', 'page', 'sort', 'search']),
+      ...mapState('Notifications', ['notifications', 'page', 'sort', 'search', 'itemsCount']),
       noAnyNotification() {
         return !this.notifications.length;
       },
@@ -79,7 +83,7 @@
     },
     methods: {
       ...mapActions('Notifications', ['initState', 'fetchNotifys']),
-      ...mapMutations('Notifications', ['setPage', 'setSort', 'setNotifys', 'setSearch']),
+      ...mapMutations('Notifications', ['setPage', 'setSort', 'setNotifys', 'setSearch', 'setItemsCount']),
       ...mapActions(['readNotifys']),
       ...mapMutations(['updateSelectedNotify']),
       pageChanged({ offset }) {
@@ -123,7 +127,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 57px * 10;
 }
 .no-results-warning {
   text-align: center;

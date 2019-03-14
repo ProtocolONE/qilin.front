@@ -20,6 +20,5 @@ export interface State {
   page: number;
   sort: string;
   search: string;
+  itemsCount: number;
 }
-
-export const NUM_ROWS: number = 10;

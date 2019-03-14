@@ -1,6 +1,7 @@
 import axios, {AxiosResponse} from 'axios';
 import {ActionTree, GetterTree, MutationTree} from 'vuex';
 import Centrifuge from "centrifuge";
+import config from '@/config';
 import { Notification, NotificationShort } from "@/modules/notifications/types";
 
 interface State {
@@ -23,7 +24,7 @@ export default function NotificationsStore(apiUrl: string)  {
       }
       for (let messageId of messageIds) {
         await axios
-          .put(`${apiUrl}/api/v1/vendors/${state.vendor.id}/messages/${messageId}/read`);
+          .put(`${apiUrl}/vendors/${state.vendor.id}/messages/${messageId}/read`);
         commit('setNotifyRead', messageId);
       }
     },
@@ -33,7 +34,7 @@ export default function NotificationsStore(apiUrl: string)  {
         return;
       }
       const notify: Notification = await axios
-        .get(`${apiUrl}/api/v1/vendors/${state.vendor.id}/messages/${messageId}`)
+        .get(`${apiUrl}/vendors/${state.vendor.id}/messages/${messageId}`)
         .then( resp => resp.data );
       dispatch('readNotifys', [notify.id]);
       commit('updateSelectedNotify', notify);
@@ -44,7 +45,7 @@ export default function NotificationsStore(apiUrl: string)  {
         return;
       }
       const vendors = await axios
-        .get(`${apiUrl}/api/v1/vendors`, { params: { limit: 1 } })
+        .get(`${apiUrl}/vendors`, { params: { limit: 1 } })
         .then(res => res.data || []);
       if (vendors.length) {
         commit('vendor', vendors[0]);
@@ -52,7 +53,7 @@ export default function NotificationsStore(apiUrl: string)  {
       const vendorId: string = vendors[0].id;
 
       const resp: AxiosResponse = await axios
-        .get(`${apiUrl}/api/v1/vendors/${vendorId}/messages/short`);
+        .get(`${apiUrl}/vendors/${vendorId}/messages/short`);
 
       if (resp.data) {
         commit('addNotifications', resp.data || []);
@@ -60,7 +61,7 @@ export default function NotificationsStore(apiUrl: string)  {
 
       const token: string = resp.headers['x-centrifugo-token'];
 
-      const centrifuge = new Centrifuge(process.env.CENTRIFUGO_URL);
+      const centrifuge = new Centrifuge(config.centrifugeUrl);
       centrifuge.setToken(token);
       centrifuge.subscribe(`qilin:${vendorId}`, message => {
         const newMsg: NotificationShort = {

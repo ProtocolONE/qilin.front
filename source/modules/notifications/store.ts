@@ -1,10 +1,12 @@
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
 import { GetterTree, ActionTree, MutationTree } from 'vuex';
-import { State, NUM_ROWS } from './types';
+import { State } from './types';
+import { NUM_ROWS } from './constants';
 
 export default function NotificationsStore(apiUrl: string) {
   const state: State = {
     notifications: [],
+    itemsCount: 0,
     vendorId: '',
     search: '',
     page: 0,
@@ -14,37 +16,38 @@ export default function NotificationsStore(apiUrl: string) {
   const actions: ActionTree<State, any> = {
     async initState({ commit, state }) {
       const vendors = await axios
-        .get(`${apiUrl}/api/v1/vendors`, { params: { limit: 1 } })
+        .get(`${apiUrl}/vendors`, { params: { limit: 1 } })
         .then(res => res.data || []);
       if (!vendors.length) {
         return;
       }
       commit('vendorId', vendors[0].id);
 
-      const notifications = await axios
-        .get(`${apiUrl}/api/v1/vendors/${vendors[0].id}/messages`, {
+      const res: AxiosResponse = await axios
+        .get(`${apiUrl}/vendors/${vendors[0].id}/messages`, {
           params: {
             offset: 0,
             limit: NUM_ROWS,
             sort: state.sort,
           }
-        })
-        .then(res => res.data || []);
-      commit('setNotifys', notifications);
+        });
+
+      commit('setNotifys', res.data);
+      commit('setItemsCount', res.headers['x-items-count']);
     },
 
     async fetchNotifys({ commit, state }) {
-      const notifications = await axios
-        .get(`${apiUrl}/api/v1/vendors/${state.vendorId}/messages`, {
+      const res: AxiosResponse = await axios
+        .get(`${apiUrl}/vendors/${state.vendorId}/messages`, {
           params: {
             query: state.search,
             sort: state.sort,
             offset: state.page * NUM_ROWS,
             limit: NUM_ROWS
           }
-        })
-        .then(res => res.data || []);
-      commit('setNotifys', notifications);
+        });
+      commit('setNotifys', res.data);
+      commit('setItemsCount', res.headers['x-items-count']);
     },
   };
   const mutations: MutationTree<State> = {
@@ -53,6 +56,7 @@ export default function NotificationsStore(apiUrl: string) {
     setPage: (state, value) => state.page = value,
     setSort: (state, value) => state.sort = value,
     setSearch: (state, value) => state.search = value,
+    setItemsCount: (state, value) => state.itemsCount = value,
   };
   return {
     state,

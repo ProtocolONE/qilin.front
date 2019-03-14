@@ -18,7 +18,6 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import { filter, get, includes, map } from 'lodash-es';
   import { UiTableRow, UiTableCell } from '@protocol-one/ui-kit';
   import formatDate from '@/helpers/formatDate';
 
@@ -47,12 +46,6 @@
 .notify-item * {
   cursor: pointer;
 }
-.wrap {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  height: 1.2em;
-  white-space: nowrap;
-}
 ._unread:after {
   content: '';
   display: block;
@@ -64,7 +57,6 @@
   box-sizing: border-box;
   margin-left: 23px;
 }
-
 .col-unread {
   width: 10%;
 }
