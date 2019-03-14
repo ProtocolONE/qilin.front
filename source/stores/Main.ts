@@ -6,7 +6,7 @@ import State from './mainTypes';
 
 // @TODO - remove this, when integrate with auth1
 function getAuthApiUrl(apiUrl: string): string {
-  return apiUrl.substr(0, apiUrl.indexOf('/') || apiUrl.length - 1);
+  return apiUrl.replace('/api/v1', '');
 }
 
 export default function MainStore(apiUrl: string, accessToken: string) {
