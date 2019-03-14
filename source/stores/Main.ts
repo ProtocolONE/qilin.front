@@ -15,20 +15,21 @@ export default function MainStore(apiUrl: string, accessToken: string) {
   };
   const getters: GetterTree<State, any> = {};
   const actions: ActionTree<State, any> = {
-    async initUser({ commit }) {
+    async initUser({ commit, dispatch }) {
       const user = await axios
         .get(`${apiUrl}/me`)
         .then(res => res.data.user);
 
       if (user) {
         commit('user', user);
+        dispatch('startWatchNotifications');
       }
     },
     /**
      * Login with adding accessToken to axios
      * @param {Any} query
      */
-    async login({ commit }, query: any) {
+    async login({ commit, dispatch }, query: any) {
       const { user, newAccessToken } = await axios
         .post(`${getAuthApiUrl(apiUrl)}/auth-api/login`, qs.stringify(query))
         .then(res => ({

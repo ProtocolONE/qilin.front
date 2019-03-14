@@ -10,6 +10,9 @@
   @logout="$emit('logout')"
 >
   <IconLogo slot="logo" />
+  <NotifierBell
+    slot="bottom"
+  />
   <LocaleChanger 
     slot="bottom"
     class="locales"
@@ -43,9 +46,10 @@ import LocaleChanger from '@/components/LocaleChanger.vue';
 import Login from '@/components/Login.vue';
 import Register from '@/components/Register.vue';
 import ResetPass from '@/components/ResetPass.vue';
+import NotifierBell from '@/components/NotifierBell.vue';
 
 export default Vue.extend({
-  components: { IconLogo, LocaleChanger, Login, Register, ResetPass, PageNavbar },
+  components: { IconLogo, LocaleChanger, Login, Register, ResetPass, PageNavbar, NotifierBell },
   props: {
     /** User has auth */
     hasAuth: {
