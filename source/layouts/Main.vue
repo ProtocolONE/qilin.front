@@ -2,6 +2,7 @@
 <div class="main-wrapper">
   <Navbar
     :links="links"
+    :hasAuth="hasAuth"
     @login="login"
     @logout="logout"
   />
@@ -22,7 +23,9 @@
     components: { Navbar, TipWithNotifications },
     computed: {
       ...mapState(['navbarLinks', 'user']),
-
+      hasAuth() {
+        return !!localStorage.getItem('accessToken');
+      },
       links() {
         // @TODO - Add type for navbarLinks/links
         return this.navbarLinks.map(link => ({
@@ -37,8 +40,8 @@
     },
     methods: {
       ...mapActions(['initUser', 'login']),
-
       logout() {
+        localStorage.removeItem('accessToken');
         document.location.reload();
       },
     },
