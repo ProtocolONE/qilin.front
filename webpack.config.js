@@ -118,6 +118,7 @@ module.exports = {
         'IMAGINARY_API',
         'NODE_ENV',
         'CENTRIFUGE_URL',
+        'AUTH1_ISSUER_URL',
       ]
         .reduce((acc, item) => ({
           ...acc,

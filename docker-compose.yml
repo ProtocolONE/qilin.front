@@ -36,6 +36,8 @@ services:
         networks:
             - p1devnet
         volumes:
+          - ./:/application
+          - qilin-front-node-modules:/application/node_modules
           - qilin-front-static-content:/application/build
         environment:
             - NODE_ENV=production
@@ -64,3 +66,4 @@ networks:
 
 volumes:
   qilin-front-static-content:
+  qilin-front-node-modules:
