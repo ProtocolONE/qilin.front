@@ -1,31 +1,24 @@
 <template>
-<Modal
+<UiModal
   @close="$emit('close')"
 >
   <iframe
     class="auth1"
-    slot="body"
+    slot="main"
     :src="frameSrc"
     width="100%"
     height="100%"
     @message="message"
   ></iframe>
-</Modal>
+</UiModal>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import Modal from '@/components/Modal.vue';
-
-interface Auth1Message {
-  access_token: string;
-  success: boolean;
-  error: string;
-  expires_in: number;
-}
+import { UiModal } from '@protocol-one/ui-kit'
 
 export default Vue.extend({
-  components: { Modal },
+  components: { UiModal },
   computed: {
     frameSrc() {
       return `${window.location.protocol}//${window.location.hostname}/auth1/login`
@@ -41,7 +34,7 @@ export default Vue.extend({
         try {
           data = JSON.parse(e.data);
         } catch (e) { }
-        if ('access_token' in data && 'success' in data) {
+        if (data && 'access_token' in data && 'success' in data) {
           localStorage.setItem('accessToken', data.access_token);
           location.reload();
         }
