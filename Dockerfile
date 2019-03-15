@@ -8,10 +8,11 @@ COPY package.json yarn.lock /application/
 COPY . /application/
 
 RUN yarn
-ENV NODE_ENV=production
-ENV QILIN_ADMIN_API=https://qilinapi.tst.protocol.one/admin/api/v1
-ENV QILIN_API=https://qilinapi.tst.protocol.one/api/v1
-ENV IMAGINARY_API=https://imaginary.tst.protocol.one
+ENV NODE_ENV=production \
+    QILIN_ADMIN_API=https://qilinapi.tst.protocol.one/admin/api/v1 \
+    QILIN_API=https://qilinapi.tst.protocol.one/api/v1 \
+    IMAGINARY_API=https://imaginary.tst.protocol.one
+
 RUN webpack
 
 COPY ./public/*.* ./build/
