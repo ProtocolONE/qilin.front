@@ -47,7 +47,8 @@ export default Vue.extend({
 <style scoped lang="scss">
 .auth1 {
   display: block;
-  min-height: 300px;
+  width: 400px;
+  height: 500px;
   border: none;
 }
 </style>

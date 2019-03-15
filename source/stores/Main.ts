@@ -13,7 +13,7 @@ export default function MainStore(apiUrl: string, accessToken: string) {
     },
   };
   const actions: ActionTree<State, any> = {
-    async initUser({ commit, getters }) {
+    async initUser({ commit, getters, dispatch }) {
       if (!getters.hasAuth) {
         return;
       }
