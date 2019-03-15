@@ -12,8 +12,6 @@ COPY . /app/
 
 RUN yarn
 
-ENV NODE_ENV=production
-
 ENV NODE_ENV=production \
     QILIN_ADMIN_API=https://qilinapi.tst.protocol.one/admin/api/v1 \
     QILIN_API=https://qilinapi.tst.protocol.one/api/v1 \
