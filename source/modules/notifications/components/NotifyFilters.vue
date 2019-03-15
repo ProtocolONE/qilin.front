@@ -4,17 +4,13 @@
   :isHead="true"
 >
   <UiTableCell
-    v-for="cell in [
-      {name: 'unread', sort: '+unread'},
-      {name: 'title', sort: '+title'},
-      {name: 'message', sort: '-message'},
-      {name: 'date', sort: '-createdDate'}
-    ]"
-    :class="['notify-cell', cell.name, {_active: sort === cell.sort}]"
-    @click.native="toggleSort(cell.sort)"
+    v-for="({ name, filterSort }) in filters"
+    :key="name"
+    :class="['notify-cell', name, { '_active': sort === filterSort }]"
+    @click.native="toggleSort(filterSort)"
   >
     <svg
-      v-if="sort === cell.sort"
+      v-if="sort === filterSort"
       width="8"
       height="10"
       viewBox="0 0 8 10"
@@ -26,7 +22,7 @@
         fill="#B1B1B1"
       />
     </svg>
-    {{ $t(cell.name) }}
+    {{ $t(name) }}
   </UiTableCell>
 </UiTableRow>
 </template>
@@ -40,9 +36,18 @@
     i18n,
     components: { UiTableRow, UiTableCell },
     props: {
-
       sort: {
         type: String,
+      },
+    },
+    computed: {
+      filters() {
+        return [
+          { name: 'unread', filterSort: '+unread' },
+          { name: 'title', filterSort: '+title' },
+          { name: 'message', filterSort: '-message' },
+          { name: 'date', filterSort: '-createdDate' },
+        ];
       },
     },
     methods: {
@@ -57,6 +62,7 @@
 .notify-cell {
   color: #0c2441;
   cursor: pointer;
+
   &._active {
     cursor: default;
   }

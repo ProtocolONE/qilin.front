@@ -1,6 +1,6 @@
 import axios, {AxiosResponse} from 'axios';
 import {ActionTree, GetterTree, MutationTree} from 'vuex';
-import Centrifuge from "centrifuge";
+import Centrifuge from 'centrifuge';
 import config from '@/config';
 import { Notification, NotificationShort } from "@/modules/notifications/types";
 
