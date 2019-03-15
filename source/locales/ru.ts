@@ -99,6 +99,13 @@ export default {
           description: 'Запросы на проверку',
         },
       },
+      request: {
+        title: 'Запрос вендора',
+        meta: {
+          title: 'Запрос вендора',
+          description: 'Запрос вендора',
+        },
+      },
     },
   },
 };
