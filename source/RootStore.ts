@@ -7,8 +7,10 @@ import DocumentsStore from '@/modules/documents/store';
 import GameStore from '@/modules/gameCommon/store';
 import GamesModule from '@/modules/games/store';
 import NotificationsStore from '@/modules/notifications/store';
+import RequestsModule from '@/modules/requests/store';
 
 const apiUrl = config.api;
+const adminApiUrl = config.adminApi;
 const accessToken = localStorage.getItem('accessToken') || '';
 
 const mainStores = MainStores(apiUrl, accessToken, routes);
@@ -37,5 +39,6 @@ export default {
     Games: GamesModule(apiUrl),
     Sales: SalesStore(apiUrl),
     Notifications: NotificationsStore(apiUrl),
+    Requests: RequestsModule(adminApiUrl),
   },
 };

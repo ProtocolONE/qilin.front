@@ -13,6 +13,7 @@ import GameDescriptions from '@/modules/gameDescriptions/Descriptions.vue';
 import Games from '@/modules/games/Games.vue';
 import OnBoarding from '@/modules/onBoarding/OnBoarding.vue';
 import Notifications from '@/modules/notifications/Notifications.vue';
+import Requests from '@/modules/requests/Requests.vue';
 
 const routes: RouteConfig[] = [
   {
@@ -86,6 +87,20 @@ const routes: RouteConfig[] = [
     path: '/documents/:vendorId',
     name: 'documents',
     component: Documents,
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    // @TODO - remove redirect when Admin page is implemented
+    redirect: '/admin/requests',
+    children: [
+      {
+        path: '/admin/requests',
+        name: 'requests',
+        component: Requests,
+        meta: 'routes.admin.requests.meta'
+      }
+    ],
   },
 ].map(route => ({ ...route, meta: `routes.${route.name}.meta` }));
 
