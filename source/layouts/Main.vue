@@ -5,6 +5,7 @@
     :links="links"
     @logout="logout"
   />
+  <TipWithNotifications />
   <router-view />
 </div>
 </template>
@@ -13,11 +14,12 @@
   import Vue from 'vue';
   import { mapState, mapActions, mapGetters } from 'vuex';
   import Navbar from './Navbar.vue';
+  import TipWithNotifications from '@/components/TipWithNotifications.vue';
 
   import './bootstrap';
 
   export default Vue.extend({
-    components: { Navbar },
+    components: { Navbar, TipWithNotifications },
     computed: {
       ...mapGetters(['hasAuth']),
       ...mapState(['navbarLinks', 'user']),
