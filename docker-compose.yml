@@ -36,6 +36,8 @@ services:
         networks:
             - p1devnet
         volumes:
+          - ./:/application
+          - qilin-front-node-modules:/application/node_modules
           - qilin-front-static-content:/application/build
         environment:
             - NODE_ENV=production
@@ -56,6 +58,7 @@ services:
             - SESSION_MAX_AGE=21600
             - QILIN_API=${QILIN_API}
             - IMAGINARY_API=${IMAGINARY_API}
+            - CENTRIFUGE_URL=${CENTRIFUGE_URL}
 
 networks:
     p1devnet:
@@ -63,3 +66,4 @@ networks:
 
 volumes:
   qilin-front-static-content:
+  qilin-front-node-modules:

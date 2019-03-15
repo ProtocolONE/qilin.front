@@ -1,16 +1,18 @@
 import { RouteConfig } from 'vue-router';
 
+import Documents from '@/modules/documents/Documents.vue';
 import Home from '@/modules/home/Home.vue';
-import OnBoarding from '@/modules/onBoarding/OnBoarding.vue';
 import GameCommon from '@/modules/gameCommon/GameCommon.vue';
 import GameGeneral from '@/modules/gameGeneral/General.vue';
-import GameNavigation from '@/modules/gameNavigation/GameNavigation.vue';
 import GameMedia from '@/modules/gameMedia/Media.vue';
 import GamePrices from '@/modules/gamePrices/Prices.vue';
+import GameNavigation from '@/modules/gameNavigation/GameNavigation.vue';
 import GameRatings from '@/modules/gameRatings/Ratings.vue';
 import GameSales from '@/modules/gameSales/Sales.vue';
 import GameDescriptions from '@/modules/gameDescriptions/Descriptions.vue';
 import Games from '@/modules/games/Games.vue';
+import OnBoarding from '@/modules/onBoarding/OnBoarding.vue';
+import Notifications from '@/modules/notifications/Notifications.vue';
 
 const routes: RouteConfig[] = [
   {
@@ -74,7 +76,17 @@ const routes: RouteConfig[] = [
     name: 'gameSales',
     path: '/games/:id/sales',
     component: GameSales
-  }
+  },
+  {
+    path: '/notifications',
+    name: 'notifications',
+    component: Notifications,
+  },
+  {
+    path: '/documents/:vendorId',
+    name: 'documents',
+    component: Documents,
+  },
 ].map(route => ({ ...route, meta: `routes.${route.name}.meta` }));
 
 export default routes;

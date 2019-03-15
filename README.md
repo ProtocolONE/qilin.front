@@ -79,6 +79,8 @@ Where:
 
 {SESSION_MAX_AGE} - session lifetime in seconds
 
+{CENTRIFUGE_URL} - Centrifuge endpoint for listen notifications via WS, for example ws://127.0.0.1:8000/connection/websocket
+
 
 ## User Authentication
 

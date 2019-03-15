@@ -22,6 +22,7 @@ declare module '@protocol-one/ui-kit' {
   const Button: any;
   const Checkbox: any;
   const DateTimeInput: any;
+  const FormByStep: any;
   const Header: any;
   const Select: any;
   const SwitchBox: any;
@@ -36,6 +37,7 @@ declare module '@protocol-one/ui-kit' {
     Button,
     Checkbox,
     DateTimeInput,
+    FormByStep,
     Header,
     Select,
     SwitchBox,

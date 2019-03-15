@@ -8,7 +8,8 @@ COPY yarn.lock package.json /app/
 COPY . /app/
 
 ENV NODE_ENV=development
-ENV QILIN_API=http://localhost:3001
+ENV QILIN_ADMIN_API=http://localhost:3001/admin/api/v1
+ENV QILIN_API=http://localhost:3001/api/v1
 ENV IMAGINARY_API=https://imaginary.tst.protocol.one
 
 RUN yarn 

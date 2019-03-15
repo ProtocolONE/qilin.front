@@ -72,5 +72,19 @@ export default {
         },
       },
     },
+    notifications: {
+      title: 'Уведомления',
+      meta: {
+        title: 'Уведомления',
+        description: 'Тут вы можете узнать на последние события вашего вендора',
+      },
+    },
+    documents: {
+      title: 'Документы',
+      meta: {
+        title: 'Документы вендора',
+        description: 'Документы вендора',
+      },
+    },
   },
 };

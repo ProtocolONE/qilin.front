@@ -5,32 +5,23 @@
   :is-authorised="hasAuth"
   :user-name="userName"
   :navigation-links="navigationLinks"
-  @login="$refs.login.$refs.modal.show()"
-  @register="$refs.reg.$refs.modal.show()"
+  @login="isShowLogin = true"
+  @register="isShowLogin = true"
   @logout="$emit('logout')"
 >
   <IconLogo slot="logo" />
+  <NotifierBell
+    slot="bottom"
+  />
   <LocaleChanger 
     slot="bottom"
     class="locales"
   />
 
   <Login
-    id="login"
-    ref="login"
-    :open-reg="() => $refs.reg.$refs.modal.show()"
-    :open-reset="() => $refs.resetpass.$refs.modal.show()"
+    v-if="isShowLogin"
+    @close="isShowLogin = false"
     @login="$emit('login', $event)"
-  />
-  <Register
-    id="register"
-    ref="reg"
-    :open-login="() => $refs.login.$refs.modal.show()"
-  />
-  <ResetPass
-    id="resetpass"
-    ref="resetpass"
-    :open-login="() => $refs.login.$refs.modal.show()"
   />
 </PageNavbar>
 </template>
@@ -43,9 +34,10 @@ import LocaleChanger from '@/components/LocaleChanger.vue';
 import Login from '@/components/Login.vue';
 import Register from '@/components/Register.vue';
 import ResetPass from '@/components/ResetPass.vue';
+import NotifierBell from '@/components/NotifierBell.vue';
 
 export default Vue.extend({
-  components: { IconLogo, LocaleChanger, Login, Register, ResetPass, PageNavbar },
+  components: { IconLogo, LocaleChanger, Login, Register, ResetPass, PageNavbar, NotifierBell },
   props: {
     /** User has auth */
     hasAuth: {
@@ -65,6 +57,7 @@ export default Vue.extend({
   },
 
   data: () => ({
+    isShowLogin: false,
     logoLink: {
       url: '/',
       router: true

@@ -1,10 +1,12 @@
-import routes from '@/routes';
 import MainStores from '@/stores';
-import GamesModule from '@/modules/games/store';
 import config from '@/config';
-import GameStore from '@/modules/gameCommon/store';
+import routes from '@/routes';
 import CreateGameStore from '@/modules/gameCreate/store';
 import SalesStore from '@/modules/gameSales/store';
+import DocumentsStore from '@/modules/documents/store';
+import GameStore from '@/modules/gameCommon/store';
+import GamesModule from '@/modules/games/store';
+import NotificationsStore from '@/modules/notifications/store';
 
 const apiUrl = config.api;
 const accessToken = localStorage.getItem('accessToken') || '';
@@ -29,9 +31,11 @@ export default {
 
   // Modules by root store
   modules: {
-    Game: GameStore(apiUrl),
     CreateGame: CreateGameStore(apiUrl),
+    Documents: DocumentsStore(apiUrl),
+    Game: GameStore(apiUrl),
     Games: GamesModule(apiUrl),
-    Sales: SalesStore(apiUrl)
+    Sales: SalesStore(apiUrl),
+    Notifications: NotificationsStore(apiUrl),
   },
 };

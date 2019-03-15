@@ -112,11 +112,19 @@ module.exports = {
     new BundleAnalyzerPlugin({ analyzerMode: 'static', openAnalyzer: false }),
     new MiniCssExtractPlugin({ filename: '[name].css', chunkFilename: '[id].css' }),
     new VueLoaderPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.QILIN_API': JSON.stringify(process.env.QILIN_API),
-      'process.env.IMAGINARY_API': JSON.stringify(process.env.IMAGINARY_API),
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-    }),
+    new webpack.DefinePlugin(
+      [
+        'QILIN_API',
+        'IMAGINARY_API',
+        'NODE_ENV',
+        'CENTRIFUGE_URL',
+        'AUTH1_ISSUER_URL',
+      ]
+        .reduce((acc, item) => ({
+          ...acc,
+          ['process.env.' + item]: JSON.stringify(process.env[item])
+        }), {})
+    ),
   ].concat(ENV_DEV ? [new webpack.HotModuleReplacementPlugin()] : []),
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.vue'],
@@ -126,7 +134,8 @@ module.exports = {
   },
   devtool: ENV_DEV ? 'inline-source-map' : '',
   devServer: {
-    stats: 'verbose',
+    noInfo: true,
+    stats: 'errors-only',
     hot: true,
     host: '0.0.0.0',
     port: 8080,

@@ -29,18 +29,18 @@ export default function RatingsStore(apiUrl: string) {
   const actions: ActionTree<State, any> = {
     async initState({ commit }, gameId: string) {
       const descriptors = await axios
-        .get(`${apiUrl}/api/v1/descriptors`)
+        .get(`${apiUrl}/descriptors`)
         .then(result => result.data);
       commit('updateDescriptors', descriptors);
 
       const ratings = await axios
-        .get(`${apiUrl}/api/v1/games/${gameId}/ratings`)
+        .get(`${apiUrl}/games/${gameId}/ratings`)
         .then(result => mergeWith(defaultRatings, result.data, (a, b) => (b === null ? a : b)));
       commit('updateRatings', ratings);
     },
     async save({ state, commit }, gameId) {
       if (state.hasChanges) {
-        await axios.put(`${apiUrl}/api/v1/games/${gameId}/ratings`, state.ratings);
+        await axios.put(`${apiUrl}/games/${gameId}/ratings`, state.ratings);
         commit('hasChanges', false);
       }
     },

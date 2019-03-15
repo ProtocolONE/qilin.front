@@ -14,7 +14,7 @@ export default function GamesStore(apiUrl: string) {
   const actions: ActionTree<State, any> = {
     async initState({ commit, dispatch }, { router }: { router: VueRouter }) {
       const vendors = await axios
-        .get(`${apiUrl}/api/v1/vendors`, { params: { limit: 1 } })
+        .get(`${apiUrl}/vendors`, { params: { limit: 1 } })
         .then(res => res.data || []);
       if (!vendors.length) {
         router.push({path: '/vendor/on-boarding'});
@@ -25,14 +25,14 @@ export default function GamesStore(apiUrl: string) {
       dispatch('fetchGames');
 
       const genres = await axios
-        .get(`${apiUrl}/api/v1/genres`)
+        .get(`${apiUrl}/genres`)
         .then(response => response.data);
       commit('genres', genres);
     },
 
     async fetchGames({ commit, state }, sort = '') {
       const games = await axios
-        .get(`${apiUrl}/api/v1/vendor/${state.vendorId}/games${sort && '?sort='}${sort}`)
+        .get(`${apiUrl}/vendor/${state.vendorId}/games${sort && '?sort='}${sort}`)
         .then(res => res.data || []);
 
       commit('games', games);
