@@ -9,7 +9,7 @@ export default function RequestsStore(apiUrl: string) {
   const getters: GetterTree<State, any> = {};
   const actions: ActionTree<State, any> = {
     async initState({ dispatch }) {
-      dispatch('fetchRequests');
+      await dispatch('fetchRequests');
     },
     async fetchRequests({ commit }, sort = '') {
       const requests = await axios

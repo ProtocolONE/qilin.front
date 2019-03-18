@@ -4,8 +4,8 @@ import NavbarStore from './Navbar';
 import OnBoardingStore from './OnBoarding';
 import NotificationsStore from './Notifications';
 
-export default function MainStores(apiUrl: string, accessToken: string, routes: RouteConfig[]) {
-  const Main = MainStore(apiUrl, accessToken);
+export default function MainStores(apiUrl: string, routes: RouteConfig[]) {
+  const Main = MainStore(apiUrl);
   const Navbar = NavbarStore(routes);
   const OnBoarding = OnBoardingStore(apiUrl);
   const Notifications = NotificationsStore(apiUrl);

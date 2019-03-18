@@ -11,9 +11,8 @@ import RequestsModule from '@/modules/requests/store';
 
 const apiUrl = config.api;
 const adminApiUrl = config.adminApi;
-const accessToken = localStorage.getItem('accessToken') || '';
 
-const mainStores = MainStores(apiUrl, accessToken, routes);
+const mainStores = MainStores(apiUrl, routes);
 
 /**
  * Root store, that agragate high-level modules.

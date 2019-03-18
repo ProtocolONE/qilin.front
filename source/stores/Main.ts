@@ -2,7 +2,7 @@ import axios from 'axios';
 import { GetterTree, ActionTree, MutationTree } from 'vuex';
 import State from './mainTypes';
 
-export default function MainStore(apiUrl: string, accessToken: string) {
+export default function MainStore(apiUrl: string) {
   const state: State = {
     user: null,
   };
@@ -20,7 +20,7 @@ export default function MainStore(apiUrl: string, accessToken: string) {
 
       const user = await axios
         .get(`${apiUrl}/me`)
-        .then(res => res.data.user);
+        .then(res => res.data.user || {});
 
       if (user) {
         commit('user', user);

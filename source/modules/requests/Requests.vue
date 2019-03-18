@@ -9,8 +9,8 @@
     <RequestsFilters @toggleSort="toggleSort" />
 
     <RequestsItem
-      v-for="(request, index) in innerRequests"
-      :key="index"
+      v-for="request in innerRequests"
+      :key="request.vendorId"
       :request="request"
     />
   </UiTable>
