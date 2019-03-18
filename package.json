@@ -53,7 +53,6 @@
     "vue": "^2.5.21",
     "vue-clickaway": "^2.2.2",
     "vue-cookie": "^1.1.4",
-    "vue2-datepicker": "^2.10.0",
     "vue-wysiwyg": "^1.7.2",
     "vuex": "^3.0.1"
   },

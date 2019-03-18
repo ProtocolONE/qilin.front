@@ -2,8 +2,10 @@
 <article class="page">
 
   <section class="page__section section">
-    <headline v-show="showDetails" id="defaultCurrency" class="section__headline">
-      {{ $t('defaultCurrency') }}
+    <headline v-show="showDetails" id="defaultCurrency">
+      <span class="section__title">
+        {{ $t('defaultCurrency') }}
+      </span>
     </headline>
     <p v-show="showDetails" class="section__description">
       {{ $t('defaultCurrencyDescription') }}
@@ -31,8 +33,10 @@
   </section>
 
   <section class="page__section section">
-    <headline v-show="showDetails" id="preorders" class="section__headline">
-      {{ $t('preorders') }}
+    <headline v-show="showDetails" id="preorders">
+      <span class="section__title">
+        {{ $t('preorders') }}
+      </span>
     </headline>
     <p v-show="showDetails" class="section__description">
       {{ $t('preordersDescription') }}
@@ -61,8 +65,9 @@
   </section>
 
   <section class="page__section section">
-    <headline v-show="showDetails" id="prices" class="section__headline">
-      {{ $t('prices') }}
+    <headline v-show="showDetails" id="prices">
+      <span class="section__title">
+        {{ $t('prices') }}
     </headline>
     <p v-show="showDetails" class="section__description">
       {{ $t('pricesDescription') }}
@@ -94,10 +99,10 @@ import i18n from './i18n'
 import Headline from '@/components/Headline'
 import PricesTable from './PricesTable'
 import {
-  Select as UiSelect,
-  TextField as UiTextField,
-  SwitchBox as UiSwitchBox,
-  DateTimeInput as UiDateTimeInput
+  UiSelect,
+  UiTextField,
+  UiSwitchBox,
+  UiDateTimeInput
 } from '@protocol-one/ui-kit'
 
 import { mapState, mapActions, mapMutations } from 'vuex'
@@ -240,7 +245,7 @@ export default {
 }
 
 .section {
-  &__headline /deep/ h2 {
+  &__title {
     font-size: 20px;
   }
 

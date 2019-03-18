@@ -8,8 +8,7 @@
           v-for="h in heads"
           :key="h.label"
           :width="h.width"
-          :class="[order, { 'thead--sorted': h.order === sort }]"
-          class="thead"
+          :class="['thead', order, { 'thead--sorted': h.order === sort }]"
         >
           <icon
             v-show="h.order === sort"
