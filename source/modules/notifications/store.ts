@@ -32,7 +32,7 @@ export default function NotificationsStore(apiUrl: string) {
           }
         });
 
-      commit('setNotifys', res.data);
+      commit('setNotifys', res.data || []);
       commit('setItemsCount', res.headers['x-items-count']);
     },
 
@@ -46,7 +46,7 @@ export default function NotificationsStore(apiUrl: string) {
             limit: NUM_ROWS
           }
         });
-      commit('setNotifys', res.data);
+      commit('setNotifys', res.data || []);
       commit('setItemsCount', res.headers['x-items-count']);
     },
   };
