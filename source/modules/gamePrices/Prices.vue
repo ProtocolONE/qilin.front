@@ -279,9 +279,6 @@ export default {
 
   .ui-switch-box {
     margin-right: 16px;
-    & /deep/ label {
-      margin-bottom: 0;
-    }
   }
 }
 </style>
