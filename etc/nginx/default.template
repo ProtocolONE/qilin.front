@@ -20,4 +20,7 @@ server {
     location ~* ^/auth1/(login|logout|refresh|callback)(.*)$ {
         proxy_pass ${APP};
     }
+    location ~* ^/(games|notifications|documents|admin|vendor)(.*)$ {
+        proxy_pass ${APP};
+    }
 }
