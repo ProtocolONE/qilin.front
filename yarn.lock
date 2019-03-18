@@ -913,6 +913,13 @@
   dependencies:
     vue-router "*"
 
+"@types/vue2-datepicker@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@types/vue2-datepicker/-/vue2-datepicker-2.0.0.tgz#95db8a67fbd791ee13d95f1dbc9f67e2077b3335"
+  integrity sha512-7QPBHj52luRgIfdJrLkcZevBTgazLaGVqkY8hZXT1n1FjYwr3v5Dlipbn8P1sBxqbVEYyT7Ek2whY7OlK16m6Q==
+  dependencies:
+    vue ">=2.0.0"
+
 "@types/vue@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@types/vue/-/vue-2.0.0.tgz#ec77b3d89591deb9ca5cb052368aa9c32be088e7"
@@ -8640,7 +8647,7 @@ vue2-dropzone@^3.0.4:
   dependencies:
     dropzone "^5.5.1"
 
-vue@*, vue@^2.5.21:
+vue@*, vue@>=2.0.0, vue@^2.5.21:
   version "2.6.6"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.6.tgz#dde41e483c11c46a7bf523909f4f2f816ab60d25"
   integrity sha512-Y2DdOZD8sxApS+iUlwv1v8U1qN41kq6Kw45lM6nVZKhygeWA49q7VCCXkjXqeDBXgurrKWkYQ9cJeEJwAq0b9Q==

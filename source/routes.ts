@@ -1,11 +1,14 @@
 import { RouteConfig } from 'vue-router';
+
 import Documents from '@/modules/documents/Documents.vue';
 import Home from '@/modules/home/Home.vue';
 import GameCommon from '@/modules/gameCommon/GameCommon.vue';
 import GameGeneral from '@/modules/gameGeneral/General.vue';
 import GameMedia from '@/modules/gameMedia/Media.vue';
+import GamePrices from '@/modules/gamePrices/Prices.vue';
 import GameNavigation from '@/modules/gameNavigation/GameNavigation.vue';
 import GameRatings from '@/modules/gameRatings/Ratings.vue';
+import GameSales from '@/modules/gameSales/Sales.vue';
 import GameDescriptions from '@/modules/gameDescriptions/Descriptions.vue';
 import Games from '@/modules/games/Games.vue';
 import OnBoarding from '@/modules/onBoarding/OnBoarding.vue';
@@ -50,6 +53,12 @@ const routes: RouteConfig[] = [
         meta: 'routes.game.media.meta'
       },
       {
+        name: 'gamePrices',
+        path: 'prices',
+        component: GamePrices,
+        meta: 'routes.game.prices.meta'
+      },
+      {
         name: 'GameRatings',
         path: 'ratings',
         component: GameRatings,
@@ -62,6 +71,11 @@ const routes: RouteConfig[] = [
         meta: 'routes.game.descriptions.meta'
       },
     ],
+  },
+  {
+    name: 'gameSales',
+    path: '/games/:id/sales',
+    component: GameSales
   },
   {
     path: '/notifications',

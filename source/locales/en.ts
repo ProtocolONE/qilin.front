@@ -23,6 +23,13 @@ export default {
         description: 'Help us setup your first tenant and start untegration',
       },
     },
+    gameSales: {
+      title: 'Sales',
+      meta: {
+        title: 'Welcome to Qilin',
+        description: 'Help us setup your first tenant and start untegration',
+      }
+    },
     game: {
       title: 'Game',
       meta: {
@@ -33,6 +40,13 @@ export default {
         title: 'Edit game media',
         meta: {
           title: 'Edit game media',
+          description: '',
+        },
+      },
+      prices: {
+        title: 'Edit game prices',
+        meta: {
+          title: 'Edit game prices',
           description: '',
         },
       },

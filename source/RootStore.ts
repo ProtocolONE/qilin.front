@@ -2,6 +2,7 @@ import MainStores from '@/stores';
 import config from '@/config';
 import routes from '@/routes';
 import CreateGameStore from '@/modules/gameCreate/store';
+import SalesStore from '@/modules/gameSales/store';
 import DocumentsStore from '@/modules/documents/store';
 import GameStore from '@/modules/gameCommon/store';
 import GamesModule from '@/modules/games/store';
@@ -34,6 +35,7 @@ export default {
     Documents: DocumentsStore(apiUrl),
     Game: GameStore(apiUrl),
     Games: GamesModule(apiUrl),
+    Sales: SalesStore(apiUrl),
     Notifications: NotificationsStore(apiUrl),
   },
 };

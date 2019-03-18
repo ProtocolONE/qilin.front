@@ -23,6 +23,13 @@ export default {
         description: 'Начните интеграцию',
       },
     },
+    gameSales: {
+      title: 'Распродажи',
+      meta: {
+        title: 'Добро пожаловать в Qilin',
+        description: 'Начните интеграцию',
+      }
+    },
     game: {
       title: 'Game',
       meta: {
@@ -33,6 +40,13 @@ export default {
         title: 'Редактирование раздела Media',
         meta: {
           title: 'Редактирование раздела Media',
+          description: '',
+        },
+      },
+      prices: {
+        title: 'Редактирование раздела Prices',
+        meta: {
+          title: 'Редактирование раздела Prices',
           description: '',
         },
       },

@@ -17,7 +17,7 @@ export interface Game {
   icon: string;
   genres: number[];
   releaseDate: Date;
-  prices: Price;
+  sales: Sale;
 }
 
 export interface State {
