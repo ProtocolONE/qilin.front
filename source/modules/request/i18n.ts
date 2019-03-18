@@ -14,6 +14,14 @@ export default {
         },
       },
       printable: 'Printable',
+      status: {
+        new: 'New',
+        checking: 'Checking',
+        ok: 'Ok',
+        returned: 'Returned',
+        archive: 'Archive',
+        title: 'Status',
+      },
     },
     en: {
       modal: {
@@ -29,6 +37,14 @@ export default {
         },
       },
       printable: 'Printable',
+      status: {
+        new: 'New',
+        checking: 'Checking',
+        ok: 'Ok',
+        returned: 'Returned',
+        archive: 'Archive',
+        title: 'Status',
+      },
     },
     ru: {
       modal: {
@@ -43,7 +59,15 @@ export default {
           title: 'Отправить сообщение',
         },
       },
-      printable: 'Printable',
+      printable: 'Печатный вариант',
+      status: {
+        new: 'New',
+        checking: 'Checking',
+        ok: 'Ok',
+        returned: 'Returned',
+        archive: 'Archive',
+        title: 'Статус',
+      },
     },
   },
 };

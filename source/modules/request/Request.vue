@@ -1,5 +1,5 @@
 <template>
-<div class="request">
+<div ref="request" class="request">
   <UiPageHeader :breadcrumbs="breadcrumbs">
     <UiHeader
       slot="title"
@@ -15,7 +15,14 @@
     />
   </UiPageHeader>
 
-  <div></div>
+  <div class="events">
+    <UiSelect
+      :label="$t('status.title')"
+      :options="statusOptions"
+      :value="requestStatus"
+      @input="showModalStatusChange"
+    />
+  </div>
 
   <div class="content">
     <Company
@@ -52,6 +59,7 @@
       class="ui-modal-main"
     >
       <UiTextarea
+        v-model="changeStatusMessage"
         :label="$t(`modal.${modalType}.optional`)"
       />
     </div>
@@ -59,7 +67,7 @@
       slot="footer"
       class="ui-modal-footer"
     >
-      <UiButton @click="hasModal = false">
+      <UiButton @click="confirmNewStatus">
         {{ $t(`modal.${modalType}.button`) }}
       </UiButton>
     </div>
@@ -71,7 +79,15 @@
 import Vue from 'vue';
 import { get, includes, reduce } from 'lodash-es';
 import { mapActions, mapGetters, mapMutations, mapState } from 'vuex';
-import { UiButton, UiHeader, UiPageHeader, UiModal, UiTextarea } from '@protocol-one/ui-kit';
+import { Printd } from 'printd';
+import {
+  UiButton,
+  UiHeader,
+  UiPageHeader,
+  UiModal,
+  UiSelect,
+  UiTextarea,
+} from '@protocol-one/ui-kit';
 import Banking from './components/Banking.vue';
 import Company from './components/Company.vue';
 import Contact from './components/Contact.vue';
@@ -79,11 +95,24 @@ import i18n from './i18n';
 
 export default Vue.extend({
   i18n,
-  components: { Banking, UiButton, Company, Contact, UiHeader, UiPageHeader, UiModal, UiTextarea },
+  components: {
+    Banking,
+    UiButton,
+    Company,
+    Contact,
+    UiHeader,
+    UiPageHeader,
+    UiModal,
+    UiSelect,
+    UiTextarea,
+  },
   data() {
     return {
+      changeStatusMessage: '',
       hasModal: false,
+      newStatus: '',
       modalType: 'changeStatus',
+      printd: null,
     };
   },
   computed: {
@@ -103,6 +132,11 @@ export default Vue.extend({
         authorized: this.fields('contact.authorized'),
         technical: this.fields('contact.technical'),
       };
+    },
+    statusOptions() {
+      const statuses = ['new', 'checking', 'ok', 'returned', 'archive'];
+
+      return statuses.map(status => ({ value: status, label: this.$i18n.t(`status.${status}`) }));
     },
     requestStatus() {
       return get(this.request, 'status', 'new');
@@ -126,7 +160,9 @@ export default Vue.extend({
       this[type](preparedFields);
     },
     confirmNewStatus() {
-      this.changeStatus();
+      this.changeStatus({ status: this.newStatus, message: this.changeStatusMessage });
+      
+      this.hasModal = false;
     },
     fields(path) {
       return reduce(
@@ -146,6 +182,17 @@ export default Vue.extend({
         ...preFields,
         [key]: field.value,
       }), {});
+    },
+    printPage() {
+      if (!this.printd) {
+        this.printd = new Printd();
+      }
+
+      this.printd.print(this.$refs.request);
+    },
+    showModalStatusChange(newStatus) {
+      this.newStatus = newStatus;
+      this.hasModal = true;
     },
   }
 });
