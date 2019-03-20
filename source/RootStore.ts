@@ -7,6 +7,7 @@ import SalesStore from '@/modules/gameSales/store';
 import DocumentsStore from '@/modules/documents/store';
 import GameStore from '@/modules/gameCommon/store';
 import GamesStore from '@/modules/games/store';
+import HistoryStore from '@/modules/history/store';
 import NotificationsStore from '@/modules/notifications/store';
 import RequestsStore from '@/modules/requests/store';
 import RequestStore from '@/modules/request/store';
@@ -39,9 +40,10 @@ export default {
     Documents: DocumentsStore(apiUrl),
     Game: GameStore(apiUrl),
     Games: GamesStore(apiUrl),
-    Sales: SalesStore(apiUrl),
+    History: HistoryStore(adminApiUrl),
     Notifications: NotificationsStore(apiUrl),
-    Requests: RequestsStore(adminApiUrl),
     Request: RequestStore(adminApiUrl),
+    Requests: RequestsStore(adminApiUrl),
+    Sales: SalesStore(apiUrl),
   },
 };

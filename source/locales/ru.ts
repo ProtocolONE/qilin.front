@@ -5,21 +5,21 @@ export default {
     home: {
       title: 'Главная',
       meta: {
-        title: 'Protocol One Qilin',
+        title: 'Главная',
         description: 'Мета описание',
       },
     },
     onBoarding: {
       title: 'Он-Бординг',
       meta: {
-        title: 'Добро пожаловать в Qilin',
+        title: 'Он-Бординг',
         description: 'Начните интеграцию',
       },
     },
     games: {
       title: 'Игры',
       meta: {
-        title: 'Добро пожаловать в Qilin',
+        title: 'Игры',
         description: 'Начните интеграцию',
       },
     },
@@ -31,7 +31,7 @@ export default {
       }
     },
     game: {
-      title: 'Game',
+      title: 'Игра',
       meta: {
         title: 'Редактирование игры',
         description: '',
@@ -104,6 +104,13 @@ export default {
         meta: {
           title: 'Запрос вендора',
           description: 'Запрос вендора',
+        },
+      },
+      history: {
+        title: 'История сообщений вендора',
+        meta: {
+          title: 'История сообщений вендора',
+          description: 'История сообщений вендора',
         },
       },
     },

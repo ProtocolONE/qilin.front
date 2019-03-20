@@ -12,14 +12,14 @@ export default {
     onBoarding: {
       title: 'On Boarding',
       meta: {
-        title: 'Welcome to Qilin',
+        title: 'On Boarding',
         description: 'Help us setup your first tenant and start untegration',
       },
     },
     games: {
       title: 'Games',
       meta: {
-        title: 'Welcome to Qilin',
+        title: 'Games',
         description: 'Help us setup your first tenant and start untegration',
       },
     },
@@ -33,13 +33,13 @@ export default {
     game: {
       title: 'Game',
       meta: {
-        title: 'Edit game',
+        title: 'Game',
         description: '',
       },
       media: {
-        title: 'Edit game media',
+        title: 'Game media',
         meta: {
-          title: 'Edit game media',
+          title: 'Game media',
           description: '',
         },
       },
@@ -51,23 +51,23 @@ export default {
         },
       },
       general: {
-        title: 'Edit game general',
+        title: 'Game general',
         meta: {
-          title: 'Edit game general',
+          title: 'Game general',
           description: '',
         },
       },
       ratings: {
-        title: 'Edit game ratings',
+        title: 'Game ratings',
         meta: {
-          title: 'Edit game ratings',
+          title: 'Game ratings',
           description: '',
         },
       },
       descriptions: {
-        title: 'Edit game descriptions',
+        title: 'Game descriptions',
         meta: {
-          title: 'Edit game descriptions',
+          title: 'Game descriptions',
           description: '',
         },
       },
@@ -104,6 +104,13 @@ export default {
         meta: {
           title: 'Vendor request',
           description: 'Vendor request',
+        },
+      },
+      history: {
+        title: 'Messages history by vendor',
+        meta: {
+          title: 'Messages history by vendor',
+          description: 'Messages history by vendor',
         },
       },
     },
