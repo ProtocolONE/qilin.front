@@ -34,7 +34,7 @@
         // @TODO - Add type for navbarLinks/links
         return this.navbarLinks.map(link => ({
           ...link,
-          title: this.$i18n.t(`routes.${link.name}.title`),
+          title: this.$i18n.t(link.titlePath),
           isActive: this.$route.name === link.name,
         }));
       },

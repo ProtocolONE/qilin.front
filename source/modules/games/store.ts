@@ -32,7 +32,9 @@ export default function GamesStore(apiUrl: string) {
 
     async fetchGames({ commit, state }, sort = '') {
       const games = await axios
-        .get(`${apiUrl}/vendor/${state.vendorId}/games${sort && '?sort='}${sort}`)
+        .get(`${apiUrl}/vendor/${state.vendorId}/games`, {
+          params: { sort: sort || undefined },
+        })
         .then(res => res.data || []);
 
       commit('games', games);
