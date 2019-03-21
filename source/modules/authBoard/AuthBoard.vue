@@ -1,33 +1,69 @@
 <template>
 <div class="auth-board">
   <IconDummy />
-  <span class="title">
-    {{ $t('title') }}
-  </span>
+  <span
+    v-html="$t('title')"
+    class="title"
+  />
   <span
     class="text"
     v-html="$t('text')"
   />
   <UiButton
-    :text="$t('buttonText')"
-    @click="$emit('clickCreate')"
+    class="button"
+    :text="$t('buttonReg')"
+    @click="showAuth('register')"
   />
   <UiButton
-    :text="$t('buttonText')"
-    @click="$emit('clickCreate')"
+    class="button"
+    :isTransparent="true"
+    :text="$t('buttonLogin')"
+    @click="showAuth('login')"
   />
+
+  <Auth
+    v-if="hasShownAuth"
+    :type="authType"
+    @close="hasShownAuth = false"
+    @message="message"
+  />
+
+  <LocaleChanger class="locales" />
 </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import { mapActions } from 'vuex';
 import { UiButton } from '@protocol-one/ui-kit';
+import Auth from '@/components/Auth.vue';
+import LocaleChanger from '@/components/LocaleChanger.vue';
 import IconDummy from '@/components/IconDummy.vue';
 import i18n from './i18n';
 
 export default Vue.extend({
   i18n,
-  components: { UiButton, IconDummy },
+  components: { Auth, IconDummy, LocaleChanger, UiButton },
+  data() {
+    return {
+      authType: 'login',
+      hasShownAuth: false,
+    };
+  },
+  methods: {
+    ...mapActions('Auth', ['setToken']),
+
+    showAuth(type: string) {
+      this.authType = type;
+      this.hasShownAuth = true;
+    },
+    message(event: any) {
+      if (event.success) {
+        this.setToken(event.accessToken);
+        this.$router.go();
+      }
+    },
+  },
 });
 </script>
 
@@ -36,7 +72,8 @@ export default Vue.extend({
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
   flex-direction: column;
   color: #b1b1b1;
   flex: 1;
@@ -52,7 +89,15 @@ export default Vue.extend({
   display: block;
   font-size: 12px;
   margin-top: 8px;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   text-align: center;
+}
+.button {
+  margin-bottom: 8px;
+}
+.locales {
+  position: fixed;
+  top: 24px;
+  right: 24px;
 }
 </style>

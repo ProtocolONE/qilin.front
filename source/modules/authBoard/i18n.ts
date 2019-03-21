@@ -1,16 +1,22 @@
 export default {
   messages: {
     de: {
-      company: 'Company',
-      contact: 'Contacts',
+      title: 'Unsigned user can’t browse any projects',
+      text: 'Please create new account on sign in if you have one',
+      buttonLogin: 'Sign in',
+      buttonReg: 'Sign up',
     },
     en: {
-      company: 'Company',
-      contact: 'Contacts',
+      title: 'Unsigned user can’t browse any projects',
+      text: 'Please create new account on sign in if you have one',
+      buttonLogin: 'Sign in',
+      buttonReg: 'Sign up',
     },
     ru: {
-      company: 'Компания',
-      contact: 'Контакты',
+      title: 'Незарегестрированные пользователи не могут просматрить проекты',
+      text: 'Создайте новую учетную запись или войдите с имеющейся',
+      buttonLogin: 'Войти',
+      buttonReg: 'Зарегистрироваться',
     },
   },
 };

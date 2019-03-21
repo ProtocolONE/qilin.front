@@ -49,10 +49,11 @@ export default Vue.extend({
           const { access_token, success }: Auth1Message = JSON.parse(e.data);
 
           if (access_token && success) {
-            localStorage.setItem('accessToken', access_token);
-            location.reload();
+            this.$emit('message', { success: true, accessToken: access_token });
           }
-        } catch (e) {}
+        } catch (error) {
+          this.$emit('message', { success: false, error });
+        }
       });
     },
   },

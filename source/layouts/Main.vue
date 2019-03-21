@@ -1,10 +1,11 @@
 <template>
-<div class="main-wrapper">
+<div :class="['main-wrapper', { '_with-navbar': !isAuthPage }]">
   <Navbar
     v-if="!isAuthPage"
     :hasAuth="hasAuth"
     :links="links"
     @logout="logout"
+    @authMessage="authMessage"
   />
   <TipWithNotifications v-if="hasAuth && !isAuthPage" />
   <router-view />
@@ -43,12 +44,22 @@
     },
     methods: {
       ...mapActions(['initUser', 'logout']),
+      ...mapActions('Auth', ['setToken']),
+
+      authMessage(event: any) {
+        if (event.success) {
+          this.setToken(event.accessToken);
+          this.$router.go();
+        }
+      },
     },
   });
 </script>
 
 <style lang="scss" scoped>
-  .main-wrapper {
+.main-wrapper {
+  &._with-navbar {
     margin-left: 80px;
   }
+}
 </style>

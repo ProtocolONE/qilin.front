@@ -1,26 +1,23 @@
 import axios from 'axios';
 import { GetterTree, ActionTree, MutationTree } from 'vuex';
-import { State } from './types';
 
-export default function AuthBoardStore(apiUrl: string) {
+interface State {
+  accessToken: string;
+}
+
+export default function AuthStore() {
   const state: State = {
-    documents: null,
+    accessToken: undefined,
   };
-  const getters: GetterTree<State, any> = {
-    steps: ({ documents }) => documents ? ['company', 'contact', 'banking'] : [],
-    disabled: ({ documents }) => documents && documents.status !== 'draft',
-  };
+  const getters: GetterTree<State, any> = {};
   const actions: ActionTree<State, any> = {
-    async initState({ commit }, vendorId) {
-      const documents = await axios
-        .get(`${apiUrl}/vendors/${vendorId}/documents`)
-        .then(response => response.data);
-
-      commit('documents', documents);
+    setToken({ commit }, accessToken) {
+      localStorage.setItem('accessToken', accessToken);
+      commit('accessToken', accessToken);
     },
   };
   const mutations: MutationTree<State> = {
-    documents: (state, value) => state.documents = value,
+    accessToken: (state, value) => state.accessToken = value,
   };
 
   return {

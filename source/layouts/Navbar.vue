@@ -20,7 +20,7 @@
     v-if="hasShownAuth"
     :type="authType"
     @close="hasShownAuth = false"
-    @login="$emit(authType, $event)"
+    @message="$emit('authMessage', $event)"
   />
 </UiPageNavbar>
 </template>
