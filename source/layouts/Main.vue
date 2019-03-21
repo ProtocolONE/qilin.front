@@ -1,11 +1,12 @@
 <template>
 <div class="main-wrapper">
   <Navbar
+    v-if="!isAuthPage"
     :hasAuth="hasAuth"
     :links="links"
     @logout="logout"
   />
-  <TipWithNotifications />
+  <TipWithNotifications v-if="hasAuth && !isAuthPage" />
   <router-view />
 </div>
 </template>
@@ -23,6 +24,10 @@
     computed: {
       ...mapGetters(['hasAuth']),
       ...mapState(['navbarLinks', 'user']),
+
+      isAuthPage() {
+        return this.$route.name === 'authBoard';
+      },
 
       links() {
         // @TODO - Add type for navbarLinks/links

@@ -1,5 +1,6 @@
 import { RouteConfig } from 'vue-router';
 
+import AuthBoard from '@/modules/authBoard/AuthBoard.vue';
 import Documents from '@/modules/documents/Documents.vue';
 import Home from '@/modules/home/Home.vue';
 import GameCommon from '@/modules/gameCommon/GameCommon.vue';
@@ -20,6 +21,11 @@ const routes: RouteConfig[] = [
     path: '/',
     name: 'home',
     component: Home,
+  },
+  {
+    path: '/auth',
+    name: 'authBoard',
+    component: AuthBoard,
   },
   {
     path: '/vendor/on-boarding',
