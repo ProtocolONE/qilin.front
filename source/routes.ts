@@ -93,9 +93,12 @@ const routes: RouteConfig[] = [
     name: 'admin',
     // @TODO - remove redirect when Admin page is implemented
     redirect: '/admin/requests',
+    component: {
+      template: '<router-view />',
+    },
     children: [
       {
-        path: '/admin/requests',
+        path: 'requests',
         name: 'requests',
         component: Requests,
         meta: 'routes.admin.requests.meta'

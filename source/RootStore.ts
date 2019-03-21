@@ -9,8 +9,8 @@ import GamesModule from '@/modules/games/store';
 import NotificationsStore from '@/modules/notifications/store';
 import RequestsModule from '@/modules/requests/store';
 
-const apiUrl = config.api;
 const adminApiUrl = config.adminApi;
+const apiUrl = config.api;
 
 const mainStores = MainStores(apiUrl, routes);
 
