@@ -46,7 +46,7 @@ export default Vue.extend({
     listenFrame () {
       window.addEventListener('message', (e) => {
         try {
-          const { access_token, success }: Auth1Message = JSON.parse(e.data);
+          const { access_token, success }: Auth1Message = e.data;
 
           if (access_token && success) {
             this.$emit('message', { success: true, accessToken: access_token });

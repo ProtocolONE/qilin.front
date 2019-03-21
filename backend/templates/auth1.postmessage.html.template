@@ -11,7 +11,7 @@
             success: {isSuccess},
         };
         var targetOrigin = "{targetOrigin}";
-        parent.postMessage(JSON.stringify(result), targetOrigin);
+        parent.postMessage(result, targetOrigin);
     </script>
 </head>
 <body></body>
