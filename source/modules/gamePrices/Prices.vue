@@ -68,6 +68,7 @@
     <headline v-show="showDetails" id="prices">
       <span class="section__title">
         {{ $t('prices') }}
+      </span>
     </headline>
     <p v-show="showDetails" class="section__description">
       {{ $t('pricesDescription') }}
