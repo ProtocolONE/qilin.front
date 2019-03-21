@@ -40,6 +40,10 @@ export default Vue.extend({
   },
   methods: {
     sortDirection(propName: string) {
+      if (this.sortingProps[propName] === undefined) {
+        return null;
+      }
+
       return this.sortingProps[propName] ? 'asc' : 'desc';
     },
     toggleSort(propName: string) {
