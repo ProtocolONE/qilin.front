@@ -13,8 +13,79 @@ export default function RequestsStore(apiUrl: string) {
     },
     async fetchRequests({ commit }, sort = '') {
       const requests = await axios
-        .get(`${apiUrl}/vendors/reviews${sort && '?sort='}${sort}`)
-        .then(res => res.data || []);
+        .get(`${apiUrl}/vendors/reviews`, {
+          params: { sort: sort || undefined },
+        })
+        .then(res => res.data || [
+          {
+            vendorId: '1',
+            name: 'Company 1',
+            country: 'USA',
+            person: 'User 1',
+            updatedAt: '2019-03-22T06:46:56Z',
+            status: 'new',
+          },
+          {
+            vendorId: '2',
+            name: 'Company 2',
+            country: 'USA',
+            person: 'User 2',
+            updatedAt: '2019-03-22T06:46:56Z',
+            status: 'checking',
+          },
+          {
+            vendorId: '3',
+            name: 'Company 3',
+            country: 'USA',
+            person: 'User 2',
+            updatedAt: '2019-03-22T06:46:56Z',
+            status: 'returned',
+          },
+          {
+            vendorId: '4',
+            name: 'Company 4',
+            country: 'USA',
+            person: 'User 3',
+            updatedAt: '2019-03-22T06:46:56Z',
+            status: 'approved',
+          },
+        ])
+        .catch(e => {
+          return [
+            {
+              vendorId: '1',
+              name: 'Company 1',
+              country: 'USA',
+              person: 'User 1',
+              updatedAt: '2019-03-22T06:46:56Z',
+              status: 'new',
+            },
+            {
+              vendorId: '2',
+              name: 'Company 2',
+              country: 'USA',
+              person: 'User 2',
+              updatedAt: '2019-03-22T06:46:56Z',
+              status: 'checking',
+            },
+            {
+              vendorId: '3',
+              name: 'Company 3',
+              country: 'USA',
+              person: 'User 2',
+              updatedAt: '2019-03-22T06:46:56Z',
+              status: 'returned',
+            },
+            {
+              vendorId: '4',
+              name: 'Company 4',
+              country: 'USA',
+              person: 'User 3',
+              updatedAt: '2019-03-22T06:46:56Z',
+              status: 'approved',
+            },
+          ]
+        });
 
       commit('requests', requests);
     },

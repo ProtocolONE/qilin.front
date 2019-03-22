@@ -6,7 +6,8 @@
   <UiTableCell
     v-for="(isSortable, column) in requestColumns"
     :key="column"
-    :class="['filter-cell', { '_active': isSortable }]"
+    :isSortable="isSortable"
+    :sortDirection="sortDirection(column)"
     @click.native="toggleSort(column)"
   >
     {{ $t(column) }}
@@ -22,6 +23,12 @@ import i18n from './i18nFilters';
 export default Vue.extend({
   i18n,
   components: { UiTableRow, UiTableCell },
+  props: {
+    sortingProps: {
+      default: () => ({}),
+      type: Object,
+    },
+  },
   computed: {
     requestColumns() {
       return {
@@ -34,20 +41,18 @@ export default Vue.extend({
     },
   },
   methods: {
+    sortDirection(propName: string) {
+      if (this.sortingProps[propName] === undefined) {
+        return null;
+      }
+
+      return this.sortingProps[propName] ? 'asc' : 'desc';
+    },
     toggleSort(propName: string) {
       if (this.requestColumns[propName]) {
         this.$emit('toggleSort', propName);
       }
-    }
+    },
   },
 });
 </script>
-
-<style lang="scss" scoped>
-.filter-cell {
-  &._active {
-    color: #0c2441;
-    cursor: pointer;
-  }
-}
-</style>

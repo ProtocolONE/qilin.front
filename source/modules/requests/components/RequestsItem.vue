@@ -11,6 +11,7 @@
   </UiTableCell>
   <UiTableCell>
     <UiButton
+      type="rectangle"
       :color="buttonColor"
       :text="$t(`status.${request.status}`)"
     />
@@ -22,8 +23,10 @@
 import Vue from 'vue';
 import { UiButton, UiTableRow, UiTableCell } from '@protocol-one/ui-kit';
 import formatDate from '@/helpers/formatDate';
+import i18n from './i18nItem';
 
 export default Vue.extend({
+  i18n,
   components: { UiButton, UiTableRow, UiTableCell },
   props: {
     request: {
@@ -36,7 +39,7 @@ export default Vue.extend({
       const colors = {
         new: 'blue',
         checking: 'purple',
-        ok: 'green',
+        approved: 'green',
         returned: 'orange',
         archive: 'gray',
       };
@@ -48,7 +51,7 @@ export default Vue.extend({
         new Date(this.request.updatedAt),
         'dd LLLL yyyy, HH:mm',
         this.$i18n.locale,
-        this.$i18n.fallbackLocale
+        this.$i18n.fallbackLocale,
       );
     },
     requestData() {
@@ -58,7 +61,7 @@ export default Vue.extend({
         name,
         country,
         person,
-        updateAt,
+        updateAt: this.formatReleaseDate,
       }
     },
     requestUrl(): string {

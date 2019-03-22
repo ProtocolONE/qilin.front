@@ -732,10 +732,10 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha1-p3c2C1s5oaLlEG+OhY8v0tBgxXA=
 
-"@protocol-one/ui-kit@^1.15.0":
-  version "1.15.0"
-  resolved "https://registry.yarnpkg.com/@protocol-one/ui-kit/-/ui-kit-1.15.0.tgz#10893e7d740a3825c7140659f219a79fb230263e"
-  integrity sha512-paDTpOoiDLjNCRGYl7zqzEDc1rNmNOpo7bs/5Gqb71nxokMfBNbTK42rOdCnaCflVpNfnCJa0hk235zyb62TEQ==
+"@protocol-one/ui-kit@^1.20.0":
+  version "1.20.0"
+  resolved "https://registry.yarnpkg.com/@protocol-one/ui-kit/-/ui-kit-1.20.0.tgz#08501845a3eaaafc4b7c1be088f567de8a2babee"
+  integrity sha512-CJNxa0eQhtKMi4tPblSbfZRRZ9DI6234PZn3cl8zSC/8SLnqKSa8kC5xfIbeCTSqMEhGRKQoi2ZdqtzVYaTieA==
   dependencies:
     date-fns "^v2.0.0-alpha.27"
     lodash-es "^4.17.11"

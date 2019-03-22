@@ -4,7 +4,7 @@ export default {
       status: {
         new: 'New',
         checking: 'Checking',
-        ok: 'Ok',
+        approved: 'Ok',
         returned: 'Returned',
         archive: 'Archive',
       },
@@ -13,7 +13,7 @@ export default {
       status: {
         new: 'New',
         checking: 'Checking',
-        ok: 'Ok',
+        approved: 'Ok',
         returned: 'Returned',
         archive: 'Archive',
       },
@@ -22,7 +22,7 @@ export default {
       status: {
         new: 'Новый',
         checking: 'На проверке',
-        ok: 'Проверен',
+        approved: 'Проверен',
         returned: 'Возвращен',
         archive: 'В архиве',
       },

@@ -6,7 +6,10 @@
   />
 
   <UiTable v-if="hasRequests">
-    <RequestsFilters @toggleSort="toggleSort" />
+    <RequestsFilters
+      :sortingProps="sortingProps"
+      @toggleSort="toggleSort"
+    />
 
     <RequestsItem
       v-for="request in innerRequests"
@@ -30,7 +33,7 @@ export default Vue.extend({
   components: { RequestsFilters, RequestsHeader, RequestsItem, UiTable },
   data: () => ({
     innerRequests: [],
-    sortingProp: {},
+    sortingProps: {},
   }),
   computed: {
     ...mapState('Requests', ['requests']),
@@ -54,7 +57,9 @@ export default Vue.extend({
       );
     },
     toggleSort(propName) {
-      this.sortingProps[propName] = !this.sortingProps[propName];
+      this.sortingProps = {
+        [propName]: !this.sortingProps[propName],
+      };
 
       this.fetchRequests(`${this.sortingProps[propName] ? '+' : '-'}${propName}`);
     },
