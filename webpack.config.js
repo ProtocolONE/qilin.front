@@ -130,6 +130,7 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js', '.vue'],
     alias: {
       '@': path.join(__dirname, 'source'),
+      vue: 'vue/dist/vue.js',
     },
   },
   devtool: ENV_DEV ? 'inline-source-map' : '',

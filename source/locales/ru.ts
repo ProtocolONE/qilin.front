@@ -86,5 +86,19 @@ export default {
         description: 'Документы вендора',
       },
     },
+    admin: {
+      title: 'Админ-панель',
+      meta: {
+        title: 'Админ-панель',
+        description: 'Админ-панель',
+      },
+      requests: {
+        title: 'Запросы на проверку',
+        meta: {
+          title: 'Запросы на проверку',
+          description: 'Запросы на проверку',
+        },
+      },
+    },
   },
 };

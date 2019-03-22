@@ -7,11 +7,12 @@ import DocumentsStore from '@/modules/documents/store';
 import GameStore from '@/modules/gameCommon/store';
 import GamesModule from '@/modules/games/store';
 import NotificationsStore from '@/modules/notifications/store';
+import RequestsModule from '@/modules/requests/store';
 
+const adminApiUrl = config.adminApi;
 const apiUrl = config.api;
-const accessToken = localStorage.getItem('accessToken') || '';
 
-const mainStores = MainStores(apiUrl, accessToken, routes);
+const mainStores = MainStores(apiUrl, routes);
 
 /**
  * Root store, that agragate high-level modules.
@@ -37,5 +38,6 @@ export default {
     Games: GamesModule(apiUrl),
     Sales: SalesStore(apiUrl),
     Notifications: NotificationsStore(apiUrl),
+    Requests: RequestsModule(adminApiUrl),
   },
 };

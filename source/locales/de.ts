@@ -72,5 +72,19 @@ export default {
         description: 'Documents for vendor',
       },
     },
+    admin: {
+      title: 'Admin-panel',
+      meta: {
+        title: 'Admin-panel',
+        description: 'Admin-panel',
+      },
+      requests: {
+        title: 'Requests',
+        meta: {
+          title: 'Requests',
+          description: 'Requests',
+        },
+      },
+    },
   },
 };
