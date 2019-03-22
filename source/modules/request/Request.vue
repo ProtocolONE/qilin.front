@@ -145,7 +145,7 @@ export default Vue.extend({
       };
     },
     statusOptions() {
-      const statuses = ['new', 'checking', 'ok', 'returned', 'archive'];
+      const statuses = ['new', 'checking', 'approved', 'returned', 'archive'];
 
       return statuses.map(status => ({ value: status, label: this.$i18n.t(`status.${status}`) }));
     },

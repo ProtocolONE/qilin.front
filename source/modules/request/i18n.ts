@@ -17,7 +17,7 @@ export default {
       status: {
         new: 'New',
         checking: 'Checking',
-        ok: 'Ok',
+        approved: 'Ok',
         returned: 'Returned',
         archive: 'Archive',
         title: 'Status',
@@ -40,7 +40,7 @@ export default {
       status: {
         new: 'New',
         checking: 'Checking',
-        ok: 'Ok',
+        approved: 'Ok',
         returned: 'Returned',
         archive: 'Archive',
         title: 'Status',
@@ -63,7 +63,7 @@ export default {
       status: {
         new: 'New',
         checking: 'Checking',
-        ok: 'Ok',
+        approved: 'Ok',
         returned: 'Returned',
         archive: 'Archive',
         title: 'Статус',

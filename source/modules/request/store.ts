@@ -16,7 +16,8 @@ export default function DocumentsStore(apiUrl: string) {
     async initState({ commit }, vendorId) {
       const request = await axios
         .get(`${apiUrl}/vendors/${vendorId}/documents`)
-        .then(response => response.data);
+        .then(response => response.data)
+        .catch(e => {});
 
       commit('vendorId', vendorId);
       commit('request', request);
