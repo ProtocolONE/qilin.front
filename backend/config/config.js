@@ -24,8 +24,8 @@ const config = {
 
   postMessageTargetOrigin: getEnvVariable('POST_MESSAGE_TARGET_ORIGIN', 'http://127.0.0.1:8080'),
 
-  auth1ClientId: getEnvVariable('AUTH1_CLIENT_ID', '5c79297b1ba28e00014ff57b'),
-  auth1ClientSecret: getEnvVariable('AUTH1_CLIENT_SECRET', 'ACWFDVzUE9whecVRTH5OOIIedkioUMsC6GgXhcrFpui798fDz8ADW0GZbde7ukxg'),
+  auth1ClientId: getEnvVariable('AUTH1_CLIENT_ID', '5c6ebece8db4bc0001beacea'),
+  auth1ClientSecret: getEnvVariable('AUTH1_CLIENT_SECRET', 'ZdAZ6N9QBDNq0kOYnXJ6m1avoVjSbqT4M3nbE2oznZrEMSIRTpvdt53qGq2kIRDm'),
   auth1Scope: getEnvVariableArray('AUTH1_CLIENT_SCOPE', 'openid,offline'),
   auth1Issuer: getEnvVariable('AUTH1_ISSUER_URL', 'https://auth1.tst.protocol.one'),
   auth1PostmessageHtmlTemplatePath: path.resolve('backend/templates/auth1.postmessage.html.template'),

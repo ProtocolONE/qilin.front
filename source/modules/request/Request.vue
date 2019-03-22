@@ -1,11 +1,14 @@
 <template>
-<div ref="request" class="request">
-  <UiPageHeader :breadcrumbs="breadcrumbs">
+<div class="request">
+  <UiPageHeader
+    class="request-header"
+    :breadcrumbs="breadcrumbs"
+  >
     <UiHeader
       slot="title"
       level="1"
     >
-      {{ request.company.name }}
+      {{ companyName }}
     </UiHeader>
 
     <UiButton
@@ -25,23 +28,28 @@
   </div>
 
   <div class="content">
-    <Company
-      class="step"
-      :countries="countries"
-      :fields="companyFields"
-      @change="changeFields('company', $event)"
-    />
-    <Contact
-      class="step"
-      :fields="contactFields"
-      @change="changeFields('contact', $event)"
-    />
-    <Banking
-      class="step"
-      :currencies="currencies"
-      :fields="bankingFields"
-      @change="changeFields('banking', $event)"
-    />
+    <div class="content-box">
+      <Company
+        class="step"
+        :countries="countries"
+        :fields="companyFields"
+        @change="changeFields('company', $event)"
+      />
+    </div>
+
+    <div class="content-box">
+      <Contact
+        class="step"
+        :fields="contactFields"
+        @change="changeFields('contact', $event)"
+      />
+      <Banking
+        class="step"
+        :currencies="currencies"
+        :fields="bankingFields"
+        @change="changeFields('banking', $event)"
+      />
+    </div>
   </div>
 
   <UiModal
@@ -127,6 +135,9 @@ export default Vue.extend({
     companyFields() {
       return this.fields('company');
     },
+    companyName() {
+      return get(this.request, 'company.name', 'Company');
+    },
     contactFields() {
       return {
         authorized: this.fields('contact.authorized'),
@@ -143,7 +154,6 @@ export default Vue.extend({
     },
   },
   mounted() {
-    console.error(this.$route);
     this.initState(this.$route.params.vendorId);
   },
   methods: {
@@ -184,11 +194,7 @@ export default Vue.extend({
       }), {});
     },
     printPage() {
-      if (!this.printd) {
-        this.printd = new Printd();
-      }
-
-      this.printd.print(this.$refs.request);
+      window.print();
     },
     showModalStatusChange(newStatus) {
       this.newStatus = newStatus;
@@ -204,14 +210,27 @@ export default Vue.extend({
   display: flex;
   flex-direction: column;
 }
+.request-header {
+  @media print {
+    display: none;
+  }
+}
+.events {
+  max-width: 320px;
+  padding: 0 32px;
+  margin-top: 16px;
+}
 .content {
   display: flex;
   flex-grow: 1;
   flex-wrap: wrap;
+  padding: 0 32px;
+  justify-content: space-between;
+  align-items: flex-start;
 }
-.step {
+.content-box {
   min-width: 300px;
-  flex-basis: 50%;
+  flex-basis: calc(50% - 16px);
 }
 .ui-modal-main {
   max-width: 460px;
