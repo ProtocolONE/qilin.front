@@ -6,7 +6,7 @@ import getters from './getters'
 export default function SalesStore(apiUrl: string) {
   actions.initState = function ({ commit, dispatch }, gameId: string) {
     commit('updateGameId', gameId)
-    commit('updateApi', `${ apiUrl }/api/v1/games/`)
+    commit('updateApi', `${ apiUrl }/games/`)
     dispatch('loadPrices')
     dispatch('loadDiscounts')
   }

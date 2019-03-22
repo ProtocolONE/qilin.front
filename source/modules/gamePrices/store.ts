@@ -48,8 +48,8 @@ export default function PricesStore (apiUrl: string) {
 
   const getters: GetterTree<State, any> = {
     getUrl: () => (value: string, id: string) =>
-      `${ apiUrl }/api/v1/games/${ id }/${ value }/`,
-
+      `${ apiUrl }/games/${ id }/${ value }/`,
+    
     getCurrencyPrice: ({ prices }) => (value: string) =>
       (prices.prices || []).find(({ currency }) => currency === value)
   }
