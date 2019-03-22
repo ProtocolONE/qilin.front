@@ -1,26 +1,26 @@
 <template>
-<PageHeader :title="$t('title')">
+<UiPageHeader :title="$t('title')">
   <div
     v-if="hasRequests"
     slot="right"
     class="search"
   >
-    <TextField
+    <UiTextField
       :label="$t('search')"
       @input="$emit('search', $event)"
     />
   </div>
-</PageHeader>
+</UiPageHeader>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import { PageHeader, TextField } from '@protocol-one/ui-kit';
+import { UiPageHeader, UiTextField } from '@protocol-one/ui-kit';
 import i18n from './i18nHeader';
 
 export default Vue.extend({
   i18n,
-  components: { PageHeader, TextField },
+  components: { UiPageHeader, UiTextField },
   props: {
     hasRequests: {
       default: false,

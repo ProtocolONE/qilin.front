@@ -55,7 +55,7 @@ export default Vue.extend({
       );
     },
     requestData() {
-      const { name, country, person, updateAt } = this.request;
+      const { name, country, person } = this.request;
 
       return {
         name,

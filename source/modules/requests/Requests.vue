@@ -52,7 +52,7 @@ export default Vue.extend({
       this.innerRequests = this.requests.filter(
         ({ country, name, person, status, updatedAt }) => includes(
           `${country} ${name} ${person} ${status} ${updatedAt}`.toLowerCase(),
-          namePart.toLowerCase(),
+          namePart.trim().toLowerCase(),
         ),
       );
     },
