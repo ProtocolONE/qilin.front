@@ -1,0 +1,28 @@
+language: node_js
+
+stages:
+  - test
+  - name: deploy 
+    if: branch = master
+
+jobs:
+  include:
+  - stage: test
+    install: true
+    script:
+    - echo 'tests here'
+  - stage: deploy
+    services: docker
+    install: true
+    script:
+    #- 'curl -H "Content-Type: application/json;" -X POST -d "{\"PROJECT\": \"$TRAVIS_REPO_SLUG\", \"BRANCH\": \"$TRAVIS_BRANCH\"}" $JENKINS'
+    - docker run -it
+      -e JENKINS_AUTH_TOKEN=$JENKINS_AUTH_TOKEN
+      -e JENKINS_BUILD_TOKEN=$JENKINS_BUILD_TOKEN
+      -e JENKINS_BUILD_PROJECT=$TRAVIS_REPO_SLUG
+      -e JENKINS_BUILD_BRANCH=$TRAVIS_BRANCH
+      p1hub/p1jenkinstrigger
+
+notifications:
+  slack:
+    secure: A2ZIZFPsVXR/yjipO0W0g2/egbFz4LG49e4e+j97MUFx57hNZVPDgsrAfkuNYblAulO3wlEvrPsr6i5eetR6XHHfowBaCyKD6gBZG02nsgyHQEHiYsely/PPCe9Z3NKFKEachM6Qkt6JzL8Bb+wywHZRLd2VBOV8n139AKTP1AJvifjyvNNAhlzsa/DVRrPMhkxZdV7uC9mZ635egOGMZWDtR9ZkMT9EtduIWIBcFBs3O2kQkNhDKZakEy5m7SLENi6Oi2VwfE+dchanri1rdy4BY7H89DTuLHUboBtOCYbB84CDEjGu/dBIU0R5bxUGfsZN40NGWDtfPqSZtDHVnkfilMlcApCGMChuHr2wNFJmwCTO28QNi7ak3VUMhJWgTlGJiHTfCvII+KoZ5iaELWrqcv7NFVoRAMSRP6ZPV1N9WCccBThhuYguXfdPxDRymC5aER94y0Cu0/69i5Z0pwhuZrI9FK9dbJm/Lj24tgA25OqBW4aT8SQWTx40cYg+1IcsUV+1DdDahUYXwijbc5gKbcIYoB3hVvX1GZXITAjGij3HjalUUf2XeMG5iE9D+JxDejgVSbhXYx9HURcbwgEce3Z15ge+NYtDlrhY4khO4wk0x4Ye6WLIkbLkZ8FElVt9jD5Etd6YECU4OvKW5Uc5IMH7mnoZDXhFD+jaqcg=
