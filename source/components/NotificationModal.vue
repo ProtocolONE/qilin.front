@@ -3,7 +3,7 @@
   @close="$emit('close')"
   class=""
 >
-  <h3 slot="header">{{ title }}</h3>
+  <h3 slot="header" class="title">{{ title }}</h3>
   <div slot="main" class="message">
     {{ message }}
   </div>
@@ -56,8 +56,9 @@
   font-size: 16px;
   color: #B1B1B1;
 }
-.message {
+.message, .title {
   min-width: 430px;
+  max-width: 500px;
 }
 .notify-footer {
   width: 100%;

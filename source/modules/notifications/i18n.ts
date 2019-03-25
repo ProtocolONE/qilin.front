@@ -12,7 +12,7 @@ export default {
     ru: {
       title: 'Уведомления',
       search: 'Поиск ...',
-      unread: 'Просмотрено',
+      unread: 'Новые',
       event: 'Событие',
       message: 'Сообщение',
       date: 'Дата',

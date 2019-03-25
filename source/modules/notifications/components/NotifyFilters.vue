@@ -4,17 +4,14 @@
   :isHead="true"
 >
   <UiTableCell
-    v-for="cell in [
-      {name: 'unread', sort: '+unread'},
-      {name: 'title', sort: '+title'},
-      {name: 'message', sort: '-message'},
-      {name: 'date', sort: '-createdDate'}
-    ]"
-    :class="['notify-cell', cell.name, {_active: sort === cell.sort}]"
-    @click.native="toggleSort(cell.sort)"
+    v-for="({ name, filterSort }) in filters"
+    :key="name"
+    :class="['notify-cell', name, { '_active': sort === filterSort, _desc: sort[0] === '-' }]"
+    @click.native="toggleSort(filterSort)"
   >
     <svg
-      v-if="sort === cell.sort"
+      class="arrow"
+      v-if="sort.substr(1) === filterSort"
       width="8"
       height="10"
       viewBox="0 0 8 10"
@@ -26,7 +23,7 @@
         fill="#B1B1B1"
       />
     </svg>
-    {{ $t(cell.name) }}
+    {{ $t(name) }}
   </UiTableCell>
 </UiTableRow>
 </template>
@@ -45,9 +42,23 @@
         type: String,
       },
     },
+    computed: {
+      filters() {
+        return [
+          { name: 'unread', filterSort: 'unread' },
+          { name: 'event', filterSort: 'title' },
+          { name: 'message', filterSort: 'message' },
+          { name: 'date', filterSort: 'createdDate' },
+        ];
+      },
+    },
     methods: {
       toggleSort(propName: string) {
-        this.$emit('toggleSort', propName);
+        const dir = propName === this.$props.sort.substr(1)
+          && this.$props.sort[0] === '+'
+            ? '-'
+            : '+';
+        this.$emit('toggleSort', dir + propName);
       }
     },
   });
@@ -59,6 +70,13 @@
   cursor: pointer;
   &._active {
     cursor: default;
+  }
+
+  .arrow {
+    transition: transform 0.3s ease;
+  }
+  &._desc .arrow {
+    transform: rotate(180deg);
   }
 }
 </style>
