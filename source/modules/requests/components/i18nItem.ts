@@ -6,7 +6,7 @@ export default {
         checking: 'Checking',
         approved: 'Ok',
         returned: 'Returned',
-        archive: 'Archive',
+        archived: 'Archive',
       },
     },
     en: {
@@ -15,7 +15,7 @@ export default {
         checking: 'Checking',
         approved: 'Ok',
         returned: 'Returned',
-        archive: 'Archive',
+        archived: 'Archive',
       },
     },
     ru: {
@@ -24,7 +24,7 @@ export default {
         checking: 'На проверке',
         approved: 'Проверен',
         returned: 'Возвращен',
-        archive: 'В архиве',
+        archived: 'В архиве',
       },
     },
   },
