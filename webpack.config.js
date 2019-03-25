@@ -114,6 +114,7 @@ module.exports = {
     new VueLoaderPlugin(),
     new webpack.DefinePlugin(
       [
+        'QILIN_ADMIN_API',
         'QILIN_API',
         'IMAGINARY_API',
         'NODE_ENV',

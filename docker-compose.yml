@@ -1,68 +1,69 @@
 version: "3.6"
 
 services:
-    qilin-front-nginx:
-        image: nginx
-        container_name: pausuper-nginx
-        depends_on:
-            - qilin-front-app
-        networks:
-            - p1devnet
-        ports:
-            - "80:80"
-        environment:
-            - NGINX_HOST=${NGINX_HOST}
-            - NGINX_PORT=80
-            - APP=http://qilin-front-app:${SERVER_PORT}
-        volumes:
-            - ./etc/nginx/default.template:/etc/nginx/conf.d/default.template
-            - qilin-front-static-content:/var/www/static
-        command: bin/bash -c "envsubst < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
-        restart: unless-stopped
+  qilin-front-nginx:
+    image: nginx
+    container_name: pausuper-nginx
+    depends_on:
+      - qilin-front-app
+    networks:
+      - p1devnet
+    ports:
+      - "80:80"
+    environment:
+      - NGINX_HOST=${NGINX_HOST}
+      - NGINX_PORT=80
+      - APP=http://qilin-front-app:${SERVER_PORT}
+    volumes:
+      - ./etc/nginx/default.template:/etc/nginx/conf.d/default.template
+      - qilin-front-static-content:/var/www/static
+    command: bin/bash -c "envsubst < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
+    restart: unless-stopped
 
-    qilin-front-redis:
-        image: redis:5.0.3
-        container_name: qilin-front-redis
-        restart: unless-stopped
-        networks:
-            - p1devnet
+  qilin-front-redis:
+    image: redis:5.0.3
+    container_name: qilin-front-redis
+    restart: unless-stopped
+    networks:
+      - p1devnet
 
-    qilin-front-app:
-        container_name: qilin-front-app
-        build: .
-        restart: unless-stopped
-        depends_on:
-            - qilin-front-redis
-        networks:
-            - p1devnet
-        volumes:
-          - ./:/application
-          - qilin-front-node-modules:/application/node_modules
-          - qilin-front-static-content:/application/build
-        environment:
-            - NODE_ENV=production
-            - AUTH1_CLIENT_ID=${AUTH1_CLIENT_ID}
-            - AUTH1_CLIENT_SCOPE=${AUTH1_CLIENT_SCOPE}
-            - AUTH1_CLIENT_SECRET=${AUTH1_CLIENT_SECRET}
-            - AUTH1_ISSUER_URL=${AUTH1_ISSUER_URL}
-            - CORS_VALID_ORIGINS=${CORS_VALID_ORIGINS}
-            - POST_MESSAGE_TARGET_ORIGIN=${POST_MESSAGE_TARGET_ORIGIN}
-            - PUBLIC_HOST=${PUBLIC_HOST}
-            - REDIS_HOST=qilin-front-redis
-            - REDIS_PORT=6379
-            - ROUTES_PREFIX=
-            - SENTRY_DSN=${SENTRY_DSN}
-            - SERVER_PORT=${SERVER_PORT}
-            - SESSION_COOKIE_NAME="qlsid"
-            - SESSION_COOKIE_SIGN_KEY=${SESSION_COOKIE_SIGN_KEY}
-            - SESSION_MAX_AGE=21600
-            - QILIN_API=${QILIN_API}
-            - IMAGINARY_API=${IMAGINARY_API}
-            - CENTRIFUGE_URL=${CENTRIFUGE_URL}
+  qilin-front-app:
+    container_name: qilin-front-app
+    build: .
+    restart: unless-stopped
+    depends_on:
+      - qilin-front-redis
+    networks:
+      - p1devnet
+    volumes:
+      - ./:/application
+      - qilin-front-node-modules:/application/node_modules
+      - qilin-front-static-content:/application/build
+    environment:
+      - NODE_ENV=production
+      - AUTH1_CLIENT_ID=${AUTH1_CLIENT_ID}
+      - AUTH1_CLIENT_SCOPE=${AUTH1_CLIENT_SCOPE}
+      - AUTH1_CLIENT_SECRET=${AUTH1_CLIENT_SECRET}
+      - AUTH1_ISSUER_URL=${AUTH1_ISSUER_URL}
+      - CORS_VALID_ORIGINS=${CORS_VALID_ORIGINS}
+      - POST_MESSAGE_TARGET_ORIGIN=${POST_MESSAGE_TARGET_ORIGIN}
+      - PUBLIC_HOST=${PUBLIC_HOST}
+      - REDIS_HOST=qilin-front-redis
+      - REDIS_PORT=6379
+      - ROUTES_PREFIX=
+      - SENTRY_DSN=${SENTRY_DSN}
+      - SERVER_PORT=${SERVER_PORT}
+      - SESSION_COOKIE_NAME="qlsid"
+      - SESSION_COOKIE_SIGN_KEY=${SESSION_COOKIE_SIGN_KEY}
+      - SESSION_MAX_AGE=21600
+      - QILIN_ADMIN_API=${QILIN_ADMIN_API}
+      - QILIN_API=${QILIN_API}
+      - IMAGINARY_API=${IMAGINARY_API}
+      - CENTRIFUGE_URL=${CENTRIFUGE_URL}
 
 networks:
-    p1devnet:
-        external: true
+  p1devnet:
+    external: true
 
 volumes:
   qilin-front-static-content:
