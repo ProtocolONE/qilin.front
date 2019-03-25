@@ -157,8 +157,12 @@
   color: #999999;
   padding-left: 38px;
   padding-top: 18px;
+  padding-right: 40px;
   position: relative;
   cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   &:hover {
     background-color: #BCD6F4;
   }

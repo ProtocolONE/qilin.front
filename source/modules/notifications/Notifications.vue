@@ -60,9 +60,11 @@
       NUM_ROWS,
       unreadTimeout: null,
       searchTimeout: null,
+      updateTimeout: null,
     }),
     computed: {
       ...mapState('Notifications', ['notifications', 'page', 'sort', 'search', 'itemsCount']),
+      ...mapState({wsNotifies: 'notifications'}), // from global notifications store
       noAnyNotification() {
         return !this.notifications.length;
       },
@@ -71,6 +73,10 @@
       this.initState();
     },
     watch: {
+      wsNotifies() {
+        clearTimeout(this.updateTimeout);
+        this.updateTimeout = setTimeout(this.fetchNotifys.bind(this), 200);
+      },
       notifications(notifys) {
         clearTimeout(this.unreadTimeout);
         this.unreadTimeout = setTimeout(

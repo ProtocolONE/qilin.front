@@ -62,6 +62,10 @@
 }
 .col-title {
   width: 20%;
+  max-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .col-message {
   max-width: 0;
