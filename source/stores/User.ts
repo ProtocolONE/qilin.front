@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { find, get } from 'lodash-es';
+import { find, get, reduce } from 'lodash-es';
 import { GetterTree, ActionTree, MutationTree } from 'vuex';
 import State from './userTypes';
 
@@ -64,7 +64,11 @@ export default function UserStore(apiUrl: string) {
         .then(res => get(res, 'data.permissions', null));
 
       if (permissions) {
-        commit('permissions', permissions);
+        commit('permissions', reduce(
+          permissions,
+          (permObject, perm) => ({ ...permObject, [perm.resource]: perm }),
+          {}
+        ));
       }
     },
     async createVendor({ commit, state }, query) {

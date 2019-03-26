@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { get } from 'lodash-es';
+import { get, includes, isEmpty } from 'lodash-es';
 import { mapState, mapActions, mapGetters } from 'vuex';
 import Navbar from './Navbar.vue';
 import TipWithNotifications from '@/components/TipWithNotifications.vue';
@@ -44,15 +44,23 @@ export default Vue.extend({
     },
   },
   async mounted() {
-    if (this.isAuthPage && this.hasAuth) {
-      this.$router.replace({ name: 'main' });
-      return;
-    }
-
     if (this.hasAuth) {
       await this.initUser({ router: this.$router });
     } else {
       this.$router.replace({ name: 'authBoard' });
+    }
+
+    if (this.isAuthPage && this.hasAuth) {
+      const moduleName = isEmpty(this.permissions) ? 'main' : 'games';
+      this.$router.replace({ name: moduleName });
+      return;
+    }
+
+    if (
+      !isEmpty(this.permissions) &&
+      !includes(['any', 'read'], get(this.permissions, `${this.$route.name}.action`, ''))
+    ) {
+      this.$router.replace({ name: 'games' });
     }
   },
   methods: {
