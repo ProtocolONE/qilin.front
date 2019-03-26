@@ -11,9 +11,8 @@ export default function GamesStore(apiUrl: string) {
   };
   const getters: GetterTree<State, any> = {};
   const actions: ActionTree<State, any> = {
-    async initState({ commit, dispatch }, { router, vendorId }: { router: VueRouter, vendorId: string }) {
+    async initState({ commit, dispatch }, { vendorId }: { vendorId: string }) {
       if (!vendorId) {
-        router.push({path: '/vendor/on-boarding'});
         return;
       }
 

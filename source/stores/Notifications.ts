@@ -18,42 +18,37 @@ export default function NotificationsStore(apiUrl: string)  {
   };
   const getters: GetterTree<State, any> = {};
   const actions: ActionTree<State, any> = {
-    async readNotifys({ commit, state }, messageIds) {
-      if (!state.vendor) {
+    async readNotifys({ commit, getters }, messageIds) {
+      if (!getters.currentVendorId) {
         return;
       }
+
       for (let messageId of messageIds) {
         await axios
-          .put(`${apiUrl}/vendors/${state.vendor.id}/messages/${messageId}/read`);
+          .put(`${apiUrl}/vendors/${getters.currentVendorId}/messages/${messageId}/read`);
         commit('setNotifyRead', messageId);
       }
     },
 
-    async openNotify({ commit, state, dispatch }, messageId) {
-      if (!state.vendor) {
+    async openNotify({ commit, dispatch, getters }, messageId) {
+      if (!getters.currentVendorId) {
         return;
       }
+
       const notify: Notification = await axios
-        .get(`${apiUrl}/vendors/${state.vendor.id}/messages/${messageId}`)
+        .get(`${apiUrl}/vendors/${getters.currentVendorId}/messages/${messageId}`)
         .then( resp => resp.data );
       dispatch('readNotifys', [notify.id]);
       commit('updateSelectedNotify', notify);
     },
 
-    async startWatchNotifications({ commit, state }) {
-      if (!state.user) {
+    async startWatchNotifications({ commit, state, getters }) {
+      if (!state.user || !getters.currentVendorId) {
         return;
       }
-      const vendors = await axios
-        .get(`${apiUrl}/vendors`, { params: { limit: 1 } })
-        .then(res => res.data || []);
-      if (vendors.length) {
-        commit('vendor', vendors[0]);
-      }
-      const vendorId: string = vendors[0].id;
 
       const resp: AxiosResponse = await axios
-        .get(`${apiUrl}/vendors/${vendorId}/messages/short`);
+        .get(`${apiUrl}/vendors/${getters.currentVendorId}/messages/short`);
 
       if (resp.data) {
         commit('addNotifications', resp.data || []);
@@ -63,13 +58,13 @@ export default function NotificationsStore(apiUrl: string)  {
 
       const centrifuge = new Centrifuge(config.centrifugeUrl);
       centrifuge.setToken(token);
-      centrifuge.subscribe(`qilin:${vendorId}`, message => {
+      centrifuge.subscribe(`qilin:${getters.currentVendorId}`, ({ data }: { data: any }) => {
         const newMsg: NotificationShort = {
-          id: message.data.id,
-          title: message.data.title,
-          createdAt: message.data.dateTime,
+          id: data.id,
+          title: data.title,
+          createdAt: data.dateTime,
           isRead: false,
-          haveMsg: message.data.body !== '',
+          haveMsg: data.body !== '',
         };
         commit('addNotifications', [newMsg]);
       });

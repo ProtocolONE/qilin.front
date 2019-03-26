@@ -56,7 +56,7 @@ export default Vue.extend({
     },
   },
   mounted() {
-    this.initState({ router: this.$router, vendorId: this.currentVendorId });
+    this.initState({ vendorId: this.currentVendorId });
   },
   methods: {
     ...mapActions('Games', ['initState', 'fetchGames']),

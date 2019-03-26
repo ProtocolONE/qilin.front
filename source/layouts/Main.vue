@@ -4,6 +4,7 @@
     v-if="!isAuthPage"
     :hasAuth="hasAuth"
     :links="links"
+    :userName="userName"
     @logout="logout"
     @authMessage="authMessage"
   />
@@ -13,47 +14,59 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue';
-  import { mapState, mapActions, mapGetters } from 'vuex';
-  import Navbar from './Navbar.vue';
-  import TipWithNotifications from '@/components/TipWithNotifications.vue';
+import Vue from 'vue';
+import { get } from 'lodash-es';
+import { mapState, mapActions, mapGetters } from 'vuex';
+import Navbar from './Navbar.vue';
+import TipWithNotifications from '@/components/TipWithNotifications.vue';
 
-  import './bootstrap';
+import './bootstrap';
 
-  export default Vue.extend({
-    components: { Navbar, TipWithNotifications },
-    computed: {
-      ...mapGetters(['hasAuth']),
-      ...mapState(['navbarLinks', 'user']),
+export default Vue.extend({
+  components: { Navbar, TipWithNotifications },
+  computed: {
+    ...mapGetters(['hasAuth', 'permissions']),
+    ...mapState(['navbarLinks', 'user']),
 
-      isAuthPage() {
-        return this.$route.name === 'authBoard';
-      },
-
-      links() {
-        // @TODO - Add type for navbarLinks/links
-        return this.navbarLinks.map(link => ({
-          ...link,
-          title: this.$i18n.t(link.titlePath),
-          isActive: this.$route.name === link.name,
-        }));
-      },
+    isAuthPage() {
+      return this.$route.name === 'authBoard';
     },
-    mounted() {
-      this.initUser();
+    userName() {
+      return get(this.user, 'name', '');
     },
-    methods: {
-      ...mapActions(['initUser', 'logout']),
-      ...mapActions('Auth', ['setToken']),
+    links() {
+      // @TODO - Add type for navbarLinks/links
+      return this.navbarLinks.map(link => ({
+        ...link,
+        title: this.$i18n.t(link.titlePath),
+        isActive: this.$route.name === link.name,
+      }));
+    },
+  },
+  async mounted() {
+    if (this.isAuthPage && this.hasAuth) {
+      this.$router.replace({ name: 'main' });
+      return;
+    }
 
-      authMessage(event: any) {
-        if (event.success) {
-          this.setToken(event.accessToken);
-          this.$router.go();
-        }
-      },
+    if (this.hasAuth) {
+      await this.initUser({ router: this.$router });
+    } else {
+      this.$router.replace({ name: 'authBoard' });
+    }
+  },
+  methods: {
+    ...mapActions(['initUser', 'logout']),
+    ...mapActions('Auth', ['setToken']),
+
+    authMessage(event: any) {
+      if (event.success) {
+        this.setToken(event.accessToken);
+        this.$router.go();
+      }
     },
-  });
+  },
+});
 </script>
 
 <style lang="scss" scoped>
