@@ -3,6 +3,7 @@ import '@babel/polyfill';
 import axios from 'axios';
 import Vue from 'vue';
 import Vuex from 'vuex';
+import Vuelidate from 'vuelidate';
 import * as Sentry from '@sentry/browser';
 import { directive as onClickaway } from 'vue-clickaway';
 import RootStore from './RootStore';
@@ -23,7 +24,9 @@ const accessToken = localStorage.getItem('accessToken') || '';
 if (accessToken) {
   axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 }
+
 Vue.use(Vuex);
+Vue.use(Vuelidate);
 Vue.directive('clickaway', onClickaway);
 
 const store = new Vuex.Store({
