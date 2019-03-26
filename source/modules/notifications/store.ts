@@ -7,24 +7,19 @@ export default function NotificationsStore(apiUrl: string) {
   const state: State = {
     notifications: [],
     itemsCount: 0,
-    vendorId: '',
     search: '',
     page: 0,
     sort: '-createdDate',
   };
   const getters: GetterTree<State, any> = {};
   const actions: ActionTree<State, any> = {
-    async initState({ commit, state }) {
-      const vendors = await axios
-        .get(`${apiUrl}/vendors`, { params: { limit: 1 } })
-        .then(res => res.data || []);
-      if (!vendors.length) {
+    async initState({ commit, state }, { vendorId }) {
+      if (!vendorId) {
         return;
       }
-      commit('vendorId', vendors[0].id);
 
       const res: AxiosResponse = await axios
-        .get(`${apiUrl}/vendors/${vendors[0].id}/messages`, {
+        .get(`${apiUrl}/vendors/${vendorId}/messages`, {
           params: {
             offset: 0,
             limit: NUM_ROWS,
@@ -36,9 +31,9 @@ export default function NotificationsStore(apiUrl: string) {
       commit('setItemsCount', res.headers['x-items-count']);
     },
 
-    async fetchNotifys({ commit, state }) {
+    async fetchNotifys({ commit, state }, { vendorId }) {
       const res: AxiosResponse = await axios
-        .get(`${apiUrl}/vendors/${state.vendorId}/messages`, {
+        .get(`${apiUrl}/vendors/${vendorId}/messages`, {
           params: {
             query: state.search,
             sort: state.sort,
@@ -52,7 +47,6 @@ export default function NotificationsStore(apiUrl: string) {
   };
   const mutations: MutationTree<State> = {
     setNotifys: (state, value) => state.notifications = value,
-    vendorId: (state, value) => state.vendorId = value,
     setPage: (state, value) => state.page = value,
     setSort: (state, value) => state.sort = value,
     setSearch: (state, value) => state.search = value,

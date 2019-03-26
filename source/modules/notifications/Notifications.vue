@@ -39,7 +39,7 @@
 
 <script type="ts">
   import Vue from 'vue';
-  import { mapState, mapActions, mapMutations } from 'vuex';
+  import { mapGetters, mapState, mapActions, mapMutations } from 'vuex';
   import { UiTable, UiPaginator } from '@protocol-one/ui-kit';
   import IconDummy from '@/components/IconDummy.vue';
   import NotifyItem from './components/NotifyItem.vue';
@@ -58,6 +58,7 @@
       updateTimeout: null,
     }),
     computed: {
+      ...mapGetters(['currentVendorId']),
       ...mapState('Notifications', ['notifications', 'page', 'sort', 'search', 'itemsCount']),
       ...mapState({wsNotifies: 'notifications'}), // from global notifications store
       noAnyNotification() {
@@ -65,12 +66,15 @@
       },
     },
     mounted() {
-      this.initState();
+      this.initState({ vendorId: this.currentVendorId });
     },
     watch: {
       wsNotifies() {
         clearTimeout(this.updateTimeout);
-        this.updateTimeout = setTimeout(this.fetchNotifys.bind(this), 200);
+        this.updateTimeout = setTimeout(
+          this.fetchNotifys({ vendorId: this.currentVendorId }).bind(this),
+          200,
+        );
       },
       notifications(notifys) {
         clearTimeout(this.unreadTimeout);
@@ -89,12 +93,12 @@
       ...mapMutations(['updateSelectedNotify']),
       pageChanged({ offset }) {
         this.setPage(Math.ceil(offset / NUM_ROWS));
-        this.fetchNotifys();
+        this.fetchNotifys({ vendorId: this.currentVendorId });
       },
       toggleSort(propName) {
         this.setPage(0);
         this.setSort(propName);
-        this.fetchNotifys();
+        this.fetchNotifys({ vendorId: this.currentVendorId });
       },
       selectNotify(notify) {
         if (!notify.message) {
@@ -108,15 +112,20 @@
         this.setPage(0);
         this.setSearch(value);
         clearTimeout(this.searchTimeout);
-        this.searchTimeout = setTimeout(() => this.fetchNotifys(), 400);
+        this.searchTimeout = setTimeout(
+          () => this.fetchNotifys({ vendorId: this.currentVendorId }),
+          400,
+        );
       },
       clearUnreadMark(notifys) {
         const ids = notifys.map(n => n.id);
-        this.setNotifys(this.notifications
-          .map(n => ids.indexOf(n.id) > -1
-            ? {...n, isRead: true}
-            : n
-          ));
+        this.setNotifys(
+          this.notifications.map(
+            n => ids.indexOf(n.id) > -1
+              ? { ...n, isRead: true }
+              : n
+          )
+        );
         this.readNotifys(ids);
       }
     },
