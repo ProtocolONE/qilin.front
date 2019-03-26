@@ -22,7 +22,7 @@
   />
   <CreateGame
     v-if="showModal"
-    :vendorId="vendorId"
+    :vendorId="currentVendorId"
     @close="showModal = false"
     @create="gameCreated"
   />
@@ -31,7 +31,7 @@
 
 <script type="ts">
 import Vue from 'vue';
-import { mapState, mapActions } from 'vuex';
+import { mapGetters, mapState, mapActions } from 'vuex';
 import { includes, map, orderBy } from 'lodash-es';
 import { UiTable } from '@protocol-one/ui-kit';
 import CreateGame from '@/modules/gameCreate/CreateGame.vue';
@@ -48,14 +48,15 @@ export default Vue.extend({
     showModal: false,
   }),
   computed: {
-    ...mapState('Games', ['games', 'vendorId', 'genres']),
+    ...mapGetters(['currentVendorId']),
+    ...mapState('Games', ['games', 'genres']),
 
     hasGames() {
       return !!this.games.length;
     },
   },
   mounted() {
-    this.initState({ router: this.$router });
+    this.initState({ router: this.$router, vendorId: this.currentVendorId });
   },
   methods: {
     ...mapActions('Games', ['initState', 'fetchGames']),
@@ -71,7 +72,10 @@ export default Vue.extend({
     toggleSort(propName) {
       this.sortingProps[propName] = !this.sortingProps[propName];
 
-      this.fetchGames(`${this.sortingProps[propName] ? '+' : '-'}${propName}`);
+      this.fetchGames({
+        sort: `${this.sortingProps[propName] ? '+' : '-'}${propName}`,
+        vendorId: this.currentVendorId,
+      });
     },
   },
   watch: {

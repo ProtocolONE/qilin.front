@@ -23,5 +23,4 @@ export interface Game {
 export interface State {
   games: Game[];
   genres: Genre[];
-  vendorId: string;
 }
