@@ -42,11 +42,13 @@ import GameItem from './components/GameItem.vue';
 
 export default Vue.extend({
   components: { CreateGame, CreateGameDummy, GamesFilters, GamesHeader, GameItem, UiTable },
-  data: () => ({
-    innerGames: [],
-    sortingProps: {},
-    showModal: false,
-  }),
+  data() {
+    return {
+      innerGames: [],
+      sortingProps: {},
+      showModal: false,
+    };
+  },
   computed: {
     ...mapGetters(['currentVendorId']),
     ...mapState('Games', ['games', 'genres']),
