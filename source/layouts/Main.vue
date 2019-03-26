@@ -1,11 +1,13 @@
 <template>
-<div class="main-wrapper">
+<div :class="['main-wrapper', { '_with-navbar': !isAuthPage }]">
   <Navbar
+    v-if="!isAuthPage"
     :hasAuth="hasAuth"
     :links="links"
     @logout="logout"
+    @authMessage="authMessage"
   />
-  <TipWithNotifications />
+  <TipWithNotifications v-if="hasAuth && !isAuthPage" />
   <router-view />
 </div>
 </template>
@@ -24,6 +26,10 @@
       ...mapGetters(['hasAuth']),
       ...mapState(['navbarLinks', 'user']),
 
+      isAuthPage() {
+        return this.$route.name === 'authBoard';
+      },
+
       links() {
         // @TODO - Add type for navbarLinks/links
         return this.navbarLinks.map(link => ({
@@ -38,12 +44,22 @@
     },
     methods: {
       ...mapActions(['initUser', 'logout']),
+      ...mapActions('Auth', ['setToken']),
+
+      authMessage(event: any) {
+        if (event.success) {
+          this.setToken(event.accessToken);
+          this.$router.go();
+        }
+      },
     },
   });
 </script>
 
 <style lang="scss" scoped>
-  .main-wrapper {
+.main-wrapper {
+  &._with-navbar {
     margin-left: 80px;
   }
+}
 </style>
