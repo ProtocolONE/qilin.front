@@ -57,8 +57,8 @@ export default {
   data () {
     return {
       heads: [
-        { label: 'currency', order: 'currency', width: 'auto' },
-        { label: 'suggestedPrice', order: 'price', width: '120' },
+        { label: 'currency', order: 'currency', width: '170' },
+        { label: 'suggestedPrice', order: 'price', width: '170' },
         { label: 'vat', order: 'vat', width: '75' },
         { label: 'endUserPrice', order: 'userPrice', width: '120' }
       ],
