@@ -65,7 +65,7 @@ export default Vue.extend({
       }
     },
     requestUrl(): string {
-      return `/admin/requests/${this.request.vendorId}`;
+      return `/admin/requests/${this.request.vendor_id}`;
     },
   },
 });
