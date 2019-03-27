@@ -99,6 +99,13 @@ export default {
           description: 'Requests',
         },
       },
+      request: {
+        title: 'Vendor request',
+        meta: {
+          title: 'Vendor request',
+          description: 'Vendor request',
+        },
+      },
     },
   },
 };

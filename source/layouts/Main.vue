@@ -61,5 +61,9 @@
   &._with-navbar {
     margin-left: 80px;
   }
+
+  @media print {
+    margin-left: 0;
+  }
 }
 </style>

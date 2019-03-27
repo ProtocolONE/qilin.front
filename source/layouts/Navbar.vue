@@ -1,8 +1,9 @@
 <template>
 <UiPageNavbar
+  class="page-navbar"
   title="Qilin"
-  :is-authorised="hasAuth"
   :logo-link="logoLink"
+  :is-authorised="hasAuth"
   :navigation-links="navigationLinks"
   :user-name="userName"
   @login="showAuth('login')"
@@ -82,6 +83,12 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
+.page-navbar {
+  @media print {
+    display: none;
+  }
+}
+
 .locales {
   padding-left: 16px;
 }

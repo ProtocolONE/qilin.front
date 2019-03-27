@@ -6,9 +6,10 @@ import CreateGameStore from '@/modules/gameCreate/store';
 import SalesStore from '@/modules/gameSales/store';
 import DocumentsStore from '@/modules/documents/store';
 import GameStore from '@/modules/gameCommon/store';
-import GamesModule from '@/modules/games/store';
+import GamesStore from '@/modules/games/store';
 import NotificationsStore from '@/modules/notifications/store';
-import RequestsModule from '@/modules/requests/store';
+import RequestsStore from '@/modules/requests/store';
+import RequestStore from '@/modules/request/store';
 
 const adminApiUrl = config.adminApi;
 const apiUrl = config.api;
@@ -37,9 +38,10 @@ export default {
     CreateGame: CreateGameStore(apiUrl),
     Documents: DocumentsStore(apiUrl),
     Game: GameStore(apiUrl),
-    Games: GamesModule(apiUrl),
+    Games: GamesStore(apiUrl),
     Sales: SalesStore(apiUrl),
     Notifications: NotificationsStore(apiUrl),
-    Requests: RequestsModule(adminApiUrl),
+    Requests: RequestsStore(adminApiUrl),
+    Request: RequestStore(adminApiUrl),
   },
 };

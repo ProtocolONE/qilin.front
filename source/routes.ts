@@ -15,6 +15,7 @@ import Games from '@/modules/games/Games.vue';
 import OnBoarding from '@/modules/onBoarding/OnBoarding.vue';
 import Notifications from '@/modules/notifications/Notifications.vue';
 import Requests from '@/modules/requests/Requests.vue';
+import Request from '@/modules/request/Request.vue';
 
 const routes: RouteConfig[] = [
   {
@@ -48,32 +49,32 @@ const routes: RouteConfig[] = [
     },
     children: [
       {
-        name: 'gameGeneral',
         path: 'general',
+        name: 'gameGeneral',
         component: GameGeneral,
         meta: 'routes.game.general.meta'
       },
       {
-        name: 'gameMedia',
         path: 'media',
+        name: 'gameMedia',
         component: GameMedia,
         meta: 'routes.game.media.meta'
       },
       {
-        name: 'gamePrices',
         path: 'prices',
+        name: 'gamePrices',
         component: GamePrices,
         meta: 'routes.game.prices.meta'
       },
       {
-        name: 'GameRatings',
         path: 'ratings',
+        name: 'GameRatings',
         component: GameRatings,
         meta: 'routes.game.ratings.meta'
       },
       {
-        name: 'GameDescriptions',
         path: 'descriptions',
+        name: 'GameDescriptions',
         component: GameDescriptions,
         meta: 'routes.game.descriptions.meta'
       },
@@ -108,7 +109,13 @@ const routes: RouteConfig[] = [
         name: 'requests',
         component: Requests,
         meta: 'routes.admin.requests.meta'
-      }
+      },
+      {
+        path: 'requests/:vendorId',
+        name: 'request',
+        component: Request,
+        meta: 'routes.admin.request.meta'
+      },
     ],
   },
 ].map(route => ({ ...route, meta: `routes.${route.name}.meta` }));

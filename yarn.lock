@@ -732,10 +732,10 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha1-p3c2C1s5oaLlEG+OhY8v0tBgxXA=
 
-"@protocol-one/ui-kit@^1.20.0":
-  version "1.20.0"
-  resolved "https://registry.yarnpkg.com/@protocol-one/ui-kit/-/ui-kit-1.20.0.tgz#08501845a3eaaafc4b7c1be088f567de8a2babee"
-  integrity sha512-CJNxa0eQhtKMi4tPblSbfZRRZ9DI6234PZn3cl8zSC/8SLnqKSa8kC5xfIbeCTSqMEhGRKQoi2ZdqtzVYaTieA==
+"@protocol-one/ui-kit@^1.21.1":
+  version "1.21.1"
+  resolved "https://registry.yarnpkg.com/@protocol-one/ui-kit/-/ui-kit-1.21.1.tgz#12429d5678019620214078e9ea3e7dc29fbc4779"
+  integrity sha512-h9SsyokIbJdZpHquD2lovDuCk3bJHMdNTXgB0K3mZzKpO5rfyVjPFRpIG3Oz/vZ+g0hgaAkTh34+n2IHRjhquQ==
   dependencies:
     date-fns "^v2.0.0-alpha.27"
     lodash-es "^4.17.11"
@@ -6756,6 +6756,11 @@ prettier@1.16.3:
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.16.3.tgz#8c62168453badef702f34b45b6ee899574a6a65d"
   integrity sha512-kn/GU6SMRYPxUakNXhpP0EedT/KmaPzr0H5lIsDogrykbaxOpOfAFfk5XA7DZrJyMAv1wlMV3CPcZruGXVVUZw==
 
+printd@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/printd/-/printd-1.3.0.tgz#090f3293a7aef536894630967b91d1b0598574ce"
+  integrity sha512-p9PddyVETBLBtWco4VWQvJIebM5QU2R001Wk2HB9udJxTYLovXWS4RkwIwQsHE3TUkG6f56u3kpCCB85p0rkeQ==
+
 private@^0.1.6, private@^0.1.8:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/private/-/private-0.1.8.tgz#2381edb3689f7a53d653190060fcf822d2f368ff"
@@ -8661,6 +8666,11 @@ vuejs-datepicker@^1.5.4:
   version "1.5.4"
   resolved "https://registry.yarnpkg.com/vuejs-datepicker/-/vuejs-datepicker-1.5.4.tgz#dacdb5eb5ef44342c67cb59b93a0d5da9c1809b3"
   integrity sha512-AVzgu3pb/fF/Sj3qu8YPnp7KhtsXkm8TSnBEcyYsWb1bMJr5FdPCxuIzISgw5kq0It7HkVJUGXQ4CiCwq9hhww==
+
+vuelidate@^0.7.4:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/vuelidate/-/vuelidate-0.7.4.tgz#5a0e54be09ac0192f1aa3387d74b92e0945bf8aa"
+  integrity sha512-QHZWYOL325Zo+2K7VBNEJTZ496Kd8Z31p85aQJFldKudUUGBmgw4zu4ghl4CyqPwjRCmqZ9lDdx4FSdMnu4fGg==
 
 vuex@^3.0.1:
   version "3.1.0"

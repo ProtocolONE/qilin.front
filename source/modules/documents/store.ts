@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { filter, includes, some } from 'lodash-es';
 import { GetterTree, ActionTree, MutationTree } from 'vuex';
-import defaultCountries from './defaultCountries';
-import defaultCurrencies from './defaultCurrencies';
+import defaultCountries from '@/helpers/defaultCountries';
+import defaultCurrencies from '@/helpers/defaultCurrencies';
 import { State } from './types';
 
 type Field = string | number | boolean;
