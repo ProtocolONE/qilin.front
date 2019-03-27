@@ -1,4 +1,4 @@
-const _ = require('lodash-es');
+const _ = require('lodash');
 
 function throwVariableError(variableName) {
   const message = `Environment variable '${variableName}' is not set`;
