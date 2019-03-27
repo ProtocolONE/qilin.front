@@ -56,7 +56,8 @@ export default Vue.extend({
     },
   },
   computed: {
-    preparedFields() {  
+    preparedFields() {
+      console.error(this.fields);
       return mapValues(this.fields, (field, key) => ({ ...field, label: this.$i18n.t(key) }));
     },
     preparedCurrencies() {

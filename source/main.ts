@@ -3,6 +3,7 @@ import '@babel/polyfill';
 import axios from 'axios';
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { extend, get } from 'lodash-es';
 import Vuelidate from 'vuelidate';
 import * as Sentry from '@sentry/browser';
 import { directive as onClickaway } from 'vue-clickaway';
@@ -10,6 +11,16 @@ import RootStore from './RootStore';
 import router from './router';
 import i18n from './i18n';
 import MainLayout from './layouts/Main.vue';
+
+function $isFieldInvalid(fieldPath: string) {
+  const field = get(this.$v, fieldPath);
+  if (!field) {
+    return false;
+  }
+  return Boolean(field.$invalid && field.$dirty);
+}
+
+extend(Vue.prototype, { $isFieldInvalid });
 
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({

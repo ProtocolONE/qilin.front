@@ -19,7 +19,14 @@
   </UiPageHeader>
 
   <div class="events">
+    <div
+      v-if="formatUpdatedDate"
+      class="date"
+    >
+      {{ formatUpdatedDate }}
+    </div>
     <UiSelect
+      class="select"
       :label="$t('status.title')"
       :options="statusOptions"
       :value="requestStatus"
@@ -27,7 +34,10 @@
     />
   </div>
 
-  <div class="content">
+  <div
+    v-if="request"
+    class="content"
+  >
     <div class="content-box">
       <Company
         class="step"
@@ -87,7 +97,6 @@
 import Vue from 'vue';
 import { get, includes, reduce } from 'lodash-es';
 import { mapActions, mapGetters, mapMutations, mapState } from 'vuex';
-import { Printd } from 'printd';
 import {
   UiButton,
   UiHeader,
@@ -96,6 +105,7 @@ import {
   UiSelect,
   UiTextarea,
 } from '@protocol-one/ui-kit';
+import formatDate from '@/helpers/formatDate';
 import Banking from './components/Banking.vue';
 import Company from './components/Company.vue';
 import Contact from './components/Contact.vue';
@@ -124,7 +134,19 @@ export default Vue.extend({
     };
   },
   computed: {
-    ...mapState('Request', ['countries', 'currencies', 'request']),
+    ...mapState('Request', ['countries', 'currencies', 'request', 'updatedAt']),
+
+    formatUpdatedDate() {
+      console.error(this.updatedAt);
+      return this.updatedAt
+        ? formatDate(
+          new Date(this.updatedAt),
+          'dd LLLL yyyy, HH:mm',
+          this.$i18n.locale,
+          this.$i18n.fallbackLocale
+        )
+        : null;
+    },
 
     bankingFields() {
       return this.fields('banking');
@@ -136,7 +158,7 @@ export default Vue.extend({
       return this.fields('company');
     },
     companyName() {
-      return get(this.request, 'company.name', 'Company');
+      return get(this.request, 'company.name', 'Company') || 'Company';
     },
     contactFields() {
       return {
@@ -180,7 +202,6 @@ export default Vue.extend({
         (preValue, value, key) => ({
           ...preValue,
           [key]: {
-            required: includes(get(this.requiredFields, path, []), key),
             value,
           },
         }),
@@ -216,9 +237,20 @@ export default Vue.extend({
   }
 }
 .events {
-  max-width: 320px;
+  max-width: 520px;
   padding: 0 32px;
   margin-top: 16px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.date {
+  font-size: 16px;
+  color: #0c2441;
+  margin-right: 32px;
+}
+.select {
+  flex-basis: 160px;
 }
 .content {
   display: flex;
@@ -231,6 +263,9 @@ export default Vue.extend({
 .content-box {
   min-width: 300px;
   flex-basis: calc(50% - 16px);
+}
+.step {
+  margin-bottom: 54px;
 }
 .ui-modal-main {
   max-width: 460px;
