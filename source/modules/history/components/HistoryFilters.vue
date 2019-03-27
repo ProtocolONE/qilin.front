@@ -25,7 +25,7 @@ export default Vue.extend({
   components: { UiTableRow, UiTableCell },
   props: {
     sortingProps: {
-      default: {},
+      default: () => ({}),
       type: Object,
     }
   },
