@@ -53,6 +53,12 @@ export default function DocumentsStore(apiUrl: string) {
 
       commit('status', status);
     },
+    async sendMessage({ commit, state }, { title, message }) {
+      await axios.post(
+        `${apiUrl}/vendors/${state.vendorId}/messages`,
+        { message, title },
+      );
+    },
   };
   const mutations: MutationTree<State> = {
     status: (state, status) => state.request = { ...state.request, status },

@@ -32,6 +32,29 @@
       :value="requestStatus"
       @input="showModalStatusChange"
     />
+    <div
+      v-clickaway="hideTip"
+      class="dots"
+    >
+      <IconSimpleDots @click.native="toggleTipVisible" />
+      <UiTip
+        :visible="isTipVisible"
+        :withoutPadding="true"
+      >
+        <RouterLink
+          :to="{ name: 'history', params: { id: vendorId }}"
+          class="event-item"
+        >
+          {{ $t('showHistory') }}
+        </RouterLink>
+        <div
+          @click="openMessageModal"
+          class="event-item"
+        >
+          {{ $t('sendMessage') }}
+        </div>
+      </UiTip>
+    </div>
   </div>
 
   <div
@@ -76,8 +99,14 @@
       slot="main"
       class="ui-modal-main"
     >
+      <UiTextField
+        v-if="modalType === 'sendMessage'"
+        class="title-message"
+        v-model="titleMessage"
+        :label="$t(`modal.${modalType}.titleMessage`)"
+      />
       <UiTextarea
-        v-model="changeStatusMessage"
+        v-model="message"
         :label="$t(`modal.${modalType}.optional`)"
       />
     </div>
@@ -85,7 +114,7 @@
       slot="footer"
       class="ui-modal-footer"
     >
-      <UiButton @click="confirmNewStatus">
+      <UiButton @click="sendHandler">
         {{ $t(`modal.${modalType}.button`) }}
       </UiButton>
     </div>
@@ -100,12 +129,15 @@ import { mapActions, mapGetters, mapMutations, mapState } from 'vuex';
 import {
   UiButton,
   UiHeader,
-  UiPageHeader,
   UiModal,
+  UiPageHeader,
   UiSelect,
   UiTextarea,
+  UiTextField,
+  UiTip,
 } from '@protocol-one/ui-kit';
 import formatDate from '@/helpers/formatDate';
+import IconSimpleDots from '@/components/IconSimpleDots.vue';
 import Banking from './components/Banking.vue';
 import Company from './components/Company.vue';
 import Contact from './components/Contact.vue';
@@ -115,29 +147,32 @@ export default Vue.extend({
   i18n,
   components: {
     Banking,
-    UiButton,
     Company,
     Contact,
+    IconSimpleDots,
+    UiButton,
     UiHeader,
-    UiPageHeader,
     UiModal,
+    UiPageHeader,
     UiSelect,
     UiTextarea,
+    UiTextField,
+    UiTip,
   },
   data() {
     return {
-      changeStatusMessage: '',
+      titleMessage: '',
+      message: '',
       hasModal: false,
-      newStatus: '',
+      isTipVisible: false,
       modalType: 'changeStatus',
-      printd: null,
+      newStatus: '',
     };
   },
   computed: {
-    ...mapState('Request', ['countries', 'currencies', 'request', 'updatedAt']),
+    ...mapState('Request', ['countries', 'currencies', 'request', 'updatedAt', 'vendorId']),
 
     formatUpdatedDate() {
-      console.error(this.updatedAt);
       return this.updatedAt
         ? formatDate(
           new Date(this.updatedAt),
@@ -179,7 +214,7 @@ export default Vue.extend({
     this.initState(this.$route.params.vendorId);
   },
   methods: {
-    ...mapActions('Request', ['initState', 'changeStatus']),
+    ...mapActions('Request', ['initState', 'changeStatus', 'sendMessage']),
     ...mapMutations('Request', ['banking', 'company', 'contact']),
 
     changeFields(type, fields) {
@@ -191,9 +226,13 @@ export default Vue.extend({
 
       this[type](preparedFields);
     },
-    confirmNewStatus() {
-      this.changeStatus({ status: this.newStatus, message: this.changeStatusMessage });
-      
+    sendHandler() {
+      if (this.modalType === 'changeStatus') {
+        this.changeStatus({ status: this.newStatus, message: this.message });
+      } else {
+        this.sendMessage({ title: this.titleMessage, message: this.message });
+      }
+
       this.hasModal = false;
     },
     fields(path) {
@@ -217,9 +256,20 @@ export default Vue.extend({
     printPage() {
       window.print();
     },
+    openMessageModal() {
+      this.modalType = 'sendMessage';
+      this.hasModal = true;
+    },
     showModalStatusChange(newStatus) {
       this.newStatus = newStatus;
+      this.modalType = 'changeStatus';
       this.hasModal = true;
+    },
+    toggleTipVisible() {
+      this.isTipVisible = !this.isTipVisible;
+    },
+    hideTip() {
+      this.isTipVisible = false;
     },
   }
 });
@@ -251,6 +301,27 @@ export default Vue.extend({
 }
 .select {
   flex-basis: 160px;
+  margin-right: 32px;
+}
+.dots {
+  position: relative;
+  width: 20px;
+  cursor: pointer;
+}
+.event-item {
+  font-size: 16px;
+  color: #999;
+  line-height: 40px;
+  display: block;
+  padding: 0;
+  background-color: #fff;
+  text-decoration: none;
+  min-width: 200px;
+  padding: 0 24px;
+
+  &:hover {
+    background-color: rgba(#2f6ecd, 0.2);
+  }
 }
 .content {
   display: flex;
@@ -266,6 +337,9 @@ export default Vue.extend({
 }
 .step {
   margin-bottom: 54px;
+}
+.title-message {
+  margin-bottom: 16px;
 }
 .ui-modal-main {
   max-width: 460px;

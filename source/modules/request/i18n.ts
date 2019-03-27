@@ -1,6 +1,7 @@
 export default {
   messages: {
     de: {
+      allRequests: 'All requests',
       modal: {
         changeStatus: {
           button: 'Send',
@@ -11,9 +12,12 @@ export default {
           button: 'Send',
           optional: 'Message',
           title: 'Send notification',
+          titleMessage: 'Title',
         },
       },
       printable: 'Printable',
+      sendMessage: 'Send natification',
+      showHistory: 'Show history',
       status: {
         new: 'New',
         checking: 'Checking',
@@ -24,6 +28,7 @@ export default {
       },
     },
     en: {
+      allRequests: 'All requests',
       modal: {
         changeStatus: {
           button: 'Send',
@@ -34,9 +39,12 @@ export default {
           button: 'Send',
           optional: 'Message',
           title: 'Send notification',
+          titleMessage: 'Title',
         },
       },
       printable: 'Printable',
+      sendMessage: 'Send natification',
+      showHistory: 'Show history',
       status: {
         new: 'New',
         checking: 'Checking',
@@ -47,6 +55,7 @@ export default {
       },
     },
     ru: {
+      allRequests: 'Все запросы',
       modal: {
         changeStatus: {
           button: 'Отправить',
@@ -57,9 +66,12 @@ export default {
           button: 'Отправить',
           optional: 'Сообщение',
           title: 'Отправить сообщение',
+          titleMessage: 'Заголовок',
         },
       },
       printable: 'Печатный вариант',
+      sendMessage: 'Отправить сообщение',
+      showHistory: 'Посмотреть историю',
       status: {
         new: 'New',
         checking: 'Checking',
