@@ -86,9 +86,9 @@ import Vue from 'vue';
 import { get, includes, reduce } from 'lodash-es';
 import { mapActions, mapGetters, mapMutations, mapState } from 'vuex';
 import { Button, FormByStep, Header, PageHeader, UiModal } from '@protocol-one/ui-kit';
-import Banking from './components/Banking.vue';
-import Company from './components/Company.vue';
-import Contact from './components/Contact.vue';
+import Banking from '@/components/Banking.vue';
+import Company from '@/components/Company.vue';
+import Contact from '@/components/Contact.vue';
 import i18n from './i18n';
 
 export default Vue.extend({
