@@ -41,7 +41,7 @@ export default Vue.extend({
         checking: 'purple',
         approved: 'green',
         returned: 'orange',
-        archive: 'gray',
+        archived: 'gray',
       };
 
       return colors[this.request.status];

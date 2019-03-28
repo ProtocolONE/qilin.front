@@ -1,6 +1,7 @@
 <template>
 <UiTableRow
   class="requests-filters"
+  :isClickable="false"
   :isHead="true"
 >
   <UiTableCell

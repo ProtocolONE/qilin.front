@@ -9,4 +9,6 @@ export interface Request {
 
 export interface State {
   requests: Request[];
+  requestsCount: number;
+  rowsLimit: number;
 }
