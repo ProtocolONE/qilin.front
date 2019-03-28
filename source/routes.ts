@@ -12,6 +12,7 @@ import GameRatings from '@/modules/gameRatings/Ratings.vue';
 import GameSales from '@/modules/gameSales/Sales.vue';
 import GameDescriptions from '@/modules/gameDescriptions/Descriptions.vue';
 import Games from '@/modules/games/Games.vue';
+import History from '@/modules/history/History.vue';
 import OnBoarding from '@/modules/onBoarding/OnBoarding.vue';
 import Notifications from '@/modules/notifications/Notifications.vue';
 import Requests from '@/modules/requests/Requests.vue';
@@ -52,13 +53,13 @@ const routes: RouteConfig[] = [
         path: 'general',
         name: 'gameGeneral',
         component: GameGeneral,
-        meta: 'routes.game.general.meta'
+        meta: 'routes.game.general.meta',
       },
       {
         path: 'media',
         name: 'gameMedia',
         component: GameMedia,
-        meta: 'routes.game.media.meta'
+        meta: 'routes.game.media.meta',
       },
       {
         path: 'prices',
@@ -70,13 +71,13 @@ const routes: RouteConfig[] = [
         path: 'ratings',
         name: 'GameRatings',
         component: GameRatings,
-        meta: 'routes.game.ratings.meta'
+        meta: 'routes.game.ratings.meta',
       },
       {
         path: 'descriptions',
         name: 'GameDescriptions',
         component: GameDescriptions,
-        meta: 'routes.game.descriptions.meta'
+        meta: 'routes.game.descriptions.meta',
       },
     ],
   },
@@ -115,6 +116,12 @@ const routes: RouteConfig[] = [
         name: 'request',
         component: Request,
         meta: 'routes.admin.request.meta'
+      },
+      {
+        path: 'history/:vendorId',
+        name: 'history',
+        component: History,
+        meta: 'routes.admin.history.meta',
       },
     ],
   },

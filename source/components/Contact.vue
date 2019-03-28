@@ -55,7 +55,7 @@ export default Vue.extend({
   components: { Header, TextField },
   props: {
     fields: {
-      default: () => {},
+      default: () => ({}),
       type: Object,
     },
   },

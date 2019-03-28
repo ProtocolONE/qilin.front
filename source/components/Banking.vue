@@ -51,7 +51,7 @@ export default Vue.extend({
       type: Array,
     },
     fields: {
-      default: () => {},
+      default: () => ({}),
       type: Object,
     },
   },

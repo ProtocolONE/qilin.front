@@ -138,9 +138,9 @@ import {
 } from '@protocol-one/ui-kit';
 import formatDate from '@/helpers/formatDate';
 import IconSimpleDots from '@/components/IconSimpleDots.vue';
-import Banking from './components/Banking.vue';
-import Company from './components/Company.vue';
-import Contact from './components/Contact.vue';
+import Banking from '@/components/Banking.vue';
+import Company from '@/components/Company.vue';
+import Contact from '@/components/Contact.vue';
 import i18n from './i18n';
 
 export default Vue.extend({

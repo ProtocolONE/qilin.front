@@ -11,14 +11,14 @@ export default function CreateGameStore(apiUrl: string) {
   };
   const getters: GetterTree<State, any> = {};
   const actions: ActionTree<State, any> = {
-    createGame({commit}, payload) {
+    createGame({commit}, { internalName, vendorId }) {
       axios
-        .post(`${apiUrl}/games`, payload)
+        .post(`${apiUrl}/vendor/${vendorId}/games`, { internalName })
         .then(res => commit('updateGameId', res.data.id));
     },
   };
   const mutations: MutationTree<State> = {
-    updateGameId: (state, value: string) => {state.gameId = value},
+    updateGameId: (state, value) => state.gameId = value,
   };
   return {
     state,

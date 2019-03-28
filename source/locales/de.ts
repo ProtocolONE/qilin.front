@@ -92,6 +92,13 @@ export default {
           description: 'Vendor request',
         },
       },
+      history: {
+        title: 'Messages history by vendor',
+        meta: {
+          title: 'Messages history by vendor',
+          description: 'Messages history by vendor',
+        },
+      },
     },
   },
 };
