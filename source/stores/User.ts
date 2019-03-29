@@ -30,7 +30,7 @@ export default function UserStore(apiUrl: string) {
 
       const user = await axios
         .get(`${apiUrl}/me`)
-        .then(res => res.data.user || {});
+        .then(res => get(res, 'data.user') || {});
 
       const vendors = await axios
         .get(`${apiUrl}/vendors`)
@@ -43,13 +43,13 @@ export default function UserStore(apiUrl: string) {
       commit('user', user);
       dispatch('startWatchNotifications');
 
+      await dispatch('fetchPermissions');
+
       if (vendors.length) {
         commit('vendors', vendors);
         commit('currentVendor', vendors[0]);
-
-        await dispatch('fetchPermissions');
       } else {
-        router.push({ name: 'onBoarding' });
+        router.replace({ name: 'onBoarding' });
       }
     },
     async fetchPermissions({ commit, getters }) {

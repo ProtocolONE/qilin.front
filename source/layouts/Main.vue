@@ -25,8 +25,8 @@ import './bootstrap';
 export default Vue.extend({
   components: { Navbar, TipWithNotifications },
   computed: {
-    ...mapGetters(['hasAuth', 'permissions']),
-    ...mapState(['navbarLinks', 'user']),
+    ...mapGetters(['hasAuth']),
+    ...mapState(['navbarLinks', 'user', 'permissions']),
 
     isAuthPage() {
       return this.$route.name === 'authBoard';
