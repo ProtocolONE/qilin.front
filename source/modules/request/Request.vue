@@ -101,12 +101,13 @@
     >
       <UiTextField
         v-if="modalType === 'sendMessage'"
-        class="title-message"
         v-model="titleMessage"
+        class="title-message"
         :label="$t(`modal.${modalType}.titleMessage`)"
       />
       <UiTextarea
         v-model="message"
+        :isBordered="true"
         :label="$t(`modal.${modalType}.optional`)"
       />
     </div>
