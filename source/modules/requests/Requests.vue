@@ -22,7 +22,6 @@
 
   <UiPaginator
     v-if="requestsCount > rowsLimit"
-    class="paginator"
     :count="requestsCount"
     :limit="rowsLimit"
     :offset="offset"
