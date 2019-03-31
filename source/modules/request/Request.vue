@@ -202,7 +202,10 @@ export default Vue.extend({
       };
     },
     statusOptions() {
-      const statuses = ['new', 'checking', 'approved', 'returned', 'archive'];
+      const mainStatuses = ['checking', 'approved', 'returned', 'archive'];
+      const statuses = this.requestStatus === 'new'
+        ? ['new', ...mainStatuses]
+        : mainStatuses;
 
       return statuses.map(status => ({ value: status, label: this.$i18n.t(`status.${status}`) }));
     },
@@ -316,8 +319,8 @@ export default Vue.extend({
   padding: 0;
   background-color: #fff;
   text-decoration: none;
-  min-width: 200px;
   padding: 0 24px;
+  white-space: nowrap;
 
   &:hover {
     background-color: rgba(#2f6ecd, 0.2);

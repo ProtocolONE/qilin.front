@@ -732,10 +732,10 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha1-p3c2C1s5oaLlEG+OhY8v0tBgxXA=
 
-"@protocol-one/ui-kit@^1.23.0":
-  version "1.23.0"
-  resolved "https://registry.yarnpkg.com/@protocol-one/ui-kit/-/ui-kit-1.23.0.tgz#0c5772110a8756de3a858e1007b180dadc79292e"
-  integrity sha512-T1RHRTq3mEXk+YJFixAg/nKND8SUf9okldt+YvStGMfeo6rJuV2dRz+S0ZjVkQxz+OtPihLcadoL6rBnj4VTeA==
+"@protocol-one/ui-kit@^1.23.1":
+  version "1.23.1"
+  resolved "https://registry.yarnpkg.com/@protocol-one/ui-kit/-/ui-kit-1.23.1.tgz#17c7ce7e982ef6a5442b90c0732b80aa7667ec7f"
+  integrity sha512-NEls/TCqIU+iCHePk9CIb4x+IOm5sNpFpgD8GzSrvAk2X5W/X9WOMjQqo6rSEvYINWMWeplXYjkxuG7nyDzGlw==
   dependencies:
     date-fns "^v2.0.0-alpha.27"
     lodash-es "^4.17.11"
@@ -6755,11 +6755,6 @@ prettier@1.16.3:
   version "1.16.3"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.16.3.tgz#8c62168453badef702f34b45b6ee899574a6a65d"
   integrity sha512-kn/GU6SMRYPxUakNXhpP0EedT/KmaPzr0H5lIsDogrykbaxOpOfAFfk5XA7DZrJyMAv1wlMV3CPcZruGXVVUZw==
-
-printd@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/printd/-/printd-1.3.0.tgz#090f3293a7aef536894630967b91d1b0598574ce"
-  integrity sha512-p9PddyVETBLBtWco4VWQvJIebM5QU2R001Wk2HB9udJxTYLovXWS4RkwIwQsHE3TUkG6f56u3kpCCB85p0rkeQ==
 
 private@^0.1.6, private@^0.1.8:
   version "0.1.8"
