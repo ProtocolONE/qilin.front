@@ -1,6 +1,7 @@
 <template>
 <UiTableRow
   class="requests-filters"
+  :isClickable="false"
   :isHead="true"
 >
   <UiTableCell
@@ -33,8 +34,8 @@ export default Vue.extend({
     requestColumns() {
       return {
         name: true,
-        country: true,
-        person: true,
+        country: false,
+        person: false,
         updatedAt: true,
         status: true,
       };

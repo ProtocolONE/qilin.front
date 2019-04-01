@@ -8,5 +8,7 @@ export interface HistoryItem {
 
 export interface State {
   history: HistoryItem[];
+  historyCount: number;
+  rowsLimit: number;
   vendorId: string;
 }

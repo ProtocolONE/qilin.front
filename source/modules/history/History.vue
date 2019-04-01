@@ -5,19 +5,36 @@
     @search="filterByName"
   />
 
-  <UiTable v-if="hasHistory">
-    <HistoryFilters
-      :sortingProps="sortingProps"
-      @toggleSort="toggleSort"
-    />
+  <div class="content">
+    <UiTable v-if="hasHistory">
+      <HistoryFilters
+        :sortingProps="sortingProps"
+        @toggleSort="toggleSort"
+      />
 
-    <HistoryItem
-      v-for="historyItem in innerHistory"
-      :key="historyItem.id"
-      :historyItem="historyItem"
-      @click.native="showMessage(historyItem)"
-    />
-  </UiTable>
+      <HistoryItem
+        v-for="historyItem in innerHistory"
+        :key="historyItem.id"
+        :historyItem="historyItem"
+        @click.native="showMessage(historyItem)"
+      />
+    </UiTable>
+  </div>
+
+  <UiPaginator
+    v-if="historyCount > rowsLimit"
+    :count="historyCount"
+    :limit="rowsLimit"
+    :offset="offset"
+    @pageChanged="pageChanged"
+  >
+    <div
+      class="left"
+      slot="left"
+    >
+      {{ $t('total', { count: historyCount }) }}
+    </div>
+  </UiPaginator>
 
   <UiModal
     v-if="hasModal"
@@ -50,9 +67,9 @@
 
 <script type="ts">
 import Vue from 'vue';
-import { includes } from 'lodash-es';
+import { get, filter, includes } from 'lodash-es';
 import { mapState, mapActions } from 'vuex';
-import { UiButton, UiHeader, UiModal, UiTable } from '@protocol-one/ui-kit';
+import { UiButton, UiHeader, UiModal, UiPaginator, UiTable } from '@protocol-one/ui-kit';
 import formatDate from '@/helpers/formatDate';
 import i18n from './i18n';
 import HistoryFilters from './components/HistoryFilters.vue';
@@ -61,18 +78,21 @@ import HistoryItem from './components/HistoryItem.vue';
 
 export default Vue.extend({
   i18n,
-  components: { HistoryFilters, HistoryHeader, HistoryItem, UiButton, UiHeader, UiModal, UiTable },
-  data: () => ({
-    innerHistory: [],
-    sortingProps: {},
-    hasModal: false,
-    dataModal: {},
-  }),
+  components: { HistoryFilters, HistoryHeader, HistoryItem, UiButton, UiHeader, UiModal, UiPaginator, UiTable },
+  data() {
+    return {
+      innerHistory: [],
+      sortingProps: {},
+      hasModal: false,
+      dataModal: {},
+      offset: 0,
+    };
+  },
   computed: {
-    ...mapState('History', ['history']),
+    ...mapState('History', ['history', 'historyCount', 'rowsLimit']),
 
     hasHistory() {
-      return !!this.history.length;
+      return !!this.historyCount;
     },
   },
   mounted() {
@@ -82,7 +102,8 @@ export default Vue.extend({
     ...mapActions('History', ['initState', 'fetchHistory']),
 
     filterByName(namePart) {
-      this.innerHistory = this.history.filter(
+      this.innerHistory = filter(
+        this.history,
         ({ title, message, createdAt }) => includes(
           `${title} ${message} ${createdAt}`.toLowerCase(),
           namePart.trim().toLowerCase(),
@@ -94,15 +115,26 @@ export default Vue.extend({
         new Date(date),
         'dd LLLL yyyy, HH:mm',
         this.$i18n.locale,
-        this.$i18n.fallbackLocale
+        this.$i18n.fallbackLocale,
       );
+    },
+    pageChanged({ offset }) {
+      const propName = get(Object.keys(this.sortingProps), '0', '');
+      this.offset = offset;
+
+      this.fetchHistory({
+        offset,
+        sort: propName ? `${this.sortingProps[propName] ? '+' : '-'}${propName}` : '',
+      });
     },
     toggleSort(propName) {
       this.sortingProps = {
         [propName]: !this.sortingProps[propName],
       };
 
-      this.fetchHistory(`${this.sortingProps[propName] ? '+' : '-'}${propName}`);
+      this.fetchHistory({
+        sort: `${this.sortingProps[propName] ? '+' : '-'}${propName}`,
+      });
     },
     showMessage(item) {
       this.dataModal = item;
@@ -123,6 +155,12 @@ export default Vue.extend({
   width: 100%;
   display: flex;
   flex-direction: column;
+}
+.content {
+  flex-grow: 1;
+}
+.left {
+  color: #333;
 }
 .ui-modal-main {
   max-width: 460px;

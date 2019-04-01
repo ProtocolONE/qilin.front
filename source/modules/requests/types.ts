@@ -4,8 +4,11 @@ export interface Request {
   person: string;
   status: string;
   updatedAt: string;
+  vendor_id: string;
 }
 
 export interface State {
   requests: Request[];
+  requestsCount: number;
+  rowsLimit: number;
 }

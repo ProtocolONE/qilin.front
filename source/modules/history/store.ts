@@ -1,10 +1,15 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
+import { get } from 'lodash-es';
 import { GetterTree, ActionTree, MutationTree } from 'vuex';
 import { State } from './types';
+
+const ROWS_LIMIT = 15;
 
 export default function HistoryStore(apiUrl: string) {
   const state: State = {
     history: [],
+    historyCount: 0,
+    rowsLimit: ROWS_LIMIT,
     vendorId: null,
   };
   const getters: GetterTree<State, any> = {};
@@ -12,21 +17,26 @@ export default function HistoryStore(apiUrl: string) {
     async initState({ commit, dispatch }, vendorId) {
       commit('vendorId', vendorId);
 
-      await dispatch('fetchHistory');
+      await dispatch('fetchHistory', {});
     },
-    async fetchHistory({ commit, state }, sort = '') {
-      const history = await axios
+    async fetchHistory({ commit, state }, { offset = 0, sort = ''}) {
+      const response: AxiosResponse = await axios
         .get(`${apiUrl}/vendors/${state.vendorId}/messages`, {
-          params: { sort: sort || undefined },
+          params: {
+            limit: state.rowsLimit,
+            offset,
+            sort: sort || undefined,
+          },
         })
-        .then(res => res.data || [])
-        .catch(e => []);
+        .catch(e => e);
 
-      commit('history', history);
+      commit('history', get(response, 'data') || []);
+      commit('historyCount', get(response, 'headers.x-items-count') || 0);
     },
   };
   const mutations: MutationTree<State> = {
     history: (state, value) => state.history = value,
+    historyCount: (state, value) => state.historyCount = value,
     vendorId: (state, value) => state.vendorId = value,
   };
 

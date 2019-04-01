@@ -41,7 +41,7 @@ export default Vue.extend({
         checking: 'purple',
         approved: 'green',
         returned: 'orange',
-        archive: 'gray',
+        archived: 'gray',
       };
 
       return colors[this.request.status];
@@ -65,7 +65,7 @@ export default Vue.extend({
       }
     },
     requestUrl(): string {
-      return `/admin/requests/${this.request.vendorId}`;
+      return `/admin/requests/${this.request.vendor_id}`;
     },
   },
 });
