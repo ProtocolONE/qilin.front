@@ -51,7 +51,7 @@ export default Vue.extend({
     };
   },
   methods: {
-    ...mapActions('Auth', ['setToken']),
+    ...mapActions(['setToken']),
 
     showAuth(type: string) {
       this.authType = type;

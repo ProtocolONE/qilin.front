@@ -1,7 +1,6 @@
 import MainStores from '@/stores';
 import config from '@/config';
 import routes from '@/routes';
-import AuthStore from '@/modules/authBoard/store';
 import CreateGameStore from '@/modules/gameCreate/store';
 import SalesStore from '@/modules/gameSales/store';
 import DocumentsStore from '@/modules/documents/store';
@@ -35,7 +34,6 @@ export default {
 
   // Modules by root store
   modules: {
-    Auth: AuthStore(),
     CreateGame: CreateGameStore(apiUrl),
     Documents: DocumentsStore(apiUrl),
     Game: GameStore(apiUrl),

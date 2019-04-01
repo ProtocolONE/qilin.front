@@ -28,6 +28,7 @@ interface Permission {
 }
 
 export default interface State {
+  accessToken: string;
   currentVendor: Vendor;
   user: User;
   vendors: Vendor[];

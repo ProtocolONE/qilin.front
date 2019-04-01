@@ -5,6 +5,7 @@ import State from './userTypes';
 
 export default function UserStore(apiUrl: string) {
   const state: State = {
+    accessToken: null,
     currentVendor: null,
     user: null,
     vendors: [],
@@ -110,8 +111,13 @@ export default function UserStore(apiUrl: string) {
       });
       location.reload();
     },
+    setToken({ commit }, accessToken) {
+      localStorage.setItem('accessToken', accessToken);
+      commit('accessToken', accessToken);
+    },
   };
   const mutations: MutationTree<State> = {
+    accessToken: (state, value) => state.accessToken = value,
     currentVendor: (state, value) => state.currentVendor = value,
     permissions: (state, value) => state.permissions = value,
     user: (state, value) => state.user = value,
