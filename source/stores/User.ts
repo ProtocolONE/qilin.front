@@ -32,18 +32,15 @@ export default function UserStore(apiUrl: string) {
         .get(`${apiUrl}/me`)
         .then(res => get(res, 'data.user') || {});
 
-      const vendors = await axios
-        .get(`${apiUrl}/vendors`)
-        .then(res => res.data || []);
-
       if (!user) {
         return;
       }
 
       commit('user', user);
-      dispatch('startWatchNotifications');
 
-      await dispatch('fetchPermissions');
+      const vendors = await axios
+        .get(`${apiUrl}/vendors`)
+        .then(res => res.data || []);
 
       if (vendors.length) {
         commit('vendors', vendors);
@@ -51,6 +48,10 @@ export default function UserStore(apiUrl: string) {
       } else {
         router.replace({ name: 'onBoarding' });
       }
+
+      await dispatch('fetchPermissions');
+
+      dispatch('startWatchNotifications');
     },
     async fetchPermissions({ commit, getters }) {
       const { hasAuth, currentVendorId, userId } = getters;

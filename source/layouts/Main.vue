@@ -31,6 +31,9 @@ export default Vue.extend({
     isAuthPage() {
       return this.$route.name === 'authBoard';
     },
+    hasAccessToModule() {
+      return includes(['any', 'read'], get(this.permissions, `${this.$route.name}.action`, ''));
+    },
     userName() {
       return get(this.user, 'name', '');
     },
@@ -43,24 +46,22 @@ export default Vue.extend({
       }));
     },
   },
-  async mounted() {
+  async created() {
     if (this.hasAuth) {
       await this.initUser({ router: this.$router });
     } else {
       this.$router.replace({ name: 'authBoard' });
+      return;
     }
 
     if (this.isAuthPage && this.hasAuth) {
-      const moduleName = isEmpty(this.permissions) ? 'main' : 'games';
+      const moduleName = isEmpty(this.permissions) ? 'onBoarding' : 'games';
       this.$router.replace({ name: moduleName });
       return;
     }
 
-    if (
-      !isEmpty(this.permissions) &&
-      !includes(['any', 'read'], get(this.permissions, `${this.$route.name}.action`, ''))
-    ) {
-      this.$router.replace({ name: 'games' });
+    if (!isEmpty(this.permissions) && !this.hasAccessToModule) {
+      this.$router.replace({ name: 'onBoarding' });
     }
   },
   methods: {
