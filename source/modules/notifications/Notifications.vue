@@ -72,7 +72,7 @@
       wsNotifies() {
         clearTimeout(this.updateTimeout);
         this.updateTimeout = setTimeout(
-          this.fetchNotifys({ vendorId: this.currentVendorId }).bind(this),
+          () => this.fetchNotifys({ vendorId: this.currentVendorId }),
           200,
         );
       },
