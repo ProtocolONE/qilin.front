@@ -30,6 +30,7 @@
       :label="$t('status.title')"
       :options="statusOptions"
       :value="requestStatus"
+      :placeholder="$t('status.new')"
       @input="showModalStatusChange"
     />
     <div
@@ -203,10 +204,7 @@ export default Vue.extend({
       };
     },
     statusOptions() {
-      const mainStatuses = ['checking', 'approved', 'returned', 'archive'];
-      const statuses = this.requestStatus === 'new'
-        ? ['new', ...mainStatuses]
-        : mainStatuses;
+      const statuses = ['checking', 'approved', 'returned', 'archived'];
 
       return statuses.map(status => ({ value: status, label: this.$i18n.t(`status.${status}`) }));
     },
@@ -265,9 +263,11 @@ export default Vue.extend({
       this.hasModal = true;
     },
     showModalStatusChange(newStatus) {
-      this.newStatus = newStatus;
-      this.modalType = 'changeStatus';
-      this.hasModal = true;
+      if (newStatus) {
+        this.newStatus = newStatus;
+        this.modalType = 'changeStatus';
+        this.hasModal = true;
+      }
     },
     toggleTipVisible() {
       this.isTipVisible = !this.isTipVisible;
