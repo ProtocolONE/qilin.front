@@ -5,6 +5,7 @@
 >
   <UiTableCell
     v-for="(isSortable, column) in historyColumns"
+    :class="['cell', `_${column}`]"
     :key="column"
     :isSortable="isSortable"
     :sortDirection="sortDirection(column)"
@@ -54,3 +55,14 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+.cell {
+  &._title {
+    width: 28%;
+  }
+  &._createdAt {
+    width: 22%;
+  }
+}
+</style>

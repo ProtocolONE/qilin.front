@@ -3,7 +3,7 @@ import { get } from 'lodash-es';
 import { GetterTree, ActionTree, MutationTree } from 'vuex';
 import { State } from './types';
 
-const ROWS_LIMIT = 15;
+const ROWS_LIMIT = 10;
 
 export default function HistoryStore(apiUrl: string) {
   const state: State = {
