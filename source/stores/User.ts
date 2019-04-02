@@ -8,8 +8,8 @@ export default function UserStore(apiUrl: string) {
     accessToken: null,
     currentVendor: null,
     user: null,
-    vendors: [],
-    permissions: [],
+    vendors: null,
+    permissions: null,
   };
   const getters: GetterTree<State, any> = {
     hasAuth() {
@@ -31,7 +31,8 @@ export default function UserStore(apiUrl: string) {
 
       const user = await axios
         .get(`${apiUrl}/me`)
-        .then(res => get(res, 'data.user') || {});
+        .then(res => get(res, 'data.user') || null)
+        .catch(() => null);
 
       if (!user) {
         return;
@@ -41,9 +42,10 @@ export default function UserStore(apiUrl: string) {
 
       const vendors = await axios
         .get(`${apiUrl}/vendors`)
-        .then(res => res.data || []);
+        .then(res => get(res, 'data') || null)
+        .catch(() => null);
 
-      if (vendors.length) {
+      if (vendors && vendors.length ) {
         commit('vendors', vendors);
         commit('currentVendor', vendors[0]);
       } else {
@@ -63,7 +65,8 @@ export default function UserStore(apiUrl: string) {
 
       const permissions = await axios
         .get(`${apiUrl}/vendors/${currentVendorId}/memberships/${userId}/permissions`)
-        .then(res => get(res, 'data.permissions', null));
+        .then(res => get(res, 'data.permissions') || null)
+        .catch(() => null);
 
       if (permissions) {
         commit('permissions', reduce(
@@ -90,8 +93,9 @@ export default function UserStore(apiUrl: string) {
         .then(res => res.data);
 
       if (vendor) {
+        const vendors = state.vendors || [];
         commit('currentVendor', vendor);
-        commit('vendors', [ vendor, ...state.vendors ]);
+        commit('vendors', [ vendor, ...vendors ]);
       }
     },
     changeCurrentVendor({ commit, state }, vendorId) {
