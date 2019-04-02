@@ -6,7 +6,10 @@
   />
 
   <div class="content">
-    <UiTable v-if="hasHistory">
+    <UiTable
+      v-if="hasHistory"
+      class="table"
+    >
       <HistoryFilters
         :sortingProps="sortingProps"
         @toggleSort="toggleSort"
@@ -158,6 +161,9 @@ export default Vue.extend({
 }
 .content {
   flex-grow: 1;
+}
+.table {
+  table-layout: fixed;
 }
 .left {
   color: #333;

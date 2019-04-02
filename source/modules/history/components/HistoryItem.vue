@@ -3,7 +3,7 @@
   <UiTableCell
     v-for="(value, key) in historyData"
     :key="key"
-    :class="['cell', `_${key}`]"
+    class="cell"
   >
     {{ value }}
   </UiTableCell>
@@ -53,12 +53,5 @@ export default Vue.extend({
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-
-  &._title {
-    min-width: 200px;
-  }
-  &._message {
-    max-width: 500px;
-  }
 }
 </style>
