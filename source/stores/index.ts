@@ -1,10 +1,10 @@
-import { RouteConfig } from 'vue-router';
+import VueRouter, { RouteConfig } from 'vue-router';
 import UserStore from './User';
 import NavbarStore from './Navbar';
 import NotificationsStore from './Notifications';
 
-export default function MainStores(apiUrl: string, routes: RouteConfig[]) {
-  const User = UserStore(apiUrl);
+export default function MainStores(apiUrl: string, router: VueRouter, routes: RouteConfig[]) {
+  const User = UserStore(apiUrl, router);
   const Navbar = NavbarStore(routes);
   const Notifications = NotificationsStore(apiUrl);
 

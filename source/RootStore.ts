@@ -1,5 +1,6 @@
-import MainStores from '@/stores';
 import config from '@/config';
+import MainStores from '@/stores';
+import router from '@/router';
 import routes from '@/routes';
 import CreateGameStore from '@/modules/gameCreate/store';
 import SalesStore from '@/modules/gameSales/store';
@@ -14,7 +15,7 @@ import RequestStore from '@/modules/request/store';
 const adminApiUrl = config.adminApi;
 const apiUrl = config.api;
 
-const mainStores = MainStores(apiUrl, routes);
+const mainStores = MainStores(apiUrl, router, routes);
 
 /**
  * Root store, that agragate high-level modules.

@@ -1,21 +1,21 @@
 <template>
-<div :class="['main-wrapper', { '_with-navbar': !isAuthPage }]">
+<div :class="['main-wrapper', { '_with-navbar': hasNavbar }]">
   <Navbar
-    v-if="!isAuthPage"
+    v-if="hasNavbar"
     :hasAuth="hasAuth"
     :links="links"
     :userName="userName"
     @logout="logout"
     @authMessage="authMessage"
   />
-  <TipWithNotifications v-if="hasAuth && !isAuthPage" />
+  <TipWithNotifications v-if="hasAuth && hasNavbar" />
   <router-view />
 </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import { get, includes, isEmpty } from 'lodash-es';
+import { get, isEmpty } from 'lodash-es';
 import { mapState, mapActions, mapGetters } from 'vuex';
 import Navbar from './Navbar.vue';
 import TipWithNotifications from '@/components/TipWithNotifications.vue';
@@ -25,14 +25,11 @@ import './bootstrap';
 export default Vue.extend({
   components: { Navbar, TipWithNotifications },
   computed: {
-    ...mapGetters(['hasAuth']),
+    ...mapGetters(['hasAccessToModule', 'hasAuth']),
     ...mapState(['navbarLinks', 'user', 'permissions']),
 
-    isAuthPage() {
-      return this.$route.name === 'authBoard';
-    },
-    hasAccessToModule() {
-      return includes(['any', 'read'], get(this.permissions, `${this.$route.name}.action`, ''));
+    hasNavbar() {
+      return this.$route.name !== 'authBoard';
     },
     userName() {
       return get(this.user, 'name', '');
@@ -47,26 +44,23 @@ export default Vue.extend({
     },
   },
   async created() {
-    if (this.hasAuth) {
-      await this.initUser({ router: this.$router });
-    } else {
-      this.$router.replace({ name: 'authBoard' });
-      return;
-    }
+    await this.initUser();
+  },
+  watch: {
+    $route(to, from) {
+      const hasPermissions = !isEmpty(this.permissions);
+      const requiresPermissions = get(to, 'meta.requiresPermissions', true);
 
-    if (this.isAuthPage && this.hasAuth) {
-      const moduleName = isEmpty(this.permissions) ? 'onBoarding' : 'games';
-      this.$router.replace({ name: moduleName });
-      return;
-    }
-
-    if (!isEmpty(this.permissions) && !this.hasAccessToModule) {
-      this.$router.replace({ name: 'onBoarding' });
-    }
+      if (
+        !hasPermissions && requiresPermissions ||
+        hasPermissions && !this.hasAccessToModule
+      ) {
+        this.$router.replace({ name: 'home' });
+      }
+    },
   },
   methods: {
-    ...mapActions(['initUser', 'logout']),
-    ...mapActions('Auth', ['setToken']),
+    ...mapActions(['initUser', 'logout', 'setToken']),
 
     authMessage(event: any) {
       if (event.success) {

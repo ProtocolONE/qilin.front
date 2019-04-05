@@ -45,7 +45,7 @@ export default Vue.extend({
     locale(val: string) {
       this.$i18n.locale = val;
       // Change i18n meta data by rout
-      changeI18nMeta(this.$route.meta);
+      changeI18nMeta(this.$route.meta.i18n);
     },
   },
 });

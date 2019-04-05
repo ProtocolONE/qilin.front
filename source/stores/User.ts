@@ -1,40 +1,40 @@
 import axios from 'axios';
-import { find, get, reduce } from 'lodash-es';
+import VueRouter from 'vue-router';
+import { find, get, includes, reduce } from 'lodash-es';
 import { GetterTree, ActionTree, MutationTree } from 'vuex';
 import State from './userTypes';
 
-export default function UserStore(apiUrl: string) {
+export default function UserStore(apiUrl: string, router: VueRouter) {
   const state: State = {
-    accessToken: null,
+    accessToken: localStorage.getItem('accessToken') || null,
     currentVendor: null,
     user: null,
     vendors: null,
     permissions: null,
   };
   const getters: GetterTree<State, any> = {
-    hasAuth() {
-      const token = localStorage.getItem('accessToken');
-      return !!token;
-    },
     currentVendorId({ currentVendor }) {
       return get(currentVendor, 'id', '');
+    },
+    hasAccessToModule({ permissions }) {
+      return includes(['any', 'read'], get(permissions, `${router.currentRoute.name}.action`, ''));
+    },
+    hasAuth({ accessToken }) {
+      return !!accessToken;
     },
     userId({ user }) {
       return get(user, 'id', '');
     },
   };
   const actions: ActionTree<State, any> = {
-    async initUser({ commit, getters, dispatch }, { router }) {
-      if (!getters.hasAuth) {
-        return;
-      }
-
+    async initUser({ commit, getters, dispatch }) {
       const user = await axios
         .get(`${apiUrl}/me`)
         .then(res => get(res, 'data.user') || null)
         .catch(() => null);
 
-      if (!user) {
+      if (getters.hasAuth && !user) {
+        dispatch('refreshToken');
         return;
       }
 
@@ -45,11 +45,9 @@ export default function UserStore(apiUrl: string) {
         .then(res => get(res, 'data') || null)
         .catch(() => null);
 
-      if (vendors && vendors.length ) {
+      if (vendors && vendors.length) {
         commit('vendors', vendors);
         commit('currentVendor', vendors[0]);
-      } else {
-        router.replace({ name: 'onBoarding' });
       }
 
       await dispatch('fetchPermissions');
@@ -108,16 +106,31 @@ export default function UserStore(apiUrl: string) {
         commit('currentVendor', currentVendor);
       }
     },
+    async refreshToken({ dispatch }) {
+      await axios
+        .get(`${apiUrl}/auth1/refresh`, { withCredentials: true })
+        .then((response) => {
+          const accessToken = get(response, 'data.access_token', null);
+
+          if (accessToken) {
+            dispatch('setToken', accessToken);
+          } else {
+            dispatch('logout');
+          }
+        })
+        .catch(() => { dispatch('logout') });
+    },
     async logout() {
       localStorage.removeItem('accessToken');
-      await axios.get('/auth1/logout', {
-        withCredentials: true,
-      });
-      location.reload();
+      await axios
+        .get(`${apiUrl}/auth1/logout`, { withCredentials: true })
+        .catch(() => null);
+      router.replace({ name: 'authBoard' });
     },
     setToken({ commit }, accessToken) {
       localStorage.setItem('accessToken', accessToken);
       commit('accessToken', accessToken);
+      router.go(0);
     },
   };
   const mutations: MutationTree<State> = {

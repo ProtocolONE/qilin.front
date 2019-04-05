@@ -60,7 +60,6 @@ export default Vue.extend({
     message(event: any) {
       if (event.success) {
         this.setToken(event.accessToken);
-        this.$router.go();
       }
     },
   },

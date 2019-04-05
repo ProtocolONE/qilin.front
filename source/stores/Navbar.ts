@@ -8,7 +8,7 @@ export default function NavbarStore(routes: RouteConfig[]) {
         .map(route => ({
           name: route.name,
           href: route.path,
-          titlePath: `${route.meta.replace('.meta', '')}.title`,
+          titlePath: `${route.meta.i18n.replace('.meta', '')}.title`,
         })),
     },
     getters: {},

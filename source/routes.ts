@@ -23,16 +23,19 @@ const routes: RouteConfig[] = [
     path: '/',
     name: 'home',
     component: Home,
+    meta: { requiresPermissions: false }, // default is 'true'
   },
   {
     path: '/auth',
     name: 'authBoard',
     component: AuthBoard,
+    meta: { requiresAuth: false }, // default is 'true'
   },
   {
     path: '/vendor/on-boarding',
     name: 'onBoarding',
     component: OnBoarding,
+    meta: { requiresPermissions: false }, // default is 'true'
   },
   {
     path: '/games',
@@ -53,31 +56,31 @@ const routes: RouteConfig[] = [
         path: 'general',
         name: 'gameGeneral',
         component: GameGeneral,
-        meta: 'routes.game.general.meta',
+        meta: { i18n: 'routes.game.general.meta' },
       },
       {
         path: 'media',
         name: 'gameMedia',
         component: GameMedia,
-        meta: 'routes.game.media.meta',
+        meta: { i18n: 'routes.game.media.meta' },
       },
       {
         path: 'prices',
         name: 'gamePrices',
         component: GamePrices,
-        meta: 'routes.game.prices.meta'
+        meta: { i18n: 'routes.game.prices.meta' }
       },
       {
         path: 'ratings',
         name: 'GameRatings',
         component: GameRatings,
-        meta: 'routes.game.ratings.meta',
+        meta: { i18n: 'routes.game.ratings.meta' },
       },
       {
         path: 'descriptions',
         name: 'GameDescriptions',
         component: GameDescriptions,
-        meta: 'routes.game.descriptions.meta',
+        meta: { i18n: 'routes.game.descriptions.meta' },
       },
     ],
   },
@@ -95,6 +98,7 @@ const routes: RouteConfig[] = [
     path: '/documents/:vendorId',
     name: 'documents',
     component: Documents,
+    meta: { requiresPermissions: false }, // default is 'true'
   },
   {
     path: '/admin',
@@ -109,22 +113,25 @@ const routes: RouteConfig[] = [
         path: 'requests',
         name: 'requests',
         component: Requests,
-        meta: 'routes.admin.requests.meta'
+        meta: { i18n: 'routes.admin.requests.meta' },
       },
       {
         path: 'requests/:vendorId',
         name: 'request',
         component: Request,
-        meta: 'routes.admin.request.meta'
+        meta: { i18n: 'routes.admin.request.meta' },
       },
       {
         path: 'history/:vendorId',
         name: 'history',
         component: History,
-        meta: 'routes.admin.history.meta',
+        meta: { i18n: 'routes.admin.history.meta', },
       },
     ],
   },
-].map(route => ({ ...route, meta: `routes.${route.name}.meta` }));
+].map(route => ({
+  ...route,
+  meta: { ...(route.meta || {}), i18n: `routes.${route.name}.meta` },
+}));
 
 export default routes;
