@@ -1,5 +1,6 @@
 const os = require('os');
 const Koa = require('koa');
+const pino = require('pino');
 const cors = require('koa2-cors');
 const urlParse = require('url-parse');
 const Sentry = require('@sentry/node');
@@ -27,7 +28,12 @@ app.on('error', (err) => {
 });
 
 // logger and errors handler
+const pinoLogger = pino({
+  useLevelLabels: true,
+  timestamp: pino.stdTimeFunctions.unixTime
+});
 const logger = new KoaReqLogger({
+  pinoInstance: pinoLogger,
   alwaysError: true, // treat all non-2** http codes as error records in logs
 });
 app.use(logger.getMiddleware());
@@ -88,7 +94,7 @@ app.use(cacheControl({
 // server
 const port = config.serverPort;
 const server = app.listen(port, () => {
-    console.log(JSON.stringify({ hello_message: `Server listening on port: ${port}` }));
+  pinoLogger.info(`Server listening on port: ${port}`);
 });
 
 module.exports = server;
