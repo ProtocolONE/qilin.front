@@ -1,6 +1,6 @@
 import axios from 'axios';
 import VueRouter from 'vue-router';
-import { find, get, includes, reduce } from 'lodash-es';
+import { find, get, includes, isEmpty, reduce } from 'lodash-es';
 import { GetterTree, ActionTree, MutationTree } from 'vuex';
 import State from './userTypes';
 
@@ -8,16 +8,31 @@ export default function UserStore(apiUrl: string, router: VueRouter) {
   const state: State = {
     accessToken: localStorage.getItem('accessToken') || null,
     currentVendor: null,
+    nextRoute: null,
+    permissions: null,
     user: null,
     vendors: null,
-    permissions: null,
   };
   const getters: GetterTree<State, any> = {
     currentVendorId({ currentVendor }) {
       return get(currentVendor, 'id', '');
     },
-    hasAccessToModule({ permissions }) {
-      return includes(['any', 'read'], get(permissions, `${router.currentRoute.name}.action`, ''));
+    hasAccessToModule({ permissions, nextRoute }) {
+      const hasPermissions = !isEmpty(permissions);
+      const requiresPermissions = get(nextRoute, 'meta.requiresPermissions', true);
+      const module = get(nextRoute, 'meta.permissions', '');
+      const permission = hasPermissions ? permissions[module] : null;
+      const hasAccess = includes(['any', 'read'], get(permission, 'action', ''));
+
+      if (!hasPermissions && requiresPermissions) {
+        return false;
+      }
+      
+      if (hasAccess || !requiresPermissions) {
+        return true;
+      }
+
+      return false;
     },
     hasAuth({ accessToken }) {
       return !!accessToken;
@@ -28,6 +43,8 @@ export default function UserStore(apiUrl: string, router: VueRouter) {
   };
   const actions: ActionTree<State, any> = {
     async initUser({ commit, getters, dispatch }) {
+      commit('nextRoute', router.currentRoute);
+
       const user = await axios
         .get(`${apiUrl}/me`)
         .then(res => get(res, 'data.user') || null)
@@ -48,6 +65,8 @@ export default function UserStore(apiUrl: string, router: VueRouter) {
       if (vendors && vendors.length) {
         commit('vendors', vendors);
         commit('currentVendor', vendors[0]);
+      } else {
+        router.replace({ name: 'onBoarding' });
       }
 
       await dispatch('fetchPermissions');
@@ -136,9 +155,10 @@ export default function UserStore(apiUrl: string, router: VueRouter) {
   const mutations: MutationTree<State> = {
     accessToken: (state, value) => state.accessToken = value,
     currentVendor: (state, value) => state.currentVendor = value,
+    nextRoute: (state, value) => state.nextRoute = value,
     permissions: (state, value) => state.permissions = value,
-    user: (state, value) => state.user = value,
     vendors: (state, value) => state.vendors = value,
+    user: (state, value) => state.user = value,
   };
 
   return {

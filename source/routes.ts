@@ -29,7 +29,7 @@ const routes: RouteConfig[] = [
     path: '/auth',
     name: 'authBoard',
     component: AuthBoard,
-    meta: { requiresAuth: false }, // default is 'true'
+    meta: { requiresAuth: false, requiresPermissions: false }, // default is 'true'
   },
   {
     path: '/vendor/on-boarding',
@@ -41,6 +41,7 @@ const routes: RouteConfig[] = [
     path: '/games',
     name: 'games',
     component: Games,
+    meta: { permissions: 'vendor.games' },
   },
   {
     path: '/games/:id',
@@ -51,81 +52,83 @@ const routes: RouteConfig[] = [
       default: GameCommon,
       navigation: GameNavigation,
     },
+    meta: { permissions: 'games' },
     children: [
       {
         path: 'general',
         name: 'gameGeneral',
         component: GameGeneral,
-        meta: { i18n: 'routes.game.general.meta' },
+        meta: { i18n: 'routes.game.general.meta', permissions: 'games' },
       },
       {
         path: 'media',
         name: 'gameMedia',
         component: GameMedia,
-        meta: { i18n: 'routes.game.media.meta' },
+        meta: { i18n: 'routes.game.media.meta', permissions: 'games' },
       },
       {
         path: 'prices',
         name: 'gamePrices',
         component: GamePrices,
-        meta: { i18n: 'routes.game.prices.meta' }
+        meta: { i18n: 'routes.game.prices.meta', permissions: 'games' },
       },
       {
         path: 'ratings',
         name: 'GameRatings',
         component: GameRatings,
-        meta: { i18n: 'routes.game.ratings.meta' },
+        meta: { i18n: 'routes.game.ratings.meta', permissions: 'games' },
       },
       {
         path: 'descriptions',
         name: 'GameDescriptions',
         component: GameDescriptions,
-        meta: { i18n: 'routes.game.descriptions.meta' },
+        meta: { i18n: 'routes.game.descriptions.meta', permissions: 'games' },
       },
     ],
   },
   {
-    name: 'gameSales',
     path: '/games/:id/sales',
-    component: GameSales
+    name: 'gameSales',
+    component: GameSales,
+    meta: { permissions: 'games' },
   },
   {
     path: '/notifications',
     name: 'notifications',
     component: Notifications,
+    meta: { permissions: 'vendors.messages.*' },
   },
   {
     path: '/documents/:vendorId',
     name: 'documents',
     component: Documents,
-    meta: { requiresPermissions: false }, // default is 'true'
+    meta: { requiresPermissions: false, permissions: 'vendors.documents.*' }, // default is 'true'
   },
   {
     path: '/admin',
     name: 'admin',
     // @TODO - remove redirect when Admin page is implemented
     redirect: '/admin/requests',
-    component: {
-      template: '<router-view />',
-    },
+    component: { template: '<router-view />' },
+    meta: { permissions: 'admin.vendors.*' },
     children: [
       {
         path: 'requests',
         name: 'requests',
         component: Requests,
-        meta: { i18n: 'routes.admin.requests.meta' },
+        meta: { i18n: 'routes.admin.requests.meta', permissions: 'admin.vendors.*' },
       },
       {
         path: 'requests/:vendorId',
         name: 'request',
         component: Request,
-        meta: { i18n: 'routes.admin.request.meta' },
+        meta: { i18n: 'routes.admin.request.meta', permissions: 'admin.vendors.*' },
       },
       {
         path: 'history/:vendorId',
         name: 'history',
         component: History,
-        meta: { i18n: 'routes.admin.history.meta', },
+        meta: { i18n: 'routes.admin.history.meta', permissions: 'admin.vendors.*' },
       },
     ],
   },
