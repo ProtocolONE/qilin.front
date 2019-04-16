@@ -3,8 +3,13 @@ import UserStore from './User';
 import NavbarStore from './Navbar';
 import NotificationsStore from './Notifications';
 
-export default function MainStores(apiUrl: string, router: VueRouter, routes: RouteConfig[]) {
-  const User = UserStore(apiUrl, router);
+export default function MainStores(
+  apiUrl: string,
+  authApiUrl: string,
+  router: VueRouter,
+  routes: RouteConfig[],
+) {
+  const User = UserStore(apiUrl, authApiUrl, router);
   const Navbar = NavbarStore(routes);
   const Notifications = NotificationsStore(apiUrl);
 

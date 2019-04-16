@@ -14,8 +14,9 @@ import RequestStore from '@/modules/request/store';
 
 const adminApiUrl = config.adminApi;
 const apiUrl = config.api;
+const authApiUrl = config.authApi;
 
-const mainStores = MainStores(apiUrl, router, routes);
+const mainStores = MainStores(apiUrl, authApiUrl, router, routes);
 
 /**
  * Root store, that agragate high-level modules.

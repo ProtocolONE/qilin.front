@@ -4,7 +4,7 @@ import { find, get, includes, isEmpty, reduce } from 'lodash-es';
 import { GetterTree, ActionTree, MutationTree } from 'vuex';
 import State from './userTypes';
 
-export default function UserStore(apiUrl: string, router: VueRouter) {
+export default function UserStore(apiUrl: string, authApiUrl: string, router: VueRouter) {
   const state: State = {
     accessToken: localStorage.getItem('accessToken') || null,
     currentVendor: null,
@@ -22,7 +22,9 @@ export default function UserStore(apiUrl: string, router: VueRouter) {
       const requiresPermissions = get(nextRoute, 'meta.requiresPermissions', true);
       const module = get(nextRoute, 'meta.permissions', '');
       const permission = hasPermissions ? permissions[module] : null;
-      const hasAccess = includes(['any', 'read'], get(permission, 'action', ''));
+      const allowed = get(permission, 'allowed', false);
+      const action = get(permission, 'action', '');
+      const hasAccess = allowed && includes(['any', 'read'], action);
 
       if (!hasPermissions && requiresPermissions) {
         return false;
@@ -127,22 +129,26 @@ export default function UserStore(apiUrl: string, router: VueRouter) {
     },
     async refreshToken({ dispatch }) {
       await axios
-        .get(`${apiUrl}/auth1/refresh`, { withCredentials: true })
+        .get(`${authApiUrl}/auth1/refresh`, { withCredentials: true })
         .then((response) => {
           const accessToken = get(response, 'data.access_token', null);
 
           if (accessToken) {
             dispatch('setToken', accessToken);
           } else {
-            dispatch('logout');
+            localStorage.removeItem('accessToken');
+            router.replace({ name: 'authBoard' });
           }
         })
-        .catch(() => { dispatch('logout') });
+        .catch(() => {
+          localStorage.removeItem('accessToken');
+          router.replace({ name: 'authBoard' });
+        });
     },
     async logout() {
       localStorage.removeItem('accessToken');
       await axios
-        .get(`${apiUrl}/auth1/logout`, { withCredentials: true })
+        .get(`${authApiUrl}/auth1/logout`, { withCredentials: true })
         .catch(() => null);
       router.replace({ name: 'authBoard' });
     },
