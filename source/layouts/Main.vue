@@ -35,7 +35,7 @@ import './bootstrap';
 export default Vue.extend({
   components: { IconLoader, Navbar, TipWithNotifications },
   computed: {
-    ...mapGetters(['hasAccessToModule', 'hasAuth', 'navbarLinks']),
+    ...mapGetters(['currentVendorId', 'hasAccessToModule', 'hasAuth', 'navbarLinks']),
     ...mapState(['user', 'permissions']),
 
     hasNavbar() {
@@ -62,11 +62,17 @@ export default Vue.extend({
   },
   watch: {
     $route(to, from) {
+      console.error(to);
       this.nextRoute(to);
     },
     hasAccessToModule(value) {
       if (!value) {
-        this.$router.replace({ name: 'home' });
+        const module = this.$route.name === 'onBoarding' ? 'documents' : 'home';
+        console.error(module, this.permissions, this.currentVendorId);
+        this.$router.replace({
+          name: module,
+          params: { vendorId: this.currentVendorId },
+        });
       }
     }
   },

@@ -17,18 +17,25 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
     currentVendorId({ currentVendor }) {
       return get(currentVendor, 'id', '');
     },
-    hasAccessToModule({ permissions, nextRoute }) {
+    hasAccessToModule({ permissions, nextRoute }, { currentVendorId }) {
       const hasPermissions = !isEmpty(permissions);
       const requiresPermissions = get(nextRoute, 'meta.requiresPermissions', true);
+
+      if (!hasPermissions && requiresPermissions) {
+        return false;
+      }
+
+      const requiresAbsenceVendor = get(nextRoute, 'meta.requiresAbsenceVendor', false);
+
+      if (requiresAbsenceVendor && currentVendorId) {
+        return false;
+      }
+
       const module = get(nextRoute, 'meta.permissions', '');
       const permission = hasPermissions ? permissions[module] : null;
       const allowed = get(permission, 'allowed', false);
       const action = get(permission, 'action', '');
       const hasAccess = allowed && includes(['any', 'read'], action);
-
-      if (!hasPermissions && requiresPermissions) {
-        return false;
-      }
       
       if (hasAccess || !requiresPermissions) {
         return true;
@@ -45,7 +52,11 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
   };
   const actions: ActionTree<State, any> = {
     async initUser({ commit, getters, dispatch }) {
-      commit('nextRoute', router.currentRoute);
+      const requiresAbsenceVendor = get(router.currentRoute, 'meta.requiresAbsenceVendor', false);
+
+      if (!requiresAbsenceVendor) {
+        commit('nextRoute', router.currentRoute);
+      }
 
       const user = await axios
         .get(`${apiUrl}/me`)
@@ -68,10 +79,14 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
         commit('vendors', vendors);
         commit('currentVendor', vendors[0]);
       } else {
-        router.replace({ name: 'onBoarding' });
+        router.push({ name: 'onBoarding' });
       }
 
       await dispatch('fetchPermissions');
+
+      if (requiresAbsenceVendor) {
+        commit('nextRoute', router.currentRoute);
+      }
 
       dispatch('startWatchNotifications');
     },
@@ -139,12 +154,12 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
             dispatch('setToken', accessToken);
           } else {
             localStorage.removeItem('accessToken');
-            router.replace({ name: 'authBoard' });
+            router.push({ name: 'authBoard' });
           }
         })
         .catch(() => {
           localStorage.removeItem('accessToken');
-          router.replace({ name: 'authBoard' });
+          router.push({ name: 'authBoard' });
         });
     },
     async logout() {
@@ -152,7 +167,7 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
       await axios
         .get(`${authApiUrl}/auth1/logout`, { withCredentials: true })
         .catch(() => null);
-      router.replace({ name: 'authBoard' });
+      router.push({ name: 'authBoard' });
     },
     setToken({ commit }, accessToken) {
       localStorage.setItem('accessToken', accessToken);
