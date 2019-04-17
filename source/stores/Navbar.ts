@@ -16,7 +16,7 @@ export default function NavbarStore(routes: RouteConfig[]) {
             }));
         } else if (isEmpty(permissions)) {
           return routes
-            .filter(route => includes(['home', 'onBoarding', 'notifications', 'documents'], route.name))
+            .filter(route => includes(['home', 'notifications', 'documents'], route.name))
             .map(route => ({
               name: route.name,
               href: route.path.replace(':vendorId', currentVendorId),
@@ -27,6 +27,12 @@ export default function NavbarStore(routes: RouteConfig[]) {
         return routes
           .filter(route => {
             if (route.name === 'authBoard') {
+              return false;
+            }
+
+            const requiresAbsenceVendor = get(route, 'meta.requiresAbsenceVendor', false);
+
+            if (requiresAbsenceVendor && currentVendorId) {
               return false;
             }
 

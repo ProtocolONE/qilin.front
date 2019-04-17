@@ -29,13 +29,13 @@ const routes: RouteConfig[] = [
     path: '/auth',
     name: 'authBoard',
     component: AuthBoard,
-    meta: { requiresAuth: false, requiresPermissions: false }, // default is 'true'
+    meta: { requiresAuth: false, requiresPermissions: false },
   },
   {
     path: '/vendor/on-boarding',
     name: 'onBoarding',
     component: OnBoarding,
-    meta: { requiresPermissions: false }, // default is 'true'
+    meta: { requiresPermissions: false, requiresAbsenceVendor: true },
   },
   {
     path: '/games',
@@ -102,7 +102,7 @@ const routes: RouteConfig[] = [
     path: '/documents/:vendorId',
     name: 'documents',
     component: Documents,
-    meta: { requiresPermissions: false, permissions: 'vendors.documents.*' }, // default is 'true'
+    meta: { requiresPermissions: false, permissions: 'vendors.documents.*' },
   },
   {
     path: '/admin',

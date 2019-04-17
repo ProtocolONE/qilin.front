@@ -95,7 +95,7 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
         ));
       }
     },
-    async createVendor({ commit, state }, query) {
+    async createVendor({ commit, dispatch, state }, query) {
       const domain3 = query.name
         .toLowerCase()
         .replace(' ', '')
@@ -115,6 +115,8 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
         const vendors = state.vendors || [];
         commit('currentVendor', vendor);
         commit('vendors', [ vendor, ...vendors ]);
+
+        await dispatch('fetchPermissions');
       }
     },
     changeCurrentVendor({ commit, state }, vendorId) {
