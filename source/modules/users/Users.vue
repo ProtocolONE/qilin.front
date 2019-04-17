@@ -40,7 +40,7 @@
 <script type="ts">
 import Vue from 'vue';
 import { get, filter, includes, map, orderBy } from 'lodash-es';
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
 import { UiPaginator, UiTable } from '@protocol-one/ui-kit';
 import i18n from './i18n';
 import UsersFilters from './components/UsersFilters.vue';
@@ -58,6 +58,8 @@ export default Vue.extend({
     };
   },
   computed: {
+    ...mapState(['permissions']),
+    ...mapGetters(['currentVendorId']),
     ...mapState('Users', ['rowsLimit', 'users', 'usersCount']),
 
     hasUsers() {
@@ -65,8 +67,7 @@ export default Vue.extend({
     },
   },
   mounted() {
-    this.initState({ vendorId: '40cbd8ae-b8a3-4ed3-825f-37dccbb9898c' });
-    console.error(this.users);
+    this.initState({ vendorId: this.currentVendorId });
   },
   methods: {
     ...mapActions('Users', ['initState', 'fetchUsers']),
