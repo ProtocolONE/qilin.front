@@ -1,6 +1,6 @@
 <template>
 <div :class="['main-wrapper', { '_with-navbar': hasNavbar }]">
-  <template v-if="hasAccessToModule">
+  <template v-if="hasAccessToModule()">
     <Navbar
       v-if="hasNavbar"
       :hasAuth="hasAuth"
@@ -36,7 +36,7 @@ export default Vue.extend({
   components: { IconLoader, Navbar, TipWithNotifications },
   computed: {
     ...mapGetters(['currentVendorId', 'hasAccessToModule', 'hasAuth', 'navbarLinks']),
-    ...mapState(['user', 'permissions']),
+    ...mapState(['user']),
 
     hasNavbar() {
       return this.$route.name !== 'authBoard';
@@ -56,19 +56,18 @@ export default Vue.extend({
   async created() {
     await this.initUser();
 
-    if (!this.hasAccessToModule) {
+    if (!this.hasAccessToModule()) {
       this.$router.replace({ name: 'home' });
     }
   },
   watch: {
     $route(to, from) {
-      console.error(to);
       this.nextRoute(to);
     },
     hasAccessToModule(value) {
       if (!value) {
         const module = this.$route.name === 'onBoarding' ? 'documents' : 'home';
-        console.error(module, this.permissions, this.currentVendorId);
+
         this.$router.replace({
           name: module,
           params: { vendorId: this.currentVendorId },

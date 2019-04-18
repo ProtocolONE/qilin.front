@@ -4,6 +4,16 @@ import { find, get, includes, isEmpty, reduce } from 'lodash-es';
 import { GetterTree, ActionTree, MutationTree } from 'vuex';
 import State from './userTypes';
 
+function mergePermissions(perm1: any, perm2: any) {
+  const action1 = perm1.action;
+  const action2 = perm2.action;
+  const action = (action1 === 'any' || action2 === 'any' || action1 !== action2)
+    ? 'any'
+    : action1;
+
+  return { action };
+}
+
 export default function UserStore(apiUrl: string, authApiUrl: string, router: VueRouter) {
   const state: State = {
     accessToken: localStorage.getItem('accessToken') || null,
@@ -17,7 +27,10 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
     currentVendorId({ currentVendor }) {
       return get(currentVendor, 'id', '');
     },
-    hasAccessToModule({ permissions, nextRoute }, { currentVendorId }) {
+    hasAccessToModule: (
+      { permissions, nextRoute },
+      { currentVendorId }
+    ) => (resourceId: string = '') => {
       const hasPermissions = !isEmpty(permissions);
       const requiresPermissions = get(nextRoute, 'meta.requiresPermissions', true);
 
@@ -31,11 +44,11 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
         return false;
       }
 
+      const uuid = resourceId || '*';
       const module = get(nextRoute, 'meta.permissions', '');
-      const permission = hasPermissions ? permissions[module] : null;
-      const allowed = get(permission, 'allowed', false);
+      const permission = hasPermissions ? get(permissions[module], uuid) : null;
       const action = get(permission, 'action', '');
-      const hasAccess = allowed && includes(['any', 'read'], action);
+      const hasAccess = includes(['any', 'read'], action);
       
       if (hasAccess || !requiresPermissions) {
         return true;
@@ -103,11 +116,51 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
         .catch(() => null);
 
       if (permissions) {
-        commit('permissions', reduce(
-          permissions,
-          (permObject, perm) => ({ ...permObject, [perm.resource]: perm }),
-          {}
-        ));
+        const preparedPermissions = reduce(
+          permissions
+            .filter(perm => perm.allowed)
+            .map(perm => ({
+              ...perm,
+              uuid: perm.uuid === 'skip' ? '*' : perm.uuid,
+            })),
+          (permObject, perm) => {
+            const prePermResource = get(permObject, `${perm.resource}`);
+            const prePerm = get(permObject, `${perm.resource}.${perm.uuid}`);
+
+            if (!prePermResource) {
+              return {
+                ...permObject,
+                [perm.resource]: {
+                  [perm.uuid]: { action: perm.action },
+                },
+              };
+            }
+
+            if (!prePerm) {
+              const allPrePerm = get(prePermResource, '*');
+
+              return {
+                ...permObject,
+                [perm.resource]: {
+                  ...prePermResource,
+                  [perm.uuid]: allPrePerm
+                    ? mergePermissions(allPrePerm, perm)
+                    : { action: perm.action },
+                },
+              };
+            }
+
+            return {
+              ...permObject,
+              [perm.resource]: {
+                ...prePermResource,
+                [perm.uuid]: mergePermissions(prePerm, perm),
+              },
+            };
+          },
+          {},
+        );
+        commit('permissions', preparedPermissions);
       }
     },
     async createVendor({ commit, dispatch, state }, query) {

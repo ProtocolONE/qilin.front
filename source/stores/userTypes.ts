@@ -1,17 +1,13 @@
 import { Route } from 'vue-router';
 
 interface Permission {
-  role: string;
-  domain: string;
-  resource: string;
-  uuid: string;
   action: string;
-  allowed: boolean;
-  restrictions: {
-    owner: string;
-    role: string;
-    uuid: string;
-  }
+}
+
+interface Permissions {
+  [resource: string]: {
+    [uuid: string]: Permission;
+  };
 }
 interface User {
   id: string;
@@ -33,7 +29,7 @@ export default interface State {
   accessToken: string;
   currentVendor: Vendor;
   nextRoute: Route;
-  permissions: Permission[];
+  permissions: Permissions;
   user: User;
   vendors: Vendor[];
 }

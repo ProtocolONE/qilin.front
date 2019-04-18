@@ -43,10 +43,9 @@ export default function NavbarStore(routes: RouteConfig[]) {
             }
 
             const module = get(route, 'meta.permissions', '');
-            const permission = permissions[module];
-            const allowed = get(permission, 'allowed', false);
+            const permission = get(permissions[module], '*');
             const action = get(permission, 'action', '');
-            const hasAccess = allowed && includes(['any', 'read'], action);
+            const hasAccess = includes(['any', 'read'], action);
 
             if (hasAccess) {
               return true;
