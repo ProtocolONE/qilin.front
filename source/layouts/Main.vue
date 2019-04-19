@@ -64,8 +64,8 @@ export default Vue.extend({
     $route(to, from) {
       this.nextRoute(to);
     },
-    hasAccessToModule(value) {
-      if (!value) {
+    hasAccessToModule(hasAccess) {
+      if (!hasAccess()) {
         const module = this.$route.name === 'onBoarding' ? 'documents' : 'home';
 
         this.$router.replace({

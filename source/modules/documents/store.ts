@@ -71,8 +71,10 @@ export default function DocumentsStore(apiUrl: string) {
       const documents = await axios
         .get(`${apiUrl}/vendors/${vendorId}/documents`)
         .then(response => response.data);
+      
+        const { status } = documents;
 
-      commit('documents', documents);
+      commit('documents', { ...documents, status: status === 'declined' ? 'draft' : status });
     },
     async save({ state }, vendorId) {
       await axios.put(`${apiUrl}/vendors/${vendorId}/documents`, state.documents);
