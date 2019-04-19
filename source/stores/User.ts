@@ -94,8 +94,6 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
       if (vendors && vendors.length) {
         commit('vendors', vendors);
         commit('currentVendor', vendors[0]);
-      } else {
-        router.push({ name: 'onBoarding' });
       }
 
       await dispatch('fetchPermissions');

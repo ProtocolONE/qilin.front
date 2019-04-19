@@ -13,6 +13,7 @@ import GameSales from '@/modules/gameSales/Sales.vue';
 import GameDescriptions from '@/modules/gameDescriptions/Descriptions.vue';
 import Games from '@/modules/games/Games.vue';
 import History from '@/modules/history/History.vue';
+import Invite from '@/modules/invite/Invite.vue';
 import OnBoarding from '@/modules/onBoarding/OnBoarding.vue';
 import Notifications from '@/modules/notifications/Notifications.vue';
 import Requests from '@/modules/requests/Requests.vue';
@@ -32,6 +33,12 @@ const routes: RouteConfig[] = [
     name: 'authBoard',
     component: AuthBoard,
     meta: { requiresAuth: false, requiresPermissions: false, isNav: false },
+  },
+  {
+    path: '/vendors/:vendorId/invite/:inviteId',
+    name: 'invite',
+    component: Invite,
+    meta: { requiresAuth: false, requiresPermissions: false },
   },
   {
     path: '/vendor/on-boarding',

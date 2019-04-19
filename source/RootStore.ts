@@ -8,6 +8,7 @@ import DocumentsStore from '@/modules/documents/store';
 import GameStore from '@/modules/gameCommon/store';
 import GamesStore from '@/modules/games/store';
 import HistoryStore from '@/modules/history/store';
+import InviteStore from '@/modules/invite/store';
 import NotificationsStore from '@/modules/notifications/store';
 import RequestsStore from '@/modules/requests/store';
 import RequestStore from '@/modules/request/store';
@@ -43,6 +44,7 @@ export default {
     Game: GameStore(apiUrl),
     Games: GamesStore(apiUrl),
     History: HistoryStore(adminApiUrl),
+    Invite: InviteStore(apiUrl),
     Notifications: NotificationsStore(apiUrl),
     Request: RequestStore(adminApiUrl),
     Requests: RequestsStore(adminApiUrl),
