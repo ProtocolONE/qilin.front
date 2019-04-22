@@ -41,11 +41,14 @@ export default Vue.extend({
     this.initState(this.inviteId);
   },
   methods: {
+    ...mapActions(['fetchPermissions']),
     ...mapActions('Invite', ['initState', 'accept']),
   },
   watch: {
     hasAccepted(val) {
-      console.error(val);
+      this.fetchPermissions().then(() => {
+        this.$router.push({ name: 'home' });
+      });
     },
   },
 });

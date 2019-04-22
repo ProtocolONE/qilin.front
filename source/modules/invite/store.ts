@@ -13,7 +13,7 @@ export default function HistoryStore(apiUrl: string) {
       commit('inviteId', inviteId);
     },
     async accept({ commit, state }, vendorId) {
-      const resp = await axios
+      await axios
         .put(`${apiUrl}/vendors/${vendorId}/memberships/invites/${state.inviteId}`, {
           method: 'accept',
         })
@@ -21,8 +21,6 @@ export default function HistoryStore(apiUrl: string) {
           commit('hasAccepted', true);
         })
         .catch(e => e);
-
-      console.error(resp);
     },
   };
   const mutations: MutationTree<State> = {
