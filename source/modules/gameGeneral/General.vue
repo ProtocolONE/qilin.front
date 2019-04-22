@@ -117,7 +117,7 @@ export default Vue.extend({
     ]),
   },
   mounted() {
-    this.initState(this.$route.params.id);
+    this.initState(this.$route.params.resourceId);
     this.updateContents(
       map(
         i18n.messages[this.$i18n.locale],

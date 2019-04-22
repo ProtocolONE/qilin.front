@@ -44,16 +44,22 @@ const routes: RouteConfig[] = [
     meta: { permissions: 'vendor.games' },
   },
   {
-    path: '/games/:id',
+    path: '/games/:resourceId',
     name: 'game',
     // @TODO - remove redirect when GameNavigation is implemented
-    redirect: '/games/:id/general',
+    redirect: '/games/:resourceId/descriptions',
     components: {
       default: GameCommon,
       navigation: GameNavigation,
     },
     meta: { permissions: 'games' },
     children: [
+      {
+        path: 'descriptions',
+        name: 'gameDescriptions',
+        component: GameDescriptions,
+        meta: { i18n: 'routes.game.descriptions.meta', permissions: 'games' },
+      },
       {
         path: 'general',
         name: 'gameGeneral',
@@ -74,20 +80,14 @@ const routes: RouteConfig[] = [
       },
       {
         path: 'ratings',
-        name: 'GameRatings',
+        name: 'gameRatings',
         component: GameRatings,
         meta: { i18n: 'routes.game.ratings.meta', permissions: 'games' },
-      },
-      {
-        path: 'descriptions',
-        name: 'GameDescriptions',
-        component: GameDescriptions,
-        meta: { i18n: 'routes.game.descriptions.meta', permissions: 'games' },
       },
     ],
   },
   {
-    path: '/games/:id/sales',
+    path: '/games/:resourceId/sales',
     name: 'gameSales',
     component: GameSales,
     meta: { permissions: 'games' },

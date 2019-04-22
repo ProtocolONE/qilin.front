@@ -34,7 +34,7 @@ export default Vue.extend({
     ...mapState('Game/Ratings', ['ratings']),
   },
   mounted() {
-    this.initState(this.$route.params.id);
+    this.initState(this.$route.params.resourceId);
     this.updateContents(
       ['ESRB', 'PEGI', 'BBFC', 'USK', 'CERO']
         .map(a => ({anchor: a, text: this.$t(a)})));

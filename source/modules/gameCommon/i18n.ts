@@ -1,11 +1,13 @@
 export default {
   messages: {
     en: {
-      tab_general: 'General',
-      tab_descriptions: 'Description',
-      tab_ratings: 'Ratings',
-      tab_media: 'Media',
-      tab_prices: 'Prices',
+      menu: {
+        gameDescriptions: 'Description',
+        gameGeneral: 'General',
+        gameMedia: 'Media',
+        gamePrices: 'Prices',
+        gameRatings: 'Ratings',
+      },
 
       all_games: 'All games',
       save: 'Save',
@@ -15,11 +17,13 @@ export default {
       hideDetails: 'Hide details'
     },
     ru: {
-      tab_general: 'Основные',
-      tab_descriptions: 'Описание',
-      tab_ratings: 'Ограничения',
-      tab_media: 'Медиа',
-      tab_prices: 'Цены',
+      menu: {
+        gameDescriptions: 'Основные',
+        gameGeneral: 'Описание',
+        gameMedia: 'Ограничения',
+        gamePrices: 'Медиа',
+        gameRatings: 'Цены',
+      },
 
       all_games: 'Все игры',
       save: 'Сохранить',

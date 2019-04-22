@@ -136,7 +136,7 @@ export default {
     ...mapState('Game/Prices', ['contents', 'prices']),
 
     gameId () {
-      return this.$route.params.id
+      return this.$route.params.resourceId
     },
 
     showDetails () {
