@@ -34,7 +34,7 @@ export default Vue.extend({
     },
   },
   mounted() {
-    this.initState(this.$route.params.id);
+    this.initState(this.$route.params.resourceId);
     this.updateGameContents();
   },
   methods: {

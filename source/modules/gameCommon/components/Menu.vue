@@ -1,15 +1,14 @@
 <template>
-<ul class="menu">
-  <li
+<div class="menu">
+  <router-link
     v-for="item in items"
     :key="item"
-    :class="$route.path === `/games/${$route.params.id}/${item}` ? 'select' : ''"
+    :class="['item', {'_select': $route.name === item}]"
+    :to="{ name: item, params: { resourceId: $route.params.resourceId } }"
   >
-    <router-link :to="`/games/${$route.params.id}/${item}`">
-      {{ $t('tab_' + item) }}
-    </router-link>
-  </li>
-</ul>
+    {{ $t(`menu.${item}`) }}
+  </router-link>
+</div>
 </template>
 
 <script type="ts">
@@ -18,9 +17,11 @@ import i18n from '../i18n'
 
 export default Vue.extend({
   i18n,
-  data: () => ({
-    items: ['general', 'descriptions', 'ratings', 'media', 'prices'],
-  }),
+  data() {
+    return {
+      items: ['gameDescriptions', 'gameGeneral', 'gameMedia', 'gamePrices', 'gameRatings'],
+    };
+  },
 })
 </script>
 
@@ -31,21 +32,21 @@ export default Vue.extend({
   padding: 0;
   background: #F6F6F6;
   box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.06);
-  li {
-    display: block;
-    padding-left: 30px;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    &.select {
-      background: #bcd6f4;
-    }
-    a {
-      color: #0c2441;
-      font-size: 16px;
-      &:hover {
-        text-decoration: none;
-      }
-    }
+}
+.item {
+  display: block;
+  padding-left: 30px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  color: #0c2441;
+  font-size: 16px;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &._select {
+    background: #bcd6f4;
   }
 }
 </style>

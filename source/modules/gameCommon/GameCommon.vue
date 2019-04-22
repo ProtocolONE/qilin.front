@@ -66,12 +66,12 @@ export default Vue.extend({
     }
   },
   mounted() {
-    this.initState(this.$route.params.id);
+    this.initState(this.$route.params.resourceId);
   },
   methods: {
     ...mapActions('Game', ['save', 'initState']),
     saveGame() {
-      this.save(this.$route.params.id);
+      this.save(this.$route.params.resourceId);
     },
 
     showGamePriceDetails () {

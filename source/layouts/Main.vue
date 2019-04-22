@@ -56,7 +56,9 @@ export default Vue.extend({
   async created() {
     await this.initUser();
 
-    if (!this.hasAccessToModule()) {
+    const resourceId = this.$route.params.resourceId || '';
+
+    if (!this.hasAccessToModule(resourceId)) {
       this.$router.replace({ name: 'home' });
     }
   },
@@ -65,7 +67,9 @@ export default Vue.extend({
       this.nextRoute(to);
     },
     hasAccessToModule(hasAccess) {
-      if (!hasAccess()) {
+      const resourceId = this.$route.params.resourceId || '';
+
+      if (!hasAccess(resourceId)) {
         const module = this.$route.name === 'onBoarding' ? 'documents' : 'home';
 
         this.$router.replace({
