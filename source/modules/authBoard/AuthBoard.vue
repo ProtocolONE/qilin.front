@@ -51,7 +51,7 @@ export default Vue.extend({
     };
   },
   methods: {
-    ...mapActions('Auth', ['setToken']),
+    ...mapActions(['setToken']),
 
     showAuth(type: string) {
       this.authType = type;
@@ -60,7 +60,6 @@ export default Vue.extend({
     message(event: any) {
       if (event.success) {
         this.setToken(event.accessToken);
-        this.$router.go();
       }
     },
   },

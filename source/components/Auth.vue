@@ -13,6 +13,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { includes } from 'lodash-es';
+import config from '@/config';
 import { UiModal } from '@protocol-one/ui-kit';
 
 interface Auth1Message {
@@ -36,7 +37,7 @@ export default Vue.extend({
   computed: {
     frameSrc() {
       // @TODO - change 'login' to this.type, when we will have frame for reg
-      return '/auth1/login';
+      return `${config.authApi}/auth1/login`;
     }
   },
   created () {

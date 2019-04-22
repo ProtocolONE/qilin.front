@@ -2,6 +2,13 @@ export default {
   lang: 'Язык',
 
   routes: {
+    authBoard: {
+      title: 'Аутентификация',
+      meta: {
+        title: 'Пройдите аутентификацию',
+        description: 'Пройдите аутентификацию',
+      },
+    },
     home: {
       title: 'Главная',
       meta: {

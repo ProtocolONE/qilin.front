@@ -249,4 +249,4 @@ export default [
   { name: 'Yemen' },
   { name: 'Zambia' },
   { name: 'Zimbabwe' },
-]
+];

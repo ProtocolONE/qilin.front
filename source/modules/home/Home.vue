@@ -11,27 +11,28 @@
 
 <template>
 <div class="page">
-  <b-row>
-    <b-col class="left">
-      <div class="center">
-        <b-btn
-          class="float-left"
-          variant="primary"
-          to="/vendor/on-boarding"
-        >
-          {{ $t('add_vendor') }}
-        </b-btn>
-      </div>
-    </b-col>
-    <b-col class="right" />
-  </b-row>
+  <div class="center">
+    <RouterLink :to="{ name: 'onBoarding' }">
+      <UiButton
+        v-if="!currentVendorId"
+        :text="$t('add_vendor')"
+      />
+    </RouterLink>
+  </div>
 </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import { mapGetters } from 'vuex';
+import { UiButton } from '@protocol-one/ui-kit';
 
-export default Vue.extend({});
+export default Vue.extend({
+  components: { UiButton },
+  computed: {
+    ...mapGetters(['currentVendorId'])
+  },
+});
 </script>
 
 <style scoped lang="scss">
@@ -39,18 +40,10 @@ export default Vue.extend({});
   position: relative;
   min-height: 100vh;
 
-  .row {
+  .center {
     position: absolute;
-    height: 100%;
-    width: 100%;
-    .left {
-      position: relative;
-      .center {
-        position: relative;
-        top: calc(50% - 50px);
-        left: 50px;
-      }
-    }
+    top: calc(50% - 50px);
+    left: 50px;
   }
 }
 </style>

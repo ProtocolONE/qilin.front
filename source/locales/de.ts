@@ -2,6 +2,13 @@ export default {
   lang: 'Sprache',
 
   routes: {
+    authBoard: {
+      title: 'Authentication',
+      meta: {
+        title: 'Authentication',
+        description: 'Authentication',
+      },
+    },
     home: {
       title: 'Home',
       meta: {
