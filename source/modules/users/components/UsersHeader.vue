@@ -17,7 +17,7 @@
   <Button
     slot="right"
     :text="$t('buttonText')"
-    @click="$emit('clickCreate')"
+    @click="$emit('openPopupInvite')"
   />
 </PageHeader>
 </template>

@@ -17,7 +17,7 @@
       <div class="box-inner">
         <div
           v-for="(game, index) in games"
-          class="item"
+          :class="['item', { '_text': !game.icon }]"
           :key="index"
           :title="game.title"
         >
@@ -26,9 +26,9 @@
             class="logo _game"
             :style="{ backgroundImage: `url(${game.icon})` }"
           />
-          <div v-else>
+          <template v-else>
             {{ game.title.charAt(0) }}
-          </div>
+          </template>
         </div>
       </div>
     </div>
@@ -52,56 +52,99 @@
     </div>
   </UiTableCell>
   <UiTableCell>{{ formatReleaseDate }}</UiTableCell>
+  <UiTableCell
+    @mouseover.native="isTipVisible = true"
+    @mouseleave.native="isTipVisible = false"
+  >
+    <div class="dots">
+      <IconSimpleDots/>
+      <UiTip
+        position="left"
+        :visible="isTipVisible"
+        :withoutPadding="true"
+      >
+        <div
+          class="event-item"
+          @click.prevent="$emit('removeAllRoles')"
+        >
+          {{ $t('removeAllRoles') }}
+        </div>
+      </UiTip>
+    </div>
+  </UiTableCell>
 </UiTableRow>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import { get, map, upperFirst } from 'lodash-es';
-import { UiTableRow, UiTableCell } from '@protocol-one/ui-kit';
+import { find, get, map, reduce, upperFirst } from 'lodash-es';
+import { UiTableRow, UiTableCell, UiTip } from '@protocol-one/ui-kit';
 import formatDate from '@/helpers/formatDate';
+import IconSimpleDots from '@/components/IconSimpleDots.vue';
+import i18n from './i18nItem';
 
 export default Vue.extend({
-  components: { UiTableRow, UiTableCell },
+  i18n,
+  components: { IconSimpleDots, UiTableRow, UiTableCell, UiTip },
   props: {
     user: {
       required: true,
       type: Object,
     },
   },
+  data() {
+    return {
+      isTipVisible: false,
+    };
+  },
   computed: {
     formatReleaseDate() {
       return formatDate(
-        new Date(this.user.lastSeen),
+        this.user.lastSeen,
         'dd LLLL yyyy, HH:mm',
         this.$i18n.locale,
         this.$i18n.fallbackLocale
-      );
+      ) || 'Pending';
     },
     userUrl(): string {
       return `/users/${this.user.id}`;
     },
     games() {
-      return map(
+      const allResource = map(
         this.user.roles,
         ({ resource }) => ({
+          id: resource.id,
           icon: get(resource, 'meta.preview', ''),
           title: get(resource, 'meta.internalName', ''),
         }),
       );
+
+      return reduce(allResource, (games, game) => {
+        if (find(games, { id: game.id })) {
+          return games;
+        }
+
+        return [ ...games, game ];
+      }, []);
     },
     roles() {
-      return map(
+      const allRoles = map(
         this.user.roles,
         ({ role, resource }) => ({
+          id: resource.id,
           icon: get(resource, 'meta.preview', ''),
-          title: get(
-            role,
-            `title.${this.$i18n.locale}`,
-            get(role, `title.${this.$i18n.fallbackLocale}`, upperFirst(role)),
-          ),
+          role,
+          title: upperFirst(role),
         }),
       );
+
+      return reduce(allRoles, (roles, role) => {
+        if (find(roles, { id: role.id, role: role.role })) {
+          return roles;
+        }
+
+        return [ ...roles, role ];
+      }, []);
     },
   },
 });
@@ -136,7 +179,6 @@ export default Vue.extend({
     vertical-align: top;
   }
 }
-// @TODO - Fix scrolling for roles
 .box {
   position: relative;
   overflow: hidden;
@@ -171,12 +213,42 @@ export default Vue.extend({
     margin-right: 0;
   }
 
+  &._text {
+    width: 28px;
+    height: 28px;
+    text-align: center;
+    box-sizing: border-box;
+    color: #a9a9a9;
+    background-color: #f9f9f9;
+    border: 1px solid #e2e2e2;
+  }
+
   &._role {
     padding: 0 12px;
     font-size: 14px;
     color: #a9a9a9;
     background-color: #f9f9f9;
     border: 1px solid #e2e2e2;
+  }
+}
+.dots {
+  position: relative;
+  width: 20px;
+  cursor: pointer;
+}
+.event-item {
+  font-size: 16px;
+  color: #999;
+  line-height: 40px;
+  display: block;
+  padding: 0;
+  background-color: #fff;
+  text-decoration: none;
+  padding: 0 24px;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: rgba(#2f6ecd, 0.2);
   }
 }
 </style>

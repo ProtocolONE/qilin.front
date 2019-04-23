@@ -103,7 +103,7 @@ const routes: RouteConfig[] = [
     path: '/documents/:vendorId',
     name: 'documents',
     component: Documents,
-    meta: { requiresPermissions: false, permissions: 'vendors.documents.*' },
+    meta: { permissions: 'vendors.documents.*' },
   },
   {
     path: '/admin',

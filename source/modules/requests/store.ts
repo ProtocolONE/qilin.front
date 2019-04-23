@@ -27,7 +27,7 @@ export default function RequestsStore(apiUrl: string) {
         })
         .catch(e => e);
 
-      commit('requests', get(response, 'data') || null);
+      commit('requests', get(response, 'data') || []);
       commit('requestsCount', get(response, 'headers.x-items-count') || 0);
     },
   };
