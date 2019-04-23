@@ -30,7 +30,7 @@ const routes: RouteConfig[] = [
     path: '/auth',
     name: 'authBoard',
     component: AuthBoard,
-    meta: { requiresAuth: false, requiresPermissions: false },
+    meta: { requiresAuth: false, requiresPermissions: false, isNav: false },
   },
   {
     path: '/vendor/on-boarding',
@@ -53,7 +53,7 @@ const routes: RouteConfig[] = [
       default: GameCommon,
       navigation: GameNavigation,
     },
-    meta: { permissions: 'games' },
+    meta: { permissions: 'games', isNav: false },
     children: [
       {
         path: 'descriptions',
@@ -91,7 +91,7 @@ const routes: RouteConfig[] = [
     path: '/games/:resourceId/sales',
     name: 'gameSales',
     component: GameSales,
-    meta: { permissions: 'games' },
+    meta: { permissions: 'games', isNav: false },
   },
   {
     path: '/notifications',
