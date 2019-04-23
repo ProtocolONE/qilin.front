@@ -13,6 +13,7 @@
   >
     {{ $t(column) }}
   </UiTableCell>
+  <UiTableCell />
 </UiTableRow>
 </template>
 

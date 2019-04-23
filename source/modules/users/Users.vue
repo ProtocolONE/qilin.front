@@ -2,6 +2,7 @@
 <div class="users-wrapper">
   <UsersHeader
     :hasUsers="hasUsers"
+    @openPopupInvite="openPopup('invite')"
     @search="filterByName"
   />
 
@@ -13,9 +14,10 @@
       />
 
       <UsersItem
-        v-for="user in innerUsers"
+        v-for="user in actualUsers"
         :key="user.id"
         :user="user"
+        @removeAllRoles="removeAllRoles(user.id)"
       />
     </UiTable>
   </div>
@@ -28,12 +30,22 @@
     @pageChanged="pageChanged"
   >
     <div
-      class="left"
+      class="paginator-left-content"
       slot="left"
     >
       {{ $t('total', { count: usersCount }) }}
     </div>
   </UiPaginator>
+
+  <AddRole
+    :games="games"
+    :hasModal="hasModal"
+    :isLastStep="modalStep === 'last'"
+    :modalType="modalType"
+    @cancel="hasModal = false"
+    @changeStep="changeStep"
+    @submit="addRolesSubmit"
+  />
 </div>
 </template>
 
@@ -42,16 +54,27 @@ import Vue from 'vue';
 import { get, filter, includes, map, orderBy } from 'lodash-es';
 import { mapState, mapActions, mapGetters } from 'vuex';
 import { UiPaginator, UiTable } from '@protocol-one/ui-kit';
-import i18n from './i18n';
+import AddRole from './components/AddRole.vue';
 import UsersFilters from './components/UsersFilters.vue';
 import UsersHeader from './components/UsersHeader.vue';
 import UsersItem from './components/UsersItem.vue';
+import i18n from './i18n';
 
 export default Vue.extend({
   i18n,
-  components: { UiPaginator, UiTable, UsersFilters, UsersHeader, UsersItem },
+  components: {
+    AddRole,
+    UiPaginator,
+    UiTable,
+    UsersFilters,
+    UsersHeader,
+    UsersItem,
+  },  
   data() {
     return {
+      hasModal: false,
+      modalType: 'invite',
+      modalStep: 'first',
       innerUsers: [],
       sortingProps: {},
       offset: 0,
@@ -60,18 +83,37 @@ export default Vue.extend({
   computed: {
     ...mapState(['permissions']),
     ...mapGetters(['currentVendorId']),
-    ...mapState('Users', ['rowsLimit', 'users', 'usersCount']),
+    ...mapState('Games', ['games']),
+    ...mapState('Users', ['roles', 'rowsLimit', 'users', 'usersCount']),
 
+    actualUsers() {
+      return filter(
+        this.innerUsers,
+        (user, index) => index >= this.offset && index < this.offset + this.rowsLimit,
+      )
+    },
     hasUsers() {
       return !!this.users.length;
     },
   },
   mounted() {
     this.initState({ vendorId: this.currentVendorId });
+    this.fetchGames({ vendorId: this.currentVendorId });
   },
   methods: {
+    ...mapActions('Games', ['fetchGames']),
     ...mapActions('Users', ['initState', 'fetchUsers']),
 
+    addRolesSubmit(roles) {
+      console.error(roles);
+    },
+    changeStep(step) {
+      this.modalStep = step;
+    },
+    openPopup(type) {
+      this.modalType = type;
+      this.hasModal = true;
+    },
     filterByName(namePart) {
       this.innerUsers = filter(
         this.users,
@@ -82,13 +124,16 @@ export default Vue.extend({
       );
     },
     pageChanged({ offset }) {
-      const propName = get(Object.keys(this.ss), '0', '');
+      const propName = get(Object.keys(this.sortingProps), '0', '');
       this.offset = offset;
 
       this.fetchUsers({
-        offset,
         sort: propName ? `${this.sortingProps[propName] ? '+' : '-'}${propName}` : '',
+        vendorId: this.currentVendorId,
       });
+    },
+    removeAllRoles(userId) {
+      
     },
     toggleSort(propName) {
       this.sortingProps = {
@@ -97,6 +142,7 @@ export default Vue.extend({
 
       this.fetchUsers({
         sort: `${this.sortingProps[propName] ? '+' : '-'}${propName}`,
+        vendorId: this.currentVendorId,
       });
     },
   },
@@ -118,7 +164,7 @@ export default Vue.extend({
 .content {
   flex-grow: 1;
 }
-.left {
+.paginator-left-content {
   color: #333;
 }
 </style>

@@ -14,7 +14,6 @@ export interface Role {
 }
 
 export interface User {
-  id: number;
   email: string;
   name: string;
   lastSeen: string;
@@ -25,5 +24,4 @@ export interface State {
   rowsLimit: number;
   users: User[];
   usersCount: number;
-  vendorId: string,
 }
