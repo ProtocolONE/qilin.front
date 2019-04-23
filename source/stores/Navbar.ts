@@ -26,7 +26,7 @@ export default function NavbarStore(routes: RouteConfig[]) {
 
         return routes
           .filter(route => {
-            if (route.name === 'authBoard') {
+            if (!get(route, 'meta.isNav', true)) {
               return false;
             }
 
