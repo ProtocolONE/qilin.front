@@ -5,16 +5,12 @@ import { State } from './types';
 export default function HistoryStore(apiUrl: string) {
   const state: State = {
     hasAccepted: false,
-    inviteId: null,
   };
   const getters: GetterTree<State, any> = {};
   const actions: ActionTree<State, any> = {
-    async initState({ commit }, inviteId) {
-      commit('inviteId', inviteId);
-    },
-    async accept({ commit, state }, vendorId) {
+    async accept({ commit }, { inviteId, vendorId }) {
       await axios
-        .put(`${apiUrl}/vendors/${vendorId}/memberships/invites/${state.inviteId}`, {
+        .put(`${apiUrl}/vendors/${vendorId}/memberships/invites/${inviteId}`, {
           method: 'accept',
         })
         .then(() => {
@@ -25,7 +21,6 @@ export default function HistoryStore(apiUrl: string) {
   };
   const mutations: MutationTree<State> = {
     hasAccepted: (state, value) => state.hasAccepted = value,
-    inviteId: (state, value) => state.inviteId = value,
   };
 
   return {

@@ -4,7 +4,7 @@
     <UiButton
       slot="right"
       v-text="$t('accept')"
-      @click="accept(currentVendorId)"
+      @click="accept({ inviteId, vendorId: currentVendorId })"
     />
   </UiPageHeader>
 
@@ -37,18 +37,19 @@ export default Vue.extend({
       return this.$route.params.inviteId;
     },
   },
-  mounted() {
-    this.initState(this.inviteId);
-  },
   methods: {
-    ...mapActions(['fetchPermissions']),
-    ...mapActions('Invite', ['initState', 'accept']),
+    ...mapActions(['fetchPermissions', 'fetchVendors']),
+    ...mapActions('Invite', ['accept']),
   },
   watch: {
     hasAccepted(val) {
-      this.fetchPermissions().then(() => {
-        this.$router.push({ name: 'home' });
-      });
+      if (val === true) {
+        this.fetchVendors().then(() => {
+          this.fetchPermissions().then(() => {
+            this.$router.replace({ name: 'home' });
+          });
+        });
+      }
     },
   },
 });
