@@ -8,6 +8,9 @@ export default function HistoryStore(apiUrl: string) {
   };
   const getters: GetterTree<State, any> = {};
   const actions: ActionTree<State, any> = {
+    initState() {
+      localStorage.removeItem('inviteData');
+    },
     async accept({ commit }, { inviteId, vendorId }) {
       await axios
         .put(`${apiUrl}/vendors/${vendorId}/memberships/invites/${inviteId}`, {

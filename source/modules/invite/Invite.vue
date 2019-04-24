@@ -37,9 +37,12 @@ export default Vue.extend({
       return this.$route.params.inviteId;
     },
   },
+  mounted() {
+    this.initSate();
+  },
   methods: {
     ...mapActions(['fetchPermissions', 'fetchVendors']),
-    ...mapActions('Invite', ['accept']),
+    ...mapActions('Invite', ['initSate', 'accept']),
   },
   watch: {
     hasAccepted(val) {
