@@ -51,6 +51,10 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
     hasAuth({ accessToken }) {
       return !!accessToken;
     },
+    inviteData() {
+      const [ vendorId, inviteId ] = (localStorage.getItem('inviteData') || ';').split(';');
+      return vendorId && inviteId ? { vendorId, inviteId } : null;
+    },
     userId({ user }) {
       return get(user, 'id', '');
     },
@@ -80,6 +84,10 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
         .catch(() => null);
 
       if (getters.hasAuth && !user) {
+        if (router.currentRoute.name === 'invite' && !getters.inviteData) {
+          const { vendorId, inviteId } = router.currentRoute.params;
+          saveInviteData(vendorId, inviteId);
+        }
         dispatch('refreshToken');
         return;
       }
@@ -100,7 +108,7 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
     async fetchPermissions({ commit, getters }) {
       const { hasAuth, currentVendorId, userId } = getters;
 
-      if (!hasAuth || !userId) {
+      if (!hasAuth || !userId || !currentVendorId) {
         return;
       }
 
@@ -172,13 +180,13 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
         .catch(() => null);
       router.push({ name: 'authBoard' });
     },
-    setToken({ commit }, accessToken) {
+    setToken({ commit, getters }, accessToken) {
       localStorage.setItem('accessToken', accessToken);
       commit('accessToken', accessToken);
 
-      const [ vendorId, inviteId ] = (localStorage.getItem('inviteData') || ';').split(';');
+      if (getters.inviteData) {
+        const { vendorId, inviteId } = getters.inviteData;
 
-      if (vendorId && inviteId) {
         router.replace({ name: 'invite', params: { vendorId, inviteId } });
       } else {
         router.go(0);
@@ -268,4 +276,10 @@ function mergePermissions(perm1: any, perm2: any) {
   const action = (action1IsAny || action2IsAny || action1 !== action2) ? 'any' : action1;
 
   return { action };
+}
+
+function saveInviteData(vendorId: string, inviteId: string) {
+  if (vendorId && inviteId) {
+    localStorage.setItem('inviteData', `${vendorId};${inviteId}`);
+  }
 }
