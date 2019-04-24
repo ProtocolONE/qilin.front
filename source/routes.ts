@@ -35,7 +35,7 @@ const routes: RouteConfig[] = [
     meta: { requiresAuth: false, requiresPermissions: false, isNav: false },
   },
   {
-    path: '/vendors/:vendorId/invite/:inviteId',
+    path: '/vendors/:vendorId/invites/:inviteId',
     name: 'invite',
     component: Invite,
     meta: { requiresAuth: false, requiresPermissions: false },
