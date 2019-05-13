@@ -90,7 +90,7 @@
     <UiButton
       class="btn-item"
       :disabled="IsSubmitDisabled"
-      @click="$emit('submit', rolesList)"
+      @click="$emit('submit', { selectedGameId, rolesList, email })"
     >
       {{ $t(`modal.${modalType}.submit`) }}
     </UiButton>

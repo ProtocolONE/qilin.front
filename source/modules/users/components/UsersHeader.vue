@@ -15,6 +15,7 @@
   </div>
 
   <Button
+    v-if="hasChangePermission"
     slot="right"
     :text="$t('buttonText')"
     @click="$emit('openPopupInvite')"
@@ -32,6 +33,10 @@ export default Vue.extend({
   components: { Button, PageHeader, TextField },
   props: {
     hasUsers: {
+      default: false,
+      type: Boolean,
+    },
+    hasChangePermission: {
       default: false,
       type: Boolean,
     },

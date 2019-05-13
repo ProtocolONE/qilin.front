@@ -128,5 +128,12 @@ export default {
         description: 'Роли пользователей для игр',
       },
     },
+    user: {
+      title: 'Пользователь',
+      meta: {
+        title: 'Пользователь',
+        description: 'Пользователь',
+      },
+    },
   },
 };

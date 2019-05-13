@@ -21,6 +21,8 @@ export interface Game {
 }
 
 export interface State {
+  rowsLimit: number;
   games: Game[];
   genres: Genre[];
+  gamesCount: number;
 }

@@ -12,6 +12,7 @@ import NotificationsStore from '@/modules/notifications/store';
 import RequestsStore from '@/modules/requests/store';
 import RequestStore from '@/modules/request/store';
 import UsersStore from '@/modules/users/store';
+import UserStore from '@/modules/user/store';
 
 const adminApiUrl = config.adminApi;
 const apiUrl = config.api;
@@ -47,5 +48,6 @@ export default {
     Requests: RequestsStore(adminApiUrl),
     Sales: SalesStore(apiUrl),
     Users: UsersStore(apiUrl),
+    User: UserStore(apiUrl),
   },
 };

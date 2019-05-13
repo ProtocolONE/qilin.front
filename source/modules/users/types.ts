@@ -14,6 +14,7 @@ export interface Role {
 }
 
 export interface User {
+  id: string;
   email: string;
   name: string;
   lastSeen: string;
