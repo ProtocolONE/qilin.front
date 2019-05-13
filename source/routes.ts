@@ -18,6 +18,7 @@ import Notifications from '@/modules/notifications/Notifications.vue';
 import Requests from '@/modules/requests/Requests.vue';
 import Request from '@/modules/request/Request.vue';
 import Users from '@/modules/users/Users.vue';
+import User from '@/modules/user/User.vue';
 
 const routes: RouteConfig[] = [
   {
@@ -138,6 +139,12 @@ const routes: RouteConfig[] = [
     name: 'users',
     component: Users,
     meta: { permissions: 'vendors.memberships' },
+  },
+  {
+    path: '/users/:userId',
+    name: 'user',
+    component: User,
+    meta: { permissions: 'vendors.memberships', isNav: false },
   },
 ].map(route => ({
   ...route,

@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { get } from 'lodash-es';
+import { find, findIndex, get, map, reduce, union } from 'lodash-es';
 import { GetterTree, ActionTree, MutationTree } from 'vuex';
 import { State } from './types';
 
@@ -27,6 +27,53 @@ export default function UsersStore(apiUrl: string) {
 
       commit('users', users);
       commit('usersCount', get(response, 'headers.x-items-count') || users.length);
+    },
+    async sendInvite({}, { selectedGameId, rolesList, email, vendorId }) {
+      await axios.post(
+        `${apiUrl}/vendors/${vendorId}/memberships/invites`,
+        {
+          email,
+          roles: map(rolesList, role => ({
+            role,
+            resource: { id: selectedGameId, domain: 'vendor' },
+          })),
+        },
+      )
+      .catch(e => e);
+    },
+    async changeRoles({ state }, { userId, vendorId, roles }) {
+      if (!roles.length) {
+        const user = find(state.users, ({ id }) => id === userId);
+
+        if (!user || !user.roles) {
+          return;
+        }
+
+        const removed = reduce(
+          user.roles,
+          (roles, currentRole) => {
+            const index = findIndex(roles, ({ id }) => id === currentRole.resource.id);
+            if (index !== -1) {
+              roles[index].roles = union(roles[index].roles, [ currentRole.role ]);
+              return roles;
+            }
+
+            roles.push({
+              id: currentRole.resource.id,
+              roles: [ currentRole.role ],
+            });
+
+            return roles;
+          },
+          [],
+        );
+
+        await axios.put(
+          `${apiUrl}/vendors/${vendorId}/memberships/${userId}`,
+          { added: [], removed },
+        )
+        .catch(e => e);
+      }
     },
   };
   const mutations: MutationTree<State> = {

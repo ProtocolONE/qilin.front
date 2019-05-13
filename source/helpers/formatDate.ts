@@ -7,7 +7,7 @@ export default function formatDate(
   locale: string,
   fallbackLocale: string
 ) {
-  return isValid(date) ? format(new Date(date), formatStr, {
+  return isValid(new Date(date)) ? format(new Date(date), formatStr, {
     locale: locales[locale] || locales[fallbackLocale],
   }) : null;
 }
