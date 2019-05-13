@@ -7,9 +7,10 @@ import State from './userTypes';
 function mergePermissions(perm1: any, perm2: any) {
   const action1 = perm1.action;
   const action2 = perm2.action;
-  const action = (action1 === 'any' || action2 === 'any' || action1 !== action2)
-    ? 'any'
-    : action1;
+  const anyArr = ['any', '*'];
+  const action1IsAny = includes(anyArr, action1);
+  const action2IsAny = includes(anyArr, action2);
+  const action = (action1IsAny || action2IsAny || action1 !== action2) ? 'any' : action1;
 
   return { action };
 }
@@ -46,9 +47,11 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
 
       const uuid = resourceId || '*';
       const module = get(nextRoute, 'meta.permissions', '');
-      const permission = hasPermissions ? get(permissions[module], uuid) : null;
+      const permission = hasPermissions
+        ? get(permissions[module], uuid, get(permissions[module], '*'))
+        : null;
       const action = get(permission, 'action', '');
-      const hasAccess = includes(['any', 'read'], action);
+      const hasAccess = includes(['any', 'read', '*'], action);
       
       if (hasAccess || !requiresPermissions) {
         return true;
