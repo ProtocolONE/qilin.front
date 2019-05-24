@@ -1,7 +1,7 @@
 <template>
 <div class="packages-wrapper">
   <PackagesHeader
-    :hasPackages="hasPackages"
+    :has-packages="hasPackages"
     @search="filterByName"
     @clickCreate="showModal = true"
   />
@@ -22,7 +22,7 @@
   />
   <CreatePackage
     v-if="showModal"
-    :vendorId="currentVendorId"
+    :vendor-id="currentVendorId"
     @close="showModal = false"
     @create="packageCreated"
   />
@@ -55,8 +55,13 @@ export default Vue.extend({
       return !!this.packages.length;
     },
   },
+  watch: {
+    packages(val) {
+      this.innerPackages = val;
+    },
+  },
   mounted() {
-    this.initState({ vendorId: this.currentVendorId });
+    this.initState({vendorId: this.currentVendorId});
   },
   methods: {
     ...mapActions('Packages', ['initState', 'fetchPackages']),
@@ -76,11 +81,6 @@ export default Vue.extend({
         sort: `${this.sortingProps[propName] ? '+' : '-'}${propName}`,
         vendorId: this.currentVendorId,
       });
-    },
-  },
-  watch: {
-    packages(val) {
-      this.innerPackages = val;
     },
   },
 });

@@ -1,13 +1,17 @@
 <template>
 <div class="package-general">
-  <Header level="2">{{ $t('name') }}</Header>
+  <Header level="2">
+    {{ $t('name') }}
+  </Header>
   <MultilangTextField
     :value="$props.value.name"
-    @change="changeProp('name', $event)"
     class="textfield"
     :label="$t('name_label')"
+    @change="changeProp('name', $event)"
   />
-  <Header level="2">{{ $t('sku') }}</Header>
+  <Header level="2">
+    {{ $t('sku') }}
+  </Header>
   <TextField
     class="textfield"
     :label="$t('sku_label')"
@@ -43,7 +47,9 @@
     </label>
   </div>
 
-  <Header level="2">{{ $t('products') }}</Header>
+  <Header level="2">
+    {{ $t('products') }}
+  </Header>
   <Button
     class="add-game"
     :text="$t('add_game')"
@@ -56,7 +62,9 @@
       v-bind="{ product }"
     />
   </UiTable>
-  <p v-else>{ $t('empty_list') }</p>
+  <p v-else>
+    { $t('empty_list') }
+  </p>
   <AddGame
     v-if="hasModal"
     @close="hasModal = false"
@@ -67,7 +75,7 @@
 
 <script type="ts">
 import Vue from 'vue';
-import { Header, Button, Checkbox, TextField, UiTable, UiTableRow, UiTableCell } from '@protocol-one/ui-kit';
+import {Header, Button, Checkbox, TextField, UiTable} from '@protocol-one/ui-kit';
 import MultilangTextField from './MultilangTextField.vue';
 import ProductItem from './ProductItem.vue';
 import AddGame from './AddGame.vue';
@@ -75,7 +83,7 @@ import i18n from '../i18n';
 
 export default Vue.extend({
   i18n,
-  components: { Header, Button, AddGame, Checkbox, TextField, MultilangTextField, ProductItem, UiTable, UiTableRow, UiTableCell },
+  components: {Header, Button, AddGame, Checkbox, TextField, MultilangTextField, ProductItem, UiTable},
   props: {
     value: {
       type: Object,

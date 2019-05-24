@@ -1,7 +1,7 @@
 <template>
 <UiTableRow
   class="packages-filters"
-  :isHead="true"
+  :is-head="true"
 >
   <UiTableCell
     class="name _active"
