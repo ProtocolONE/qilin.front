@@ -23,6 +23,20 @@ export default {
         description: 'Начните интеграцию',
       },
     },
+    packages: {
+      title: 'Пакеты',
+      meta: {
+        title: 'Пакеты',
+        description: 'Создавайте дополнительные пакеты',
+      },
+    },
+    package: {
+      title: 'Пакет',
+      meta: {
+        title: 'Пакет',
+        description: 'Новый пакет',
+      },
+    },
     games: {
       title: 'Игры',
       meta: {

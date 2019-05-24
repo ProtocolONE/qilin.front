@@ -17,6 +17,8 @@ import OnBoarding from '@/modules/onBoarding/OnBoarding.vue';
 import Notifications from '@/modules/notifications/Notifications.vue';
 import Requests from '@/modules/requests/Requests.vue';
 import Request from '@/modules/request/Request.vue';
+import Packages from '@/modules/packages/Packages.vue';
+import Package from '@/modules/package/Package.vue';
 
 const routes: RouteConfig[] = [
   {
@@ -36,6 +38,18 @@ const routes: RouteConfig[] = [
     name: 'onBoarding',
     component: OnBoarding,
     meta: { requiresPermissions: false, requiresAbsenceVendor: true },
+  },
+  {
+    path: '/packages',
+    name: 'packages',
+    component: Packages,
+    meta: { permissions: 'vendors.packages.*' },
+  },
+  {
+    path: '/packages/:resourceId',
+    name: 'package',
+    component: Package,
+    meta: { permissions: 'packages' },
   },
   {
     path: '/games',

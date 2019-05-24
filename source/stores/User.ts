@@ -65,6 +65,9 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
     userId({ user }) {
       return get(user, 'id', '');
     },
+    isUserInit({ permissions }) {
+      return permissions !== null;
+    },
   };
   const actions: ActionTree<State, any> = {
     async initUser({ commit, getters, dispatch }) {

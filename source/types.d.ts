@@ -34,6 +34,8 @@ declare module '@protocol-one/ui-kit' {
   const UiTable: any;
   const UiTableCell: any;
   const UiTableRow: any;
+  const UiLangsBar: any;
+  const PageHeader: any;
 
   export {
     Button,
@@ -51,6 +53,8 @@ declare module '@protocol-one/ui-kit' {
     UiTable,
     UiTableCell,
     UiTableRow,
+    UiLangsBar,
+    PageHeader,
   };
 }
 
