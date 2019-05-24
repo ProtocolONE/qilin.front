@@ -21,11 +21,11 @@ export default function PackageStore(apiUrl: string) {
     async save({ state }) {
       await axios.put(`${apiUrl}/packages/${state.packageObj.id}`, state.packageObj);
     },
-    async fetchGames({ commit }, { sort = '', query = '', vendorId }) {
+    async fetchGames({commit}, {sort = '-releaseDate', query = '', vendorId}) {
       const games = await axios
         .get(`${apiUrl}/vendors/${vendorId}/games`, {
           params: {
-            limit: 10,
+            limit: 5,
             sort: sort || undefined,
             internalName: query || undefined
           },
@@ -34,10 +34,24 @@ export default function PackageStore(apiUrl: string) {
 
       commit('updateFoundGames', games);
     },
+    async addProducts({commit, state}, productIds) {
+      const pkg = await axios
+        .post(`${apiUrl}/packages/${state.packageObj.id}/products`, productIds)
+        .then(res => res.data || []);
+
+      commit('updatePackage', pkg);
+    },
   };
   const mutations: MutationTree<State> = {
-    updatePackage: (state, value: Package) => state.packageObj = value,
-    updateFoundGames: (state, value: Package) => state.foundGames = value,
+    updatePackage: (state, value: Package) => {
+      state.packageObj = value;
+    },
+    updateFoundGames: (state, value: Package) => {
+      state.foundGames = value.filter(
+        game => state.packageObj.products
+          .find(product => product.id !== game.id)
+      );
+    },
   };
   return {
     state,

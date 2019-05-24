@@ -53,7 +53,7 @@
   <Button
     class="add-game"
     :text="$t('add_game')"
-    @click="addGame"
+    @click="clickAddGame"
   />
   <UiTable v-if="value.products.length">
     <ProductItem
@@ -68,6 +68,7 @@
   <AddGame
     v-if="hasModal"
     @close="hasModal = false"
+    @ok="addProducts"
   />
 
 </div>
@@ -80,6 +81,7 @@ import MultilangTextField from './MultilangTextField.vue';
 import ProductItem from './ProductItem.vue';
 import AddGame from './AddGame.vue';
 import i18n from '../i18n';
+import {mapActions} from "vuex";
 
 export default Vue.extend({
   i18n,
@@ -97,12 +99,14 @@ export default Vue.extend({
   },
   computed: {},
   methods: {
+    ...mapActions('Package', ['addProducts']),
+
     changeProp(prop, value) {
       this.$emit('change', {...this.$props.value, [prop]: value});
     },
-    addGame() {
+    clickAddGame() {
       this.hasModal = true;
-    }
+    },
   },
 });
 </script>

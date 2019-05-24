@@ -30,6 +30,7 @@
         <span class="name">{{ game.internalName }}</span>
         <span class="date">{{ formatDate(game.releaseDate) }}</span>
       </label>
+      <p v-if="!foundGames.length">{{ $t('modal.not_found') }}</p>
     </div>
   </div>
   <div
@@ -55,6 +56,13 @@ import formatDate from '@/helpers/formatDate';
 export default Vue.extend({
   i18n,
   components: { UiModal, Header, Button, TextField, Checkbox },
+  data() {
+    return {
+      select: [],
+      search: '',
+      updateTimeout: null,
+    }
+  },
   computed: {
     ...mapGetters(['currentVendorId']),
     ...mapState('Package', ['foundGames']),
@@ -62,20 +70,23 @@ export default Vue.extend({
   mounted() {
     this.fetchGames({ vendorId: this.currentVendorId });
   },
-  data() {
-    return {
-      select: [],
-      search: '',
-    }
-  },
   methods: {
     ...mapActions('Package', ['fetchGames']),
 
     okClick() {
       this.$emit('close');
+      this.$emit('ok', this.select);
     },
     inputSearch(value) {
       this.search = value;
+
+      clearTimeout(this.updateTimeout);
+      this.updateTimeout = setTimeout(() => {
+        this.fetchGames({
+          query: this.search,
+          vendorId: this.currentVendorId
+        });
+      }, 200);
     },
     isChecked(id) {
       return this.select.indexOf(id) > -1;
