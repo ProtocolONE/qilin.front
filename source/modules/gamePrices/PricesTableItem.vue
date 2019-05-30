@@ -44,10 +44,10 @@
 
     <transition name="fade">
       <ul v-show="actions" class="shadow actions-list">
-        <li @click="handleEdit" class="actions-list__item">
+        <li class="actions-list__item" @click="handleEdit">
           {{ $t('edit') }}
         </li>
-        <li @click="$emit('set-default')" class="actions-list__item">
+        <li class="actions-list__item" @click="$emit('set-default')">
           {{ $t('asDefault') }}
         </li>
       </ul>
@@ -57,11 +57,11 @@
 </template>
 
 <script lang="ts">
-import i18n from './i18n'
-import Icon from '@/icons'
-import { TextField as UiTextField } from '@protocol-one/ui-kit'
+  import {TextField as UiTextField} from '@protocol-one/ui-kit'
+  import i18n from './i18n'
+  import Icon from '@/icons'
 
-export default {
+  export default {
   name: 'PricesTableItem',
 
   i18n,
@@ -92,7 +92,7 @@ export default {
 
   methods: {
     handleEdit () {
-      this.hideActions()
+      this.hideActions();
       this.edit = true
     },
 
@@ -101,13 +101,13 @@ export default {
     },
 
     cancelEdit () {
-      this.edit = false
-      this.editedPrice = this.price
+      this.edit = false;
+      this.editedPrice = this.price;
       this.editedVat = this.vat
     },
 
     savePrice () {
-      this.$emit('save-price', { price: this.editedPrice, vat: this.editedVat })
+      this.$emit('save-price', {price: this.editedPrice, vat: this.editedVat});
       this.edit = false
     }
   }

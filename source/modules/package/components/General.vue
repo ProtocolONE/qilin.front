@@ -55,35 +55,42 @@
     :text="$t('add_game')"
     @click="clickAddGame"
   />
-  <UiTable v-if="value.products.length">
+  <Button
+    class="remove-product"
+    :text="$t('remove_product')"
+    @click="clickRemoveProduct"
+  />
+  <UiTable v-if="value.products">
     <ProductItem
       v-for="product in value.products"
       :key="product.id"
       v-bind="{ product }"
+      :checked="isChecked(product.id)"
+      @change="switchSelect(product.id)"
+      :isDefault="isDefault(product.id)"
     />
   </UiTable>
   <p v-else>
-    { $t('empty_list') }
+    {{ $t('empty_list') }}
   </p>
   <AddGame
     v-if="hasModal"
     @close="hasModal = false"
     @ok="addProducts"
   />
-
 </div>
 </template>
 
-<script type="ts">
-import Vue from 'vue';
-import {Header, Button, Checkbox, TextField, UiTable} from '@protocol-one/ui-kit';
-import MultilangTextField from './MultilangTextField.vue';
-import ProductItem from './ProductItem.vue';
-import AddGame from './AddGame.vue';
-import i18n from '../i18n';
-import {mapActions} from "vuex";
+<script lang="ts">
+  import Vue from 'vue';
+  import {mapActions} from "vuex";
+  import {Button, Checkbox, Header, TextField, UiTable} from '@protocol-one/ui-kit';
+  import MultilangTextField from './MultilangTextField.vue';
+  import ProductItem from './ProductItem.vue';
+  import AddGame from './AddGame.vue';
+  import i18n from './i18nGeneral';
 
-export default Vue.extend({
+  export default Vue.extend({
   i18n,
   components: {Header, Button, AddGame, Checkbox, TextField, MultilangTextField, ProductItem, UiTable},
   props: {
@@ -95,17 +102,37 @@ export default Vue.extend({
   data() {
     return {
       hasModal: false,
+      select: [],
     };
   },
   computed: {},
   methods: {
-    ...mapActions('Package', ['addProducts']),
+    ...mapActions('Package', ['addProducts', 'removeProducts']),
 
     changeProp(prop, value) {
       this.$emit('change', {...this.$props.value, [prop]: value});
     },
     clickAddGame() {
       this.hasModal = true;
+    },
+    clickRemoveProduct() {
+      this.removeProducts(this.select)
+        .then(() => {
+          this.select = []
+        });
+    },
+    isChecked(id) {
+      return this.select.indexOf(id) > -1;
+    },
+    switchSelect(id) {
+      if (this.select.indexOf(id) > -1) {
+        this.select = this.select.filter(gameId => gameId !== id);
+      } else {
+        this.select = this.select.concat([id]);
+      }
+    },
+    isDefault(productId) {
+      return productId === this.value.defaultProductId;
     },
   },
 });
@@ -129,5 +156,10 @@ export default Vue.extend({
 }
 .add-game {
   margin: 10px 0;
+}
+
+.remove-product {
+  margin: 10px 0;
+  margin-left: 10px;
 }
 </style>

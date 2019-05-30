@@ -20,9 +20,9 @@ export default {
       menu: {
         gameDescriptions: 'Основные',
         gameGeneral: 'Описание',
-        gameMedia: 'Ограничения',
-        gamePrices: 'Медиа',
-        gameRatings: 'Цены',
+        gameMedia: 'Медиа',
+        gamePrices: 'Цены',
+        gameRatings: 'Ограничения',
       },
 
       all_games: 'Все игры',

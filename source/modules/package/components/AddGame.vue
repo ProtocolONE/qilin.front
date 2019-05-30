@@ -7,13 +7,13 @@
     slot="header"
     level="2"
   >
-    {{ $t('modal.title') }}
+    {{ $t('title') }}
   </Header>
   <div slot="main">
-    <div v-html="$t('modal.description')"/>
+    <div v-html="$t('description')"/>
     <TextField
       :value="search"
-      :label="$t('modal.search')"
+      :label="$t('search')"
       @input="inputSearch($event)"
     />
     <div class="games">
@@ -30,7 +30,7 @@
         <span class="name">{{ game.internalName }}</span>
         <span class="date">{{ formatDate(game.releaseDate) }}</span>
       </label>
-      <p v-if="!foundGames.length">{{ $t('modal.not_found') }}</p>
+      <p v-if="!foundGames.length">{{ $t('not_found') }}</p>
     </div>
   </div>
   <div
@@ -40,20 +40,20 @@
     <Button
       @click="okClick"
     >
-      {{ $t('modal.ok') }}
+      {{ $t('ok') }}
     </Button>
   </div>
 </UiModal>
 </template>
 
 <script type="ts">
-import Vue from 'vue'
-import { TextField, Button, Header, UiModal, Checkbox } from '@protocol-one/ui-kit'
-import {mapActions, mapGetters, mapState} from "vuex";
-import i18n from '../i18n';
-import formatDate from '@/helpers/formatDate';
+  import Vue from 'vue'
+  import {Button, Checkbox, Header, TextField, UiModal} from '@protocol-one/ui-kit'
+  import {mapActions, mapGetters, mapState} from "vuex";
+  import i18n from './i18nAddGame';
+  import formatDate from '@/helpers/formatDate';
 
-export default Vue.extend({
+  export default Vue.extend({
   i18n,
   components: { UiModal, Header, Button, TextField, Checkbox },
   data() {

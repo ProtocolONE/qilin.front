@@ -1,14 +1,20 @@
 <template>
-<UiTableRow
-  :link="productUrl"
->
+<UiTableRow class="row">
+  <UiTableCell>
+    <Checkbox
+      :style="{visibility: isDefault ? 'hidden' : 'visible'}"
+      class="select"
+      :checked="checked"
+      @change="$emit('change', $event)"
+    />
+  </UiTableCell>
   <UiTableCell>
     <div
       v-if="iconUrl"
       class="logo"
       :style="{ backgroundImage: `url(${iconUrl})` }"
     />
-    {{ product.name }}
+    <router-link :to="productUrl">{{ product.name }}</router-link>
   </UiTableCell>
   <UiTableCell>
     {{ productType }}
@@ -17,17 +23,25 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { UiTableRow, UiTableCell } from '@protocol-one/ui-kit';
-import i18n from '../i18n';
+  import Vue from 'vue';
+  import {Checkbox, UiTableCell, UiTableRow} from '@protocol-one/ui-kit';
+  import i18n from '../i18n';
 
-export default Vue.extend({
+  export default Vue.extend({
   i18n,
-  components: { UiTableRow, UiTableCell },
+    components: {UiTableRow, UiTableCell, Checkbox},
   props: {
     product: {
       required: true,
       type: Object,
+    },
+    checked: {
+      required: true,
+      type: Boolean,
+    },
+    isDefault: {
+      default: false,
+      type: Boolean,
     },
   },
   computed: {
@@ -53,5 +67,9 @@ export default Vue.extend({
     background-position: center;
     display: inline-block;
     vertical-align: middle;
+  }
+
+  .row > * {
+    padding: 10px 0 10px 10px;
   }
 </style>

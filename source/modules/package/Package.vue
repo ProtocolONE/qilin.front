@@ -13,7 +13,7 @@
     <Button
       slot="right"
       :text="$t('save')"
-      @click="savePackage"
+      @click="save"
     />
   </PageHeader>
 
@@ -26,9 +26,24 @@
     <KeepAlive>
       <General
         v-if="currentStep === 'general'"
-        class="main"
         :value="packageObj"
         @change="updatePackage($event)"
+      />
+    </KeepAlive>
+    <KeepAlive>
+      <Media
+        v-if="currentStep === 'media'"
+        :media="packageObj.media"
+        @change="updateMedia($event)"
+      />
+    </KeepAlive>
+    <KeepAlive>
+      <Prices
+        v-if="currentStep === 'prices'"
+        :commercial="packageObj.commercial"
+        @change="updatePrices($event)"
+        @addCurrency="addCurrency($event)"
+        @removeCurrency="removeCurrency($event)"
       />
     </KeepAlive>
   </FormByStep>
@@ -36,15 +51,17 @@
 </template>
 
 <script type="ts">
-import Vue from 'vue';
-import { mapActions, mapGetters, mapMutations, mapState } from 'vuex';
-import { Button, FormByStep, Header, PageHeader } from '@protocol-one/ui-kit';
-import General from './components/General.vue';
-import i18n from './i18n';
+  import Vue from 'vue';
+  import {mapActions, mapGetters, mapMutations, mapState} from 'vuex';
+  import {Button, FormByStep, Header, PageHeader} from '@protocol-one/ui-kit';
+  import General from './components/General.vue';
+  import Media from './components/Media.vue';
+  import Prices from '@/modules/packagePrices/Prices.vue';
+  import i18n from './i18n';
 
-export default Vue.extend({
+  export default Vue.extend({
   i18n,
-  components: { General, Button, FormByStep, Header, PageHeader },
+    components: {General, Button, FormByStep, Header, PageHeader, Media, Prices},
   data: () => ({
       currentStep: 'general',
   }),
@@ -54,7 +71,7 @@ export default Vue.extend({
     formSteps() {
       return this.steps.map(step => ({
         value: step,
-        label: this.$i18n.t(step),
+        label: this.$i18n.t(`tabs.${step}`),
       }));
     },
     breadcrumbs () {
@@ -78,10 +95,7 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions('Package', ['initState', 'save']),
-    ...mapMutations('Package', ['updatePackage']),
-    savePackage() {
-      this.save();
-    },
+    ...mapMutations('Package', ['updatePackage', 'updateMedia', 'updatePrices', 'removeCurrency', 'addCurrency']),
   }
 });
 </script>
@@ -95,7 +109,8 @@ export default Vue.extend({
 .content {
   flex-grow: 1;
 }
-.main {
+
+.general {
   max-width: 600px;
 }
 .submit-box {

@@ -22,11 +22,17 @@ export interface Product {
 export interface Price {
   currency: string;
   price: number;
+  vat: number;
+}
+
+export interface PackagePreOrder {
+  date: Date
+  enabled: boolean;
 }
 
 export interface PackagePrices {
   common: number;
-  preOrder: number;
+  preOrder: PackagePreOrder;
   prices: Price[];
 }
 
@@ -57,4 +63,5 @@ export interface Package {
 export interface State {
   packageObj: Package;
   foundGames: Game[];
+  initialPrices: string[];
 }
