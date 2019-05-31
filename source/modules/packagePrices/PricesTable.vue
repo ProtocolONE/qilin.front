@@ -75,11 +75,11 @@
 </template>
 
 <script lang="ts">
-  import i18n from './i18n'
+  import {cloneDeep, orderBy} from 'lodash-es'
   import Icon from '@/icons'
+  import i18n from './i18n'
   import PricesTableItem from './PricesTableItem.vue'
   import DefaultCurrencies from '@/helpers/defaultCurrencies'
-  import {cloneDeep, orderBy} from 'lodash-es'
 
   export default {
     name: 'PricesTable',
@@ -109,14 +109,14 @@
         },
         sort: null,
         order: 'asc',
-        moreCurrencies: false,
+        moreCurrencies: !this.items.length,
       }
     },
 
     computed: {
       mappedItems() {
-        let currency = this.defaultCurrency;
-        let mappedItems = cloneDeep(this.items).map(item => {
+        const currency = this.defaultCurrency;
+        const mappedItems = cloneDeep(this.items).map(item => {
           item.defaultCurrency = item.currency;
           item.userPrice = parseFloat((item.price - item.price * item.vat / 100).toFixed(2));
           if (currency === item.currency) {
@@ -124,7 +124,6 @@
           }
           return item
         });
-
         return orderBy(mappedItems, this.sort, this.order)
       },
 

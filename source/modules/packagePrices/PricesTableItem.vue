@@ -3,7 +3,7 @@
   <td class="cell">{{ currency }}</td>
   <td class="cell">
     <ui-text-field
-      v-if="edit"
+      v-if="isEdit"
       v-model="editedPrice"
       v-focus
       class="cell__text-field"
@@ -15,7 +15,7 @@
   </td>
   <td class="cell">
     <ui-text-field
-      v-if="edit"
+      v-if="isEdit"
       v-model="editedVat"
       class="cell__text-field"
       type="number"
@@ -26,18 +26,18 @@
   </td>
   <td class="cell">{{ userPrice }}</td>
   <td class="cell cell--actions">
-    <div v-if="edit" class="controls">
-    <span class="controls__btn controls__btn--cancel" @click="cancelEdit">
-      <icon name="times" width="10" height="10" fill="gray"/>
-    </span>
+    <div v-if="isEdit" class="controls">
+      <span class="controls__btn controls__btn--cancel" @click="cancelEdit">
+        <icon name="times" width="10" height="10" fill="gray"/>
+      </span>
       <span class="controls__btn controls__btn--submit" @click="savePrice">
-      <icon name="check" width="12" height="12" fill="#FFF"/>
-    </span>
+        <icon name="check" width="12" height="12" fill="#FFF"/>
+      </span>
     </div>
     <a
       v-else
       v-clickaway="hideActions"
-      href="#"
+      href="/"
       class="actions-link"
       @click.prevent="actions = true"
     >
@@ -62,9 +62,9 @@
 </template>
 
 <script lang="ts">
+  import {TextField as UiTextField} from '@protocol-one/ui-kit'
   import i18n from './i18n'
   import Icon from '@/icons'
-  import {TextField as UiTextField} from '@protocol-one/ui-kit'
 
   export default {
     name: 'PricesTableItem',
@@ -83,14 +83,18 @@
       currency: String,
       price: [Number, String],
       vat: [Number, String],
-      userPrice: [Number, String]
+      userPrice: [Number, String],
+      edit: {
+        type: Boolean,
+        default: false,
+      },
     },
 
     data() {
       return {
         editedPrice: this.price,
         editedVat: this.vat,
-        edit: false,
+        isEdit: this.edit || false,
         actions: false
       }
     },
@@ -98,7 +102,7 @@
     methods: {
       handleEdit() {
         this.hideActions();
-        this.edit = true
+        this.isEdit = true
       },
 
       hideActions() {
@@ -106,7 +110,7 @@
       },
 
       cancelEdit() {
-        this.edit = false;
+        this.isEdit = false;
         this.editedPrice = this.price;
         this.editedVat = this.vat;
       },
@@ -115,93 +119,95 @@
         this.$emit('save-price', {
           price: parseFloat(this.editedPrice),
           vat: parseInt(this.editedVat, 10),
+          edit: false,
         });
-        this.edit = false
+        this.isEdit = false
       }
     }
   }
 </script>
 
 <style lang="scss" scoped>
-  .cell {
-    padding: 10px;
-    padding-left: 15px;
-    vertical-align: top;
+.cell {
+  padding: 10px;
+  padding-left: 15px;
+  vertical-align: middle;
+  font-size: 16px;
 
-    &--actions {
-      position: relative;
-    }
-
-    &__price {
-      padding: 4px;
-    }
-
-    &__text-field {
-      padding: 0;
-    }
+  &--actions {
+    position: relative;
   }
 
-  .actions-link:active .actions-icon,
-  .actions-link:focus .actions-icon {
-    fill: #2275D7;
+  &__price {
+    padding: 4px;
   }
 
-  .actions-icon {
-    transition: fill .2s linear;
-  }
-
-  .actions-list {
-    position: absolute;
-    right: 0;
-    bottom: 35px;
-    z-index: 100;
-    margin: 0;
+  &__text-field {
     padding: 0;
-    list-style-type: none;
-    background-color: #FFF;
-    border: 1px solid rgba(0, 0, 0, .05);
+  }
+}
 
-    &__item {
-      padding: 10px 20px;
-      color: #B1B1B1;
-      white-space: nowrap;
-      cursor: pointer;
-      transition: color .2s linear, background-color .2s linear;
+.actions-link:active .actions-icon,
+.actions-link:focus .actions-icon {
+  fill: #2275D7;
+}
 
-      &:hover {
-        color: #333;
-        background-color: #E3EEFF;
-      }
+.actions-icon {
+  transition: fill .2s linear;
+}
+
+.actions-list {
+  position: absolute;
+  right: 0;
+  bottom: 35px;
+  z-index: 100;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  background-color: #FFF;
+  border: 1px solid rgba(0, 0, 0, .05);
+
+  &__item {
+    padding: 10px 20px;
+    color: #B1B1B1;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: color .2s linear, background-color .2s linear;
+
+    &:hover {
+      color: #333;
+      background-color: #E3EEFF;
     }
   }
+}
 
-  .controls {
-    display: flex;
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  &__btn {
+    display: inline-flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: opacity .3s linear;
 
-    &__btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-      border-radius: 50%;
-      transition: opacity .3s linear;
+    &--cancel {
+      border: 1px solid gray;
+    }
 
-      &--cancel {
-        border: 1px solid gray;
-      }
+    &--submit {
+      border: 1px solid #2275D7;
+      background-color: #2275D7;
+    }
 
-      &--submit {
-        border: 1px solid #2275D7;
-        background-color: #2275D7;
-      }
-
-      &:hover {
-        opacity: .7;
-      }
+    &:hover {
+      opacity: .7;
     }
   }
+}
 </style>

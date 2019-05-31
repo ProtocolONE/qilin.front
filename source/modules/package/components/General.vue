@@ -6,7 +6,7 @@
   <MultilangTextField
     :value="$props.value.name"
     class="textfield"
-    :label="$t('name_label')"
+    :label="$t('nameLabel')"
     @change="changeProp('name', $event)"
   />
   <Header level="2">
@@ -14,7 +14,7 @@
   </Header>
   <TextField
     class="textfield"
-    :label="$t('sku_label')"
+    :label="$t('skuLabel')"
     :value="$props.value.sku"
     @change="changeProp('sku', $event)"
   />
@@ -28,7 +28,7 @@
         @change="changeProp('isEnabled', $event)"
       />
       <span class="label">
-        {{ $t(`is_enabled`) }}
+        {{ $t(`isEnabled`) }}
       </span>
     </label>
   </div>
@@ -42,7 +42,7 @@
         @change="changeProp('isUpgradeAllowed', $event)"
       />
       <span class="label">
-        {{ $t(`is_upgrade_allowed`) }}
+        {{ $t(`isUpgradeAllowed`) }}
       </span>
     </label>
   </div>
@@ -52,12 +52,13 @@
   </Header>
   <Button
     class="add-game"
-    :text="$t('add_game')"
+    :text="$t('addGame')"
     @click="clickAddGame"
   />
   <Button
     class="remove-product"
-    :text="$t('remove_product')"
+    color="orange"
+    :text="$t('removeProduct')"
     @click="clickRemoveProduct"
   />
   <UiTable v-if="value.products">
@@ -71,7 +72,7 @@
     />
   </UiTable>
   <p v-else>
-    {{ $t('empty_list') }}
+    {{ $t('emptyList') }}
   </p>
   <AddGame
     v-if="hasModal"

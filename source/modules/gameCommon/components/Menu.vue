@@ -12,14 +12,14 @@
 </template>
 
 <script type="ts">
-import Vue from 'vue'
-import i18n from '../i18n'
+  import Vue from 'vue'
+  import i18n from '../i18n'
 
-export default Vue.extend({
+  export default Vue.extend({
   i18n,
   data() {
     return {
-      items: ['gameDescriptions', 'gameGeneral', 'gameMedia', 'gamePrices', 'gameRatings'],
+      items: ['gameGeneral', 'gameDescriptions', 'gameMedia', 'gameRatings'],
     };
   },
 })

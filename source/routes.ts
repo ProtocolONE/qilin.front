@@ -1,4 +1,4 @@
-import { RouteConfig } from 'vue-router';
+import {RouteConfig} from 'vue-router';
 
 import AuthBoard from '@/modules/authBoard/AuthBoard.vue';
 import Documents from '@/modules/documents/Documents.vue';
@@ -6,7 +6,6 @@ import Home from '@/modules/home/Home.vue';
 import GameCommon from '@/modules/gameCommon/GameCommon.vue';
 import GameGeneral from '@/modules/gameGeneral/General.vue';
 import GameMedia from '@/modules/gameMedia/Media.vue';
-import GamePrices from '@/modules/gamePrices/Prices.vue';
 import GameNavigation from '@/modules/gameNavigation/GameNavigation.vue';
 import GameRatings from '@/modules/gameRatings/Ratings.vue';
 import GameSales from '@/modules/gameSales/Sales.vue';
@@ -61,7 +60,7 @@ const routes: RouteConfig[] = [
     path: '/games/:resourceId',
     name: 'game',
     // @TODO - remove redirect when GameNavigation is implemented
-    redirect: '/games/:resourceId/descriptions',
+    redirect: '/games/:resourceId/general',
     components: {
       default: GameCommon,
       navigation: GameNavigation,
@@ -85,12 +84,6 @@ const routes: RouteConfig[] = [
         name: 'gameMedia',
         component: GameMedia,
         meta: { i18n: 'routes.game.media.meta', permissions: 'games' },
-      },
-      {
-        path: 'prices',
-        name: 'gamePrices',
-        component: GamePrices,
-        meta: { i18n: 'routes.game.prices.meta', permissions: 'games' },
       },
       {
         path: 'ratings',

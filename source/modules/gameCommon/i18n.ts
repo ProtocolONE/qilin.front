@@ -2,10 +2,9 @@ export default {
   messages: {
     en: {
       menu: {
-        gameDescriptions: 'Description',
         gameGeneral: 'General',
+        gameDescriptions: 'Description',
         gameMedia: 'Media',
-        gamePrices: 'Prices',
         gameRatings: 'Ratings',
       },
 
@@ -18,10 +17,9 @@ export default {
     },
     ru: {
       menu: {
-        gameDescriptions: 'Основные',
-        gameGeneral: 'Описание',
+        gameGeneral: 'Основные',
+        gameDescriptions: 'Описание',
         gameMedia: 'Медиа',
-        gamePrices: 'Цены',
         gameRatings: 'Ограничения',
       },
 

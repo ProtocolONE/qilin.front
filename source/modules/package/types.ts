@@ -23,6 +23,7 @@ export interface Price {
   currency: string;
   price: number;
   vat: number;
+  edit?: boolean;
 }
 
 export interface PackagePreOrder {

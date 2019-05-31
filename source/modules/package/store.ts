@@ -1,9 +1,9 @@
 import axios from 'axios';
 import {ActionTree, GetterTree, MutationTree} from 'vuex';
-import {Package, PackagePrices, State} from './types';
+import {merge} from "lodash-es";
 import {Game} from "@/modules/games/types";
 import {PackageMedia} from "@/modules/packages/types";
-import {merge} from "lodash-es";
+import {DiscountPolicy, Package, PackagePrices, RegionalRestrictions, State} from './types';
 
 export default function PackageStore(apiUrl: string) {
   const state: State = {
@@ -22,6 +22,7 @@ export default function PackageStore(apiUrl: string) {
       commit('updatePackage', pkg);
       commit('updateInitialPrices');
     },
+
     async save({state, commit}) {
       // TODO: Optimize this mess!
       const prices = (state.packageObj.commercial.prices || []);
@@ -38,6 +39,7 @@ export default function PackageStore(apiUrl: string) {
       await axios.put(`${apiUrl}/packages/${state.packageObj.id}`, state.packageObj);
       commit('updateInitialPrices');
     },
+
     async fetchGames({commit}, {sort = '-releaseDate', query = '', vendorId}) {
       const games = await axios
         .get(`${apiUrl}/vendors/${vendorId}/games`, {
@@ -51,6 +53,7 @@ export default function PackageStore(apiUrl: string) {
 
       commit('updateFoundGames', games);
     },
+
     async addProducts({commit, state}, productIds) {
       const pkg = await axios
         .post(`${apiUrl}/packages/${state.packageObj.id}/products`, productIds)
@@ -58,6 +61,7 @@ export default function PackageStore(apiUrl: string) {
 
       commit('updatePackage', pkg);
     },
+
     async removeProducts({commit, state}, productIds) {
       const pkg = await axios
         .delete(`${apiUrl}/packages/${state.packageObj.id}/products`, {data: productIds})
@@ -70,15 +74,35 @@ export default function PackageStore(apiUrl: string) {
     updatePackage: (state, pkg: Package) => {
       state.packageObj = pkg;
     },
+
     updateMedia: (state, media: PackageMedia) => {
       state.packageObj = {...state.packageObj, media};
     },
+
     updatePrices: (state, prices: PackagePrices) => {
       state.packageObj = {
         ...state.packageObj,
         commercial: merge(state.packageObj.commercial, prices),
       };
     },
+
+    updateDiscount: (state, discount: DiscountPolicy) => {
+      state.packageObj = {
+        ...state.packageObj,
+        discountPolicy: {
+          ...state.packageObj.discountPolicy,
+          ...discount,
+        },
+      };
+    },
+
+    updateRegional: (state, regional: RegionalRestrictions) => {
+      state.packageObj = {
+        ...state.packageObj,
+        regionalRestrinctions: regional,
+      };
+    },
+
     removeCurrency(state, name) {
       state.packageObj = {
         ...state.packageObj,
@@ -90,38 +114,55 @@ export default function PackageStore(apiUrl: string) {
       };
       if (state.packageObj.commercial.common.currency === name) {
         const prices = (state.packageObj.commercial.prices || []);
+        const def = prices.length ? prices[0].currency : '';
         state.packageObj = {
           ...state.packageObj,
           commercial: {
             ...state.packageObj.commercial,
             common: {
               ...state.packageObj.commercial.common,
-              currency: prices.length
-                ? prices[0].currency
-                : '',
+              currency: def,
             }
           },
         };
       }
     },
+
     addCurrency(state, currency) {
+      const prices = (state.packageObj.commercial.prices || []);
+
       state.packageObj = {
         ...state.packageObj,
         commercial: {
           ...state.packageObj.commercial,
-          prices: (state.packageObj.commercial.prices || [])
+          prices: prices
             .concat({
               currency: currency.value,
               price: currency.price,
               vat: 0,
+              edit: true,
             })
         }
       };
+      if (!prices.length) {
+        state.packageObj = {
+          ...state.packageObj,
+          commercial: {
+            ...state.packageObj.commercial,
+            common: {
+              ...state.packageObj.commercial.common,
+              currency: currency.value,
+            }
+          },
+        };
+      }
     },
+
     updateInitialPrices: (state) => {
       state.initialPrices = (state.packageObj.commercial.prices || [])
         .map(({currency}) => currency);
     },
+
     updateFoundGames: (state, games: Game[]) => {
       state.foundGames = state.packageObj.products
         ? games.filter(

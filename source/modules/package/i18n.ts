@@ -1,16 +1,26 @@
 export default {
   messages: {
-    de: {
-      save: 'Save',
-      title: 'Package',
-    },
+    de: {},
     en: {
       save: 'Save',
-      title: 'Package',
+      title: 'Packet',
+      allPackages: 'All packages',
+      showDetails: 'Show details',
+      hideDetails: 'Hide details',
+      tabs: {
+        general: 'Main',
+        media: 'Media',
+        prices: 'Prices',
+        discount: 'Discount',
+        regional: 'Regional restrictions',
+      },
     },
     ru: {
       save: 'Сохранить',
       title: 'Пакет',
+      allPackages: 'Пакеты',
+      showDetails: 'Показать подробности',
+      hideDetails: 'Скрыть подробности',
       tabs: {
         general: 'Основные',
         media: 'Медия',

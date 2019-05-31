@@ -85,8 +85,7 @@
   </section>
 
   <prices-table
-    v-if="commercial.prices"
-    :items="commercial.prices"
+    :items="commercial.prices || []"
     :default-currency="commercial.common.currency"
     @set-default="changeDefaultCurrency"
     @save-price="handleSavePrice"
@@ -98,130 +97,130 @@
 </template>
 
 <script lang="ts">
+  import {merge} from 'lodash-es'
   import {UiDateTimeInput, UiSelect, UiSwitchBox, UiTextField} from '@protocol-one/ui-kit'
   import i18n from './i18n'
-  import {merge} from 'lodash-es'
   import Headline from '@/components/Headline.vue'
   import PricesTable from './PricesTable.vue'
 
   export default {
-    i18n,
+  i18n,
 
-    components: {
-      Headline,
-      PricesTable,
-      UiSelect,
-      UiTextField,
-      UiSwitchBox,
-      UiDateTimeInput
+  components: {
+    Headline,
+    PricesTable,
+    UiSelect,
+    UiTextField,
+    UiSwitchBox,
+    UiDateTimeInput
+  },
+
+  props: {
+    commercial: {
+      type: Object,
+      require: true,
+    },
+  },
+
+  computed: {
+    defaultPrice() {
+      const found = (this.commercial.prices || [])
+        .find(({currency}) => currency === this.commercial.common.currency);
+      return found ? found.price : 0;
     },
 
-    props: {
-      commercial: {
-        type: Object,
-        require: true,
-      },
-    },
-
-    computed: {
-      defaultPrice() {
-        const found = this.commercial.prices
-          .find(({currency}) => currency === this.commercial.common.currency);
-        return found ? found.price : 0;
-      },
-
-      showDetails() {
-        if (!this.$route.query.details) {
-          return true
-        }
-        return this.$route.query.details === 'true'
-      },
-
-      currencyOptions() {
-        const prices = this.commercial.prices || [];
-        return prices.map(({currency}) => ({label: currency, value: currency}));
-      },
-
-    },
-
-    methods: {
-      update(props) {
-        this.$emit('change', merge(this.commercial, props));
-      },
-
-      changeDefaultCurrency(value) {
-        this.update({
-          common: {
-            currency: value
-          }
-        })
-      },
-
-      handleSavePrice(price) {
-        this.update({
-          prices: this.commercial.prices
-            .map(
-              p => p.currency === price.currency
-                ? price
-                : p)
-        })
+    showDetails() {
+      if (!this.$route.query.details) {
+        return true
       }
+      return this.$route.query.details === 'true'
+    },
 
+    currencyOptions() {
+      return (this.commercial.prices || [])
+        .map(({currency}) => ({label: currency, value: currency}));
+    },
+
+  },
+
+  methods: {
+    update(props) {
+      this.$emit('change', merge(this.commercial, props));
+    },
+
+    changeDefaultCurrency(value) {
+      this.update({
+        common: {
+          currency: value
+        }
+      })
+    },
+
+    handleSavePrice(price) {
+      this.update({
+        prices: (this.commercial.prices || [])
+          .map(
+            p => p.currency === price.currency
+              ? price
+              : p)
+      })
     }
+
   }
+}
 </script>
 
 <style lang="scss" scoped>
-  .page {
-    min-width: 528px;
-    max-width: 768px;
-    min-height: calc(100vh - 84px);
-    color: #333333;
+.page {
+  min-width: 528px;
+  max-width: 768px;
+  min-height: calc(100vh - 84px);
+  color: #333333;
 
-    &__section {
-      margin: 33px 30px;
+  &__section {
+    margin: 33px 30px;
 
-      &:not(:last-of-type) {
-        margin-bottom: 25px;
-      }
+    &:not(:last-of-type) {
+      margin-bottom: 25px;
     }
   }
+}
 
-  .section {
-    &__title {
-      font-size: 20px;
-    }
-
-    &__description {
-      font-size: 14px;
-      color: #b1b1b1;
-    }
+.section {
+  &__title {
+    font-size: 20px;
   }
 
-  .preorders-options {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+  &__description {
+    font-size: 14px;
+    color: #b1b1b1;
   }
+}
 
-  .price-setting {
-    max-width: 500px;
-    display: flex;
-    align-items: center;
+.preorders-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
 
-    &__item {
-      &:not(:last-child) {
-        margin-right: 24px;
-      }
+.price-setting {
+  max-width: 500px;
+  display: flex;
+  align-items: center;
+
+  &__item {
+    &:not(:last-child) {
+      margin-right: 24px;
     }
   }
+}
 
-  .switcher {
-    display: inline-flex;
-    align-items: center;
+.switcher {
+  display: inline-flex;
+  align-items: center;
 
-    .ui-switch-box {
-      margin-right: 16px;
-    }
+  .ui-switch-box {
+    margin-right: 16px;
   }
+}
 </style>

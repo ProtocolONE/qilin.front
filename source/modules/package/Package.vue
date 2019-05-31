@@ -10,11 +10,24 @@
       {{ $t('title') }}
     </Header>
 
-    <Button
-      slot="right"
-      :text="$t('save')"
-      @click="save"
-    />
+    <div slot="right">
+      <a v-show="currentStep === 'prices'" href="#" class="package-prices-details" @click.prevent="togglePackagePricesDetails">
+        <Icon
+          :name="(!$route.query.details || $route.query.details === 'true') ? 'eye-slash' : 'eye'"
+          width="16"
+          height="16"
+          fill="rgba(51, 51, 51, 0.5)"
+          class="package-prices-details__icon"
+        />
+        <span class="package-prices-details__label">
+          {{ $t((!$route.query.details || $route.query.details === 'true') ? 'hideDetails' : 'showDetails') }}
+        </span>
+      </a>
+      <Button
+        :text="$t('save')"
+        @click="save"
+      />
+    </div>
   </PageHeader>
 
   <FormByStep
@@ -46,6 +59,20 @@
         @removeCurrency="removeCurrency($event)"
       />
     </KeepAlive>
+    <KeepAlive>
+      <Discount
+        v-if="currentStep === 'discount'"
+        :discount="packageObj.discountPolicy"
+        @change="updateDiscount($event)"
+      />
+    </KeepAlive>
+    <KeepAlive>
+      <Regional
+        v-if="currentStep === 'regional'"
+        :region="packageObj.regionalRestrinctions"
+        @change="updateRegional($event)"
+      />
+    </KeepAlive>
   </FormByStep>
 </div>
 </template>
@@ -56,29 +83,48 @@
   import {Button, FormByStep, Header, PageHeader} from '@protocol-one/ui-kit';
   import General from './components/General.vue';
   import Media from './components/Media.vue';
+  import Discount from './components/Discount.vue';
+  import Regional from './components/Regional.vue';
   import Prices from '@/modules/packagePrices/Prices.vue';
+  import Icon from '@/icons';
   import i18n from './i18n';
 
   export default Vue.extend({
   i18n,
-    components: {General, Button, FormByStep, Header, PageHeader, Media, Prices},
+
+  components: {
+    General,
+    Button,
+    FormByStep,
+    Header,
+    PageHeader,
+    Media,
+    Prices,
+    Icon,
+    Discount,
+    Regional,
+  },
+
   data: () => ({
       currentStep: 'general',
   }),
+
   computed: {
     ...mapState('Package', ['packageObj']),
     ...mapGetters('Package', ['steps']),
+
     formSteps() {
       return this.steps.map(step => ({
         value: step,
         label: this.$i18n.t(`tabs.${step}`),
       }));
     },
+
     breadcrumbs () {
       return [
         {
           url: '/packages',
-          label: this.$t('all_packages'),
+          label: this.$t('allPackages'),
           router: true
         },
       ].concat(this.packageObj
@@ -90,12 +136,35 @@
         : []);
     }
   },
+
   mounted() {
     this.initState(this.$route.params.resourceId);
   },
+
   methods: {
     ...mapActions('Package', ['initState', 'save']),
-    ...mapMutations('Package', ['updatePackage', 'updateMedia', 'updatePrices', 'removeCurrency', 'addCurrency']),
+    ...mapMutations('Package', [
+      'updatePackage',
+      'updateMedia',
+      'updatePrices',
+      'removeCurrency',
+      'addCurrency',
+      'updateDiscount',
+      'updateRegional',
+    ]),
+    togglePackagePricesDetails () {
+      let details;
+      if (!this.$route.query.details || this.$route.query.details === 'true') {
+        details = 'false'
+      }
+      else {
+        details = 'true'
+      }
+      this.$router.replace({
+        ...this.$route,
+        query: { ...this.$route.query, details }
+      })
+    }
   }
 });
 </script>
@@ -109,7 +178,6 @@
 .content {
   flex-grow: 1;
 }
-
 .general {
   max-width: 600px;
 }
@@ -124,5 +192,15 @@
 .ui-modal-footer {
   display: flex;
   justify-content: flex-end;
+}
+.package-prices-details {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 0;
+  margin-right: 16px;
+
+  &__icon {
+    margin-right: 8px;
+  }
 }
 </style>

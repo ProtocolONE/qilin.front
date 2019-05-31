@@ -21,7 +21,11 @@ const en = {
   notifyRateJumps: 'Notify when rates change',
   default: 'Default',
   edit: 'Edit',
-  asDefault: 'Set as default'
+  asDefault: 'Set as default',
+
+  moreCurrencies: 'All currencies',
+  addCurrency: 'Add',
+  remove: 'Remove',
 };
 
 const ru = {
