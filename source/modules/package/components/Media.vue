@@ -7,7 +7,7 @@
   </Header>
   <p
     class="no-margin"
-    v-html="$t('cover_descr')"
+    v-html="$t('cover_description')"
   />
   <CoverImage
     :value="media.cover"
@@ -21,7 +21,7 @@
   </Header>
   <p
     class="no-margin"
-    v-html="$t('image_descr')"
+    v-html="$t('image_description')"
   />
   <CoverImage
     :value="media.image"
@@ -35,7 +35,7 @@
   </Header>
   <p
     class="no-margin"
-    v-html="$t('thumb_descr')"
+    v-html="$t('thumb_description')"
   />
   <CoverImage
     :value="media.thumb"
@@ -54,13 +54,14 @@
     i18n,
     components: {Header, CoverImage},
     props: {
+      /**
+       * @typedef {  image: LocalizedString; cover: LocalizedString; thumb: LocalizedString} PackageMedia
+       * @type {PackageMedia}
+       */
       media: {
         type: Object,
         required: true,
       },
-    },
-    data() {
-      return {};
     },
     computed: {},
     methods: {

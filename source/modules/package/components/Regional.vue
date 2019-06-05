@@ -26,8 +26,8 @@
         {{ $t(`countries.${country}`) }}
       </label>
       <UiButton
-        @click="clickRemove"
         color="orange"
+        @click="clickRemove"
       >
         {{ $t('remove') }}
       </UiButton>
@@ -53,7 +53,7 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import {toPairs, without} from "lodash-es";
+  import {includes, toPairs, without} from 'lodash-es';
   import {Checkbox as UiCheckbox, UiButton, UiSelect} from '@protocol-one/ui-kit'
   import Headline from '@/components/Headline.vue'
   import i18n from './i18nRegional';
@@ -67,6 +67,10 @@
     UiCheckbox,
   },
   props: {
+    /**
+     * @typedef {allowedCountries: string[]} RegionalRestrictions
+     * @type {RegionalRestrictions}
+     */
     region: {
       type: Object,
       required: true,
@@ -83,7 +87,7 @@
       const allowed = this.region.allowedCountries || [];
       return toPairs(this.$i18n.t('countries'))
         .map(pair => ({label: pair[1], value: pair[0]}))
-        .filter(item => allowed.indexOf(item.value) === -1);
+        .filter(item => !includes(allowed, item.value));
     },
     allowedCountries () {
       return this.region.allowedCountries || [];
@@ -91,23 +95,27 @@
   },
   methods: {
     isChecked(country) {
-      return this.select.indexOf(country) > -1;
+      return includes(this.select, country);
     },
     changeSelect(country) {
-        this.select = this.select.indexOf(country) > -1
+        this.select = includes(this.select, country)
           ? without(this.select, [country])
           : this.select.concat([country]);
     },
     clickNewCountry() {
+      if (!this.newCountry) {
+        return;
+      }
       this.$emit('change', {
         allowedCountries: this.allowedCountries
           .concat([this.newCountry])
       });
+      this.newCountry = '';
     },
     clickRemove() {
       this.$emit('change', {
         allowedCountries: this.allowedCountries
-          .filter(country => this.select.indexOf(country) === -1)
+          .filter(country => !includes(this.select, country))
       });
       this.select = [];
     }
@@ -115,7 +123,7 @@
 });
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .selectCountry {
   margin-top: 18px;
 }

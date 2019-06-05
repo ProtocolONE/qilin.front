@@ -1,6 +1,8 @@
 <template>
 <tr>
-  <td class="cell">{{ currency }}</td>
+  <td class="cell">
+    {{ currency }}
+  </td>
   <td class="cell">
     <ui-text-field
       v-if="isEdit"
@@ -24,7 +26,9 @@
       {{ vat }}
     </template>
   </td>
-  <td class="cell">{{ userPrice }}</td>
+  <td class="cell">
+    {{ userPrice }}
+  </td>
   <td class="cell cell--actions">
     <div v-if="isEdit" class="controls">
       <span class="controls__btn controls__btn--cancel" @click="cancelEdit">
@@ -46,13 +50,13 @@
 
     <transition name="fade">
       <ul v-show="actions" class="shadow actions-list">
-        <li @click="handleEdit" class="actions-list__item">
+        <li class="actions-list__item" @click="handleEdit">
           {{ $t('edit') }}
         </li>
-        <li @click="$emit('set-default')" class="actions-list__item">
+        <li class="actions-list__item" @click="$emit('set-default')">
           {{ $t('asDefault') }}
         </li>
-        <li @click="$emit('remove-currency')" class="actions-list__item">
+        <li class="actions-list__item" @click="$emit('remove-currency')">
           {{ $t('remove') }}
         </li>
       </ul>

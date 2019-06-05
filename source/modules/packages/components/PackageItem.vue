@@ -22,11 +22,11 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { UiTableRow, UiTableCell } from '@protocol-one/ui-kit';
-import formatDate from '@/helpers/formatDate';
+  import Vue from 'vue';
+  import {UiTableCell, UiTableRow} from '@protocol-one/ui-kit';
+  import formatDate from '@/helpers/formatDate';
 
-export default Vue.extend({
+  export default Vue.extend({
   components: { UiTableRow, UiTableCell },
   props: {
     pkg: {
@@ -40,7 +40,7 @@ export default Vue.extend({
     },
     formatDate() {
       return formatDate(
-        new Date(this.pkg.createdAt),
+        this.pkg.createdAt,
         'dd LLLL yyyy, HH:mm',
         this.$i18n.locale,
         this.$i18n.fallbackLocale

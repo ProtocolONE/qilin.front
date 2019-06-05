@@ -1,8 +1,8 @@
 import axios from 'axios';
 import {ActionTree, GetterTree, MutationTree} from 'vuex';
-import {merge} from "lodash-es";
-import {Game} from "@/modules/games/types";
-import {PackageMedia} from "@/modules/packages/types";
+import {merge} from 'lodash-es';
+import {Game} from '@/modules/games/types';
+import {PackageMedia} from '@/modules/packages/types';
 import {DiscountPolicy, Package, PackagePrices, RegionalRestrictions, State} from './types';
 
 export default function PackageStore(apiUrl: string) {
@@ -24,18 +24,6 @@ export default function PackageStore(apiUrl: string) {
     },
 
     async save({state, commit}) {
-      // TODO: Optimize this mess!
-      const prices = (state.packageObj.commercial.prices || []);
-      const deletedPrices = state.initialPrices
-        .filter(currency => !prices.find(price => price.currency === currency));
-
-      await axios.put(`${apiUrl}/packages/${state.packageObj.id}/prices`, state.packageObj.commercial);
-      for (const price of prices) {
-        await axios.put(`${apiUrl}/packages/${state.packageObj.id}/prices/${price.currency}`, price);
-      }
-      for (const currency of deletedPrices) {
-        await axios.delete(`${apiUrl}/packages/${state.packageObj.id}/prices/${currency}`);
-      }
       await axios.put(`${apiUrl}/packages/${state.packageObj.id}`, state.packageObj);
       commit('updateInitialPrices');
     },

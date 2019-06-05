@@ -60,8 +60,12 @@
         :key="c.value"
         class="more-currency"
       >
-        <td class="cell">{{ c.value }}</td>
-        <td class="cell">{{ c.price }}</td>
+        <td class="cell">
+          {{ c.value }}
+        </td>
+        <td class="cell">
+          {{ c.price }}
+        </td>
         <td class="cell"></td>
         <td class="cell"></td>
         <td class="cell">

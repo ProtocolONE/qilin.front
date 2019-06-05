@@ -14,7 +14,9 @@
       class="logo"
       :style="{ backgroundImage: `url(${iconUrl})` }"
     />
-    <router-link :to="productUrl">{{ product.name }}</router-link>
+    <router-link :to="productUrl">
+      {{ product.name }}
+    </router-link>
   </UiTableCell>
   <UiTableCell>
     {{ productType }}
@@ -31,6 +33,10 @@
   i18n,
     components: {UiTableRow, UiTableCell, Checkbox},
   props: {
+    /**
+     * @typedef {id: string; name: string; type: ProductType; image: LocalizedString} Product
+     * @type {Product}
+     */
     product: {
       required: true,
       type: Object,
@@ -58,7 +64,7 @@
 });
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .logo {
   width: 40px;
   height: 40px;

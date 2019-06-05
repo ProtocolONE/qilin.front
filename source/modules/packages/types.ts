@@ -1,4 +1,4 @@
-import {LocalizedString} from "@/modules/gameMedia/types";
+import {LocalizedString} from '@/modules/gameMedia/types';
 
 export interface PackageMedia {
   image: LocalizedString;

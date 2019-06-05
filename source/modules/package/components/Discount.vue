@@ -1,7 +1,7 @@
 <template>
 <article class="package-discount">
 
-  <section class="page__section section">
+  <section class="section">
     <headline id="discount">
       <span class="section__title">
         {{ $t('discount') }}
@@ -24,7 +24,7 @@
     </div>
   </section>
 
-  <section class="page__section section">
+  <section class="section">
     <headline id="buyOption">
       <span class="section__title">
         {{ $t('buyOption') }}
@@ -61,13 +61,14 @@
     UiTextField,
   },
   props: {
+    /**
+     * @typedef {discount: number; buyOption: BuyOption} DiscountPolicy
+     * @type {DiscountPolicy}
+     */
     discount: {
       type: Object,
       required: true,
     },
-  },
-  data() {
-    return {};
   },
   computed: {
     buyOptions() {
@@ -88,11 +89,8 @@
 });
 </script>
 
-<style lang="scss">
-.buy-option-select {
-
-}
-.page__section {
+<style scoped lang="scss">
+.section {
   max-width: 500px;
 }
 .discount-input {

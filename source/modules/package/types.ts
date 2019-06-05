@@ -1,6 +1,6 @@
-import {LocalizedString} from "@/modules/gameMedia/types";
-import {PackageMedia} from "@/modules/packages/types";
-import {Game} from "@/modules/games/types";
+import {LocalizedString} from '@/modules/gameMedia/types';
+import {PackageMedia} from '@/modules/packages/types';
+import {Game} from '@/modules/games/types';
 
 enum ProductType {
   Game = "games",
@@ -31,8 +31,13 @@ export interface PackagePreOrder {
   enabled: boolean;
 }
 
+export interface PackageCommon {
+  currency: string;
+  notifyRateJumps: boolean;
+}
+
 export interface PackagePrices {
-  common: number;
+  common: PackageCommon;
   preOrder: PackagePreOrder;
   prices: Price[];
 }
@@ -50,7 +55,7 @@ export interface Package {
   id: string;
   createdAt: Date;
   sku: string;
-  name: string;
+  name: LocalizedString;
   isUpgradeAllowed: boolean;
   isEnabled: boolean;
   isDefault: boolean;

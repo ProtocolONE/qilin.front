@@ -4,7 +4,7 @@
     {{ $t('name') }}
   </Header>
   <MultilangTextField
-    :value="$props.value.name"
+    :value="pkg.name"
     class="textfield"
     :label="$t('nameLabel')"
     @change="changeProp('name', $event)"
@@ -15,7 +15,7 @@
   <TextField
     class="textfield"
     :label="$t('skuLabel')"
-    :value="$props.value.sku"
+    :value="pkg.sku"
     @change="changeProp('sku', $event)"
   />
   <div class="box">
@@ -24,7 +24,7 @@
     >
       <Checkbox
         class="check"
-        :checked="$props.value.isEnabled"
+        :checked="pkg.isEnabled"
         @change="changeProp('isEnabled', $event)"
       />
       <span class="label">
@@ -38,7 +38,7 @@
     >
       <Checkbox
         class="check"
-        :checked="$props.value.isUpgradeAllowed"
+        :checked="pkg.isUpgradeAllowed"
         @change="changeProp('isUpgradeAllowed', $event)"
       />
       <span class="label">
@@ -61,14 +61,14 @@
     :text="$t('removeProduct')"
     @click="clickRemoveProduct"
   />
-  <UiTable v-if="value.products">
+  <UiTable v-if="pkg.products">
     <ProductItem
-      v-for="product in value.products"
+      v-for="product in pkg.products"
       :key="product.id"
       v-bind="{ product }"
       :checked="isChecked(product.id)"
+      :is-default="isDefault(product.id)"
       @change="switchSelect(product.id)"
-      :isDefault="isDefault(product.id)"
     />
   </UiTable>
   <p v-else>
@@ -84,7 +84,7 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import {mapActions} from "vuex";
+  import {mapActions} from 'vuex';
   import {Button, Checkbox, Header, TextField, UiTable} from '@protocol-one/ui-kit';
   import MultilangTextField from './MultilangTextField.vue';
   import ProductItem from './ProductItem.vue';
@@ -95,7 +95,13 @@
   i18n,
   components: {Header, Button, AddGame, Checkbox, TextField, MultilangTextField, ProductItem, UiTable},
   props: {
-    value: {
+    /**
+     * @typedef {id: string; createdAt: Date; sku: string; name: string; isUpgradeAllowed: boolean; isEnabled: boolean;
+     * isDefault: boolean; products: Product[]; media: PackageMedia; discountPolicy:
+     * DiscountPolicy; regionalRestrinctions: RegionalRestrictions; commercial: PackagePrices} Package
+     * @type {Package}
+     */
+    pkg: {
       type: Object,
       required: true,
     },
@@ -111,7 +117,7 @@
     ...mapActions('Package', ['addProducts', 'removeProducts']),
 
     changeProp(prop, value) {
-      this.$emit('change', {...this.$props.value, [prop]: value});
+      this.$emit('change', {...this.pkg, [prop]: value});
     },
     clickAddGame() {
       this.hasModal = true;
@@ -133,7 +139,7 @@
       }
     },
     isDefault(productId) {
-      return productId === this.value.defaultProductId;
+      return productId === this.pkg.defaultProductId;
     },
   },
 });

@@ -15,11 +15,11 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import { UiLangsBar, TextField } from '@protocol-one/ui-kit';
-import i18n from '../i18n';
+  import Vue from 'vue';
+  import {TextField, UiLangsBar} from '@protocol-one/ui-kit';
+  import i18n from '../i18n';
 
-export default Vue.extend({
+  export default Vue.extend({
   i18n,
   components: { UiLangsBar, TextField },
   props: {
@@ -27,6 +27,9 @@ export default Vue.extend({
       type: String,
       required: true,
     },
+    /**
+     * @type {Object}
+     */
     value: {
       type: Object,
       required: true,

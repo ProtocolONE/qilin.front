@@ -1,4 +1,5 @@
 const strictMode = process.env.ESLINT_STRICT === 'true';
+const path = require('path');
 
 module.exports = {
   root: true,
@@ -12,7 +13,7 @@ module.exports = {
     parser: 'babel-eslint',
   },
   extends: ['airbnb-base', 'prettier', 'plugin:vue/recommended'],
-  plugins: ['import', 'prettier', 'chai-friendly', 'mocha', 'eslint-comments', 'vue'],
+  plugins: ['import', 'prettier', 'chai-friendly', 'mocha', 'eslint-comments'],
   rules: {
     /*'prettier/prettier': [
       'error',
@@ -45,6 +46,7 @@ module.exports = {
       },
     ],
 
+    'import/resolver': 'on',
     'import/no-unresolved': 'off',
     'import/no-extraneous-dependencies': 'off',
     'import/extensions': 'off',
@@ -120,4 +122,15 @@ module.exports = {
     'vue/html-self-closing': 'off',
     'vue/html-closing-bracket-spacing': 'off'
   },
+  settings: {
+    'import/resolver': {
+      alias: {
+        map: [
+          ['@', path.join(__dirname, 'source')],
+          ['vue', 'vue/dist/vue.js'],
+        ],
+        extensions: ['.ts', '.js', '.json']
+      }
+    }
+  }
 };

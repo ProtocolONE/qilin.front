@@ -39,7 +39,7 @@
     <KeepAlive>
       <General
         v-if="currentStep === 'general'"
-        :value="packageObj"
+        :pkg="packageObj"
         @change="updatePackage($event)"
       />
     </KeepAlive>
@@ -119,7 +119,6 @@
         label: this.$i18n.t(`tabs.${step}`),
       }));
     },
-
     breadcrumbs () {
       return [
         {
@@ -127,13 +126,12 @@
           label: this.$t('allPackages'),
           router: true
         },
-      ].concat(this.packageObj
-        ? [
-            {
-              label: this.packageObj.name[this.$i18n.locale] || this.packageObj.name.en,
-            },
-          ]
-        : []);
+        ...(
+          this.packageObj ?
+            [{ label: this.packageObj.name[this.$i18n.locale] || this.packageObj.name.en }] :
+            []
+        )
+      ];
     }
   },
 

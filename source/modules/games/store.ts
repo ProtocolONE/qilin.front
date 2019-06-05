@@ -1,8 +1,6 @@
 import axios from 'axios';
-import { includes } from 'lodash-es';
-import { GetterTree, ActionTree, MutationTree } from 'vuex';
-import { VueRouter } from "vue-router/types/router";
-import { State } from './types';
+import {ActionTree, GetterTree, MutationTree} from 'vuex';
+import {State} from './types';
 
 export default function GamesStore(apiUrl: string) {
   const state: State = {

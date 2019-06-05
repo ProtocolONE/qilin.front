@@ -30,7 +30,9 @@
         <span class="name">{{ game.internalName }}</span>
         <span class="date">{{ formatDate(game.releaseDate) }}</span>
       </label>
-      <p v-if="!foundGames.length">{{ $t('not_found') }}</p>
+      <p v-if="!foundGames.length">
+        {{ $t('not_found') }}
+      </p>
     </div>
   </div>
   <div
@@ -49,7 +51,7 @@
 <script type="ts">
   import Vue from 'vue'
   import {Button, Checkbox, Header, TextField, UiModal} from '@protocol-one/ui-kit'
-  import {mapActions, mapGetters, mapState} from "vuex";
+  import {mapActions, mapGetters, mapState} from 'vuex';
   import i18n from './i18nAddGame';
   import formatDate from '@/helpers/formatDate';
 
@@ -100,7 +102,7 @@
     },
     formatDate(date) {
       return formatDate(
-        new Date(date),
+        date,
         'dd LLLL yyyy',
         this.$i18n.locale,
         this.$i18n.fallbackLocale
@@ -114,7 +116,7 @@
 .modal-add-game {
 
 }
-.games .item {
+.item {
   display: flex;
   justify-content: space-around;
   align-items: flex-end;

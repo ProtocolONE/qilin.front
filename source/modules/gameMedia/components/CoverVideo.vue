@@ -1,6 +1,6 @@
 <template>
 <div class="cover-video">
-  <LangsBar
+  <UiLangsBar
     :value="lang"
     :filled-list="filled"
     @change="selectLang"
@@ -19,19 +19,19 @@
 </template>
 
 <script type="ts">
-import Vue from 'vue'
-import {LangsBar} from '@protocol-one/ui-kit'
-import UploadItem from './UploadItem.vue'
-import {OpenFileDialog, UploadVideo} from '../uploader'
-import i18n from '../i18n'
+  import Vue from 'vue'
+  import {UiLangsBar} from '@protocol-one/ui-kit'
+  import UploadItem from './UploadItem.vue'
+  import {OpenFileDialog, UploadVideo} from '../uploader'
+  import i18n from '../i18n'
 
-export default Vue.extend({
+  export default Vue.extend({
   i18n,
-  components: {UploadItem, LangsBar},
+  components: {UploadItem, UiLangsBar},
   props: {
     value: {
       type: Object,
-      require: true,
+      required: true,
       default: () => ({}),
     }
   },

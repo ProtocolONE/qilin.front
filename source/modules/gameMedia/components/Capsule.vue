@@ -1,6 +1,6 @@
 <template>
 <div class="capsule">
-  <LangsBar
+  <UiLangsBar
     :value="lang"
     :filled-list="filled"
     @change="selectLang"
@@ -36,18 +36,18 @@
 <script type="ts">
   import Vue from 'vue'
   import {clone} from 'lodash-es'
-  import {LangsBar} from '@protocol-one/ui-kit'
+  import {UiLangsBar} from '@protocol-one/ui-kit'
   import UploadItem from './UploadItem.vue'
   import {OpenFileDialog, UploadImage} from '../uploader'
   import i18n from '../i18n'
 
   export default Vue.extend({
     i18n,
-    components: {UploadItem, LangsBar},
+    components: {UploadItem, UiLangsBar},
     props: {
       value: {
         type: Object,
-        require: true,
+        required: true,
         default: () => ({}),
       }
     },

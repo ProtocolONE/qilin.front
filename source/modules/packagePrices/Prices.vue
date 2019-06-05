@@ -116,9 +116,13 @@
   },
 
   props: {
+    /**
+     * @typedef {common: number; preOrder: PackagePreOrder; prices: Price[]} PackagePrices
+     * @type {PackagePrices}
+     */
     commercial: {
       type: Object,
-      require: true,
+      required: true,
     },
   },
 
