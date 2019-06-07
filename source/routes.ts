@@ -17,6 +17,8 @@ import OnBoarding from '@/modules/onBoarding/OnBoarding.vue';
 import Notifications from '@/modules/notifications/Notifications.vue';
 import Requests from '@/modules/requests/Requests.vue';
 import Request from '@/modules/request/Request.vue';
+import Users from '@/modules/users/Users.vue';
+import User from '@/modules/user/User.vue';
 
 const routes: RouteConfig[] = [
   {
@@ -29,7 +31,7 @@ const routes: RouteConfig[] = [
     path: '/auth',
     name: 'authBoard',
     component: AuthBoard,
-    meta: { requiresAuth: false, requiresPermissions: false },
+    meta: { requiresAuth: false, requiresPermissions: false, isNav: false },
   },
   {
     path: '/vendor/on-boarding',
@@ -52,7 +54,7 @@ const routes: RouteConfig[] = [
       default: GameCommon,
       navigation: GameNavigation,
     },
-    meta: { permissions: 'games' },
+    meta: { permissions: 'games', isNav: false },
     children: [
       {
         path: 'descriptions',
@@ -90,7 +92,7 @@ const routes: RouteConfig[] = [
     path: '/games/:resourceId/sales',
     name: 'gameSales',
     component: GameSales,
-    meta: { permissions: 'games' },
+    meta: { permissions: 'games', isNav: false },
   },
   {
     path: '/notifications',
@@ -102,7 +104,7 @@ const routes: RouteConfig[] = [
     path: '/documents/:vendorId',
     name: 'documents',
     component: Documents,
-    meta: { requiresPermissions: false, permissions: 'vendors.documents.*' },
+    meta: { permissions: 'vendors.documents.*' },
   },
   {
     path: '/admin',
@@ -131,6 +133,18 @@ const routes: RouteConfig[] = [
         meta: { i18n: 'routes.admin.history.meta', permissions: 'admin.vendors.*' },
       },
     ],
+  },
+  {
+    path: '/users',
+    name: 'users',
+    component: Users,
+    meta: { permissions: 'vendors.memberships' },
+  },
+  {
+    path: '/users/:userId',
+    name: 'user',
+    component: User,
+    meta: { permissions: 'vendors.memberships', isNav: false },
   },
 ].map(route => ({
   ...route,
