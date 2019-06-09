@@ -15,6 +15,7 @@
       v-html="$t('info')"
     />
     <Button
+      v-if="hasCreatePerm"
       :text="$t('buttonText')"
       @click="$emit('clickCreate')"
     />
@@ -31,6 +32,10 @@ export default Vue.extend({
   i18n,
   components: { Button, TextField },
   props: {
+    hasCreatePerm: {
+      default: false,
+      type: Boolean,
+    },
     hasGames: {
       default: false,
       type: Boolean,

@@ -86,7 +86,6 @@ export default Vue.extend({
     authMessage(event: any) {
       if (event.success) {
         this.setToken(event.accessToken);
-        this.$router.go();
       }
     },
   },

@@ -121,5 +121,19 @@ export default {
         },
       },
     },
+    users: {
+      title: 'Users',
+      meta: {
+        title: 'Users Roles',
+        description: 'Users roles for games',
+      },
+    },
+    user: {
+      title: 'User',
+      meta: {
+        title: 'User',
+        description: 'User',
+      },
+    },
   },
 };

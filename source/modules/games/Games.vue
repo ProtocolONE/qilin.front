@@ -2,6 +2,7 @@
 <div class="games-wrapper">
   <GamesHeader
     :hasGames="hasGames"
+    :hasCreatePerm="hasCreatePerm"
     @search="filterByName"
     @clickCreate="showModal = true"
   />
@@ -32,7 +33,7 @@
 <script type="ts">
 import Vue from 'vue';
 import { mapGetters, mapState, mapActions } from 'vuex';
-import { includes, map, orderBy } from 'lodash-es';
+import { get, includes, map, orderBy } from 'lodash-es';
 import { UiTable } from '@protocol-one/ui-kit';
 import CreateGame from '@/modules/gameCreate/CreateGame.vue';
 import CreateGameDummy from './components/CreateGameDummy.vue';
@@ -42,15 +43,28 @@ import GameItem from './components/GameItem.vue';
 
 export default Vue.extend({
   components: { CreateGame, CreateGameDummy, GamesFilters, GamesHeader, GameItem, UiTable },
-  data: () => ({
-    innerGames: [],
-    sortingProps: {},
-    showModal: false,
-  }),
+  data() {
+    return {
+      innerGames: [],
+      sortingProps: {},
+      showModal: false,
+    };
+  },
   computed: {
+    ...mapState(['permissions']),
     ...mapGetters(['currentVendorId']),
     ...mapState('Games', ['games', 'genres']),
 
+    hasCreatePerm() {
+      return includes(
+        ['any', '*', 'write'],
+        get(
+          this.permissions,
+          ['vendor.games', '*', 'action'],
+          get(this.permissions, ['vendors.memberships', 'skip', 'action'], ''),
+        ),
+      );
+    },
     hasGames() {
       return !!this.games.length;
     },

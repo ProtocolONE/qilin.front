@@ -27,7 +27,7 @@ export default Vue.extend({
     iconClasses() {
       return [
         'simple-preloader',
-        '_' + this.color,
+        `_${this.color}`,
       ];
     },
   },
@@ -35,7 +35,7 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
-$blue: #2F6ECD;
+$blue: #2f6ecd;
 
 @mixin simple-preloader($color) {
   stroke: $color;

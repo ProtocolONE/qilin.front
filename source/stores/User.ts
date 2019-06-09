@@ -4,17 +4,6 @@ import { find, get, includes, isEmpty, reduce } from 'lodash-es';
 import { GetterTree, ActionTree, MutationTree } from 'vuex';
 import State from './userTypes';
 
-function mergePermissions(perm1: any, perm2: any) {
-  const action1 = perm1.action;
-  const action2 = perm2.action;
-  const anyArr = ['any', '*'];
-  const action1IsAny = includes(anyArr, action1);
-  const action2IsAny = includes(anyArr, action2);
-  const action = (action1IsAny || action2IsAny || action1 !== action2) ? 'any' : action1;
-
-  return { action };
-}
-
 export default function UserStore(apiUrl: string, authApiUrl: string, router: VueRouter) {
   const state: State = {
     accessToken: localStorage.getItem('accessToken') || null,
@@ -62,30 +51,50 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
     hasAuth({ accessToken }) {
       return !!accessToken;
     },
+    inviteData() {
+      const [ vendorId, inviteId ] = (localStorage.getItem('inviteData') || ';').split(';');
+      return vendorId && inviteId ? { vendorId, inviteId } : null;
+    },
     userId({ user }) {
       return get(user, 'id', '');
     },
   };
   const actions: ActionTree<State, any> = {
-    async initUser({ commit, getters, dispatch }) {
+    async initUser({ commit, dispatch, getters }) {
       const requiresAbsenceVendor = get(router.currentRoute, 'meta.requiresAbsenceVendor', false);
 
       if (!requiresAbsenceVendor) {
         commit('nextRoute', router.currentRoute);
       }
 
+      await dispatch('fetchUser');
+      await dispatch('fetchVendors');
+      await dispatch('fetchPermissions');
+
+      if (requiresAbsenceVendor) {
+        commit('nextRoute', router.currentRoute);
+      }
+
+      dispatch('startWatchNotifications');
+    },
+    async fetchUser({ commit, dispatch, getters }) {
       const user = await axios
         .get(`${apiUrl}/me`)
         .then(res => get(res, 'data.user') || null)
         .catch(() => null);
 
       if (getters.hasAuth && !user) {
+        if (router.currentRoute.name === 'invite' && !getters.inviteData) {
+          const { vendorId, inviteId } = router.currentRoute.params;
+          saveInviteData(vendorId, inviteId);
+        }
         dispatch('refreshToken');
         return;
       }
 
       commit('user', user);
-
+    },
+    async fetchVendors({ commit }) {
       const vendors = await axios
         .get(`${apiUrl}/vendors`)
         .then(res => get(res, 'data') || null)
@@ -94,17 +103,7 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
       if (vendors && vendors.length) {
         commit('vendors', vendors);
         commit('currentVendor', vendors[0]);
-      } else {
-        router.push({ name: 'onBoarding' });
       }
-
-      await dispatch('fetchPermissions');
-
-      if (requiresAbsenceVendor) {
-        commit('nextRoute', router.currentRoute);
-      }
-
-      dispatch('startWatchNotifications');
     },
     async fetchPermissions({ commit, getters }) {
       const { hasAuth, currentVendorId, userId } = getters;
@@ -119,51 +118,7 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
         .catch(() => null);
 
       if (permissions) {
-        const preparedPermissions = reduce(
-          permissions
-            .filter(perm => perm.allowed)
-            .map(perm => ({
-              ...perm,
-              uuid: perm.uuid === 'skip' ? '*' : perm.uuid,
-            })),
-          (permObject, perm) => {
-            const prePermResource = get(permObject, `${perm.resource}`);
-            const prePerm = get(permObject, `${perm.resource}.${perm.uuid}`);
-
-            if (!prePermResource) {
-              return {
-                ...permObject,
-                [perm.resource]: {
-                  [perm.uuid]: { action: perm.action },
-                },
-              };
-            }
-
-            if (!prePerm) {
-              const allPrePerm = get(prePermResource, '*');
-
-              return {
-                ...permObject,
-                [perm.resource]: {
-                  ...prePermResource,
-                  [perm.uuid]: allPrePerm
-                    ? mergePermissions(allPrePerm, perm)
-                    : { action: perm.action },
-                },
-              };
-            }
-
-            return {
-              ...permObject,
-              [perm.resource]: {
-                ...prePermResource,
-                [perm.uuid]: mergePermissions(prePerm, perm),
-              },
-            };
-          },
-          {},
-        );
-        commit('permissions', preparedPermissions);
+        commit('permissions', preparePermissions(permissions));
       }
     },
     async createVendor({ commit, dispatch, state }, query) {
@@ -225,10 +180,17 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
         .catch(() => null);
       router.push({ name: 'authBoard' });
     },
-    setToken({ commit }, accessToken) {
+    setToken({ commit, getters }, accessToken) {
       localStorage.setItem('accessToken', accessToken);
       commit('accessToken', accessToken);
-      router.go(0);
+
+      if (getters.inviteData) {
+        const { vendorId, inviteId } = getters.inviteData;
+
+        router.replace({ name: 'invite', params: { vendorId, inviteId } });
+      } else {
+        router.go(0);
+      }
     },
   };
   const mutations: MutationTree<State> = {
@@ -246,4 +208,78 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
     actions,
     mutations,
   };
+}
+
+function preparePermissions(perms) {
+  return restructurePermissions(
+    unifiqPermissions(
+      filterPermissions(perms),
+    ),
+  );
+}
+function restructurePermissions(perms) {
+  return reduce(
+    perms,
+    (permObject, perm) => {
+      const prePermResource = get(permObject, `${perm.resource}`);
+      const prePerm = get(permObject, `${perm.resource}.${perm.uuid}`);
+
+      if (!prePermResource) {
+        return {
+          ...permObject,
+          [perm.resource]: {
+            [perm.uuid]: { action: perm.action },
+          },
+        };
+      }
+
+      if (!prePerm) {
+        const allPrePerm = get(prePermResource, '*');
+
+        return {
+          ...permObject,
+          [perm.resource]: {
+            ...prePermResource,
+            [perm.uuid]: allPrePerm
+              ? mergePermissions(allPrePerm, perm)
+              : { action: perm.action },
+          },
+        };
+      }
+
+      return {
+        ...permObject,
+        [perm.resource]: {
+          ...prePermResource,
+          [perm.uuid]: mergePermissions(prePerm, perm),
+        },
+      };
+    },
+    {},
+  );
+}
+function unifiqPermissions(perms) {
+  return perms.map(perm => ({
+    ...perm,
+    uuid: perm.uuid === 'skip' ? '*' : perm.uuid,
+  }));
+}
+function filterPermissions(perms) {
+  return perms.filter(perm => perm.allowed);
+}
+function mergePermissions(perm1: any, perm2: any) {
+  const action1 = perm1.action;
+  const action2 = perm2.action;
+  const anyArr = ['any', '*'];
+  const action1IsAny = includes(anyArr, action1);
+  const action2IsAny = includes(anyArr, action2);
+  const action = (action1IsAny || action2IsAny || action1 !== action2) ? 'any' : action1;
+
+  return { action };
+}
+
+function saveInviteData(vendorId: string, inviteId: string) {
+  if (vendorId && inviteId) {
+    localStorage.setItem('inviteData', `${vendorId};${inviteId}`);
+  }
 }
