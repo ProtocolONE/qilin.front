@@ -20,12 +20,12 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { UiButton, UiTableRow, UiTableCell } from '@protocol-one/ui-kit';
-import formatDate from '@/helpers/formatDate';
-import i18n from './i18nItem';
+  import Vue from 'vue';
+  import {UiButton, UiTableCell, UiTableRow} from '@protocol-one/ui-kit';
+  import formatDate from '@/helpers/formatDate';
+  import i18n from './i18nItem';
 
-export default Vue.extend({
+  export default Vue.extend({
   i18n,
   components: { UiButton, UiTableRow, UiTableCell },
   props: {
@@ -48,7 +48,7 @@ export default Vue.extend({
     },
     formatReleaseDate() {
       return formatDate(
-        new Date(this.request.updatedAt),
+        this.request.updatedAt,
         'dd LLLL yyyy, HH:mm',
         this.$i18n.locale,
         this.$i18n.fallbackLocale,

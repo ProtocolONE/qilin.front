@@ -1,7 +1,7 @@
 import axios from 'axios';
 import VueRouter from 'vue-router';
-import { find, get, includes, isEmpty, reduce } from 'lodash-es';
-import { GetterTree, ActionTree, MutationTree } from 'vuex';
+import {find, get, includes, isEmpty, reduce} from 'lodash-es';
+import {ActionTree, GetterTree, MutationTree} from 'vuex';
 import State from './userTypes';
 
 function mergePermissions(perm1: any, perm2: any) {
@@ -65,6 +65,9 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
     userId({ user }) {
       return get(user, 'id', '');
     },
+    isUserInit({ permissions }) {
+      return permissions !== null;
+    },
   };
   const actions: ActionTree<State, any> = {
     async initUser({ commit, getters, dispatch }) {
@@ -74,17 +77,19 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
         commit('nextRoute', router.currentRoute);
       }
 
-      const user = await axios
+      const appState = await axios
         .get(`${apiUrl}/me`)
-        .then(res => get(res, 'data.user') || null)
+        .then(res => res.data || null)
         .catch(() => null);
 
-      if (getters.hasAuth && !user) {
+      if (getters.hasAuth && !appState) {
         dispatch('refreshToken');
         return;
       }
 
-      commit('user', user);
+      commit('user', get(appState, 'user') || null);
+
+      localStorage.setItem('imaginaryJwt', get(appState, 'imaginaryJwt') || null);
 
       const vendors = await axios
         .get(`${apiUrl}/vendors`)

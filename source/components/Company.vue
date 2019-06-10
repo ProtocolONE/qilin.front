@@ -17,13 +17,15 @@
     v-bind="preparedFields.website"
     @input="change('website', $event)"
   />
-  <Select
-    v-bind="preparedFields.country"
-    :options="preparedCountries"
-    :hasEmptyValue="true"
-    :placeholder="$t('countriesPlaceholder')"
-    @input="change('country', $event)"
-  />
+  <label>
+    <Select
+      v-bind="preparedFields.country"
+      :options="preparedCountries"
+      :hasEmptyValue="true"
+      :placeholder="$t('countriesPlaceholder')"
+      @input="change('country', $event)"
+    />
+  </label>
   <TextField
     v-bind="preparedFields.region"
     @input="change('region', $event)"

@@ -11,6 +11,8 @@ import HistoryStore from '@/modules/history/store';
 import NotificationsStore from '@/modules/notifications/store';
 import RequestsStore from '@/modules/requests/store';
 import RequestStore from '@/modules/request/store';
+import PackagesStore from '@/modules/packages/store';
+import PackageStore from '@/modules/package/store';
 
 const adminApiUrl = config.adminApi;
 const apiUrl = config.api;
@@ -45,5 +47,7 @@ export default {
     Request: RequestStore(adminApiUrl),
     Requests: RequestsStore(adminApiUrl),
     Sales: SalesStore(apiUrl),
+    Packages: PackagesStore(apiUrl),
+    Package: PackageStore(apiUrl),
   },
 };

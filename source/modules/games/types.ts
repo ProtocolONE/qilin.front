@@ -6,7 +6,7 @@ interface Genre {
   };
 }
 
-interface Price {
+export interface Price {
   price: number;
   currency: string;
 }
@@ -17,7 +17,7 @@ export interface Game {
   icon: string;
   genres: number[];
   releaseDate: Date;
-  sales: Sale;
+  prices: Price;
 }
 
 export interface State {

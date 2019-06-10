@@ -1,12 +1,15 @@
 <template>
 <tr>
-  <td class="cell">{{ currency }}</td>
+  <td class="cell">
+    {{ currency }}
+  </td>
   <td class="cell">
     <ui-text-field
-      v-if="edit"
+      v-if="isEdit"
       v-model="editedPrice"
       v-focus
       class="cell__text-field"
+      type="number"
     />
     <template v-else>
       {{ price }}
@@ -14,17 +17,20 @@
   </td>
   <td class="cell">
     <ui-text-field
-      v-if="edit"
+      v-if="isEdit"
       v-model="editedVat"
       class="cell__text-field"
+      type="number"
     />
     <template v-else>
       {{ vat }}
     </template>
   </td>
-  <td class="cell">{{ userPrice }}</td>
+  <td class="cell">
+    {{ userPrice }}
+  </td>
   <td class="cell cell--actions">
-    <div v-if="edit" class="controls">
+    <div v-if="isEdit" class="controls">
       <span class="controls__btn controls__btn--cancel" @click="cancelEdit">
         <icon name="times" width="10" height="10" fill="gray"/>
       </span>
@@ -35,7 +41,7 @@
     <a
       v-else
       v-clickaway="hideActions"
-      href="#"
+      href="/"
       class="actions-link"
       @click.prevent="actions = true"
     >
@@ -44,11 +50,14 @@
 
     <transition name="fade">
       <ul v-show="actions" class="shadow actions-list">
-        <li @click="handleEdit" class="actions-list__item">
+        <li class="actions-list__item" @click="handleEdit">
           {{ $t('edit') }}
         </li>
-        <li @click="$emit('set-default')" class="actions-list__item">
+        <li class="actions-list__item" @click="$emit('set-default')">
           {{ $t('asDefault') }}
+        </li>
+        <li class="actions-list__item" @click="$emit('remove-currency')">
+          {{ $t('remove') }}
         </li>
       </ul>
     </transition>
@@ -57,68 +66,77 @@
 </template>
 
 <script lang="ts">
-import i18n from './i18n'
-import Icon from '@/icons'
-import { TextField as UiTextField } from '@protocol-one/ui-kit'
+  import {TextField as UiTextField} from '@protocol-one/ui-kit'
+  import i18n from './i18n'
+  import Icon from '@/icons'
 
-export default {
-  name: 'PricesTableItem',
+  export default {
+    name: 'PricesTableItem',
 
-  i18n,
+    i18n,
 
-  directives: {
-    focus: {
-      inserted: el => el.querySelector('input').focus()
-    }
-  },
-
-  components: { Icon, UiTextField },
-
-  props: {
-    currency: String,
-    price: [Number, String],
-    vat: [Number, String],
-    userPrice: [Number, String]
-  },
-
-  data () {
-    return {
-      editedPrice: this.price,
-      editedVat: this.vat,
-      edit: false,
-      actions: false
-    }
-  },
-
-  methods: {
-    handleEdit () {
-      this.hideActions()
-      this.edit = true
+    directives: {
+      focus: {
+        inserted: el => el.querySelector('input').focus()
+      }
     },
 
-    hideActions () {
-      this.actions = false
+    components: {Icon, UiTextField},
+
+    props: {
+      currency: String,
+      price: [Number, String],
+      vat: [Number, String],
+      userPrice: [Number, String],
+      edit: {
+        type: Boolean,
+        default: false,
+      },
     },
 
-    cancelEdit () {
-      this.edit = false
-      this.editedPrice = this.price
-      this.editedVat = this.vat
+    data() {
+      return {
+        editedPrice: this.price,
+        editedVat: this.vat,
+        isEdit: this.edit || false,
+        actions: false
+      }
     },
 
-    savePrice () {
-      this.$emit('save-price', { price: this.editedPrice, vat: this.editedVat })
-      this.edit = false
+    methods: {
+      handleEdit() {
+        this.hideActions();
+        this.isEdit = true
+      },
+
+      hideActions() {
+        this.actions = false
+      },
+
+      cancelEdit() {
+        this.isEdit = false;
+        this.editedPrice = this.price;
+        this.editedVat = this.vat;
+      },
+
+      savePrice() {
+        this.$emit('save-price', {
+          price: parseFloat(this.editedPrice),
+          vat: parseInt(this.editedVat, 10),
+          edit: false,
+        });
+        this.isEdit = false
+      }
     }
   }
-}
 </script>
 
 <style lang="scss" scoped>
 .cell {
   padding: 10px;
   padding-left: 15px;
-  vertical-align: top;
+  vertical-align: middle;
+  font-size: 16px;
 
   &--actions {
     position: relative;
