@@ -140,7 +140,7 @@ module.exports = {
     stats: 'errors-only',
     hot: true,
     host: '0.0.0.0',
-    port: 8080,
+    port: process.env.SERVER_PORT || 8080,
     proxy: {
       '/api/*': 'http://localhost:3001',
       '/auth-api/*': 'http://localhost:3001',

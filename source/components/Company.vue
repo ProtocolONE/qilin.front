@@ -17,15 +17,13 @@
     v-bind="preparedFields.website"
     @input="change('website', $event)"
   />
-  <label>
-    <Select
-      v-bind="preparedFields.country"
-      :options="preparedCountries"
-      :hasEmptyValue="true"
-      :placeholder="$t('countriesPlaceholder')"
-      @input="change('country', $event)"
-    />
-  </label>
+  <Select
+    v-bind="preparedFields.country"
+    :options="preparedCountries"
+    :hasEmptyValue="true"
+    :placeholder="$t('countriesPlaceholder')"
+    @input="change('country', $event)"
+  />
   <TextField
     v-bind="preparedFields.region"
     @input="change('region', $event)"
@@ -58,12 +56,12 @@
 </template>
 
 <script type="ts">
-import Vue from 'vue';
-import { mapValues } from 'lodash-es';
-import { Header, Select, TextField } from '@protocol-one/ui-kit';
-import i18n from './i18nCompany';
+  import Vue from 'vue';
+  import {mapValues} from 'lodash-es';
+  import {Header, Select, TextField} from '@protocol-one/ui-kit';
+  import i18n from './i18nCompany';
 
-export default Vue.extend({
+  export default Vue.extend({
   i18n,
   components: { Header, Select, TextField },
   props: {
