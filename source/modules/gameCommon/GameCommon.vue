@@ -36,15 +36,15 @@
 </template>
 
 <script type="ts">
-import Vue from 'vue'
-import { mapActions, mapState } from 'vuex';
-import { Button, PageHeader } from '@protocol-one/ui-kit';
-import Menu from './components/Menu.vue';
-import Contents from './components/Contents.vue';
-import Icon from '@/icons';
-import i18n from './i18n';
+  import Vue from 'vue'
+  import {mapActions, mapState} from 'vuex';
+  import {Button, PageHeader} from '@protocol-one/ui-kit';
+  import Menu from './components/Menu.vue';
+  import Contents from './components/Contents.vue';
+  import Icon from '@/icons';
+  import i18n from './i18n';
 
-export default Vue.extend({
+  export default Vue.extend({
   i18n,
   components: { Menu, Contents, Button, Icon, PageHeader },
   computed: {
@@ -74,12 +74,8 @@ export default Vue.extend({
       this.save(this.$route.params.resourceId);
     },
 
-    showGamePriceDetails () {
-      return !this.$route.query.details || this.$route.query.details === 'true'
-    },
-
     toggleGamePricesDetails () {
-      let details
+      let details;
       if (!this.$route.query.details || this.$route.query.details === 'true') {
         details = 'false'
       }

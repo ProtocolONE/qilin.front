@@ -30,17 +30,17 @@
 </template>
 
 <script type="ts">
-import Vue from 'vue';
-import { mapGetters, mapState, mapActions } from 'vuex';
-import { includes, map, orderBy } from 'lodash-es';
-import { UiTable } from '@protocol-one/ui-kit';
-import CreateGame from '@/modules/gameCreate/CreateGame.vue';
-import CreateGameDummy from './components/CreateGameDummy.vue';
-import GamesFilters from './components/GamesFilters.vue';
-import GamesHeader from './components/GamesHeader.vue';
-import GameItem from './components/GameItem.vue';
+  import Vue from 'vue';
+  import {mapActions, mapGetters, mapState} from 'vuex';
+  import {includes} from 'lodash-es';
+  import {UiTable} from '@protocol-one/ui-kit';
+  import CreateGame from '@/modules/gameCreate/CreateGame.vue';
+  import CreateGameDummy from './components/CreateGameDummy.vue';
+  import GamesFilters from './components/GamesFilters.vue';
+  import GamesHeader from './components/GamesHeader.vue';
+  import GameItem from './components/GameItem.vue';
 
-export default Vue.extend({
+  export default Vue.extend({
   components: { CreateGame, CreateGameDummy, GamesFilters, GamesHeader, GameItem, UiTable },
   data: () => ({
     innerGames: [],

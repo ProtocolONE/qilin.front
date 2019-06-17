@@ -3,7 +3,7 @@
   <PackagesHeader
     :has-packages="hasPackages"
     @search="filterByName"
-    @clickCreate="showModal = true"
+    @clickCreate="showPackageModal = true"
   />
 
   <UiTable v-if="hasPackages">
@@ -18,34 +18,52 @@
 
   <CreatePackageDummy
     v-else
-    @clickCreate="showModal = true"
+    @clickCreate="showGameModal = true"
   />
   <CreatePackage
-    v-if="showModal"
+    v-if="showPackageModal"
     :vendor-id="currentVendorId"
-    @close="showModal = false"
+    @close="showPackageModal = false"
     @create="packageCreated"
+  />
+  <CreateGame
+    v-if="showGameModal"
+    :vendorId="currentVendorId"
+    @close="showGameModal = false"
+    @create="gameCreated"
   />
 </div>
 </template>
 
 <script type="ts">
-import Vue from 'vue';
-import { mapGetters, mapState, mapActions } from 'vuex';
-import { includes } from 'lodash-es';
-import { UiTable } from '@protocol-one/ui-kit';
-import CreatePackage from './components/CreatePackage.vue';
-import CreatePackageDummy from './components/CreatePackageDummy.vue';
-import PackagesFilters from './components/PackagesFilters.vue';
-import PackagesHeader from './components/PackagesHeader.vue';
-import PackageItem from './components/PackageItem.vue';
+  import Vue from 'vue';
+  import {mapActions, mapGetters, mapState} from 'vuex';
+  import {UiTable} from '@protocol-one/ui-kit';
+  import CreatePackage from './components/CreatePackage.vue';
+  import CreatePackageDummy from './components/CreatePackageDummy.vue';
+  import PackagesFilters from './components/PackagesFilters.vue';
+  import PackagesHeader from './components/PackagesHeader.vue';
+  import PackageItem from './components/PackageItem.vue';
+  import CreateGame from '@/modules/gameCreate/CreateGame.vue';
 
-export default Vue.extend({
-  components: { CreatePackage, CreatePackageDummy, PackagesFilters, PackagesHeader, PackageItem, UiTable },
+  export default Vue.extend({
+  components: {
+    CreatePackage,
+    CreatePackageDummy,
+    PackagesFilters,
+    PackagesHeader,
+    PackageItem,
+    UiTable,
+    CreateGame,
+  },
   data: () => ({
+    searchTimeout: null,
     innerPackages: [],
     sortingProps: {},
-    showModal: false,
+    showPackageModal: false,
+    showGameModal: false, 
+    sort: '',
+    search: '',
   }),
   computed: {
     ...mapGetters(['currentVendorId']),
@@ -67,21 +85,30 @@ export default Vue.extend({
     ...mapActions('Packages', ['initState', 'fetchPackages']),
 
     filterByName(namePart) {
-      this.innerPackages = this.packages.filter(
-        pkg => includes(pkg.internalName.toLowerCase(), namePart.toLowerCase())
-      );
+      clearTimeout(this.searchTimeout);
+      this.searchTimeout = setTimeout(() => {
+        this.search = namePart;
+        this.fetchList();
+      }, 300);
     },
     packageCreated(packageId) {
-      this.$router.push({ name: 'pkg', params: { id: packageId } });
+      this.$router.push({ name: 'package', params: { resourceId: packageId } });
+    },
+    gameCreated(gameId) {
+      this.$router.push({ name: 'game', params: { resourceId: gameId } });
     },
     toggleSort(propName) {
       this.sortingProps[propName] = !this.sortingProps[propName];
-
+      this.sort = `${this.sortingProps[propName] ? '+' : '-'}${propName}`;
+      this.fetchList();
+    },
+    fetchList() {
       this.fetchPackages({
-        sort: `${this.sortingProps[propName] ? '+' : '-'}${propName}`,
+        search: this.search,
+        sort: this.sort,
         vendorId: this.currentVendorId,
       });
-    },
+    }
   },
 });
 </script>

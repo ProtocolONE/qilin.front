@@ -23,7 +23,6 @@
       </div>
     </div>
   </UiTableCell>
-  <UiTableCell>{{ game.prices.currency }} {{ game.prices.price }}</UiTableCell>
   <UiTableCell>{{ formatReleaseDate }}</UiTableCell>
 </UiTableRow>
 </template>
