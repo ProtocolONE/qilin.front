@@ -1,6 +1,10 @@
 <template>
-<UiTableRow class="row">
-  <UiTableCell>
+<UiTableRow
+  class="row"
+  :isHoverable="false"
+  :isClickable="false"
+>
+  <UiTableCell class="select-cell">
     <Checkbox
       :style="{visibility: isDefault ? 'hidden' : 'visible'}"
       class="select"
@@ -18,7 +22,7 @@
       {{ product.name }}
     </router-link>
   </UiTableCell>
-  <UiTableCell>
+  <UiTableCell class="type-cell">
     {{ productType }}
   </UiTableCell>
 </UiTableRow>
@@ -65,6 +69,16 @@
 </script>
 
 <style scoped lang="scss">
+.select-cell {
+  width: 60px;
+}
+.type-cell {
+  width: 100px;
+}
+.select {
+  position: relative;
+  top: 4px;
+}
 .logo {
   width: 40px;
   height: 40px;
@@ -74,7 +88,6 @@
   display: inline-block;
   vertical-align: middle;
 }
-
 .row > * {
   padding: 10px 0 10px 10px;
 }

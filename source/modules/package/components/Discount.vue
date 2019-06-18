@@ -83,7 +83,7 @@
       this.$emit('change', {buyOption: value});
     },
     changeDiscount(value) {
-      this.$emit('change', {discount: parseInt(value, 10)});
+      this.$emit('change', {discount: Math.max(Math.min(parseInt(value, 10), 100), 0)});
     },
   },
 });

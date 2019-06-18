@@ -1,6 +1,5 @@
 <template>
 <UiModal
-  class="modal-add-package"
   @close="$emit('close')"
 >
   <Header
@@ -9,8 +8,13 @@
   >
     {{ $t('title') }}
   </Header>
-  <div slot="main">
-    <div v-html="$t('description')"/>
+  <div class="body" slot="main">
+    <TextField
+      :value="name"
+      :label="$t('name')"
+      @input="name = $event"
+    />
+    <div class="info" v-html="$t('searchText')"/>
     <TextField
       :value="search"
       :label="$t('search')"
@@ -40,8 +44,8 @@
     class="ui-modal-footer"
   >
     <Button
-      @click="okClick"
-      :disabled="!select.length"
+      @click="clickOk"
+      :disabled="isOkDisabled"
     >
       {{ $t('ok') }}
     </Button>
@@ -61,6 +65,7 @@
     components: { UiModal, Header, Button, TextField, Checkbox },
     data() {
       return {
+        name: '',
         select: [],
         search: '',
         updateTimeout: null,
@@ -69,6 +74,9 @@
     computed: {
       ...mapGetters(['currentVendorId']),
       ...mapState('Packages', ['foundGames']),
+      isOkDisabled() {
+        return !this.select.length || !this.name.trim().length;
+      },
     },
     mounted() {
       this.fetchGames({ vendorId: this.currentVendorId });
@@ -76,9 +84,9 @@
     methods: {
       ...mapActions('Packages', ['fetchGames', 'createPackage']),
 
-      okClick() {
+      clickOk() {
         this.createPackage({
-          name: 'new package',
+          name: this.name,
           products: this.select,
           vendorId: this.currentVendorId,
         }).then(packageId => {
@@ -120,29 +128,34 @@
 </script>
 
 <style scoped lang="scss">
-  .modal-add-game {
-
+.body {
+  min-width: 550px;
+}
+.info {
+  color: #b1b1b1;
+  font-size: 12px;
+  line-height: 17px;
+}
+.item {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  cursor: pointer;
+  .check {
+    width: 30px;
+    position: relative;
+    top: -2px;
   }
-  .item {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-end;
-    cursor: pointer;
-    .check {
-      width: 30px;
-      position: relative;
-      top: -2px;
-    }
-    .date {
-      text-align: right;
-      width: 150px
-    }
-    .name {
-      flex: 1;
-      overflow-x: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      max-width: 500px;
-    }
+  .date {
+    text-align: right;
+    width: 150px
   }
+  .name {
+    flex: 1;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 500px;
+  }
+}
 </style>

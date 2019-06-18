@@ -18,7 +18,6 @@ import Requests from '@/modules/requests/Requests.vue';
 import Request from '@/modules/request/Request.vue';
 import Packages from '@/modules/packages/Packages.vue';
 import Package from '@/modules/package/Package.vue';
-import Bundles from '@/modules/bundles/Bundles.vue';
 
 const routes: RouteConfig[] = [
   {
@@ -50,12 +49,6 @@ const routes: RouteConfig[] = [
     name: 'package',
     component: Package,
     meta: { permissions: 'packages' },
-  },
-  {
-    path: '/bundles',
-    name: 'bundles',
-    component: Bundles,
-    meta: { permissions: 'vendors.bundles.*' },
   },
   {
     path: '/games',

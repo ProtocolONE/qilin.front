@@ -10,6 +10,7 @@
       v-focus
       class="cell__text-field"
       type="number"
+      @input="editedPrice = Math.max($event, 0)"
     />
     <template v-else>
       {{ price }}
@@ -21,6 +22,7 @@
       v-model="editedVat"
       class="cell__text-field"
       type="number"
+      @input="editedVat = Math.max($event, 0)"
     />
     <template v-else>
       {{ vat }}
