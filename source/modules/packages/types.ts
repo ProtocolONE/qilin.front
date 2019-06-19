@@ -19,5 +19,9 @@ export interface PackageItem {
 
 export interface State {
   packages: PackageItem[];
-  foundGames: Game[],
+  foundGames: Game[];
+  search: string;
+  page: number;
+  sort: string;
+  itemsCount: number;
 }

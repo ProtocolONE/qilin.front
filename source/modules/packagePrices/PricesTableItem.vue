@@ -10,6 +10,8 @@
       v-focus
       class="cell__text-field"
       type="number"
+      min="0"
+      @blur="validatePrice"
     />
     <template v-else>
       {{ price }}
@@ -21,6 +23,8 @@
       v-model="editedVat"
       class="cell__text-field"
       type="number"
+      min="0"
+      @blur="validateVat"
     />
     <template v-else>
       {{ vat }}
@@ -71,64 +75,72 @@
   import Icon from '@/icons'
 
   export default {
-    name: 'PricesTableItem',
+  name: 'PricesTableItem',
 
-    i18n,
+  i18n,
 
-    directives: {
-      focus: {
-        inserted: el => el.querySelector('input').focus()
-      }
+  directives: {
+    focus: {
+      inserted: el => el.querySelector('input').focus()
+    }
+  },
+
+  components: {Icon, UiTextField},
+
+  props: {
+    currency: String,
+    price: [Number, String],
+    vat: [Number, String],
+    userPrice: [Number, String],
+    edit: {
+      type: Boolean,
+      default: false,
+    },
+  },
+
+  data() {
+    return {
+      editedPrice: this.price,
+      editedVat: this.vat,
+      isEdit: this.edit || false,
+      actions: false
+    }
+  },
+
+  methods: {
+    validatePrice() {
+      this.editedPrice = Math.max(this.editedPrice, 0);
     },
 
-    components: {Icon, UiTextField},
-
-    props: {
-      currency: String,
-      price: [Number, String],
-      vat: [Number, String],
-      userPrice: [Number, String],
-      edit: {
-        type: Boolean,
-        default: false,
-      },
+    validateVat() {
+      this.editedVat = Math.max(this.editedVat, 0);
     },
 
-    data() {
-      return {
-        editedPrice: this.price,
-        editedVat: this.vat,
-        isEdit: this.edit || false,
-        actions: false
-      }
+    handleEdit() {
+      this.hideActions();
+      this.isEdit = true
     },
 
-    methods: {
-      handleEdit() {
-        this.hideActions();
-        this.isEdit = true
-      },
+    hideActions() {
+      this.actions = false
+    },
 
-      hideActions() {
-        this.actions = false
-      },
+    cancelEdit() {
+      this.isEdit = false;
+      this.editedPrice = this.price;
+      this.editedVat = this.vat;
+    },
 
-      cancelEdit() {
-        this.isEdit = false;
-        this.editedPrice = this.price;
-        this.editedVat = this.vat;
-      },
-
-      savePrice() {
-        this.$emit('save-price', {
-          price: parseFloat(this.editedPrice),
-          vat: parseInt(this.editedVat, 10),
-          edit: false,
-        });
-        this.isEdit = false
-      }
+    savePrice() {
+      this.$emit('save-price', {
+        price: parseFloat(this.editedPrice),
+        vat: parseInt(this.editedVat, 10),
+        edit: false,
+      });
+      this.isEdit = false
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

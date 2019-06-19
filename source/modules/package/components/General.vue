@@ -16,7 +16,7 @@
     class="textfield"
     :label="$t('skuLabel')"
     :value="pkg.sku"
-    @change="changeProp('sku', $event)"
+    @input="changeProp('sku', $event)"
   />
   <div class="box">
     <label
@@ -60,6 +60,7 @@
     color="orange"
     :text="$t('removeProduct')"
     @click="clickRemoveProduct"
+    :disabled="!select.length"
   />
   <UiTable v-if="pkg.products">
     <ProductItem
@@ -164,7 +165,6 @@
 .add-game {
   margin: 10px 0;
 }
-
 .remove-product {
   margin: 10px 0;
   margin-left: 10px;

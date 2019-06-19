@@ -4,16 +4,18 @@ export default {
     en: {
       title: 'Adding game',
       ok: 'Ok',
-      description: 'After adding a game, the package price will change.',
+      searchText: 'Select at least one game.',
       search: 'Search',
       not_found: 'Not found',
+      name: 'Package name',
     },
     ru: {
       title: 'Создание дополнительного пакета',
       ok: 'Ok',
-      description: 'После добавления новой игры в пакет его стоимость будет пересчитана автоматичесски',
+      searchText: 'Добавьте хотя бы одну игру',
       search: 'Поиск',
       not_found: 'Ничего не найдено',
+      name: 'Название пакета',
     }
   },
 };
