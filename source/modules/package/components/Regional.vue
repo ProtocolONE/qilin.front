@@ -10,6 +10,25 @@
     <p class="section__description">
       {{ $t('regionalRestrictionsDescription') }}
     </p>
+    <UiSelect
+      v-model="newCountry"
+      class="selectCountry"
+      :label="$t('addNewCountry')"
+      :options="allCountries"
+    />
+    <UiButton
+      @click="clickNewCountry"
+    >
+      {{ $t('append') }}
+    </UiButton>
+    <UiButton
+      class="removeCountry"
+      color="orange"
+      @click="clickRemove"
+      :disabled="!select.length"
+    >
+      {{ $t('remove') }}
+    </UiButton>
     <div
       v-if="allowedCountries.length"
       class="allowedCountries"
@@ -25,27 +44,12 @@
         />
         {{ $t(`countries.${country}`) }}
       </label>
-      <UiButton
-        color="orange"
-        @click="clickRemove"
-      >
-        {{ $t('remove') }}
-      </UiButton>
     </div>
-    <p v-else>
+    <p v-else
+       class="allowedCountries"
+    >
       {{ $t('allowedInAllCountries') }}
     </p>
-    <UiSelect
-      v-model="newCountry"
-      class="selectCountry"
-      :label="$t('addNewCountry')"
-      :options="allCountries"
-    />
-    <UiButton
-      @click="clickNewCountry"
-    >
-      {{ $t('append') }}
-    </UiButton>
   </section>
 
 </article>
@@ -98,9 +102,9 @@
       return includes(this.select, country);
     },
     changeSelect(country) {
-        this.select = includes(this.select, country)
-          ? without(this.select, [country])
-          : this.select.concat([country]);
+      this.select = includes(this.select, country)
+        ? without(this.select, country)
+        : this.select.concat([country]);
     },
     clickNewCountry() {
       if (!this.newCountry) {
@@ -127,7 +131,11 @@
 .selectCountry {
   margin-top: 18px;
 }
+.removeCountry {
+  margin-left: 10px;
+}
 .allowedCountries {
+  margin-top: 20px;
   label {
     display: block;
     .select {

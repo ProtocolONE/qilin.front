@@ -1,23 +1,23 @@
 <template>
-  <header class="header">
-    <h1 class="title">
-      {{ $t('title') }}
-    </h1>
-    <SearchInput
-      class="search"
-      :label="$t('search')"
-      :value="searchValue"
-      @input="$emit('search', $event)"
-    />
-  </header>
+<header class="header">
+  <h1 class="title">
+    {{ $t('title') }}
+  </h1>
+  <SearchInput
+    class="search"
+    :label="$t('search')"
+    :value="searchValue"
+    @input="$emit('search', $event)"
+  />
+</header>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import SearchInput from './SearchInput.vue';
-import i18n from '../i18n';
+  import Vue from 'vue';
+  import SearchInput from './SearchInput.vue';
+  import i18n from '../i18n';
 
-export default Vue.extend({
+  export default Vue.extend({
   i18n,
   components: { SearchInput },
   props: {

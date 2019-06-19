@@ -39,13 +39,13 @@
 
 <script type="ts">
   import Vue from 'vue';
-  import { mapGetters, mapState, mapActions, mapMutations } from 'vuex';
-  import { UiTable, UiPaginator } from '@protocol-one/ui-kit';
+  import {mapActions, mapGetters, mapMutations, mapState} from 'vuex';
+  import {UiPaginator, UiTable} from '@protocol-one/ui-kit';
   import IconDummy from '@/components/IconDummy.vue';
   import NotifyItem from './components/NotifyItem.vue';
   import NotifysHeader from './components/NotifysHeader.vue';
   import NotifyFilters from './components/NotifyFilters.vue';
-  import { NUM_ROWS } from './constants';
+  import {NUM_ROWS} from './constants';
   import i18n from './i18n';
 
   export default Vue.extend({
@@ -88,9 +88,8 @@
     },
     methods: {
       ...mapActions('Notifications', ['initState', 'fetchNotifys']),
-      ...mapMutations('Notifications', ['setPage', 'setSort', 'setNotifys', 'setSearch', 'setItemsCount']),
+      ...mapMutations('Notifications', ['setPage', 'setSort', 'setNotifys', 'setSearch', 'updateSelectedNotify']),
       ...mapActions(['readNotifys']),
-      ...mapMutations(['updateSelectedNotify']),
       pageChanged({ offset }) {
         this.setPage(Math.ceil(offset / NUM_ROWS));
         this.fetchNotifys({ vendorId: this.currentVendorId });

@@ -7,6 +7,7 @@
     <div class="search">
       <TextField
         :label="$t('search')"
+        :value="searchValue"
         @input="$emit('search', $event)"
       />
     </div>
@@ -23,14 +24,18 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { Button, TextField } from '@protocol-one/ui-kit';
-import i18n from './i18nHeader';
+  import Vue from 'vue';
+  import {Button, TextField} from '@protocol-one/ui-kit';
+  import i18n from './i18nHeader';
 
-export default Vue.extend({
+  export default Vue.extend({
   i18n,
   components: { Button, TextField },
   props: {
+    searchValue: {
+      type: String,
+      required: true,
+    },
     hasPackages: {
       default: false,
       type: Boolean,
