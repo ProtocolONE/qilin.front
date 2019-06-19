@@ -1,5 +1,4 @@
 import {RouteConfig} from 'vue-router';
-
 import AuthBoard from '@/modules/authBoard/AuthBoard.vue';
 import Documents from '@/modules/documents/Documents.vue';
 import Home from '@/modules/home/Home.vue';
@@ -66,6 +65,7 @@ const routes: RouteConfig[] = [
       navigation: GameNavigation,
     },
     meta: { permissions: 'games' },
+
     children: [
       {
         path: 'descriptions',

@@ -1,51 +1,64 @@
 <template>
 <UiTableRow
   class="packages-filters"
-  :is-head="true"
+  :isHead="true"
 >
   <UiTableCell
-    class="name _active"
-    @click.native="toggleSort('name')"
+    v-for="({ name, filterSort }) in filters"
+    :key="name"
+    :class="['cell', name]"
+    :is-sortable="!!filterSort && filterSort === sort.substr(1)"
+    :sort-direction="sort[0] === '-' ? 'desc' : 'asc'"
+    @click.native="toggleSort(filterSort)"
   >
-    {{ $t('name') }}
-  </UiTableCell>
-  <UiTableCell
-    class="price"
-    @click.native="toggleSort('createdDate')"
-  >
-    {{ $t('date') }}
-  </UiTableCell>
-  <UiTableCell
-    class="discount"
-    @click.native="toggleSort('discount')"
-  >
-    {{ $t('discount') }}
+    {{ $t(name) }}
   </UiTableCell>
 </UiTableRow>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { UiTableRow, UiTableCell } from '@protocol-one/ui-kit';
-import i18n from './i18nPackagesFilters';
+  import Vue from 'vue';
+  import {UiTableCell, UiTableRow} from '@protocol-one/ui-kit';
+  import i18n from './i18nPackagesFilters';
 
-export default Vue.extend({
-  i18n,
-  components: { UiTableRow, UiTableCell },
-  methods: {
-    toggleSort(propName: string) {
-      this.$emit('toggleSort', propName);
-    }
-  },
-});
+  export default Vue.extend({
+    i18n,
+    components: { UiTableRow, UiTableCell },
+    props: {
+      sort: {
+        type: String,
+      },
+    },
+    computed: {
+      filters() {
+        return [
+          { name: 'name', filterSort: 'name' },
+          { name: 'date', filterSort: 'date' },
+          { name: 'discount', filterSort: '' },
+        ];
+      },
+    },
+    methods: {
+      toggleSort(propName: string) {
+        if (!propName) return;
+        const dir = propName === this.sort.substr(1)
+        && this.sort[0] === '+'
+          ? '-'
+          : '+';
+        this.$emit('toggleSort', dir + propName);
+      }
+    },
+  });
 </script>
 
 <style lang="scss" scoped>
-.name,
-.release {
-  &._active {
-    color: #0c2441;
-    cursor: pointer;
+.cell {
+  cursor: pointer;
+  .arrow {
+    transition: transform 0.3s ease;
+  }
+  &._desc .arrow {
+    transform: rotate(180deg);
   }
 }
 </style>

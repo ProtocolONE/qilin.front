@@ -1,4 +1,5 @@
 import {LocalizedString} from '@/modules/gameMedia/types';
+import {Game} from '@/modules/games/types';
 
 export interface PackageMedia {
   image: LocalizedString;
@@ -18,4 +19,9 @@ export interface PackageItem {
 
 export interface State {
   packages: PackageItem[];
+  foundGames: Game[];
+  search: string;
+  page: number;
+  sort: string;
+  itemsCount: number;
 }

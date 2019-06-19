@@ -1,55 +1,81 @@
 <template>
 <div class="packages-wrapper">
   <PackagesHeader
-    :has-packages="hasPackages"
+    :hasPackages="hasPackages"
+    :searchValue="search"
     @search="filterByName"
-    @clickCreate="showModal = true"
+    @clickCreate="showPackageModal = true"
   />
 
   <UiTable v-if="hasPackages">
-    <PackagesFilters @toggleSort="toggleSort" />
-
+    <PackagesFilters
+      :sort="sort"
+      @toggleSort="toggleSort"
+    />
     <PackageItem
       v-for="pkg in innerPackages"
       :key="pkg.id"
-      v-bind="{ pkg, genres }"
+      :pkg="pkg"
     />
   </UiTable>
-
   <CreatePackageDummy
     v-else
-    @clickCreate="showModal = true"
+    @clickCreate="showGameModal = true"
+  />
+  <UiPaginator
+    :count="itemsCount"
+    :limit="NUM_ROWS"
+    :offset="page * NUM_ROWS"
+    @pageChanged="pageChanged"
   />
   <CreatePackage
-    v-if="showModal"
+    v-if="showPackageModal"
     :vendor-id="currentVendorId"
-    @close="showModal = false"
+    @close="showPackageModal = false"
     @create="packageCreated"
+  />
+  <CreateGame
+    v-if="showGameModal"
+    :vendorId="currentVendorId"
+    @close="showGameModal = false"
+    @create="gameCreated"
   />
 </div>
 </template>
 
 <script type="ts">
-import Vue from 'vue';
-import { mapGetters, mapState, mapActions } from 'vuex';
-import { includes } from 'lodash-es';
-import { UiTable } from '@protocol-one/ui-kit';
-import CreatePackage from './components/CreatePackage.vue';
-import CreatePackageDummy from './components/CreatePackageDummy.vue';
-import PackagesFilters from './components/PackagesFilters.vue';
-import PackagesHeader from './components/PackagesHeader.vue';
-import PackageItem from './components/PackageItem.vue';
+  import Vue from 'vue';
+  import {mapActions, mapGetters, mapMutations, mapState} from 'vuex';
+  import {UiPaginator, UiTable} from '@protocol-one/ui-kit';
+  import CreatePackage from './components/CreatePackage.vue';
+  import CreatePackageDummy from './components/CreatePackageDummy.vue';
+  import PackagesFilters from './components/PackagesFilters.vue';
+  import PackagesHeader from './components/PackagesHeader.vue';
+  import PackageItem from './components/PackageItem.vue';
+  import CreateGame from '@/modules/gameCreate/CreateGame.vue';
+  import {NUM_ROWS} from './constants';
 
-export default Vue.extend({
-  components: { CreatePackage, CreatePackageDummy, PackagesFilters, PackagesHeader, PackageItem, UiTable },
+  export default Vue.extend({
+  components: {
+    CreatePackage,
+    CreatePackageDummy,
+    PackagesFilters,
+    PackagesHeader,
+    PackageItem,
+    UiTable,
+    CreateGame,
+    UiPaginator,
+  },
   data: () => ({
+    NUM_ROWS,
+    searchTimeout: null,
     innerPackages: [],
-    sortingProps: {},
-    showModal: false,
+    showPackageModal: false,
+    showGameModal: false, 
   }),
   computed: {
     ...mapGetters(['currentVendorId']),
-    ...mapState('Packages', ['packages', 'genres']),
+    ...mapState('Packages', ['packages', 'page', 'sort', 'search', 'itemsCount']),
 
     hasPackages() {
       return !!this.packages.length;
@@ -61,26 +87,35 @@ export default Vue.extend({
     },
   },
   mounted() {
-    this.initState({vendorId: this.currentVendorId});
+    this.initState({ vendorId: this.currentVendorId });
   },
   methods: {
     ...mapActions('Packages', ['initState', 'fetchPackages']),
+    ...mapMutations('Packages', ['setPage', 'setSort', 'setSearch']),
 
-    filterByName(namePart) {
-      this.innerPackages = this.packages.filter(
-        pkg => includes(pkg.internalName.toLowerCase(), namePart.toLowerCase())
+    filterByName(value) {
+      this.setPage(0);
+      this.setSearch(value);
+      clearTimeout(this.searchTimeout);
+      this.searchTimeout = setTimeout(
+        () => this.fetchPackages({ vendorId: this.currentVendorId }),
+        400,
       );
     },
     packageCreated(packageId) {
-      this.$router.push({ name: 'pkg', params: { id: packageId } });
+      this.$router.push({ name: 'package', params: { resourceId: packageId } });
+    },
+    gameCreated(gameId) {
+      this.$router.push({ name: 'game', params: { resourceId: gameId } });
     },
     toggleSort(propName) {
-      this.sortingProps[propName] = !this.sortingProps[propName];
-
-      this.fetchPackages({
-        sort: `${this.sortingProps[propName] ? '+' : '-'}${propName}`,
-        vendorId: this.currentVendorId,
-      });
+      this.setPage(0);
+      this.setSort(propName);
+      this.fetchPackages({ vendorId: this.currentVendorId });
+    },
+    pageChanged({ offset }) {
+      this.setPage(Math.ceil(offset / NUM_ROWS));
+      this.fetchPackages({ vendorId: this.currentVendorId });
     },
   },
 });
