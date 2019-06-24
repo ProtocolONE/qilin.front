@@ -2,20 +2,20 @@ export default {
   messages: {
     de: {
       title: 'Bundles',
-      buttonText: 'Create New Bundle',
-      info: '',
+      create: 'Create bundle',
+      info: 'Your bundles',
       search: 'Search ...',
     },
     en: {
       title: 'Bundles',
-      buttonText: 'Create New Bundle',
-      info: '',
+      create: 'Create bundle',
+      info: 'Your bundles',
       search: 'Search ...',
     },
     ru: {
-      title: 'Пакеты',
-      buttonText: 'Создать новый пакет',
-      info: '',
+      title: 'Наборы',
+      create: 'Создать набор',
+      info: 'Наборы доступные вам',
       search: 'Поиск ...',
     },
   },

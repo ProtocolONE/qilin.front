@@ -37,6 +37,20 @@ export default {
         description: 'Новый пакет',
       },
     },
+    bundles: {
+      title: 'Наборы',
+      meta: {
+        title: 'Наборы',
+        description: 'Создавайте игровые наборы для повышения чека продажи',
+      },
+    },
+    bundle: {
+      title: 'Набор',
+      meta: {
+        title: 'Набор',
+        description: 'Управление набором',
+      },
+    },
     games: {
       title: 'Игры',
       meta: {

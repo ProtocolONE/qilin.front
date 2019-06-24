@@ -3,20 +3,11 @@
   :link="bundleUrl"
 >
   <UiTableCell>
-    <div
-      v-if="bundle.media.thumb"
-      class="logo"
-      :style="{ backgroundImage: `url(${iconUrl})` }"
-    />
     {{ bundleName }}
   </UiTableCell>
   <UiTableCell>
     <div class="date"/>
     {{ formatDate }}
-  </UiTableCell>
-  <UiTableCell>
-    <div class="discount"/>
-    {{ bundle.discountPolicy.discount }} %
   </UiTableCell>
 </UiTableRow>
 </template>
@@ -35,9 +26,6 @@
     },
   },
   computed: {
-    iconUrl() {
-      return this.bundle.media.thumb[this.$i18n.locale] || this.bundle.media.thumb.en;
-    },
     formatDate() {
       return formatDate(
         this.bundle.createdAt,

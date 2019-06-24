@@ -1,29 +1,37 @@
 <template>
 <div class="bundles-wrapper">
   <BundlesHeader
-    :has-bundles="hasBundles"
+    :hasBundles="hasBundles"
+    :searchValue="search"
     @search="filterByName"
-    @clickCreate="showModal = true"
+    @clickCreate="showBundleModal = true"
   />
 
   <UiTable v-if="hasBundles">
-    <BundlesFilters @toggleSort="toggleSort" />
-
+    <BundlesFilters
+      :sort="sort"
+      @toggleSort="toggleSort"
+    />
     <BundleItem
       v-for="bundle in innerBundles"
       :key="bundle.id"
-      v-bind="{ bundle, genres }"
+      :bundle="bundle"
     />
   </UiTable>
-
   <CreateBundleDummy
     v-else
-    @clickCreate="showModal = true"
+    @clickCreate="showBundleModal = true"
+  />
+  <UiPaginator
+    :count="itemsCount"
+    :limit="NUM_ROWS"
+    :offset="page * NUM_ROWS"
+    @pageChanged="pageChanged"
   />
   <CreateBundle
-    v-if="showModal"
+    v-if="showBundleModal"
     :vendor-id="currentVendorId"
-    @close="showModal = false"
+    @close="showBundleModal = false"
     @create="bundleCreated"
   />
 </div>
@@ -31,25 +39,35 @@
 
 <script type="ts">
   import Vue from 'vue';
-  import {mapActions, mapGetters, mapState} from 'vuex';
-  import {includes} from 'lodash-es';
-  import {UiTable} from '@protocol-one/ui-kit';
+  import {mapActions, mapGetters, mapMutations, mapState} from 'vuex';
+  import {UiPaginator, UiTable} from '@protocol-one/ui-kit';
   import CreateBundle from './components/CreateBundle.vue';
   import CreateBundleDummy from './components/CreateBundleDummy.vue';
   import BundlesFilters from './components/BundlesFilters.vue';
   import BundlesHeader from './components/BundlesHeader.vue';
   import BundleItem from './components/BundleItem.vue';
+  import {NUM_ROWS} from './constants';
 
   export default Vue.extend({
-  components: { CreateBundle, CreateBundleDummy, BundlesFilters, BundlesHeader, BundleItem, UiTable },
+  components: {
+    CreateBundle,
+    CreateBundleDummy,
+    BundlesFilters,
+    BundlesHeader,
+    BundleItem,
+    UiTable,
+    UiPaginator,
+  },
   data: () => ({
+    NUM_ROWS,
+    searchTimeout: null,
     innerBundles: [],
-    sortingProps: {},
-    showModal: false,
+    showBundleModal: false,
+    showGameModal: false, 
   }),
   computed: {
     ...mapGetters(['currentVendorId']),
-    ...mapState('Bundles', ['bundles', 'genres']),
+    ...mapState('Bundles', ['bundles', 'page', 'sort', 'search', 'itemsCount']),
 
     hasBundles() {
       return !!this.bundles.length;
@@ -61,26 +79,32 @@
     },
   },
   mounted() {
-    this.initState({vendorId: this.currentVendorId});
+    this.initState({ vendorId: this.currentVendorId });
   },
   methods: {
     ...mapActions('Bundles', ['initState', 'fetchBundles']),
+    ...mapMutations('Bundles', ['setPage', 'setSort', 'setSearch']),
 
-    filterByName(namePart) {
-      this.innerBundles = this.bundles.filter(
-        bundle => includes(bundle.internalName.toLowerCase(), namePart.toLowerCase())
+    filterByName(value) {
+      this.setPage(0);
+      this.setSearch(value);
+      clearTimeout(this.searchTimeout);
+      this.searchTimeout = setTimeout(
+        () => this.fetchBundles({ vendorId: this.currentVendorId }),
+        400,
       );
     },
     bundleCreated(bundleId) {
-      this.$router.push({ name: 'bundle', params: { id: bundleId } });
+      this.$router.push({ name: 'bundle', params: { resourceId: bundleId } });
     },
     toggleSort(propName) {
-      this.sortingProps[propName] = !this.sortingProps[propName];
-
-      this.fetchBundles({
-        sort: `${this.sortingProps[propName] ? '+' : '-'}${propName}`,
-        vendorId: this.currentVendorId,
-      });
+      this.setPage(0);
+      this.setSort(propName);
+      this.fetchBundles({ vendorId: this.currentVendorId });
+    },
+    pageChanged({ offset }) {
+      this.setPage(Math.ceil(offset / NUM_ROWS));
+      this.fetchBundles({ vendorId: this.currentVendorId });
     },
   },
 });

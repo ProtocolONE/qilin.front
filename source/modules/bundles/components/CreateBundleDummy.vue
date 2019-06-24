@@ -4,10 +4,6 @@
   <span class="title">
     {{ $t('title') }}
   </span>
-  <span
-    class="text"
-    v-html="$t('text')"
-  />
   <Button
     :text="$t('buttonText')"
     @click="$emit('clickCreate')"
@@ -44,11 +40,5 @@
   display: block;
   margin-top: 12px;
 }
-.text {
-  display: block;
-  font-size: 12px;
-  margin-top: 8px;
-  margin-bottom: 24px;
-  text-align: center;
-}
+
 </style>

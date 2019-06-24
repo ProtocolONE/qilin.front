@@ -1,21 +1,20 @@
 import {LocalizedString} from '@/modules/gameMedia/types';
-
-export interface BundleMedia {
-  image: LocalizedString;
-  cover: LocalizedString;
-  thumb: LocalizedString;
-}
+import {PackageItem} from "@/modules/packages/types";
 
 export interface BundleItem {
   id: string;
   createdAt: Date;
-  isDefault: boolean;
-  isEnabled: boolean;
-  media: BundleMedia;
-  name: LocalizedString;
   sku: string;
+  name: LocalizedString;
+  isEnabled: boolean;
+  isUpgradeAllowed: boolean;
 }
 
 export interface State {
   bundles: BundleItem[];
+  foundPackages: PackageItem[];
+  search: string;
+  page: number;
+  sort: string;
+  itemsCount: number;
 }

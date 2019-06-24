@@ -1,163 +1,87 @@
 import axios from 'axios';
 import {ActionTree, GetterTree, MutationTree} from 'vuex';
-import {merge} from 'lodash-es';
-import {Game} from '@/modules/games/types';
-import {PackageMedia} from '@/modules/packages/types';
-import {DiscountPolicy, Package, PackagePrices, RegionalRestrictions, State} from './types';
+import {Bundle, State} from './types';
+import {DiscountPolicy, Package, RegionalRestrictions} from "@/modules/package/types";
 
-export default function PackageStore(apiUrl: string) {
+export default function BundleStore(apiUrl: string) {
   const state: State = {
-    packageObj: null,
-    foundGames: [],
-    initialPrices: [],
+    bundle: null,
+    foundPackages: [],
   };
   const getters: GetterTree<State, any> = {
-    steps: () => ['general', 'media', 'prices', 'discount', 'regional'],
+    steps: () => ['general', 'discount', 'regional'],
   };
   const actions: ActionTree<State, any> = {
-    async initState({ commit }, packageId: string) {
-      const pkg: Package = await axios
-        .get(`${apiUrl}/packages/${packageId}`)
+    async initState({ commit }, bundleId: string) {
+      const bundle: Bundle = await axios
+        .get(`${apiUrl}/bundles/${bundleId}/store`)
         .then(({ data }) => data);
-      commit('updatePackage', pkg);
-      commit('updateInitialPrices');
+      commit('updateBundle', bundle);
     },
 
     async save({state, commit}) {
-      await axios.put(`${apiUrl}/packages/${state.packageObj.id}`, state.packageObj);
-      commit('updateInitialPrices');
+      await axios.put(`${apiUrl}/bundles/${state.bundle.id}/store`, state.bundle);
     },
 
-    async fetchGames({commit}, {sort = '-releaseDate', query = '', vendorId}) {
-      const games = await axios
-        .get(`${apiUrl}/vendors/${vendorId}/games`, {
+    async fetchPackages({commit}, {sort = '-releaseDate', query = '', vendorId}) {
+      const packages = await axios
+        .get(`${apiUrl}/vendors/${vendorId}/packages`, {
           params: {
             limit: 5,
             sort: sort || undefined,
-            internalName: query || undefined
+            name: query || undefined
           },
         })
         .then(res => res.data || []);
 
-      commit('updateFoundGames', games);
+      commit('updateFoundPackages', packages);
     },
 
-    async addProducts({commit, state}, productIds) {
-      const pkg = await axios
-        .post(`${apiUrl}/packages/${state.packageObj.id}/products`, productIds)
+    async addPackages({commit, state}, packageIds) {
+      const bundle = await axios
+        .post(`${apiUrl}/bundles/${state.bundle.id}/packages`, packageIds)
         .then(res => res.data || []);
 
-      commit('updatePackage', pkg);
+      commit('updateBundle', bundle);
     },
 
-    async removeProducts({commit, state}, productIds) {
-      const pkg = await axios
-        .delete(`${apiUrl}/packages/${state.packageObj.id}/products`, {data: productIds})
+    async removePackages({commit, state}, packageIds) {
+      const bundle = await axios
+        .delete(`${apiUrl}/bundles/${state.bundle.id}/packages`, {data: packageIds})
         .then(res => res.data || []);
 
-      commit('updatePackage', pkg);
+      commit('updateBundle', bundle);
     },
   };
   const mutations: MutationTree<State> = {
-    updatePackage: (state, pkg: Package) => {
-      state.packageObj = pkg;
-    },
-
-    updateMedia: (state, media: PackageMedia) => {
-      state.packageObj = {...state.packageObj, media};
-    },
-
-    updatePrices: (state, prices: PackagePrices) => {
-      state.packageObj = {
-        ...state.packageObj,
-        commercial: merge(state.packageObj.commercial, prices),
-      };
+    updateBundle: (state, bundle: Bundle) => {
+      state.bundle = bundle
     },
 
     updateDiscount: (state, discount: DiscountPolicy) => {
-      state.packageObj = {
-        ...state.packageObj,
+      state.bundle = {
+        ...state.bundle,
         discountPolicy: {
-          ...state.packageObj.discountPolicy,
+          ...state.bundle.discountPolicy,
           ...discount,
         },
       };
     },
 
     updateRegional: (state, regional: RegionalRestrictions) => {
-      state.packageObj = {
-        ...state.packageObj,
+      state.bundle = {
+        ...state.bundle,
         regionalRestrinctions: regional,
       };
     },
 
-    removeCurrency(state, name) {
-      state.packageObj = {
-        ...state.packageObj,
-        commercial: {
-          ...state.packageObj.commercial,
-          prices: (state.packageObj.commercial.prices || [])
-            .filter(({currency}) => name !== currency)
-        }
-      };
-      if (state.packageObj.commercial.common.currency === name) {
-        const prices = (state.packageObj.commercial.prices || []);
-        const def = prices.length ? prices[0].currency : '';
-        state.packageObj = {
-          ...state.packageObj,
-          commercial: {
-            ...state.packageObj.commercial,
-            common: {
-              ...state.packageObj.commercial.common,
-              currency: def,
-            }
-          },
-        };
-      }
-    },
-
-    addCurrency(state, currency) {
-      const prices = (state.packageObj.commercial.prices || []);
-
-      state.packageObj = {
-        ...state.packageObj,
-        commercial: {
-          ...state.packageObj.commercial,
-          prices: prices
-            .concat({
-              currency: currency.value,
-              price: currency.price,
-              vat: 0,
-              edit: true,
-            })
-        }
-      };
-      if (!prices.length) {
-        state.packageObj = {
-          ...state.packageObj,
-          commercial: {
-            ...state.packageObj.commercial,
-            common: {
-              ...state.packageObj.commercial.common,
-              currency: currency.value,
-            }
-          },
-        };
-      }
-    },
-
-    updateInitialPrices: (state) => {
-      state.initialPrices = (state.packageObj.commercial.prices || [])
-        .map(({currency}) => currency);
-    },
-
-    updateFoundGames: (state, games: Game[]) => {
-      state.foundGames = state.packageObj.products
-        ? games.filter(
-          game => !state.packageObj.products.find(
-            product => product.id === game.id
+    updateFoundPackages: (state, packages: Package[]) => {
+      state.foundPackages = state.bundle.packages
+        ? packages.filter(
+          pkg => !state.bundle.packages.find(
+            bundlePkg => bundlePkg.id === pkg.id
           ))
-        : games;
+        : packages;
     },
   };
   return {

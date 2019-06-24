@@ -1,73 +1,21 @@
-import {LocalizedString} from '@/modules/gameMedia/types';
-import {PackageMedia} from '@/modules/packages/types';
-import {Game} from '@/modules/games/types';
+import {LocalizedString} from '@/modules/packageMedia/types';
+import {DiscountPolicy, RegionalRestrictions} from "@/modules/package/types";
+import {PackageItem} from "@/modules/packages/types";
 
-enum ProductType {
-  Game = "games",
-  DLC = "dlcs",
-}
-
-enum BuyOption {
-  Whole = "games",
-  Part = "dlcs",
-}
-
-export interface Product {
-  id: string;
-  name: string;
-  type: ProductType;
-  image: LocalizedString;
-}
-
-export interface Price {
-  currency: string;
-  price: number;
-  vat: number;
-  edit?: boolean;
-}
-
-export interface PackagePreOrder {
-  date: Date
-  enabled: boolean;
-}
-
-export interface PackageCommon {
-  currency: string;
-  notifyRateJumps: boolean;
-}
-
-export interface PackagePrices {
-  common: PackageCommon;
-  preOrder: PackagePreOrder;
-  prices: Price[];
-}
-
-export interface DiscountPolicy {
-  discount: number;
-  buyOption: BuyOption;
-}
-
-export interface RegionalRestrictions {
-  allowedCountries: string[];
-}
-
-export interface Package {
+export interface Bundle {
   id: string;
   createdAt: Date;
   sku: string;
   name: LocalizedString;
   isUpgradeAllowed: boolean;
   isEnabled: boolean;
-  isDefault: boolean;
-  products: Product[];
-  media: PackageMedia;
   discountPolicy: DiscountPolicy;
   regionalRestrinctions: RegionalRestrictions;
-  commercial: PackagePrices;
+  packages: PackageItem[];
 }
 
 export interface State {
-  packageObj: Package;
-  foundGames: Game[];
+  bundle: Bundle;
+  foundPackages: PackageItem[];
   initialPrices: string[];
 }

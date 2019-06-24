@@ -1,5 +1,5 @@
 <template>
-<article class="package-discount">
+<article class="bundle-discount">
 
   <section class="section">
     <headline id="discount">
@@ -12,7 +12,7 @@
     </p>
     <div>
       <ui-text-field
-        :value="discount.discount"
+        v-model="discount.discount"
         :label="$t('discount')"
         type="number"
         step="1"
@@ -20,6 +20,7 @@
         max="100"
         class="discount-input"
         @input="changeDiscount($event)"
+        @blur="validateDiscount"
       /><span class="discount-prefix">%</span>
     </div>
   </section>
@@ -79,11 +80,14 @@
     }
   },
   methods: {
+    validateDiscount() {
+      this.$emit('change', {discount: Math.max(Math.min(this.discount.discount, 100), 0)});
+    },
     changeBuyOption(value) {
       this.$emit('change', {buyOption: value});
     },
     changeDiscount(value) {
-      this.$emit('change', {discount: parseInt(value, 10)});
+      this.$emit('change', {discount: value});
     },
   },
 });

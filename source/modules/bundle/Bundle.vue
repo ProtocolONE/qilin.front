@@ -1,5 +1,5 @@
 <template>
-<div class="package">
+<div class="bundle">
   <PageHeader
     :breadcrumbs="breadcrumbs"
   >
@@ -11,18 +11,6 @@
     </Header>
 
     <div slot="right">
-      <a v-show="currentStep === 'prices'" href="#" class="package-prices-details" @click.prevent="togglePackagePricesDetails">
-        <Icon
-          :name="(!$route.query.details || $route.query.details === 'true') ? 'eye-slash' : 'eye'"
-          width="16"
-          height="16"
-          fill="rgba(51, 51, 51, 0.5)"
-          class="package-prices-details__icon"
-        />
-        <span class="package-prices-details__label">
-          {{ $t((!$route.query.details || $route.query.details === 'true') ? 'hideDetails' : 'showDetails') }}
-        </span>
-      </a>
       <Button
         :text="$t('save')"
         @click="save"
@@ -31,7 +19,7 @@
   </PageHeader>
 
   <FormByStep
-    v-if="packageObj !== null"
+    v-if="bundle !== null"
     v-model="currentStep"
     class="content"
     :steps="formSteps"
@@ -39,37 +27,21 @@
     <KeepAlive>
       <General
         v-if="currentStep === 'general'"
-        :pkg="packageObj"
-        @change="updatePackage($event)"
-      />
-    </KeepAlive>
-    <KeepAlive>
-      <Media
-        v-if="currentStep === 'media'"
-        :media="packageObj.media"
-        @change="updateMedia($event)"
-      />
-    </KeepAlive>
-    <KeepAlive>
-      <Prices
-        v-if="currentStep === 'prices'"
-        :commercial="packageObj.commercial"
-        @change="updatePrices($event)"
-        @addCurrency="addCurrency($event)"
-        @removeCurrency="removeCurrency($event)"
+        :bundle="bundle"
+        @change="updateBundle($event)"
       />
     </KeepAlive>
     <KeepAlive>
       <Discount
         v-if="currentStep === 'discount'"
-        :discount="packageObj.discountPolicy"
+        :discount="bundle.discountPolicy"
         @change="updateDiscount($event)"
       />
     </KeepAlive>
     <KeepAlive>
       <Regional
         v-if="currentStep === 'regional'"
-        :region="packageObj.regionalRestrinctions"
+        :region="bundle.regionalRestrinctions"
         @change="updateRegional($event)"
       />
     </KeepAlive>
@@ -82,11 +54,8 @@
   import {mapActions, mapGetters, mapMutations, mapState} from 'vuex';
   import {Button, FormByStep, Header, PageHeader} from '@protocol-one/ui-kit';
   import General from './components/General.vue';
-  import Media from './components/Media.vue';
   import Discount from './components/Discount.vue';
   import Regional from './components/Regional.vue';
-  import Prices from '@/modules/packagePrices/Prices.vue';
-  import Icon from '@/icons';
   import i18n from './i18n';
 
   export default Vue.extend({
@@ -98,9 +67,6 @@
     FormByStep,
     Header,
     PageHeader,
-    Media,
-    Prices,
-    Icon,
     Discount,
     Regional,
   },
@@ -110,8 +76,8 @@
   }),
 
   computed: {
-    ...mapState('Package', ['packageObj']),
-    ...mapGetters('Package', ['steps']),
+    ...mapState('Bundle', ['bundle']),
+    ...mapGetters('Bundle', ['steps']),
 
     formSteps() {
       return this.steps.map(step => ({
@@ -119,16 +85,16 @@
         label: this.$i18n.t(`tabs.${step}`),
       }));
     },
-    breadcrumbs () {
+    breadcrumbs() {
       return [
         {
-          url: '/packages',
-          label: this.$t('allPackages'),
+          url: '/bundles',
+          label: this.$t('allBundles'),
           router: true
         },
         ...(
-          this.packageObj ?
-            [{ label: this.packageObj.name[this.$i18n.locale] || this.packageObj.name.en }] :
+          this.bundle ?
+            [{ label: this.bundle.name[this.$i18n.locale] || this.bundle.name.en }] :
             []
         )
       ];
@@ -140,35 +106,18 @@
   },
 
   methods: {
-    ...mapActions('Package', ['initState', 'save']),
-    ...mapMutations('Package', [
-      'updatePackage',
-      'updateMedia',
-      'updatePrices',
-      'removeCurrency',
-      'addCurrency',
+    ...mapActions('Bundle', ['initState', 'save']),
+    ...mapMutations('Bundle', [
+      'updateBundle',
       'updateDiscount',
       'updateRegional',
     ]),
-    togglePackagePricesDetails () {
-      let details;
-      if (!this.$route.query.details || this.$route.query.details === 'true') {
-        details = 'false'
-      }
-      else {
-        details = 'true'
-      }
-      this.$router.replace({
-        ...this.$route,
-        query: { ...this.$route.query, details }
-      })
-    }
   }
 });
 </script>
 
 <style scoped lang="scss">
-.package {
+.bundle {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -191,7 +140,7 @@
   display: flex;
   justify-content: flex-end;
 }
-.package-prices-details {
+.bundle-prices-details {
   display: inline-flex;
   align-items: center;
   margin-bottom: 0;

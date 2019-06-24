@@ -2,18 +2,15 @@ export default {
   messages: {
     de: {
       title: 'There are no bundles here yet',
-      buttonText: 'Create New Bundle',
-      text: '',
+      buttonText: 'Create bundle',
     },
     en: {
       title: 'There are no bundles here yet',
-      buttonText: 'Create New Bundle',
-      text: '',
+      buttonText: 'Create bundle',
     },
     ru: {
-      title: 'Нет ни одного пакета',
-      buttonText: 'Создать',
-      text: '',
+      title: 'Нет ни одного набора',
+      buttonText: 'Создать набор',
     },
   },
 }

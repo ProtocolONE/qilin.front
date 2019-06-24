@@ -1,6 +1,6 @@
 <template>
 <UiModal
-  class="modal-add-game"
+  class="modal-add-package"
   @close="$emit('close')"
 >
   <Header
@@ -16,21 +16,21 @@
       :label="$t('search')"
       @input="inputSearch($event)"
     />
-    <div class="games">
+    <div class="packages">
       <label
-        v-for="game in foundGames"
-        :key="game.id"
+        v-for="pkg in foundPackages"
+        :key="pkg.id"
         class="item"
       >
         <Checkbox
           class="check"
-          :checked="isChecked(game.id)"
-          @change="switchGame(game.id)"
+          :checked="isChecked(pkg.id)"
+          @change="switchPackage(pkg.id)"
         />
-        <span class="name">{{ game.internalName }}</span>
-        <span class="date">{{ formatDate(game.releaseDate) }}</span>
+        <span class="name">{{ pkg.name[$i18n.locale] || pkg.name.en }}</span>
+        <span class="date">{{ formatDate(pkg.createdAt) }}</span>
       </label>
-      <p v-if="!foundGames.length">
+      <p v-if="!foundPackages.length">
         {{ $t('not_found') }}
       </p>
     </div>
@@ -52,7 +52,7 @@
   import Vue from 'vue'
   import {Button, Checkbox, Header, TextField, UiModal} from '@protocol-one/ui-kit'
   import {mapActions, mapGetters, mapState} from 'vuex';
-  import i18n from './i18nAddGame';
+  import i18n from './i18nAddPackage';
   import formatDate from '@/helpers/formatDate';
 
   export default Vue.extend({
@@ -67,13 +67,13 @@
   },
   computed: {
     ...mapGetters(['currentVendorId']),
-    ...mapState('Package', ['foundGames']),
+    ...mapState('Bundle', ['foundPackages']),
   },
   mounted() {
-    this.fetchGames({ vendorId: this.currentVendorId });
+    this.fetchPackages({ vendorId: this.currentVendorId });
   },
   methods: {
-    ...mapActions('Package', ['fetchGames']),
+    ...mapActions('Bundle', ['fetchPackages']),
 
     okClick() {
       this.$emit('close');
@@ -84,7 +84,7 @@
 
       clearTimeout(this.updateTimeout);
       this.updateTimeout = setTimeout(() => {
-        this.fetchGames({
+        this.fetchPackages({
           query: this.search,
           vendorId: this.currentVendorId
         });
@@ -93,9 +93,9 @@
     isChecked(id) {
       return this.select.indexOf(id) > -1;
     },
-    switchGame(id) {
+    switchPackage(id) {
       if (this.select.indexOf(id) > -1) {
-        this.select = this.select.filter(gameId => gameId !== id);
+        this.select = this.select.filter(packageId => packageId !== id);
       } else {
         this.select = this.select.concat([id]);
       }
@@ -113,9 +113,6 @@
 </script>
 
 <style scoped lang="scss">
-.modal-add-game {
-
-}
 .item {
   display: flex;
   justify-content: space-around;

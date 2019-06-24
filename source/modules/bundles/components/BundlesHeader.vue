@@ -7,6 +7,7 @@
     <div class="search">
       <TextField
         :label="$t('search')"
+        :value="searchValue"
         @input="$emit('search', $event)"
       />
     </div>
@@ -15,7 +16,7 @@
       v-html="$t('info')"
     />
     <Button
-      :text="$t('buttonText')"
+      :text="$t('create')"
       @click="$emit('clickCreate')"
     />
   </template>
@@ -31,6 +32,10 @@
   i18n,
   components: { Button, TextField },
   props: {
+    searchValue: {
+      type: String,
+      required: true,
+    },
     hasBundles: {
       default: false,
       type: Boolean,

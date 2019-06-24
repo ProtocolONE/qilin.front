@@ -7,8 +7,8 @@
   />
   <TextField
     class="textfield"
-    :label="$props.label"
-    :value="$props.value[lang] || ''"
+    :label="label"
+    :value="value[lang] || ''"
     @input="change"
   />
 </div>
