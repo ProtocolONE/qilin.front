@@ -1,5 +1,5 @@
 <template>
-<article class="package-discount">
+<article class="bundle-discount">
 
   <section class="section">
     <headline id="discount">

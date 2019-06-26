@@ -6,7 +6,6 @@
 >
   <UiTableCell class="select-cell">
     <UiCheckbox
-      :style="{visibility: isDefault ? 'hidden' : 'visible'}"
       class="select"
       :checked="checked"
       @change="$emit('change', $event)"
@@ -18,12 +17,12 @@
       class="logo"
       :style="{ backgroundImage: `url(${iconUrl})` }"
     />
-    <router-link :to="productUrl">
-      {{ product.name }}
+    <router-link :to="packageUrl">
+      {{ pkg.name[$i18n.locale] || pkg.name.en }}
     </router-link>
   </UiTableCell>
-  <UiTableCell class="type-cell">
-    {{ productType }}
+  <UiTableCell class="created-cell">
+    {{ formatDate(pkg.createdAt) }}
   </UiTableCell>
 </UiTableRow>
 </template>
@@ -32,16 +31,18 @@
 import Vue from 'vue';
 import {UiCheckbox, UiTableCell, UiTableRow} from '@protocol-one/ui-kit';
 import i18n from './i18nGeneral';
+import formatDate from '@/helpers/formatDate';
 
 export default Vue.extend({
   i18n,
     components: {UiTableRow, UiTableCell, UiCheckbox},
   props: {
     /**
-     * @typedef {id: string; name: string; type: ProductType; image: LocalizedString} Product
-     * @type {Product}
+     * @typedef {id: string; createdAt: Date; isDefault: boolean; isEnabled: boolean; media: PackageMedia;
+     * name: LocalizedString; sku: string} PackageItem
+     * @type {PackageItem}
      */
-    product: {
+    pkg: {
       required: true,
       type: Object,
     },
@@ -49,22 +50,25 @@ export default Vue.extend({
       required: true,
       type: Boolean,
     },
-    isDefault: {
-      default: false,
-      type: Boolean,
-    },
   },
   computed: {
     iconUrl() {
-      return this.product.image[this.$i18n.locale] || this.product.image.en;
+      return this.pkg.media.thumb[this.$i18n.locale] || this.pkg.media.thumb.en;
     },
-    productType() {
-      return this.$t(`productType.${this.product.type}`);
-    },
-    productUrl(): string {
-      return `/${this.product.type}/${this.product.id}`;
+    packageUrl(): string {
+      return `/packages/${this.pkg.id}`;
     },
   },
+  methods: {
+    formatDate(date) {
+      return formatDate(
+        date,
+        'dd LLLL yyyy',
+        this.$i18n.locale,
+        this.$i18n.fallbackLocale
+      );
+    },
+  }
 });
 </script>
 
@@ -72,8 +76,8 @@ export default Vue.extend({
 .select-cell {
   width: 60px;
 }
-.type-cell {
-  width: 100px;
+.created-cell {
+  width: 130px;
 }
 .select {
   margin-top: 4px;

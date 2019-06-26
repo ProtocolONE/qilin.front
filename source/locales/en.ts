@@ -30,6 +30,13 @@ export default {
         description: 'Add new packages to advance your games',
       },
     },
+    bundles: {
+      title: 'Bundles',
+      meta: {
+        title: 'Bundles',
+        description: 'Create new bundles to raise average sales',
+      },
+    },
     games: {
       title: 'Games',
       meta: {

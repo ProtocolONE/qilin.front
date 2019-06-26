@@ -1,10 +1,10 @@
 <template>
-<div class="package-general">
+<div class="bundle-general">
   <UiHeader level="2">
     {{ $t('name') }}
   </UiHeader>
   <MultilangTextField
-    :value="pkg.name"
+    :value="bundle.name"
     class="textfield"
     :label="$t('nameLabel')"
     @change="changeProp('name', $event)"
@@ -15,7 +15,7 @@
   <UiTextField
     class="textfield"
     :label="$t('skuLabel')"
-    :value="pkg.sku"
+    :value="bundle.sku"
     @input="changeProp('sku', $event)"
   />
   <div class="box">
@@ -24,7 +24,7 @@
     >
       <UiCheckbox
         class="check"
-        :checked="pkg.isEnabled"
+        :checked="bundle.isEnabled"
         @change="changeProp('isEnabled', $event)"
       />
       <span class="label">
@@ -38,7 +38,7 @@
     >
       <UiCheckbox
         class="check"
-        :checked="pkg.isUpgradeAllowed"
+        :checked="bundle.isUpgradeAllowed"
         @change="changeProp('isUpgradeAllowed', $event)"
       />
       <span class="label">
@@ -48,37 +48,36 @@
   </div>
 
   <UiHeader level="2">
-    {{ $t('products') }}
+    {{ $t('packages') }}
   </UiHeader>
   <UiButton
-    class="add-game"
-    :text="$t('addGame')"
-    @click="clickAddGame"
+    class="add-package"
+    :text="$t('addPackage')"
+    @click="clickAddPackage"
   />
   <UiButton
-    class="remove-product"
+    class="remove-package"
     color="orange"
-    :text="$t('removeProduct')"
+    :text="$t('removePackage')"
     :disabled="!select.length"
-    @click="clickRemoveProduct"
+    @click="clickRemovePackage"
   />
-  <UiTable v-if="pkg.products">
-    <ProductItem
-      v-for="product in pkg.products"
-      :key="product.id"
-      v-bind="{ product }"
-      :checked="isChecked(product.id)"
-      :is-default="isDefault(product.id)"
-      @change="switchSelect(product.id)"
+  <UiTable v-if="bundle.packages">
+    <PackageItem
+      v-for="pkg in bundle.packages"
+      :key="pkg.id"
+      v-bind="{ pkg }"
+      :checked="isChecked(pkg.id)"
+      @change="switchSelect(pkg.id)"
     />
   </UiTable>
   <p v-else>
     {{ $t('emptyList') }}
   </p>
-  <AddGame
+  <AddPackage
     v-if="hasModal"
     @close="hasModal = false"
-    @ok="addProducts"
+    @ok="addPackages"
   />
 </div>
 </template>
@@ -87,22 +86,22 @@
 import Vue from 'vue';
 import {mapActions} from 'vuex';
 import {UiButton, UiCheckbox, UiHeader, UiTable, UiTextField} from '@protocol-one/ui-kit';
-import MultilangTextField from './MultilangTextField.vue';
-import ProductItem from './ProductItem.vue';
-import AddGame from './AddGame.vue';
+import MultilangTextField from '../../package/components/MultilangTextField.vue';
+import PackageItem from './PackageItem.vue';
+import AddPackage from './AddPackage.vue';
 import i18n from './i18nGeneral';
 
 export default Vue.extend({
   i18n,
-  components: {UiHeader, UiButton, AddGame, UiCheckbox, UiTextField, MultilangTextField, ProductItem, UiTable},
+  components: {UiHeader, UiButton, AddPackage, UiCheckbox, UiTextField, MultilangTextField, PackageItem, UiTable},
   props: {
     /**
-     * @typedef {id: string; createdAt: Date; sku: string; name: string; isUpgradeAllowed: boolean; isEnabled: boolean;
-     * isDefault: boolean; products: Product[]; media: PackageMedia; discountPolicy:
-     * DiscountPolicy; regionalRestrinctions: RegionalRestrictions; commercial: PackagePrices} Package
-     * @type {Package}
+     * @typedef {id: string; createdAt: Date; sku: string; name: LocalizedString; isUpgradeAllowed: boolean;
+     * isEnabled: boolean; discountPolicy: DiscountPolicy; regionalRestrinctions: RegionalRestrictions;
+     * packages: PackageItem[]} Bundle
+     * @type {Bundle}
      */
-    pkg: {
+    bundle: {
       type: Object,
       required: true,
     },
@@ -115,16 +114,16 @@ export default Vue.extend({
   },
   computed: {},
   methods: {
-    ...mapActions('Package', ['addProducts', 'removeProducts']),
+    ...mapActions('Bundle', ['addPackages', 'removePackages']),
 
     changeProp(prop, value) {
-      this.$emit('change', {...this.pkg, [prop]: value});
+      this.$emit('change', {...this.bundle, [prop]: value});
     },
-    clickAddGame() {
+    clickAddPackage() {
       this.hasModal = true;
     },
-    clickRemoveProduct() {
-      this.removeProducts(this.select)
+    clickRemovePackage() {
+      this.removePackages(this.select)
         .then(() => {
           this.select = []
         });
@@ -134,13 +133,10 @@ export default Vue.extend({
     },
     switchSelect(id) {
       if (this.select.indexOf(id) > -1) {
-        this.select = this.select.filter(gameId => gameId !== id);
+        this.select = this.select.filter(packageId => packageId !== id);
       } else {
         this.select = this.select.concat([id]);
       }
-    },
-    isDefault(productId) {
-      return productId === this.pkg.defaultProductId;
     },
   },
 });
@@ -162,10 +158,10 @@ export default Vue.extend({
   height: 20px;
   margin-right: 16px;
 }
-.add-game {
+.add-package {
   margin: 10px 0;
 }
-.remove-product {
+.remove-package {
   margin: 10px 0;
   margin-left: 10px;
 }

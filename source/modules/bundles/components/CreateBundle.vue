@@ -8,7 +8,9 @@
   >
     {{ $t('title') }}
   </UiHeader>
-  <div class="body" slot="main">
+  <div slot="main"
+       class="body"
+  >
     <UiTextField
       :value="name"
       :label="$t('name')"
@@ -20,21 +22,21 @@
       :label="$t('search')"
       @input="inputSearch($event)"
     />
-    <div class="games">
+    <div class="pkgs">
       <label
-        v-for="game in foundGames"
-        :key="game.id"
+        v-for="pkg in foundPackages"
+        :key="pkg.id"
         class="item"
       >
         <UiCheckbox
           class="check"
-          :checked="isChecked(game.id)"
-          @change="switchGame(game.id)"
+          :checked="isChecked(pkg.id)"
+          @change="switchPackage(pkg.id)"
         />
-        <span class="name">{{ game.internalName }}</span>
-        <span class="date">{{ formatDate(game.releaseDate) }}</span>
+        <span class="name">{{ pkg.name[$i18n.locale] || pkg.name.en }}</span>
+        <span class="date">{{ formatDate(pkg.createdAt) }}</span>
       </label>
-      <p v-if="!foundGames.length">
+      <p v-if="!foundPackages.length">
         {{ $t('not_found') }}
       </p>
     </div>
@@ -57,12 +59,18 @@
 import Vue from 'vue'
 import {UiButton, UiCheckbox, UiHeader, UiModal, UiTextField} from '@protocol-one/ui-kit'
 import {mapActions, mapGetters, mapState} from 'vuex';
-import i18n from './i18nCreatePackage';
+import i18n from './i18nCreateBundle';
 import formatDate from '@/helpers/formatDate';
 
 export default Vue.extend({
   i18n,
-  components: { UiModal, UiHeader, UiButton, UiTextField, UiCheckbox },
+  components: {
+    UiModal,
+    UiHeader,
+    UiButton,
+    UiTextField,
+    UiCheckbox
+  },
   data() {
     return {
       name: '',
@@ -73,25 +81,25 @@ export default Vue.extend({
   },
   computed: {
     ...mapGetters(['currentVendorId']),
-    ...mapState('Packages', ['foundGames']),
+    ...mapState('Bundles', ['foundPackages']),
     isOkDisabled() {
       return !this.select.length || !this.name.trim().length;
     },
   },
   mounted() {
-    this.fetchGames({ vendorId: this.currentVendorId });
+    this.fetchPackages({ vendorId: this.currentVendorId });
   },
   methods: {
-    ...mapActions('Packages', ['fetchGames', 'createPackage']),
+    ...mapActions('Bundles', ['fetchPackages', 'createBundle']),
 
     clickOk() {
-      this.createPackage({
+      this.createBundle({
         name: this.name,
-        products: this.select,
+        packages: this.select,
         vendorId: this.currentVendorId,
-      }).then(packageId => {
+      }).then(bundleId => {
         this.$emit('close');
-        this.$emit('create', packageId);
+        this.$emit('create', bundleId);
       });
     },
     inputSearch(value) {
@@ -99,7 +107,7 @@ export default Vue.extend({
 
       clearTimeout(this.updateTimeout);
       this.updateTimeout = setTimeout(() => {
-        this.fetchGames({
+        this.fetchPackages({
           query: this.search,
           vendorId: this.currentVendorId,
         });
@@ -108,9 +116,9 @@ export default Vue.extend({
     isChecked(id) {
       return this.select.indexOf(id) > -1;
     },
-    switchGame(id) {
+    switchPackage(id) {
       if (this.select.indexOf(id) > -1) {
-        this.select = this.select.filter(gameId => gameId !== id);
+        this.select = this.select.filter(pkgId => pkgId !== id);
       } else {
         this.select = this.select.concat([id]);
       }

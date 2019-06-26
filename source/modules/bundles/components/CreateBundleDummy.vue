@@ -1,13 +1,9 @@
 <template>
-<div class="create-package-dummy">
+<div class="create-bundle-dummy">
   <IconDummy />
   <span class="title">
     {{ $t('title') }}
   </span>
-  <span
-    class="text"
-    v-html="$t('text')"
-  />
   <UiButton
     :text="$t('buttonText')"
     @click="$emit('clickCreate')"
@@ -19,7 +15,7 @@
 import Vue from 'vue';
 import {UiButton} from '@protocol-one/ui-kit';
 import IconDummy from '@/components/IconDummy.vue';
-import i18n from './i18nCreatePackageDummy';
+import i18n from './i18nCreateBundleDummy';
 
 export default Vue.extend({
   i18n,
@@ -28,7 +24,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.create-package-dummy {
+.create-bundle-dummy {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -44,11 +40,5 @@ export default Vue.extend({
   display: block;
   margin-top: 12px;
 }
-.text {
-  display: block;
-  font-size: 12px;
-  margin-top: 8px;
-  margin-bottom: 24px;
-  text-align: center;
-}
+
 </style>

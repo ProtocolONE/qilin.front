@@ -5,23 +5,23 @@
     :value="lang"
     @change="lang = $event"
   />
-  <TextField
+  <UiTextField
     class="textfield"
-    :label="$props.label"
-    :value="$props.value[lang] || ''"
+    :label="label"
+    :value="value[lang] || ''"
     @input="change"
   />
 </div>
 </template>
 
 <script>
-  import Vue from 'vue';
-  import {TextField, UiLangsBar} from '@protocol-one/ui-kit';
-  import i18n from '../i18n';
+import Vue from 'vue';
+import {UiLangsBar, UiTextField} from '@protocol-one/ui-kit';
+import i18n from '../i18n';
 
-  export default Vue.extend({
+export default Vue.extend({
   i18n,
-  components: { UiLangsBar, TextField },
+  components: { UiLangsBar, UiTextField },
   props: {
     label: {
       type: String,

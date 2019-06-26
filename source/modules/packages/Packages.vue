@@ -44,18 +44,18 @@
 </template>
 
 <script type="ts">
-  import Vue from 'vue';
-  import {mapActions, mapGetters, mapMutations, mapState} from 'vuex';
-  import {UiPaginator, UiTable} from '@protocol-one/ui-kit';
-  import CreatePackage from './components/CreatePackage.vue';
-  import CreatePackageDummy from './components/CreatePackageDummy.vue';
-  import PackagesFilters from './components/PackagesFilters.vue';
-  import PackagesHeader from './components/PackagesHeader.vue';
-  import PackageItem from './components/PackageItem.vue';
-  import CreateGame from '@/modules/gameCreate/CreateGame.vue';
-  import {NUM_ROWS} from './constants';
+import Vue from 'vue';
+import {mapActions, mapGetters, mapMutations, mapState} from 'vuex';
+import {UiPaginator, UiTable} from '@protocol-one/ui-kit';
+import CreatePackage from './components/CreatePackage.vue';
+import CreatePackageDummy from './components/CreatePackageDummy.vue';
+import PackagesFilters from './components/PackagesFilters.vue';
+import PackagesHeader from './components/PackagesHeader.vue';
+import PackageItem from './components/PackageItem.vue';
+import CreateGame from '@/modules/gameCreate/CreateGame.vue';
+import {NUM_ROWS} from './constants';
 
-  export default Vue.extend({
+export default Vue.extend({
   components: {
     CreatePackage,
     CreatePackageDummy,

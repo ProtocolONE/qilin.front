@@ -8,7 +8,7 @@
       v-if="isEdit"
       v-model="editedPrice"
       v-focus
-      class="cell__text-field"
+      class="cell_text-field"
       type="number"
       min="0"
       @blur="validatePrice"
@@ -21,7 +21,7 @@
     <ui-text-field
       v-if="isEdit"
       v-model="editedVat"
-      class="cell__text-field"
+      class="cell_text-field"
       type="number"
       min="0"
       @blur="validateVat"
@@ -35,10 +35,10 @@
   </td>
   <td class="cell cell--actions">
     <div v-if="isEdit" class="controls">
-      <span class="controls__btn controls__btn--cancel" @click="cancelEdit">
+      <span class="controls_btn controls_btn--cancel" @click="cancelEdit">
         <icon name="times" width="10" height="10" fill="gray"/>
       </span>
-      <span class="controls__btn controls__btn--submit" @click="savePrice">
+      <span class="controls_btn controls_btn--submit" @click="savePrice">
         <icon name="check" width="12" height="12" fill="#FFF"/>
       </span>
     </div>
@@ -54,13 +54,13 @@
 
     <transition name="fade">
       <ul v-show="actions" class="shadow actions-list">
-        <li class="actions-list__item" @click="handleEdit">
+        <li class="actions-list_item" @click="handleEdit">
           {{ $t('edit') }}
         </li>
-        <li class="actions-list__item" @click="$emit('set-default')">
+        <li class="actions-list_item" @click="$emit('set-default')">
           {{ $t('asDefault') }}
         </li>
-        <li class="actions-list__item" @click="$emit('remove-currency')">
+        <li class="actions-list_item" @click="$emit('remove-currency')">
           {{ $t('remove') }}
         </li>
       </ul>
@@ -70,11 +70,11 @@
 </template>
 
 <script lang="ts">
-  import {TextField as UiTextField} from '@protocol-one/ui-kit'
-  import i18n from './i18n'
-  import Icon from '@/icons'
+import {UiTextField} from '@protocol-one/ui-kit'
+import i18n from './i18n'
+import Icon from '@/icons'
 
-  export default {
+export default {
   name: 'PricesTableItem',
 
   i18n,
@@ -154,11 +154,11 @@
     position: relative;
   }
 
-  &__price {
+  &_price {
     padding: 4px;
   }
 
-  &__text-field {
+  &_text-field {
     padding: 0;
   }
 }
@@ -183,7 +183,7 @@
   background-color: #FFF;
   border: 1px solid rgba(0, 0, 0, .05);
 
-  &__item {
+  &_item {
     padding: 10px 20px;
     color: #B1B1B1;
     white-space: nowrap;
@@ -202,7 +202,7 @@
   align-items: center;
   justify-content: space-around;
 
-  &__btn {
+  &_btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;

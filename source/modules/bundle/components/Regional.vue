@@ -1,5 +1,5 @@
 <template>
-<article class="package-regional">
+<article class="bundle-regional">
 
   <section class="page_section section">
     <headline id="regional">

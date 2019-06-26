@@ -1,5 +1,6 @@
 <template>
 <UiModal
+  class="modal-add-package"
   @close="$emit('close')"
 >
   <UiHeader
@@ -8,33 +9,28 @@
   >
     {{ $t('title') }}
   </UiHeader>
-  <div class="body" slot="main">
-    <UiTextField
-      :value="name"
-      :label="$t('name')"
-      @input="name = $event"
-    />
-    <div class="info" v-html="$t('searchText')"/>
+  <div slot="main">
+    <div v-html="$t('description')"/>
     <UiTextField
       :value="search"
       :label="$t('search')"
       @input="inputSearch($event)"
     />
-    <div class="games">
+    <div class="packages">
       <label
-        v-for="game in foundGames"
-        :key="game.id"
+        v-for="pkg in foundPackages"
+        :key="pkg.id"
         class="item"
       >
         <UiCheckbox
           class="check"
-          :checked="isChecked(game.id)"
-          @change="switchGame(game.id)"
+          :checked="isChecked(pkg.id)"
+          @change="switchPackage(pkg.id)"
         />
-        <span class="name">{{ game.internalName }}</span>
-        <span class="date">{{ formatDate(game.releaseDate) }}</span>
+        <span class="name">{{ pkg.name[$i18n.locale] || pkg.name.en }}</span>
+        <span class="date">{{ formatDate(pkg.createdAt) }}</span>
       </label>
-      <p v-if="!foundGames.length">
+      <p v-if="!foundPackages.length">
         {{ $t('not_found') }}
       </p>
     </div>
@@ -44,8 +40,7 @@
     class="ui-modal-footer"
   >
     <UiButton
-      :disabled="isOkDisabled"
-      @click="clickOk"
+      @click="okClick"
     >
       {{ $t('ok') }}
     </UiButton>
@@ -57,7 +52,7 @@
 import Vue from 'vue'
 import {UiButton, UiCheckbox, UiHeader, UiModal, UiTextField} from '@protocol-one/ui-kit'
 import {mapActions, mapGetters, mapState} from 'vuex';
-import i18n from './i18nCreatePackage';
+import i18n from './i18nAddPackage';
 import formatDate from '@/helpers/formatDate';
 
 export default Vue.extend({
@@ -65,7 +60,6 @@ export default Vue.extend({
   components: { UiModal, UiHeader, UiButton, UiTextField, UiCheckbox },
   data() {
     return {
-      name: '',
       select: [],
       search: '',
       updateTimeout: null,
@@ -73,44 +67,35 @@ export default Vue.extend({
   },
   computed: {
     ...mapGetters(['currentVendorId']),
-    ...mapState('Packages', ['foundGames']),
-    isOkDisabled() {
-      return !this.select.length || !this.name.trim().length;
-    },
+    ...mapState('Bundle', ['foundPackages']),
   },
   mounted() {
-    this.fetchGames({ vendorId: this.currentVendorId });
+    this.fetchPackages({ vendorId: this.currentVendorId });
   },
   methods: {
-    ...mapActions('Packages', ['fetchGames', 'createPackage']),
+    ...mapActions('Bundle', ['fetchPackages']),
 
-    clickOk() {
-      this.createPackage({
-        name: this.name,
-        products: this.select,
-        vendorId: this.currentVendorId,
-      }).then(packageId => {
-        this.$emit('close');
-        this.$emit('create', packageId);
-      });
+    okClick() {
+      this.$emit('close');
+      this.$emit('ok', this.select);
     },
     inputSearch(value) {
       this.search = value;
 
       clearTimeout(this.updateTimeout);
       this.updateTimeout = setTimeout(() => {
-        this.fetchGames({
+        this.fetchPackages({
           query: this.search,
-          vendorId: this.currentVendorId,
+          vendorId: this.currentVendorId
         });
       }, 200);
     },
     isChecked(id) {
       return this.select.indexOf(id) > -1;
     },
-    switchGame(id) {
+    switchPackage(id) {
       if (this.select.indexOf(id) > -1) {
-        this.select = this.select.filter(gameId => gameId !== id);
+        this.select = this.select.filter(packageId => packageId !== id);
       } else {
         this.select = this.select.concat([id]);
       }
@@ -128,14 +113,6 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
-.body {
-  min-width: 550px;
-}
-.info {
-  color: #b1b1b1;
-  font-size: 12px;
-  line-height: 17px;
-}
 .item {
   display: flex;
   justify-content: space-around;

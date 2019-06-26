@@ -1,9 +1,9 @@
 <template>
-<header class="packages-header">
+<header class="bundles-header">
   <h1 class="title">
     {{ $t('title') }}
   </h1>
-  <template v-if="hasPackages">
+  <template v-if="hasBundles">
     <div class="search">
       <UiTextField
         :label="$t('search')"
@@ -16,7 +16,7 @@
       v-html="$t('info')"
     />
     <UiButton
-      :text="$t('buttonText')"
+      :text="$t('create')"
       @click="$emit('clickCreate')"
     />
   </template>
@@ -36,7 +36,7 @@ export default Vue.extend({
       type: String,
       required: true,
     },
-    hasPackages: {
+    hasBundles: {
       default: false,
       type: Boolean,
     },
@@ -45,7 +45,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.packages-header {
+.bundles-header {
   height: 88px;
   display: flex;
   align-items: center;

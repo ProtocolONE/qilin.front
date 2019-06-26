@@ -1,6 +1,6 @@
 <template>
 <UiTableRow
-  class="packages-filters"
+  class="bundles-filters"
   :isHead="true"
 >
   <UiTableCell
@@ -19,7 +19,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import {UiTableCell, UiTableRow} from '@protocol-one/ui-kit';
-import i18n from './i18nPackagesFilters';
+import i18n from './i18nBundlesFilters';
 
 export default Vue.extend({
   i18n,
@@ -34,7 +34,6 @@ export default Vue.extend({
       return [
         { name: 'name', filterSort: 'name' },
         { name: 'date', filterSort: 'date' },
-        { name: 'discount', filterSort: '' },
       ];
     },
   },

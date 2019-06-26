@@ -1,10 +1,10 @@
 <template>
 <div class="package-media">
-  <Header
+  <UiHeader
     level="2"
   >
     {{ $t('cover') }}
-  </Header>
+  </UiHeader>
   <p
     class="no-margin"
     v-html="$t('cover_description')"
@@ -14,11 +14,11 @@
     @change="updateProp('cover', $event)"
   />
 
-  <Header
+  <UiHeader
     level="2"
   >
     {{ $t('image') }}
-  </Header>
+  </UiHeader>
   <p
     class="no-margin"
     v-html="$t('image_description')"
@@ -28,11 +28,11 @@
     @change="updateProp('image', $event)"
   />
 
-  <Header
+  <UiHeader
     level="2"
   >
     {{ $t('thumb') }}
-  </Header>
+  </UiHeader>
   <p
     class="no-margin"
     v-html="$t('thumb_description')"
@@ -45,31 +45,31 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue';
-  import {Header} from '@protocol-one/ui-kit';
-  import i18n from './i18nMedia';
-  import CoverImage from '../../gameMedia/components/CoverImage.vue';
+import Vue from 'vue';
+import {UiHeader} from '@protocol-one/ui-kit';
+import i18n from './i18nMedia';
+import CoverImage from '../../gameMedia/components/CoverImage.vue';
 
-  export default Vue.extend({
-    i18n,
-    components: {Header, CoverImage},
-    props: {
-      /**
-       * @typedef {  image: LocalizedString; cover: LocalizedString; thumb: LocalizedString} PackageMedia
-       * @type {PackageMedia}
-       */
-      media: {
-        type: Object,
-        required: true,
-      },
+export default Vue.extend({
+  i18n,
+  components: {UiHeader, CoverImage},
+  props: {
+    /**
+     * @typedef {  image: LocalizedString; cover: LocalizedString; thumb: LocalizedString} PackageMedia
+     * @type {PackageMedia}
+     */
+    media: {
+      type: Object,
+      required: true,
     },
-    computed: {},
-    methods: {
-      updateProp(prop, value) {
-        this.$emit('change', {...this.media, [prop]: value});
-      },
+  },
+  computed: {},
+  methods: {
+    updateProp(prop, value) {
+      this.$emit('change', {...this.media, [prop]: value});
     },
-  });
+  },
+});
 </script>
 
 <style>
