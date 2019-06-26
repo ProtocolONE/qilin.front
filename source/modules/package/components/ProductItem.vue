@@ -5,7 +5,7 @@
   :isClickable="false"
 >
   <UiTableCell class="select-cell">
-    <Checkbox
+    <UiCheckbox
       :style="{visibility: isDefault ? 'hidden' : 'visible'}"
       class="select"
       :checked="checked"
@@ -29,13 +29,13 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue';
-  import {Checkbox, UiTableCell, UiTableRow} from '@protocol-one/ui-kit';
-  import i18n from './i18nGeneral';
+import Vue from 'vue';
+import {UiCheckbox, UiTableCell, UiTableRow} from '@protocol-one/ui-kit';
+import i18n from './i18nGeneral';
 
-  export default Vue.extend({
+export default Vue.extend({
   i18n,
-    components: {UiTableRow, UiTableCell, Checkbox},
+    components: {UiTableRow, UiTableCell, UiCheckbox},
   props: {
     /**
      * @typedef {id: string; name: string; type: ProductType; image: LocalizedString} Product
@@ -76,8 +76,7 @@
   width: 100px;
 }
 .select {
-  position: relative;
-  top: 4px;
+  margin-top: 4px;
 }
 .logo {
   width: 40px;

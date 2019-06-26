@@ -1,13 +1,13 @@
 <template>
 <article class="page">
 
-  <section class="page__section section">
+  <section class="page_section section">
     <headline v-show="showDetails" id="defaultCurrency">
-      <span class="section__title">
+      <span class="section_title">
         {{ $t('defaultCurrency') }}
       </span>
     </headline>
-    <p v-show="showDetails" class="section__description">
+    <p v-show="showDetails" class="section_description">
       {{ $t('defaultCurrencyDescription') }}
     </p>
 
@@ -16,29 +16,29 @@
         :value="commercial.common.currency"
         :options="currencyOptions"
         :label="$t('defaultCurrency')"
-        class="price-setting__item"
+        class="price-setting_item"
         @input="changeDefaultCurrency"
       />
       <ui-text-field
         :value="defaultPrice"
         :label="$t('priceInDefaultCurrency')"
         disabled
-        class="price-setting__item"
+        class="price-setting_item"
       />
     </div>
 
-    <p v-show="showDetails" class="section__description">
+    <p v-show="showDetails" class="section_description">
       {{ $t('defaultCurrencyInfo') }}
     </p>
   </section>
 
-  <section class="page__section section">
+  <section class="page_section section">
     <headline v-show="showDetails" id="preorders">
-      <span class="section__title">
+      <span class="section_title">
         {{ $t('preorders') }}
       </span>
     </headline>
-    <p v-show="showDetails" class="section__description">
+    <p v-show="showDetails" class="section_description">
       {{ $t('preordersDescription') }}
     </p>
 
@@ -64,13 +64,13 @@
     </div>
   </section>
 
-  <section class="page__section section">
+  <section class="page_section section">
     <headline v-show="showDetails" id="prices">
-      <span class="section__title">
+      <span class="section_title">
         {{ $t('prices') }}
       </span>
     </headline>
-    <p v-show="showDetails" class="section__description">
+    <p v-show="showDetails" class="section_description">
       {{ $t('pricesDescription') }}
     </p>
     <label for="notifyRateJumps" class="switcher">
@@ -97,13 +97,13 @@
 </template>
 
 <script lang="ts">
-  import {merge} from 'lodash-es'
-  import {UiDateTimeInput, UiSelect, UiSwitchBox, UiTextField} from '@protocol-one/ui-kit'
-  import i18n from './i18n'
-  import Headline from '@/components/Headline.vue'
-  import PricesTable from './PricesTable.vue'
+import {merge} from 'lodash-es'
+import {UiDateTimeInput, UiSelect, UiSwitchBox, UiTextField} from '@protocol-one/ui-kit'
+import i18n from './i18n'
+import Headline from '@/components/Headline.vue'
+import PricesTable from './PricesTable.vue'
 
-  export default {
+export default {
   i18n,
 
   components: {
@@ -181,7 +181,7 @@
   min-height: calc(100vh - 84px);
   color: #333333;
 
-  &__section {
+  &_section {
     margin: 33px 30px;
 
     &:not(:last-of-type) {
@@ -191,11 +191,11 @@
 }
 
 .section {
-  &__title {
+  &_title {
     font-size: 20px;
   }
 
-  &__description {
+  &_description {
     font-size: 14px;
     color: #b1b1b1;
   }
@@ -212,7 +212,7 @@
   display: flex;
   align-items: center;
 
-  &__item {
+  &_item {
     &:not(:last-child) {
       margin-right: 24px;
     }

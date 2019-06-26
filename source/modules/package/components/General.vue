@@ -1,18 +1,18 @@
 <template>
 <div class="package-general">
-  <Header level="2">
+  <UiHeader level="2">
     {{ $t('name') }}
-  </Header>
+  </UiHeader>
   <MultilangTextField
     :value="pkg.name"
     class="textfield"
     :label="$t('nameLabel')"
     @change="changeProp('name', $event)"
   />
-  <Header level="2">
+  <UiHeader level="2">
     {{ $t('sku') }}
-  </Header>
-  <TextField
+  </UiHeader>
+  <UiTextField
     class="textfield"
     :label="$t('skuLabel')"
     :value="pkg.sku"
@@ -22,7 +22,7 @@
     <label
       class="checkbox"
     >
-      <Checkbox
+      <UiCheckbox
         class="check"
         :checked="pkg.isEnabled"
         @change="changeProp('isEnabled', $event)"
@@ -36,7 +36,7 @@
     <label
       class="checkbox"
     >
-      <Checkbox
+      <UiCheckbox
         class="check"
         :checked="pkg.isUpgradeAllowed"
         @change="changeProp('isUpgradeAllowed', $event)"
@@ -47,20 +47,20 @@
     </label>
   </div>
 
-  <Header level="2">
+  <UiHeader level="2">
     {{ $t('products') }}
-  </Header>
-  <Button
+  </UiHeader>
+  <UiButton
     class="add-game"
     :text="$t('addGame')"
     @click="clickAddGame"
   />
-  <Button
+  <UiButton
     class="remove-product"
     color="orange"
     :text="$t('removeProduct')"
-    @click="clickRemoveProduct"
     :disabled="!select.length"
+    @click="clickRemoveProduct"
   />
   <UiTable v-if="pkg.products">
     <ProductItem
@@ -84,17 +84,17 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue';
-  import {mapActions} from 'vuex';
-  import {Button, Checkbox, Header, TextField, UiTable} from '@protocol-one/ui-kit';
-  import MultilangTextField from './MultilangTextField.vue';
-  import ProductItem from './ProductItem.vue';
-  import AddGame from './AddGame.vue';
-  import i18n from './i18nGeneral';
+import Vue from 'vue';
+import {mapActions} from 'vuex';
+import {UiButton, UiCheckbox, UiHeader, UiTable, UiTextField} from '@protocol-one/ui-kit';
+import MultilangTextField from './MultilangTextField.vue';
+import ProductItem from './ProductItem.vue';
+import AddGame from './AddGame.vue';
+import i18n from './i18nGeneral';
 
-  export default Vue.extend({
+export default Vue.extend({
   i18n,
-  components: {Header, Button, AddGame, Checkbox, TextField, MultilangTextField, ProductItem, UiTable},
+  components: {UiHeader, UiButton, AddGame, UiCheckbox, UiTextField, MultilangTextField, ProductItem, UiTable},
   props: {
     /**
      * @typedef {id: string; createdAt: Date; sku: string; name: string; isUpgradeAllowed: boolean; isEnabled: boolean;

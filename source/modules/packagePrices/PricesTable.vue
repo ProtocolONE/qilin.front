@@ -13,9 +13,9 @@
           <icon
             v-show="h.order === sort"
             v-bind="icon"
-            class="thead__icon"
+            class="thead_icon"
           />
-          <label class="thead__label" @click.stop="handlerSort(h.order)">
+          <label class="thead_label" @click.stop="handlerSort(h.order)">
             {{ $t(h.label) }}
           </label>
         </th>
@@ -79,91 +79,97 @@
 </template>
 
 <script lang="ts">
-  import {cloneDeep, orderBy} from 'lodash-es'
-  import Icon from '@/icons'
-  import i18n from './i18n'
-  import PricesTableItem from './PricesTableItem.vue'
-  import DefaultCurrencies from '@/helpers/defaultCurrencies'
+import {cloneDeep, orderBy} from 'lodash-es'
+import Icon from '@/icons'
+import i18n from './i18n'
+import PricesTableItem from './PricesTableItem.vue'
+import DefaultCurrencies from '@/helpers/defaultCurrencies'
 
-  export default {
-    name: 'PricesTable',
+export default {
+  name: 'PricesTable',
 
-    i18n,
+  i18n,
 
-    components: {Icon, PricesTableItem},
+  components: {Icon, PricesTableItem},
 
-    props: {
-      items: Array,
-      defaultCurrency: String
+  props: {
+    items: {
+      type: Array,
+      default: () => [],
     },
-
-    data() {
-      return {
-        heads: [
-          {label: 'currency', order: 'currency', width: '170'},
-          {label: 'suggestedPrice', order: 'price', width: '170'},
-          {label: 'vat', order: 'vat', width: '75'},
-          {label: 'endUserPrice', order: 'userPrice', width: '120'}
-        ],
-        icon: {
-          name: 'sort',
-          width: 10,
-          height: 10,
-          fill: '#000'
-        },
-        sort: null,
-        order: 'asc',
-        moreCurrencies: !this.items.length,
-      }
-    },
-
-    computed: {
-      mappedItems() {
-        const currency = this.defaultCurrency;
-        const mappedItems = cloneDeep(this.items).map(item => {
-          item.defaultCurrency = item.currency;
-          item.userPrice = parseFloat((item.price - item.price * item.vat / 100).toFixed(2));
-          if (currency === item.currency) {
-            item.currency = `${item.currency} (${this.$t('default')})`
-          }
-          return item
-        });
-        return orderBy(mappedItems, this.sort, this.order)
-      },
-
-      defaultCurrencies() {
-        const item = this.items.find(({currency}) => currency === this.defaultCurrency);
-        const curr = DefaultCurrencies.find(({value}) => value === this.defaultCurrency);
-        const basePrice = item && curr && curr.rate > 0 ? (item.price / curr.rate) : 0;
-
-        return DefaultCurrencies
-          .filter(({value}) => !this.items.find(i => i.currency === value))
-          .map(dcurr => ({...dcurr, price: parseFloat((basePrice * dcurr.rate).toFixed(2))}))
-      },
-
-      defaultPrice() {
-        const found = this.items.find(({currency}) => currency === this.defaultCurrency);
-        return found ? found.price : 0;
-      },
-    },
-
-    methods: {
-      clickMoreCurrencies() {
-        this.moreCurrencies = !this.moreCurrencies;
-      },
-
-      handlerSort(value) {
-        let {order, sort} = this;
-        order = (sort === value) ? (order || 'asc') : 'asc';
-        if (sort === value) {
-          if (order === 'asc') order = 'desc';
-          else order = 'asc'
-        }
-        this.order = order;
-        this.sort = value;
-      },
+    defaultCurrency: {
+      type: String,
+      default: () => 'USD',
     }
+  },
+
+  data() {
+    return {
+      heads: [
+        {label: 'currency', order: 'currency', width: '170'},
+        {label: 'suggestedPrice', order: 'price', width: '170'},
+        {label: 'vat', order: 'vat', width: '75'},
+        {label: 'endUserPrice', order: 'userPrice', width: '120'}
+      ],
+      icon: {
+        name: 'sort',
+        width: 10,
+        height: 10,
+        fill: '#000'
+      },
+      sort: null,
+      order: 'asc',
+      moreCurrencies: !this.items.length,
+    }
+  },
+
+  computed: {
+    mappedItems() {
+      const currency = this.defaultCurrency;
+      const mappedItems = cloneDeep(this.items).map(item => {
+        item.defaultCurrency = item.currency;
+        item.userPrice = parseFloat((item.price - item.price * item.vat / 100).toFixed(2));
+        if (currency === item.currency) {
+          item.currency = `${item.currency} (${this.$t('default')})`
+        }
+        return item
+      });
+      return orderBy(mappedItems, this.sort, this.order)
+    },
+
+    defaultCurrencies() {
+      const item = this.items.find(({currency}) => currency === this.defaultCurrency);
+      const curr = DefaultCurrencies.find(({value}) => value === this.defaultCurrency);
+      const basePrice = item && curr && curr.rate > 0 ? (item.price / curr.rate) : 0;
+
+      return DefaultCurrencies
+        .filter(({value}) => !this.items.find(i => i.currency === value))
+        .map(dcurr => ({...dcurr, price: parseFloat((basePrice * dcurr.rate).toFixed(2))}))
+    },
+
+    defaultPrice() {
+      const found = this.items.find(({currency}) => currency === this.defaultCurrency);
+      return found ? found.price : 0;
+    },
+  },
+
+  methods: {
+    clickMoreCurrencies() {
+      this.moreCurrencies = !this.moreCurrencies;
+    },
+
+    handlerSort(value) {
+      let {order, sort} = this;
+      order = (sort === value) ? (order || 'asc') : 'asc';
+      if (sort === value) {
+        if (order === 'asc') order = 'desc';
+        else order = 'asc'
+      }
+      this.order = order;
+      this.sort = value;
+    },
   }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -198,14 +204,14 @@
       background-color: #F6F6F6;
       border: 1px solid #dee2e6;
 
-      &__icon {
+      &_icon {
         position: absolute;
         top: 15px;
         left: 0;
         transition: transform .2s linear;
       }
 
-      &__label {
+      &_label {
         margin-bottom: 0;
         cursor: pointer;
       }
@@ -213,7 +219,7 @@
       &--sorted {
         color: #0C2441;
 
-        &.desc .thead__icon {
+        &.desc .thead_icon {
           transform: rotateX(180deg);
         }
       }

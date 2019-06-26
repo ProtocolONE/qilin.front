@@ -1,13 +1,13 @@
 <template>
 <article class="bundle-regional">
 
-  <section class="page__section section">
+  <section class="page_section section">
     <headline id="regional">
-      <span class="section__title">
+      <span class="section_title">
         {{ $t('regionalRestrictions') }}
       </span>
     </headline>
-    <p class="section__description">
+    <p class="section_description">
       {{ $t('regionalRestrictionsDescription') }}
     </p>
     <UiSelect
@@ -24,8 +24,8 @@
     <UiButton
       class="removeCountry"
       color="orange"
-      @click="clickRemove"
       :disabled="!select.length"
+      @click="clickRemove"
     >
       {{ $t('remove') }}
     </UiButton>
@@ -56,13 +56,13 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue';
-  import {includes, toPairs, without} from 'lodash-es';
-  import {Checkbox as UiCheckbox, UiButton, UiSelect} from '@protocol-one/ui-kit'
-  import Headline from '@/components/Headline.vue'
-  import i18n from './i18nRegional';
+import Vue from 'vue';
+import {includes, toPairs, without} from 'lodash-es';
+import {UiButton, UiCheckbox, UiSelect} from '@protocol-one/ui-kit'
+import Headline from '@/components/Headline.vue'
+import i18n from './i18nRegional';
 
-  export default Vue.extend({
+export default Vue.extend({
   i18n,
   components: {
     Headline,
@@ -88,10 +88,10 @@
   },
   computed: {
     allCountries () {
-      const allowed = this.region.allowedCountries || [];
+      const allowed = this.allowedCountries;
       return toPairs(this.$i18n.t('countries'))
-        .map(pair => ({label: pair[1], value: pair[0]}))
-        .filter(item => !includes(allowed, item.value));
+        .filter(item => !includes(allowed, item[0]))
+        .map(pair => ({label: pair[1], value: pair[0]}));
     },
     allowedCountries () {
       return this.region.allowedCountries || [];
@@ -139,8 +139,7 @@
   label {
     display: block;
     .select {
-      position: relative;
-      top: 2px;
+      margin-top: 2px;
       margin-right: 6px;
     }
   }

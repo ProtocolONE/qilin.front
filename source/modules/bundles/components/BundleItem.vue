@@ -13,11 +13,11 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue';
-  import {UiTableCell, UiTableRow} from '@protocol-one/ui-kit';
-  import formatDate from '@/helpers/formatDate';
+import Vue from 'vue';
+import {UiTableCell, UiTableRow} from '@protocol-one/ui-kit';
+import formatDate from '@/helpers/formatDate';
 
-  export default Vue.extend({
+export default Vue.extend({
   components: { UiTableRow, UiTableCell },
   props: {
     bundle: {

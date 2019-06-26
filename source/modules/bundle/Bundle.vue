@@ -1,24 +1,24 @@
 <template>
 <div class="bundle">
-  <PageHeader
+  <UiPageHeader
     :breadcrumbs="breadcrumbs"
   >
-    <Header
+    <UiHeader
       slot="title"
       level="1"
     >
       {{ $t('title') }}
-    </Header>
+    </UiHeader>
 
     <div slot="right">
-      <Button
+      <UiButton
         :text="$t('save')"
         @click="save"
       />
     </div>
-  </PageHeader>
+  </UiPageHeader>
 
-  <FormByStep
+  <UiFormByStep
     v-if="bundle !== null"
     v-model="currentStep"
     class="content"
@@ -30,43 +30,40 @@
         :bundle="bundle"
         @change="updateBundle($event)"
       />
-    </KeepAlive>
-    <KeepAlive>
       <Discount
         v-if="currentStep === 'discount'"
         :discount="bundle.discountPolicy"
         @change="updateDiscount($event)"
       />
-    </KeepAlive>
-    <KeepAlive>
       <Regional
         v-if="currentStep === 'regional'"
         :region="bundle.regionalRestrinctions"
         @change="updateRegional($event)"
       />
     </KeepAlive>
-  </FormByStep>
+  </UiFormByStep>
 </div>
 </template>
 
 <script type="ts">
-  import Vue from 'vue';
-  import {mapActions, mapGetters, mapMutations, mapState} from 'vuex';
-  import {Button, FormByStep, Header, PageHeader} from '@protocol-one/ui-kit';
-  import General from './components/General.vue';
-  import Discount from './components/Discount.vue';
-  import Regional from './components/Regional.vue';
-  import i18n from './i18n';
+import Vue from 'vue';
+import {mapActions, mapGetters, mapMutations, mapState} from 'vuex';
+import {UiButton, UiFormByStep, UiHeader, UiPageHeader} from '@protocol-one/ui-kit';
+import General from './components/General.vue';
+import Discount from './components/Discount.vue';
+import Regional from './components/Regional.vue';
+import i18n from './i18n';
 
-  export default Vue.extend({
+export default Vue.extend({
   i18n,
 
   components: {
+    UiButton,
+    UiFormByStep,
+    UiHeader,
+    UiPageHeader,
+
     General,
-    Button,
-    FormByStep,
-    Header,
-    PageHeader,
     Discount,
     Regional,
   },
@@ -139,15 +136,5 @@
 .ui-modal-footer {
   display: flex;
   justify-content: flex-end;
-}
-.bundle-prices-details {
-  display: inline-flex;
-  align-items: center;
-  margin-bottom: 0;
-  margin-right: 16px;
-
-  &__icon {
-    margin-right: 8px;
-  }
 }
 </style>

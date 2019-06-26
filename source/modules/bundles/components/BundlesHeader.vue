@@ -5,7 +5,7 @@
   </h1>
   <template v-if="hasBundles">
     <div class="search">
-      <TextField
+      <UiTextField
         :label="$t('search')"
         :value="searchValue"
         @input="$emit('search', $event)"
@@ -15,7 +15,7 @@
       class="info"
       v-html="$t('info')"
     />
-    <Button
+    <UiButton
       :text="$t('create')"
       @click="$emit('clickCreate')"
     />
@@ -24,13 +24,13 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue';
-  import {Button, TextField} from '@protocol-one/ui-kit';
-  import i18n from './i18nHeader';
+import Vue from 'vue';
+import {UiButton, UiTextField} from '@protocol-one/ui-kit';
+import i18n from './i18nHeader';
 
-  export default Vue.extend({
+export default Vue.extend({
   i18n,
-  components: { Button, TextField },
+  components: { UiButton, UiTextField },
   props: {
     searchValue: {
       type: String,

@@ -35,7 +35,15 @@ declare module '@protocol-one/ui-kit' {
   const UiTableCell: any;
   const UiTableRow: any;
   const UiLangsBar: any;
-  const PageHeader: any;
+  const UiFormByStep: any;
+  const UiHeader: any;
+  const UiPaginator: any;
+  const UiCheckbox: any;
+  const UiTextField: any;
+  const UiSelect: any;
+  const UiPageHeader: any;
+  const UiDateTimeInput: any;
+  const UiSwitchBox: any;
 
   export {
     Button,
@@ -54,7 +62,15 @@ declare module '@protocol-one/ui-kit' {
     UiTableCell,
     UiTableRow,
     UiLangsBar,
-    PageHeader,
+    UiFormByStep,
+    UiHeader,
+    UiPageHeader,
+    UiPaginator,
+    UiCheckbox,
+    UiTextField,
+    UiSelect,
+    UiDateTimeInput,
+    UiSwitchBox,
   };
 }
 

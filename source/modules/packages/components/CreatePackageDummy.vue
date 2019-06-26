@@ -8,7 +8,7 @@
     class="text"
     v-html="$t('text')"
   />
-  <Button
+  <UiButton
     :text="$t('buttonText')"
     @click="$emit('clickCreate')"
   />
@@ -17,13 +17,13 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Button } from '@protocol-one/ui-kit';
+import {UiButton} from '@protocol-one/ui-kit';
 import IconDummy from '@/components/IconDummy.vue';
 import i18n from './i18nCreatePackageDummy';
 
 export default Vue.extend({
   i18n,
-  components: { Button, IconDummy },
+  components: { UiButton, IconDummy },
 });
 </script>
 

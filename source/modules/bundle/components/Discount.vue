@@ -3,11 +3,11 @@
 
   <section class="section">
     <headline id="discount">
-      <span class="section__title">
+      <span class="section_title">
         {{ $t('discount') }}
       </span>
     </headline>
-    <p class="section__description">
+    <p class="section_description">
       {{ $t('discountDescription') }}
     </p>
     <div>
@@ -27,11 +27,11 @@
 
   <section class="section">
     <headline id="buyOption">
-      <span class="section__title">
+      <span class="section_title">
         {{ $t('buyOption') }}
       </span>
     </headline>
-    <p class="section__description">
+    <p class="section_description">
       {{ $t('buyOptionDescription') }}
     </p>
     <div>
@@ -49,12 +49,12 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue';
-  import {UiSelect, UiTextField} from '@protocol-one/ui-kit'
-  import Headline from '@/components/Headline.vue'
-  import i18n from './i18nDiscount';
+import Vue from 'vue';
+import {UiSelect, UiTextField} from '@protocol-one/ui-kit'
+import Headline from '@/components/Headline.vue'
+import i18n from './i18nDiscount';
 
-  export default Vue.extend({
+export default Vue.extend({
   i18n,
   components: {
     Headline,

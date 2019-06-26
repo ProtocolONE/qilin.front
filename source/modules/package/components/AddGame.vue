@@ -3,15 +3,15 @@
   class="modal-add-game"
   @close="$emit('close')"
 >
-  <Header
+  <UiHeader
     slot="header"
     level="2"
   >
     {{ $t('title') }}
-  </Header>
+  </UiHeader>
   <div slot="main">
     <div v-html="$t('description')"/>
-    <TextField
+    <UiTextField
       :value="search"
       :label="$t('search')"
       @input="inputSearch($event)"
@@ -22,7 +22,7 @@
         :key="game.id"
         class="item"
       >
-        <Checkbox
+        <UiCheckbox
           class="check"
           :checked="isChecked(game.id)"
           @change="switchGame(game.id)"
@@ -39,25 +39,25 @@
     slot="footer"
     class="ui-modal-footer"
   >
-    <Button
+    <UiButton
       @click="okClick"
     >
       {{ $t('ok') }}
-    </Button>
+    </UiButton>
   </div>
 </UiModal>
 </template>
 
 <script type="ts">
-  import Vue from 'vue'
-  import {Button, Checkbox, Header, TextField, UiModal} from '@protocol-one/ui-kit'
-  import {mapActions, mapGetters, mapState} from 'vuex';
-  import i18n from './i18nAddGame';
-  import formatDate from '@/helpers/formatDate';
+import Vue from 'vue'
+import {UiButton, UiCheckbox, UiHeader, UiModal, UiTextField} from '@protocol-one/ui-kit'
+import {mapActions, mapGetters, mapState} from 'vuex';
+import i18n from './i18nAddGame';
+import formatDate from '@/helpers/formatDate';
 
-  export default Vue.extend({
+export default Vue.extend({
   i18n,
-  components: { UiModal, Header, Button, TextField, Checkbox },
+  components: { UiModal, UiHeader, UiButton, UiTextField, UiCheckbox },
   data() {
     return {
       select: [],
@@ -123,8 +123,7 @@
   cursor: pointer;
   .check {
     width: 30px;
-    position: relative;
-    top: -2px;
+    margin-top: -2px;
   }
   .date {
     text-align: right;

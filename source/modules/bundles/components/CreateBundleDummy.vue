@@ -4,7 +4,7 @@
   <span class="title">
     {{ $t('title') }}
   </span>
-  <Button
+  <UiButton
     :text="$t('buttonText')"
     @click="$emit('clickCreate')"
   />
@@ -12,14 +12,14 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue';
-  import {Button} from '@protocol-one/ui-kit';
-  import IconDummy from '@/components/IconDummy.vue';
-  import i18n from './i18nCreateBundleDummy';
+import Vue from 'vue';
+import {UiButton} from '@protocol-one/ui-kit';
+import IconDummy from '@/components/IconDummy.vue';
+import i18n from './i18nCreateBundleDummy';
 
-  export default Vue.extend({
+export default Vue.extend({
   i18n,
-  components: { Button, IconDummy },
+  components: { UiButton, IconDummy },
 });
 </script>
 

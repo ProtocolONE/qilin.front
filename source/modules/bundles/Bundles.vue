@@ -1,27 +1,21 @@
 <template>
 <div class="bundles-wrapper">
   <BundlesHeader
-    :hasBundles="hasBundles"
-    :searchValue="search"
+    :has-bundles="hasBundles"
+    :search-value="search"
     @search="filterByName"
     @clickCreate="showBundleModal = true"
   />
 
   <UiTable v-if="hasBundles">
-    <BundlesFilters
-      :sort="sort"
-      @toggleSort="toggleSort"
-    />
+    <BundlesFilters :sort="sort" @toggleSort="toggleSort" />
     <BundleItem
       v-for="bundle in innerBundles"
       :key="bundle.id"
       :bundle="bundle"
     />
   </UiTable>
-  <CreateBundleDummy
-    v-else
-    @clickCreate="showBundleModal = true"
-  />
+  <CreateBundleDummy v-else @clickCreate="showBundleModal = true" />
   <UiPaginator
     :count="itemsCount"
     :limit="NUM_ROWS"
@@ -38,32 +32,33 @@
 </template>
 
 <script type="ts">
-  import Vue from 'vue';
-  import {mapActions, mapGetters, mapMutations, mapState} from 'vuex';
-  import {UiPaginator, UiTable} from '@protocol-one/ui-kit';
-  import CreateBundle from './components/CreateBundle.vue';
-  import CreateBundleDummy from './components/CreateBundleDummy.vue';
-  import BundlesFilters from './components/BundlesFilters.vue';
-  import BundlesHeader from './components/BundlesHeader.vue';
-  import BundleItem from './components/BundleItem.vue';
-  import {NUM_ROWS} from './constants';
+import Vue from 'vue';
+import {mapActions, mapGetters, mapMutations, mapState} from 'vuex';
+import {UiPaginator, UiTable} from '@protocol-one/ui-kit';
+import CreateBundle from './components/CreateBundle.vue';
+import CreateBundleDummy from './components/CreateBundleDummy.vue';
+import BundlesFilters from './components/BundlesFilters.vue';
+import BundlesHeader from './components/BundlesHeader.vue';
+import BundleItem from './components/BundleItem.vue';
+import {NUM_ROWS} from './constants';
 
-  export default Vue.extend({
+export default Vue.extend({
   components: {
+    UiTable,
+    UiPaginator,
+
     CreateBundle,
     CreateBundleDummy,
     BundlesFilters,
     BundlesHeader,
     BundleItem,
-    UiTable,
-    UiPaginator,
   },
   data: () => ({
     NUM_ROWS,
     searchTimeout: null,
     innerBundles: [],
     showBundleModal: false,
-    showGameModal: false, 
+    showGameModal: false,
   }),
   computed: {
     ...mapGetters(['currentVendorId']),

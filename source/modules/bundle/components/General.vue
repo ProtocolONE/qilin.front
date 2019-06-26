@@ -1,18 +1,18 @@
 <template>
 <div class="bundle-general">
-  <Header level="2">
+  <UiHeader level="2">
     {{ $t('name') }}
-  </Header>
+  </UiHeader>
   <MultilangTextField
     :value="bundle.name"
     class="textfield"
     :label="$t('nameLabel')"
     @change="changeProp('name', $event)"
   />
-  <Header level="2">
+  <UiHeader level="2">
     {{ $t('sku') }}
-  </Header>
-  <TextField
+  </UiHeader>
+  <UiTextField
     class="textfield"
     :label="$t('skuLabel')"
     :value="bundle.sku"
@@ -22,7 +22,7 @@
     <label
       class="checkbox"
     >
-      <Checkbox
+      <UiCheckbox
         class="check"
         :checked="bundle.isEnabled"
         @change="changeProp('isEnabled', $event)"
@@ -36,7 +36,7 @@
     <label
       class="checkbox"
     >
-      <Checkbox
+      <UiCheckbox
         class="check"
         :checked="bundle.isUpgradeAllowed"
         @change="changeProp('isUpgradeAllowed', $event)"
@@ -47,20 +47,20 @@
     </label>
   </div>
 
-  <Header level="2">
+  <UiHeader level="2">
     {{ $t('packages') }}
-  </Header>
-  <Button
+  </UiHeader>
+  <UiButton
     class="add-package"
     :text="$t('addPackage')"
     @click="clickAddPackage"
   />
-  <Button
+  <UiButton
     class="remove-package"
     color="orange"
     :text="$t('removePackage')"
-    @click="clickRemovePackage"
     :disabled="!select.length"
+    @click="clickRemovePackage"
   />
   <UiTable v-if="bundle.packages">
     <PackageItem
@@ -83,17 +83,17 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue';
-  import {mapActions} from 'vuex';
-  import {Button, Checkbox, Header, TextField, UiTable} from '@protocol-one/ui-kit';
-  import MultilangTextField from '../../package/components/MultilangTextField.vue';
-  import PackageItem from './PackageItem.vue';
-  import AddPackage from './AddPackage.vue';
-  import i18n from './i18nGeneral';
+import Vue from 'vue';
+import {mapActions} from 'vuex';
+import {UiButton, UiCheckbox, UiHeader, UiTable, UiTextField} from '@protocol-one/ui-kit';
+import MultilangTextField from '../../package/components/MultilangTextField.vue';
+import PackageItem from './PackageItem.vue';
+import AddPackage from './AddPackage.vue';
+import i18n from './i18nGeneral';
 
-  export default Vue.extend({
+export default Vue.extend({
   i18n,
-  components: {Header, Button, AddPackage, Checkbox, TextField, MultilangTextField, PackageItem, UiTable},
+  components: {UiHeader, UiButton, AddPackage, UiCheckbox, UiTextField, MultilangTextField, PackageItem, UiTable},
   props: {
     /**
      * @typedef {id: string; createdAt: Date; sku: string; name: LocalizedString; isUpgradeAllowed: boolean;

@@ -5,7 +5,7 @@
   :isClickable="false"
 >
   <UiTableCell class="select-cell">
-    <Checkbox
+    <UiCheckbox
       class="select"
       :checked="checked"
       @change="$emit('change', $event)"
@@ -28,14 +28,14 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue';
-  import {Checkbox, UiTableCell, UiTableRow} from '@protocol-one/ui-kit';
-  import i18n from './i18nGeneral';
-  import formatDate from '@/helpers/formatDate';
+import Vue from 'vue';
+import {UiCheckbox, UiTableCell, UiTableRow} from '@protocol-one/ui-kit';
+import i18n from './i18nGeneral';
+import formatDate from '@/helpers/formatDate';
 
-  export default Vue.extend({
+export default Vue.extend({
   i18n,
-    components: {UiTableRow, UiTableCell, Checkbox},
+    components: {UiTableRow, UiTableCell, UiCheckbox},
   props: {
     /**
      * @typedef {id: string; createdAt: Date; isDefault: boolean; isEnabled: boolean; media: PackageMedia;
@@ -80,8 +80,7 @@
   width: 130px;
 }
 .select {
-  position: relative;
-  top: 4px;
+  margin-top: 4px;
 }
 .logo {
   width: 40px;

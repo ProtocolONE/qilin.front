@@ -2,20 +2,20 @@
 <UiModal
   @close="$emit('close')"
 >
-  <Header
+  <UiHeader
     slot="header"
     level="2"
   >
     {{ $t('title') }}
-  </Header>
+  </UiHeader>
   <div class="body" slot="main">
-    <TextField
+    <UiTextField
       :value="name"
       :label="$t('name')"
       @input="name = $event"
     />
     <div class="info" v-html="$t('searchText')"/>
-    <TextField
+    <UiTextField
       :value="search"
       :label="$t('search')"
       @input="inputSearch($event)"
@@ -26,7 +26,7 @@
         :key="game.id"
         class="item"
       >
-        <Checkbox
+        <UiCheckbox
           class="check"
           :checked="isChecked(game.id)"
           @change="switchGame(game.id)"
@@ -43,88 +43,88 @@
     slot="footer"
     class="ui-modal-footer"
   >
-    <Button
-      @click="clickOk"
+    <UiButton
       :disabled="isOkDisabled"
+      @click="clickOk"
     >
       {{ $t('ok') }}
-    </Button>
+    </UiButton>
   </div>
 </UiModal>
 </template>
 
 <script type="ts">
-  import Vue from 'vue'
-  import {Button, Checkbox, Header, TextField, UiModal} from '@protocol-one/ui-kit'
-  import {mapActions, mapGetters, mapState} from 'vuex';
-  import i18n from './i18nCreatePackage';
-  import formatDate from '@/helpers/formatDate';
+import Vue from 'vue'
+import {UiButton, UiCheckbox, UiHeader, UiModal, UiTextField} from '@protocol-one/ui-kit'
+import {mapActions, mapGetters, mapState} from 'vuex';
+import i18n from './i18nCreatePackage';
+import formatDate from '@/helpers/formatDate';
 
-  export default Vue.extend({
-    i18n,
-    components: { UiModal, Header, Button, TextField, Checkbox },
-    data() {
-      return {
-        name: '',
-        select: [],
-        search: '',
-        updateTimeout: null,
-      }
-    },
-    computed: {
-      ...mapGetters(['currentVendorId']),
-      ...mapState('Packages', ['foundGames']),
-      isOkDisabled() {
-        return !this.select.length || !this.name.trim().length;
-      },
-    },
-    mounted() {
-      this.fetchGames({ vendorId: this.currentVendorId });
-    },
-    methods: {
-      ...mapActions('Packages', ['fetchGames', 'createPackage']),
-
-      clickOk() {
-        this.createPackage({
-          name: this.name,
-          products: this.select,
-          vendorId: this.currentVendorId,
-        }).then(packageId => {
-          this.$emit('close');
-          this.$emit('create', packageId);
-        });
-      },
-      inputSearch(value) {
-        this.search = value;
-
-        clearTimeout(this.updateTimeout);
-        this.updateTimeout = setTimeout(() => {
-          this.fetchGames({
-            query: this.search,
-            vendorId: this.currentVendorId,
-          });
-        }, 200);
-      },
-      isChecked(id) {
-        return this.select.indexOf(id) > -1;
-      },
-      switchGame(id) {
-        if (this.select.indexOf(id) > -1) {
-          this.select = this.select.filter(gameId => gameId !== id);
-        } else {
-          this.select = this.select.concat([id]);
-        }
-      },
-      formatDate(date) {
-        return formatDate(
-          date,
-          'dd LLLL yyyy',
-          this.$i18n.locale,
-          this.$i18n.fallbackLocale
-        );
-      }
+export default Vue.extend({
+  i18n,
+  components: { UiModal, UiHeader, UiButton, UiTextField, UiCheckbox },
+  data() {
+    return {
+      name: '',
+      select: [],
+      search: '',
+      updateTimeout: null,
     }
-  })
+  },
+  computed: {
+    ...mapGetters(['currentVendorId']),
+    ...mapState('Packages', ['foundGames']),
+    isOkDisabled() {
+      return !this.select.length || !this.name.trim().length;
+    },
+  },
+  mounted() {
+    this.fetchGames({ vendorId: this.currentVendorId });
+  },
+  methods: {
+    ...mapActions('Packages', ['fetchGames', 'createPackage']),
+
+    clickOk() {
+      this.createPackage({
+        name: this.name,
+        products: this.select,
+        vendorId: this.currentVendorId,
+      }).then(packageId => {
+        this.$emit('close');
+        this.$emit('create', packageId);
+      });
+    },
+    inputSearch(value) {
+      this.search = value;
+
+      clearTimeout(this.updateTimeout);
+      this.updateTimeout = setTimeout(() => {
+        this.fetchGames({
+          query: this.search,
+          vendorId: this.currentVendorId,
+        });
+      }, 200);
+    },
+    isChecked(id) {
+      return this.select.indexOf(id) > -1;
+    },
+    switchGame(id) {
+      if (this.select.indexOf(id) > -1) {
+        this.select = this.select.filter(gameId => gameId !== id);
+      } else {
+        this.select = this.select.concat([id]);
+      }
+    },
+    formatDate(date) {
+      return formatDate(
+        date,
+        'dd LLLL yyyy',
+        this.$i18n.locale,
+        this.$i18n.fallbackLocale
+      );
+    }
+  }
+})
 </script>
 
 <style scoped lang="scss">
@@ -143,8 +143,7 @@
   cursor: pointer;
   .check {
     width: 30px;
-    position: relative;
-    top: -2px;
+    margin-top: -2px;
   }
   .date {
     text-align: right;

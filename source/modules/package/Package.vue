@@ -1,14 +1,14 @@
 <template>
 <div class="package">
-  <PageHeader
+  <UiPageHeader
     :breadcrumbs="breadcrumbs"
   >
-    <Header
+    <UiHeader
       slot="title"
       level="1"
     >
       {{ $t('title') }}
-    </Header>
+    </UiHeader>
 
     <div slot="right">
       <a v-show="currentStep === 'prices'" href="#" class="package-prices-details" @click.prevent="togglePackagePricesDetails">
@@ -17,18 +17,18 @@
           width="16"
           height="16"
           fill="rgba(51, 51, 51, 0.5)"
-          class="package-prices-details__icon"
+          class="package-prices-details_icon"
         />
-        <span class="package-prices-details__label">
+        <span class="package-prices-details_label">
           {{ $t((!$route.query.details || $route.query.details === 'true') ? 'hideDetails' : 'showDetails') }}
         </span>
       </a>
-      <Button
+      <UiButton
         :text="$t('save')"
         @click="save"
       />
     </div>
-  </PageHeader>
+  </UiPageHeader>
 
   <FormByStep
     v-if="packageObj !== null"
@@ -42,15 +42,11 @@
         :pkg="packageObj"
         @change="updatePackage($event)"
       />
-    </KeepAlive>
-    <KeepAlive>
       <Media
         v-if="currentStep === 'media'"
         :media="packageObj.media"
         @change="updateMedia($event)"
       />
-    </KeepAlive>
-    <KeepAlive>
       <Prices
         v-if="currentStep === 'prices'"
         :commercial="packageObj.commercial"
@@ -58,8 +54,6 @@
         @addCurrency="addCurrency($event)"
         @removeCurrency="removeCurrency($event)"
       />
-    </KeepAlive>
-    <KeepAlive>
       <Discount
         v-if="currentStep === 'discount'"
         :discount="packageObj.discountPolicy"
@@ -78,26 +72,26 @@
 </template>
 
 <script type="ts">
-  import Vue from 'vue';
-  import {mapActions, mapGetters, mapMutations, mapState} from 'vuex';
-  import {Button, FormByStep, Header, PageHeader} from '@protocol-one/ui-kit';
-  import General from './components/General.vue';
-  import Media from './components/Media.vue';
-  import Discount from './components/Discount.vue';
-  import Regional from './components/Regional.vue';
-  import Prices from '@/modules/packagePrices/Prices.vue';
-  import Icon from '@/icons';
-  import i18n from './i18n';
+import Vue from 'vue';
+import {mapActions, mapGetters, mapMutations, mapState} from 'vuex';
+import {FormByStep, UiButton, UiHeader, UiPageHeader} from '@protocol-one/ui-kit';
+import General from './components/General.vue';
+import Media from './components/Media.vue';
+import Discount from './components/Discount.vue';
+import Regional from './components/Regional.vue';
+import Prices from '@/modules/packagePrices/Prices.vue';
+import Icon from '@/icons';
+import i18n from './i18n';
 
-  export default Vue.extend({
+export default Vue.extend({
   i18n,
 
   components: {
     General,
-    Button,
+    UiButton,
     FormByStep,
-    Header,
-    PageHeader,
+    UiHeader,
+    UiPageHeader,
     Media,
     Prices,
     Icon,
@@ -197,7 +191,7 @@
   margin-bottom: 0;
   margin-right: 16px;
 
-  &__icon {
+  &_icon {
     margin-right: 8px;
   }
 }
