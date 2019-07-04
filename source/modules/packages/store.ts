@@ -11,6 +11,7 @@ export default function PackagesStore(apiUrl: string) {
     search: '',
     page: 0,
     sort: '-name',
+    hasPackages: false,
   };
   const getters: GetterTree<State, any> = {};
   const actions: ActionTree<State, any> = {
@@ -19,7 +20,8 @@ export default function PackagesStore(apiUrl: string) {
         return;
       }
 
-      dispatch('fetchPackages', { vendorId });
+      await dispatch('fetchPackages', { vendorId });
+      commit('setHasPackages', state.packages.length > 0);
     },
 
     async fetchGames({commit}, {sort = '-releaseDate', query = '', vendorId}) {
@@ -64,6 +66,7 @@ export default function PackagesStore(apiUrl: string) {
     setSort: (state, value) => state.sort = value,
     setSearch: (state, value) => state.search = value,
     setItemsCount: (state, value) => state.itemsCount = value,
+    setHasPackages: (state, value) => state.hasPackages = value,
   };
 
   return {

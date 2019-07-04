@@ -11,15 +11,17 @@ export default function BundlesStore(apiUrl: string) {
     search: '',
     page: 0,
     sort: '-name',
+    hasBundles: true,
   };
   const getters: GetterTree<State, any> = {};
   const actions: ActionTree<State, any> = {
-    async initState({ commit, dispatch }, { vendorId }: { vendorId: string }) {
+    async initState({ commit, dispatch, state }, { vendorId }: { vendorId: string }) {
       if (!vendorId) {
         return;
       }
 
-      dispatch('fetchBundles', { vendorId });
+      await dispatch('fetchBundles', { vendorId });
+      commit('setHasBundles', state.bundles.length > 0);
     },
 
     async fetchBundles({ commit, state }, { vendorId }) {
@@ -63,6 +65,7 @@ export default function BundlesStore(apiUrl: string) {
     setSearch: (state, value) => state.search = value,
     setItemsCount: (state, value) => state.itemsCount = value,
     setFoundPackages: (state, packages) => state.foundPackages = packages,
+    setHasBundles: (state, value) => state.hasBundles = value,
   };
 
   return {

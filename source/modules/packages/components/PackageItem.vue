@@ -15,11 +15,15 @@
     {{ formatDate }}
   </UiTableCell>
   <UiTableCell>
+    {{ `${pkg.price.price} ${pkg.price.currency}` }}
+  </UiTableCell>
+  <UiTableCell>
     <div class="discount"/>
-    {{ pkg.discountPolicy.discount }} %
+    {{ pkg.discount }} %
   </UiTableCell>
 </UiTableRow>
 </template>
+
 
 <script lang="ts">
   import Vue from 'vue';

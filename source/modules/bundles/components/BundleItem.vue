@@ -9,6 +9,13 @@
     <div class="date"/>
     {{ formatDate }}
   </UiTableCell>
+  <UiTableCell>
+    {{ `${bundle.price.price} ${bundle.price.currency}` }}
+  </UiTableCell>
+  <UiTableCell>
+    <div class="discount"/>
+    {{ bundle.discount }} %
+  </UiTableCell>
 </UiTableRow>
 </template>
 
