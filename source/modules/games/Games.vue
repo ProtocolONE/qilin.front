@@ -67,7 +67,7 @@
       );
     },
     gameCreated(gameId) {
-      this.$router.push({ name: 'game', params: { id: gameId } });
+      this.$router.push({ name: 'game', params: { resourceId: gameId } });
     },
     toggleSort(propName) {
       this.sortingProps[propName] = !this.sortingProps[propName];

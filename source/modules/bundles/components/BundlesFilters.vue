@@ -35,7 +35,7 @@ export default Vue.extend({
         { name: 'name',     filterSort: 'name' },
         { name: 'date',     filterSort: 'date' },
         { name: 'price',    filterSort: 'price' },
-        { name: 'discount', filterSort: '' },
+        { name: 'discount', filterSort: 'discount' },
       ];
     },
   },
