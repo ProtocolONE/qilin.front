@@ -75,11 +75,7 @@ export default Vue.extend({
   }),
   computed: {
     ...mapGetters(['currentVendorId']),
-    ...mapState('Packages', ['packages', 'page', 'sort', 'search', 'itemsCount']),
-
-    hasPackages() {
-      return !!this.packages.length;
-    },
+    ...mapState('Packages', ['packages', 'page', 'sort', 'search', 'itemsCount', 'hasPackages']),
   },
   watch: {
     packages(val) {

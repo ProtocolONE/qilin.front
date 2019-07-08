@@ -32,8 +32,10 @@ export default Vue.extend({
   computed: {
     filters() {
       return [
-        { name: 'name', filterSort: 'name' },
-        { name: 'date', filterSort: 'date' },
+        { name: 'name',     filterSort: 'name' },
+        { name: 'date',     filterSort: 'date' },
+        { name: 'price',    filterSort: 'price' },
+        { name: 'discount', filterSort: '' },
       ];
     },
   },

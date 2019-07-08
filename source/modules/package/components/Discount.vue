@@ -81,7 +81,7 @@ export default Vue.extend({
   },
   methods: {
     validateDiscount() {
-      this.$emit('change', {discount: Math.max(Math.min(this.discount.discount, 100), 0)});
+      this.$emit('change', {discount: Math.max(Math.min(parseInt(this.discount.discount, 10), 100), 0)});
     },
     changeBuyOption(value) {
       this.$emit('change', {buyOption: value});

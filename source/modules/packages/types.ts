@@ -7,6 +7,11 @@ export interface PackageMedia {
   thumb: LocalizedString;
 }
 
+export interface Price {
+  price: number;
+  currency: string;
+}
+
 export interface PackageItem {
   id: string;
   createdAt: Date;
@@ -15,6 +20,8 @@ export interface PackageItem {
   media: PackageMedia;
   name: LocalizedString;
   sku: string;
+  discount: number;
+  price: Price;
 }
 
 export interface State {
@@ -24,4 +31,5 @@ export interface State {
   page: number;
   sort: string;
   itemsCount: number;
+  hasPackages: boolean;
 }

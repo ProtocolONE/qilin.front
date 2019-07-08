@@ -1,5 +1,5 @@
 import {LocalizedString} from '@/modules/gameMedia/types';
-import {PackageItem} from "@/modules/packages/types";
+import {PackageItem, Price} from "@/modules/packages/types";
 
 export interface BundleItem {
   id: string;
@@ -8,6 +8,8 @@ export interface BundleItem {
   name: LocalizedString;
   isEnabled: boolean;
   isUpgradeAllowed: boolean;
+  discount: number;
+  price: Price;
 }
 
 export interface State {
@@ -17,4 +19,5 @@ export interface State {
   page: number;
   sort: string;
   itemsCount: number;
+  hasBundles: boolean;
 }
