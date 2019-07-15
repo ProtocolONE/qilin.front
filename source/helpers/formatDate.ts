@@ -1,4 +1,4 @@
-import { format, isValid } from 'date-fns';
+import {format, isValid} from 'date-fns';
 import * as locales from 'date-fns/locale';
 
 export default function formatDate(

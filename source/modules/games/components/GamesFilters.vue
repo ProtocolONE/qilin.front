@@ -12,9 +12,6 @@
   <UiTableCell>
     {{ $t('genre') }}
   </UiTableCell>
-  <UiTableCell>
-    {{ $t('price') }}
-  </UiTableCell>
   <UiTableCell
     class="release _active"
     @click.native="toggleSort('releaseDate')"
@@ -25,11 +22,11 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { UiTableRow, UiTableCell } from '@protocol-one/ui-kit';
-import i18n from './i18nGamesFilters';
+  import Vue from 'vue';
+  import {UiTableCell, UiTableRow} from '@protocol-one/ui-kit';
+  import i18n from './i18nGamesFilters';
 
-export default Vue.extend({
+  export default Vue.extend({
   i18n,
   components: { UiTableRow, UiTableCell },
   methods: {

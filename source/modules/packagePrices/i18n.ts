@@ -21,8 +21,12 @@ const en = {
   notifyRateJumps: 'Notify when rates change',
   default: 'Default',
   edit: 'Edit',
-  asDefault: 'Set as default'
-}
+  asDefault: 'Set as default',
+
+  moreCurrencies: 'All currencies',
+  addCurrency: 'Add',
+  remove: 'Remove',
+};
 
 const ru = {
   defaultCurrency: 'Валюта по умолчанию',
@@ -47,9 +51,13 @@ const ru = {
   notifyRateJumps: 'Уведомлять об изменении тарифов',
   default: 'По умолчанию',
   edit: 'Редактировать',
-  asDefault: 'Установить по умолчанию'
-}
+  asDefault: 'Установить по умолчанию',
+
+  moreCurrencies: 'Все валюты',
+  addCurrency: 'Добавить',
+  remove: 'Удалить',
+};
 
 export default {
-  messages: { en, ru }
+  messages: {en, ru}
 }

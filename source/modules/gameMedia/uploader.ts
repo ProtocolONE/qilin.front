@@ -28,6 +28,7 @@ export function OpenFileDialog(accept: string, select: OpenFileFunc) {
 }
 
 export function UploadImage(file: File, opts: Options, fileReady: FileReadyFunc) {
+  const imaginaryJwt = localStorage.getItem('imaginaryJwt');
   const formData = new FormData();
   formData.append('file', file, file.name);
   axios
@@ -38,6 +39,7 @@ export function UploadImage(file: File, opts: Options, fileReady: FileReadyFunc)
         format: 'jpeg',
       },
       headers: {
+        Authorization: `Bearer ${imaginaryJwt}`,
         'Content-Type': `multipart/form-data`,
       },
     })
@@ -45,12 +47,14 @@ export function UploadImage(file: File, opts: Options, fileReady: FileReadyFunc)
 }
 
 export function UploadVideo(file: File, fileReady: FileReadyFunc) {
+  const imaginaryJwt = localStorage.getItem('imaginaryJwt');
   const formData = new FormData();
   formData.append('file', file, file.name);
   axios
     .post(`${config.imaginary_api}/video`, formData, {
       params: {},
       headers: {
+        Authorization: `Bearer ${imaginaryJwt}`,
         'Content-Type': `multipart/form-data`,
       },
     })

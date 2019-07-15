@@ -1,6 +1,6 @@
 <template>
 <div class="addition-trailers">
-  <LangsBar
+  <UiLangsBar
     :value="lang"
     :filled-list="filled"
     @change="selectLang"
@@ -31,18 +31,18 @@
 <script type="ts">
   import Vue from 'vue'
   import {clone} from 'lodash-es'
-  import {LangsBar, Button} from '@protocol-one/ui-kit'
+  import {UiLangsBar} from '@protocol-one/ui-kit'
   import UploadItem from './UploadItem.vue'
   import {OpenFileDialog, UploadVideo} from '../uploader'
   import i18n from '../i18n'
 
   export default Vue.extend({
     i18n,
-    components: {UploadItem, LangsBar, Button},
+    components: {UploadItem, UiLangsBar},
     props: {
       value: {
         type: Object,
-        require: true,
+        required: true,
         default: () => ({}),
       }
     },

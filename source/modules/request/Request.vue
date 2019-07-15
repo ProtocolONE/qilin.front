@@ -125,27 +125,27 @@
 </template>
 
 <script type="ts">
-import Vue from 'vue';
-import { get, includes, reduce } from 'lodash-es';
-import { mapActions, mapGetters, mapMutations, mapState } from 'vuex';
-import {
-  UiButton,
-  UiHeader,
-  UiModal,
-  UiPageHeader,
-  UiSelect,
-  UiTextarea,
-  UiTextField,
-  UiTip,
-} from '@protocol-one/ui-kit';
-import formatDate from '@/helpers/formatDate';
-import IconSimpleDots from '@/components/IconSimpleDots.vue';
-import Banking from '@/components/Banking.vue';
-import Company from '@/components/Company.vue';
-import Contact from '@/components/Contact.vue';
-import i18n from './i18n';
+  import Vue from 'vue';
+  import {get, reduce} from 'lodash-es';
+  import {mapActions, mapMutations, mapState} from 'vuex';
+  import {
+    UiButton,
+    UiHeader,
+    UiModal,
+    UiPageHeader,
+    UiSelect,
+    UiTextarea,
+    UiTextField,
+    UiTip,
+  } from '@protocol-one/ui-kit';
+  import formatDate from '@/helpers/formatDate';
+  import IconSimpleDots from '@/components/IconSimpleDots.vue';
+  import Banking from '@/components/Banking.vue';
+  import Company from '@/components/Company.vue';
+  import Contact from '@/components/Contact.vue';
+  import i18n from './i18n';
 
-export default Vue.extend({
+  export default Vue.extend({
   i18n,
   components: {
     Banking,
@@ -177,7 +177,7 @@ export default Vue.extend({
     formatUpdatedDate() {
       return this.updatedAt
         ? formatDate(
-          new Date(this.updatedAt),
+          this.updatedAt,
           'dd LLLL yyyy, HH:mm',
           this.$i18n.locale,
           this.$i18n.fallbackLocale

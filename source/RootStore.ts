@@ -14,6 +14,10 @@ import RequestsStore from '@/modules/requests/store';
 import RequestStore from '@/modules/request/store';
 import UsersStore from '@/modules/users/store';
 import UserStore from '@/modules/user/store';
+import PackagesStore from '@/modules/packages/store';
+import PackageStore from '@/modules/package/store';
+import BundlesStore from '@/modules/bundles/store';
+import BundleStore from '@/modules/bundle/store';
 
 const adminApiUrl = config.adminApi;
 const apiUrl = config.api;
@@ -49,6 +53,10 @@ export default {
     Request: RequestStore(adminApiUrl),
     Requests: RequestsStore(adminApiUrl),
     Sales: SalesStore(apiUrl),
+    Packages: PackagesStore(apiUrl),
+    Package: PackageStore(apiUrl),
+    Bundles: BundlesStore(apiUrl),
+    Bundle: BundleStore(apiUrl),
     Users: UsersStore(apiUrl),
     User: UserStore(apiUrl),
   },

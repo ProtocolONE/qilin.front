@@ -32,9 +32,9 @@
 
 <script type="ts">
 import Vue from 'vue';
-import { mapGetters, mapState, mapActions } from 'vuex';
-import { get, includes, map, orderBy } from 'lodash-es';
-import { UiTable } from '@protocol-one/ui-kit';
+import {mapActions, mapGetters, mapState} from 'vuex';
+import {includes, get} from 'lodash-es';
+import {UiTable} from '@protocol-one/ui-kit';
 import CreateGame from '@/modules/gameCreate/CreateGame.vue';
 import CreateGameDummy from './components/CreateGameDummy.vue';
 import GamesFilters from './components/GamesFilters.vue';
@@ -43,15 +43,12 @@ import GameItem from './components/GameItem.vue';
 
 export default Vue.extend({
   components: { CreateGame, CreateGameDummy, GamesFilters, GamesHeader, GameItem, UiTable },
-  data() {
-    return {
-      innerGames: [],
-      sortingProps: {},
-      showModal: false,
-    };
-  },
+  data: () => ({
+    innerGames: [],
+    sortingProps: {},
+    showModal: false,
+  }),
   computed: {
-    ...mapState(['permissions']),
     ...mapGetters(['currentVendorId']),
     ...mapState('Games', ['games', 'genres']),
 
@@ -81,7 +78,7 @@ export default Vue.extend({
       );
     },
     gameCreated(gameId) {
-      this.$router.push({ name: 'game', params: { id: gameId } });
+      this.$router.push({ name: 'game', params: { resourceId: gameId } });
     },
     toggleSort(propName) {
       this.sortingProps[propName] = !this.sortingProps[propName];

@@ -35,7 +35,7 @@ import './bootstrap';
 export default Vue.extend({
   components: { IconLoader, Navbar, TipWithNotifications },
   computed: {
-    ...mapGetters(['currentVendorId', 'hasAccessToModule', 'hasAuth', 'navbarLinks']),
+    ...mapGetters(['currentVendorId', 'hasAccessToModule', 'hasAuth', 'navbarLinks', 'isUserInit']),
     ...mapState(['user']),
 
     hasNavbar() {
@@ -67,6 +67,10 @@ export default Vue.extend({
       this.nextRoute(to);
     },
     hasAccessToModule(hasAccess) {
+      if (!this.isUserInit) {
+        return;
+      }
+
       const resourceId = this.$route.params.resourceId || '';
 
       if (!hasAccess(resourceId)) {

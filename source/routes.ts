@@ -6,7 +6,6 @@ import Home from '@/modules/home/Home.vue';
 import GameCommon from '@/modules/gameCommon/GameCommon.vue';
 import GameGeneral from '@/modules/gameGeneral/General.vue';
 import GameMedia from '@/modules/gameMedia/Media.vue';
-import GamePrices from '@/modules/gamePrices/Prices.vue';
 import GameNavigation from '@/modules/gameNavigation/GameNavigation.vue';
 import GameRatings from '@/modules/gameRatings/Ratings.vue';
 import GameSales from '@/modules/gameSales/Sales.vue';
@@ -18,6 +17,10 @@ import OnBoarding from '@/modules/onBoarding/OnBoarding.vue';
 import Notifications from '@/modules/notifications/Notifications.vue';
 import Requests from '@/modules/requests/Requests.vue';
 import Request from '@/modules/request/Request.vue';
+import Packages from '@/modules/packages/Packages.vue';
+import Package from '@/modules/package/Package.vue';
+import Bundles from '@/modules/bundles/Bundles.vue';
+import Bundle from '@/modules/bundle/Bundle.vue';
 import Users from '@/modules/users/Users.vue';
 import User from '@/modules/user/User.vue';
 
@@ -47,16 +50,40 @@ const routes: RouteConfig[] = [
     meta: { requiresPermissions: false, requiresAbsenceVendor: true },
   },
   {
+    path: '/packages',
+    name: 'packages',
+    component: Packages,
+    meta: { permissions: 'vendors.packages.*' },
+  },
+  {
+    path: '/packages/:resourceId',
+    name: 'package',
+    component: Package,
+    meta: { permissions: 'packages' },
+  },
+  {
+    path: '/bundles',
+    name: 'bundles',
+    component: Bundles,
+    meta: { permissions: 'vendors.bundles.*' },
+  },
+  {
+    path: '/bundles/:resourceId',
+    name: 'bundle',
+    component: Bundle,
+    meta: { permissions: 'bundles' },
+  },
+  {
     path: '/games',
     name: 'games',
     component: Games,
-    meta: { permissions: 'vendor.games' },
+    meta: { permissions: 'vendors.games' },
   },
   {
     path: '/games/:resourceId',
     name: 'game',
     // @TODO - remove redirect when GameNavigation is implemented
-    redirect: '/games/:resourceId/descriptions',
+    redirect: '/games/:resourceId/general',
     components: {
       default: GameCommon,
       navigation: GameNavigation,
@@ -80,12 +107,6 @@ const routes: RouteConfig[] = [
         name: 'gameMedia',
         component: GameMedia,
         meta: { i18n: 'routes.game.media.meta', permissions: 'games' },
-      },
-      {
-        path: 'prices',
-        name: 'gamePrices',
-        component: GamePrices,
-        meta: { i18n: 'routes.game.prices.meta', permissions: 'games' },
       },
       {
         path: 'ratings',

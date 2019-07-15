@@ -69,17 +69,17 @@
 </template>
 
 <script type="ts">
-import Vue from 'vue';
-import { get, filter, includes } from 'lodash-es';
-import { mapState, mapActions } from 'vuex';
-import { UiButton, UiHeader, UiModal, UiPaginator, UiTable } from '@protocol-one/ui-kit';
-import formatDate from '@/helpers/formatDate';
-import i18n from './i18n';
-import HistoryFilters from './components/HistoryFilters.vue';
-import HistoryHeader from './components/HistoryHeader.vue';
-import HistoryItem from './components/HistoryItem.vue';
+  import Vue from 'vue';
+  import {filter, get, includes} from 'lodash-es';
+  import {mapActions, mapState} from 'vuex';
+  import {UiButton, UiHeader, UiModal, UiPaginator, UiTable} from '@protocol-one/ui-kit';
+  import formatDate from '@/helpers/formatDate';
+  import i18n from './i18n';
+  import HistoryFilters from './components/HistoryFilters.vue';
+  import HistoryHeader from './components/HistoryHeader.vue';
+  import HistoryItem from './components/HistoryItem.vue';
 
-export default Vue.extend({
+  export default Vue.extend({
   i18n,
   components: { HistoryFilters, HistoryHeader, HistoryItem, UiButton, UiHeader, UiModal, UiPaginator, UiTable },
   data() {
@@ -115,7 +115,7 @@ export default Vue.extend({
     },
     formatCreatedDate(date) {
       return formatDate(
-        new Date(date),
+        date,
         'dd LLLL yyyy, HH:mm',
         this.$i18n.locale,
         this.$i18n.fallbackLocale,

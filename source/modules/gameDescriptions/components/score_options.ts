@@ -1,4 +1,4 @@
-import {ScoreOption} from "@/modules/gameDescriptions/types";
+import {ScoreOption} from '@/modules/gameDescriptions/types';
 
 export const scoreOptions: ScoreOption[] = [
   {value: '1', label: '1'},

@@ -1,12 +1,17 @@
 <template>
 <tr>
-  <td class="cell">{{ currency }}</td>
+  <td class="cell">
+    {{ currency }}
+  </td>
   <td class="cell">
     <ui-text-field
-      v-if="edit"
+      v-if="isEdit"
       v-model="editedPrice"
       v-focus
-      class="cell__text-field"
+      class="cell_text-field"
+      type="number"
+      min="0"
+      @blur="validatePrice"
     />
     <template v-else>
       {{ price }}
@@ -14,28 +19,33 @@
   </td>
   <td class="cell">
     <ui-text-field
-      v-if="edit"
+      v-if="isEdit"
       v-model="editedVat"
-      class="cell__text-field"
+      class="cell_text-field"
+      type="number"
+      min="0"
+      @blur="validateVat"
     />
     <template v-else>
       {{ vat }}
     </template>
   </td>
-  <td class="cell">{{ userPrice }}</td>
+  <td class="cell">
+    {{ userPrice }}
+  </td>
   <td class="cell cell--actions">
-    <div v-if="edit" class="controls">
-      <span class="controls__btn controls__btn--cancel" @click="cancelEdit">
+    <div v-if="isEdit" class="controls">
+      <span class="controls_btn controls_btn--cancel" @click="cancelEdit">
         <icon name="times" width="10" height="10" fill="gray"/>
       </span>
-      <span class="controls__btn controls__btn--submit" @click="savePrice">
+      <span class="controls_btn controls_btn--submit" @click="savePrice">
         <icon name="check" width="12" height="12" fill="#FFF"/>
       </span>
     </div>
     <a
       v-else
       v-clickaway="hideActions"
-      href="#"
+      href="/"
       class="actions-link"
       @click.prevent="actions = true"
     >
@@ -44,11 +54,14 @@
 
     <transition name="fade">
       <ul v-show="actions" class="shadow actions-list">
-        <li @click="handleEdit" class="actions-list__item">
+        <li class="actions-list_item" @click="handleEdit">
           {{ $t('edit') }}
         </li>
-        <li @click="$emit('set-default')" class="actions-list__item">
+        <li class="actions-list_item" @click="$emit('set-default')">
           {{ $t('asDefault') }}
+        </li>
+        <li class="actions-list_item" @click="$emit('remove-currency')">
+          {{ $t('remove') }}
         </li>
       </ul>
     </transition>
@@ -57,9 +70,9 @@
 </template>
 
 <script lang="ts">
+import {UiTextField} from '@protocol-one/ui-kit'
 import i18n from './i18n'
 import Icon from '@/icons'
-import { TextField as UiTextField } from '@protocol-one/ui-kit'
 
 export default {
   name: 'PricesTableItem',
@@ -72,43 +85,59 @@ export default {
     }
   },
 
-  components: { Icon, UiTextField },
+  components: {Icon, UiTextField},
 
   props: {
     currency: String,
     price: [Number, String],
     vat: [Number, String],
-    userPrice: [Number, String]
+    userPrice: [Number, String],
+    edit: {
+      type: Boolean,
+      default: false,
+    },
   },
 
-  data () {
+  data() {
     return {
       editedPrice: this.price,
       editedVat: this.vat,
-      edit: false,
+      isEdit: this.edit || false,
       actions: false
     }
   },
 
   methods: {
-    handleEdit () {
-      this.hideActions()
-      this.edit = true
+    validatePrice() {
+      this.editedPrice = Math.max(this.editedPrice, 0);
     },
 
-    hideActions () {
+    validateVat() {
+      this.editedVat = Math.max(this.editedVat, 0);
+    },
+
+    handleEdit() {
+      this.hideActions();
+      this.isEdit = true
+    },
+
+    hideActions() {
       this.actions = false
     },
 
-    cancelEdit () {
-      this.edit = false
-      this.editedPrice = this.price
-      this.editedVat = this.vat
+    cancelEdit() {
+      this.isEdit = false;
+      this.editedPrice = this.price;
+      this.editedVat = this.vat;
     },
 
-    savePrice () {
-      this.$emit('save-price', { price: this.editedPrice, vat: this.editedVat })
-      this.edit = false
+    savePrice() {
+      this.$emit('save-price', {
+        price: parseFloat(this.editedPrice),
+        vat: parseInt(this.editedVat, 10),
+        edit: false,
+      });
+      this.isEdit = false
     }
   }
 }
@@ -118,17 +147,18 @@ export default {
 .cell {
   padding: 10px;
   padding-left: 15px;
-  vertical-align: top;
+  vertical-align: middle;
+  font-size: 16px;
 
   &--actions {
     position: relative;
   }
 
-  &__price {
+  &_price {
     padding: 4px;
   }
 
-  &__text-field {
+  &_text-field {
     padding: 0;
   }
 }
@@ -153,7 +183,7 @@ export default {
   background-color: #FFF;
   border: 1px solid rgba(0, 0, 0, .05);
 
-  &__item {
+  &_item {
     padding: 10px 20px;
     color: #B1B1B1;
     white-space: nowrap;
@@ -172,7 +202,7 @@ export default {
   align-items: center;
   justify-content: space-around;
 
-  &__btn {
+  &_btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;

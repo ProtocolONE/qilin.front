@@ -21,18 +21,17 @@
       </div>
     </div>
   </UiTableCell>
-  <UiTableCell>{{ game.prices.currency }} {{ game.prices.price }}</UiTableCell>
   <UiTableCell>{{ formatReleaseDate }}</UiTableCell>
 </UiTableRow>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { filter, get, includes, map } from 'lodash-es';
-import { UiTableRow, UiTableCell } from '@protocol-one/ui-kit';
-import formatDate from '@/helpers/formatDate';
+  import Vue from 'vue';
+  import {filter, get, includes, map} from 'lodash-es';
+  import {UiTableCell, UiTableRow} from '@protocol-one/ui-kit';
+  import formatDate from '@/helpers/formatDate';
 
-export default Vue.extend({
+  export default Vue.extend({
   components: { UiTableRow, UiTableCell },
   props: {
     genres: {
@@ -47,7 +46,7 @@ export default Vue.extend({
   computed: {
     formatReleaseDate() {
       return formatDate(
-        new Date(this.game.releaseDate),
+        this.game.releaseDate,
         'dd LLLL yyyy, HH:mm',
         this.$i18n.locale,
         this.$i18n.fallbackLocale

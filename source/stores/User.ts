@@ -42,11 +42,7 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
       const action = get(permission, 'action', '');
       const hasAccess = includes(['any', 'read', '*'], action);
       
-      if (hasAccess || !requiresPermissions) {
-        return true;
-      }
-
-      return false;
+      return (hasAccess || !requiresPermissions);
     },
     hasAuth({ accessToken }) {
       return !!accessToken;
@@ -58,9 +54,12 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
     userId({ user }) {
       return get(user, 'id', '');
     },
+    isUserInit({ permissions }) {
+      return permissions !== null;
+    },
   };
   const actions: ActionTree<State, any> = {
-    async initUser({ commit, dispatch, getters }) {
+    async initUser({ commit, dispatch }) {
       const requiresAbsenceVendor = get(router.currentRoute, 'meta.requiresAbsenceVendor', false);
 
       if (!requiresAbsenceVendor) {
@@ -78,21 +77,19 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
       dispatch('startWatchNotifications');
     },
     async fetchUser({ commit, dispatch, getters }) {
-      const user = await axios
+      const appState = await axios
         .get(`${apiUrl}/me`)
-        .then(res => get(res, 'data.user') || null)
+        .then(res => res.data || null)
         .catch(() => null);
 
-      if (getters.hasAuth && !user) {
-        if (router.currentRoute.name === 'invite' && !getters.inviteData) {
-          const { vendorId, inviteId } = router.currentRoute.params;
-          saveInviteData(vendorId, inviteId);
-        }
+      if (getters.hasAuth && !appState) {
         dispatch('refreshToken');
         return;
       }
 
-      commit('user', user);
+      commit('user', get(appState, 'user') || null);
+
+      localStorage.setItem('imaginaryJwt', get(appState, 'imaginaryJwt') || null);
     },
     async fetchVendors({ commit }) {
       const vendors = await axios
@@ -103,6 +100,8 @@ export default function UserStore(apiUrl: string, authApiUrl: string, router: Vu
       if (vendors && vendors.length) {
         commit('vendors', vendors);
         commit('currentVendor', vendors[0]);
+      } else {
+        router.push({ name: 'onBoarding' });
       }
     },
     async fetchPermissions({ commit, getters }) {

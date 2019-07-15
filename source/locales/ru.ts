@@ -23,6 +23,34 @@ export default {
         description: 'Начните интеграцию',
       },
     },
+    packages: {
+      title: 'Пакеты',
+      meta: {
+        title: 'Пакеты',
+        description: 'Создавайте дополнительные пакеты',
+      },
+    },
+    package: {
+      title: 'Пакет',
+      meta: {
+        title: 'Пакет',
+        description: 'Новый пакет',
+      },
+    },
+    bundles: {
+      title: 'Наборы',
+      meta: {
+        title: 'Наборы',
+        description: 'Создавайте игровые наборы для повышения чека продажи',
+      },
+    },
+    bundle: {
+      title: 'Набор',
+      meta: {
+        title: 'Набор',
+        description: 'Управление набором',
+      },
+    },
     games: {
       title: 'Игры',
       meta: {

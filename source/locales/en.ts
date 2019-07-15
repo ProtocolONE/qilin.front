@@ -23,6 +23,20 @@ export default {
         description: 'Help us setup your first tenant and start untegration',
       },
     },
+    packages: {
+      title: 'Packages',
+      meta: {
+        title: 'Packages',
+        description: 'Add new packages to advance your games',
+      },
+    },
+    bundles: {
+      title: 'Bundles',
+      meta: {
+        title: 'Bundles',
+        description: 'Create new bundles to raise average sales',
+      },
+    },
     games: {
       title: 'Games',
       meta: {
