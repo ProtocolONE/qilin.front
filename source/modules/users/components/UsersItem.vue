@@ -125,7 +125,7 @@ export default Vue.extend({
         }
 
         return [ ...games, game ];
-      }, []);
+      }, []).filter(game => game.id !== 'skip');
     },
     roles() {
       const allRoles = map(
