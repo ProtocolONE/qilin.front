@@ -144,7 +144,7 @@ export default Vue.extend({
         }
 
         return [ ...roles, role ];
-      }, []);
+      }, []).filter(role => role.id !== 'skip');
     },
   },
 });

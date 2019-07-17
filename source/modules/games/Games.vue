@@ -57,7 +57,7 @@ export default Vue.extend({
         ['any', '*', 'write'],
         get(
           this.permissions,
-          ['vendor.games', '*', 'action'],
+          ['vendors.games', '*', 'action'],
           get(this.permissions, ['vendors.memberships', 'skip', 'action'], ''),
         ),
       );
