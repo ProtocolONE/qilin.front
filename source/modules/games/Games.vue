@@ -49,6 +49,7 @@ export default Vue.extend({
     showModal: false,
   }),
   computed: {
+    ...mapState(['permissions']),
     ...mapGetters(['currentVendorId']),
     ...mapState('Games', ['games', 'genres']),
 

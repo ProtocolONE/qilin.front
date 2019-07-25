@@ -3,62 +3,82 @@
   <UsersHeader
     :hasUsers="hasUsers"
     :hasChangePermission="hasChangePermission"
+    :showInvites="showInvites"
     @openPopupInvite="openPopup('invite')"
     @search="filterByName"
+    @switchInvites="switchInvites"
   />
 
-  <div class="content">
-    <UiTable v-if="hasUsers">
-      <UsersFilters
-        :sortingProps="sortingProps"
-        @toggleSort="toggleSort"
-      />
+  <div v-if="!showInvites">
+    <div class="content">
+      <UiTable v-if="hasUsers">
+        <UsersFilters
+          :sortingProps="sortingProps"
+          @toggleSort="toggleSort"
+        />
 
-      <UsersItem
-        v-for="user in actualUsers"
-        :key="user.id"
-        :user="user"
-        @removeAllRoles="removeAllRoles(user.id)"
-      />
-    </UiTable>
+        <UsersItem
+          v-for="user in actualUsers"
+          :key="user.id"
+          :user="user"
+          @removeAllRoles="removeAllRoles(user.id)"
+        />
+      </UiTable>
+    </div>
+
+    <UiPaginator
+      v-if="usersCount > rowsLimit"
+      :count="usersCount"
+      :limit="rowsLimit"
+      :offset="offset"
+      @pageChanged="pageChanged"
+    >
+      <div
+        class="paginator-left-content"
+        slot="left"
+      >
+        {{ $t('total', { count: usersCount }) }}
+      </div>
+    </UiPaginator>
+
+    <AddRole
+      :games="games"
+      :hasModal="hasModal"
+      :isLastStep="modalStep === 'last'"
+      :modalType="modalType"
+      @cancel="hasModal = false"
+      @changeStep="changeStep"
+      @submit="addRolesSubmit"
+    />
   </div>
 
-  <UiPaginator
-    v-if="usersCount > rowsLimit"
-    :count="usersCount"
-    :limit="rowsLimit"
-    :offset="offset"
-    @pageChanged="pageChanged"
-  >
-    <div
-      class="paginator-left-content"
-      slot="left"
-    >
-      {{ $t('total', { count: usersCount }) }}
+  <div v-else>
+    <div class="content">
+      <UiTable>
+        <InvitesFilters/>
+        <InvitesItem
+          v-for="invite in invites"
+          :key="invite.email"
+          :invite="invite"
+        />
+      </UiTable>
     </div>
-  </UiPaginator>
+  </div>
 
-  <AddRole
-    :games="games"
-    :hasModal="hasModal"
-    :isLastStep="modalStep === 'last'"
-    :modalType="modalType"
-    @cancel="hasModal = false"
-    @changeStep="changeStep"
-    @submit="addRolesSubmit"
-  />
 </div>
 </template>
 
 <script type="ts">
 import Vue from 'vue';
-import { get, filter, includes, map, orderBy } from 'lodash-es';
-import { mapState, mapActions, mapGetters } from 'vuex';
+import { get, filter, includes } from 'lodash-es';
+import { mapState, mapActions, mapGetters, mapMutations } from 'vuex';
 import { UiPaginator, UiTable } from '@protocol-one/ui-kit';
 import AddRole from '@/components/AddRole.vue';
 import UsersFilters from './components/UsersFilters.vue';
 import UsersHeader from './components/UsersHeader.vue';
 import UsersItem from './components/UsersItem.vue';
+import InvitesItem from './components/InvitesItem.vue';
+import InvitesFilters from './components/InvitesFilters.vue';
 import i18n from './i18n';
 
 export default Vue.extend({
@@ -70,6 +90,8 @@ export default Vue.extend({
     UsersFilters,
     UsersHeader,
     UsersItem,
+    InvitesFilters,
+    InvitesItem,
   },  
   data() {
     return {
@@ -85,7 +107,7 @@ export default Vue.extend({
     ...mapState(['permissions']),
     ...mapGetters(['currentVendorId']),
     ...mapState('Games', ['games']),
-    ...mapState('Users', ['rowsLimit', 'users', 'usersCount']),
+    ...mapState('Users', ['rowsLimit', 'users', 'usersCount', 'showInvites']),
 
     actualUsers() {
       return filter(
@@ -112,6 +134,7 @@ export default Vue.extend({
     this.fetchGames({ vendorId: this.currentVendorId });
   },
   methods: {
+    ...mapMutations('Users', ['switchInvites']),
     ...mapActions('Games', ['fetchGames']),
     ...mapActions('Users', ['initState', 'fetchUsers', 'changeRoles', 'sendInvite']),
 

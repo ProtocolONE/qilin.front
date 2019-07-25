@@ -156,6 +156,7 @@ export default Vue.extend({
     roles() {
       return {
         support: { checked: false, label: this.$i18n.t('roles.support') },
+        manager: { checked: false, label: this.$i18n.t('roles.manager') },
       };
     },
     IsSubmitDisabled() {

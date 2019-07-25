@@ -10,6 +10,8 @@ export default function UsersStore(apiUrl: string) {
     rowsLimit: ROWS_LIMIT,
     users: [],
     usersCount: 0,
+    showInvites: false,
+    invites: [],
   };
   const getters: GetterTree<State, any> = {};
   const actions: ActionTree<State, any> = {
@@ -79,6 +81,7 @@ export default function UsersStore(apiUrl: string) {
   const mutations: MutationTree<State> = {
     users: (state, value) => state.users = value,
     usersCount: (state, value) => state.usersCount = value,
+    switchInvites: (state) => state.showInvites = !state.showInvites,
   };
 
   return {

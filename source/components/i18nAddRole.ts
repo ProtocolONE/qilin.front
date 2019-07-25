@@ -18,6 +18,7 @@ export default {
       },
       roles: {
         support: 'Support',
+        manages: 'Manages',
       },
       selectGame: 'Select game',
     },
@@ -38,6 +39,7 @@ export default {
       },
       roles: {
         support: 'Support',
+        manages: 'Manages',
       },
       selectGame: 'Select game',
     },
@@ -59,6 +61,7 @@ export default {
       },
       roles: {
         support: 'Саппорт',
+        manager: 'Менеджен',
       },
       selectGame: 'К выбору игры',
     },

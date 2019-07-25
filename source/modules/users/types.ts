@@ -21,8 +21,16 @@ export interface User {
   roles: Role[];
 }
 
+export interface Invite {
+  email: string;
+  created_at: string;
+  roles: Role[];
+}
+
 export interface State {
   rowsLimit: number;
   users: User[];
   usersCount: number;
+  showInvites: boolean;
+  invites: Invite[];
 }
