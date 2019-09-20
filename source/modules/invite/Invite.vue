@@ -19,7 +19,7 @@
 
 <script type="ts">
 import Vue from 'vue';
-import { mapGetters, mapState, mapActions } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import { UiButton, UiPageHeader } from '@protocol-one/ui-kit';
 import IconDummy from '@/components/IconDummy.vue';
 import i18n from './i18n';

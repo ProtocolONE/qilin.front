@@ -1,5 +1,10 @@
 <template>
 <div class="auth-board">
+
+  <div v-if="!!inviteData" style="margin-bottom:20px">
+    Чтобы принять приглашение, пожалуйста, зарегестрируйтесь и/или войдите.
+  </div>
+
   <IconDummy />
   <span
     v-html="$t('title')"
@@ -51,7 +56,7 @@ export default Vue.extend({
     };
   },
   methods: {
-    ...mapActions(['setToken']),
+    ...mapActions(['setToken', 'inviteData']),
 
     showAuth(type: string) {
       this.authType = type;

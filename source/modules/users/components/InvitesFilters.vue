@@ -35,8 +35,9 @@ export default Vue.extend({
     userColumns() {
       return {
         email: false,
+        games: false,
         roles: false,
-        created_at: false,
+        createdAt: false,
       };
     },
   },

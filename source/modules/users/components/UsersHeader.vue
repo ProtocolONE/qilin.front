@@ -70,8 +70,9 @@ export default Vue.extend({
   margin-right: 12px;
   cursor: pointer;
   .switch {
+    margin-left: 10px;
     position: relative;
-    top: 4px;
+    top: 6px;
   }
 }
 </style>

@@ -3,14 +3,17 @@ export default {
     de: {
       removeAllRoles: 'Remove all roles',
       resendInvite: 'Resend invite',
+      cancel: 'Cancel',
     },
     en: {
       removeAllRoles: 'Remove all roles',
       resendInvite: 'Resend invite',
+      cancel: 'Cancel',
     },
     ru: {
       removeAllRoles: 'Удалить все роли',
-      resendInvite: 'Переотправить инвайт',
+      resendInvite: 'Отправить повторно',
+      cancel: 'Отменить',
     },
   },
 }

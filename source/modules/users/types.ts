@@ -19,11 +19,13 @@ export interface User {
   name: string;
   lastSeen: string;
   roles: Role[];
+  gender: string;
 }
 
 export interface Invite {
+  id: string;
   email: string;
-  created_at: string;
+  createdAt: string;
   roles: Role[];
 }
 

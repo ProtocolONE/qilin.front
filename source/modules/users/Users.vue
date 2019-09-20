@@ -16,7 +16,6 @@
           :sortingProps="sortingProps"
           @toggleSort="toggleSort"
         />
-
         <UsersItem
           v-for="user in actualUsers"
           :key="user.id"
@@ -40,18 +39,7 @@
         {{ $t('total', { count: usersCount }) }}
       </div>
     </UiPaginator>
-
-    <AddRole
-      :games="games"
-      :hasModal="hasModal"
-      :isLastStep="modalStep === 'last'"
-      :modalType="modalType"
-      @cancel="hasModal = false"
-      @changeStep="changeStep"
-      @submit="addRolesSubmit"
-    />
   </div>
-
   <div v-else>
     <div class="content">
       <UiTable>
@@ -60,10 +48,28 @@
           v-for="invite in invites"
           :key="invite.email"
           :invite="invite"
+          @resend="clickResendInvite"
+          @cancel="clickCancelInvite"
         />
       </UiTable>
     </div>
   </div>
+
+  <AddRole
+    :games="userGames"
+    :hasModal="hasModal"
+    :isLastStep="modalStep === 'last'"
+    :modalType="modalType"
+    @cancel="hasModal = false"
+    @changeStep="changeStep"
+    @submit="addRolesSubmit"
+  />
+
+  <MessageBox
+    v-if="isInviteSent"
+    @close="isInviteSent = false"
+    :message="$t('inviteSent')"
+  />
 
 </div>
 </template>
@@ -74,6 +80,7 @@ import { get, filter, includes } from 'lodash-es';
 import { mapState, mapActions, mapGetters, mapMutations } from 'vuex';
 import { UiPaginator, UiTable } from '@protocol-one/ui-kit';
 import AddRole from '@/components/AddRole.vue';
+import MessageBox from '@/components/MessageBox.vue';
 import UsersFilters from './components/UsersFilters.vue';
 import UsersHeader from './components/UsersHeader.vue';
 import UsersItem from './components/UsersItem.vue';
@@ -92,6 +99,7 @@ export default Vue.extend({
     UsersItem,
     InvitesFilters,
     InvitesItem,
+    MessageBox,
   },  
   data() {
     return {
@@ -101,13 +109,14 @@ export default Vue.extend({
       innerUsers: [],
       sortingProps: {},
       offset: 0,
+      isInviteSent: false,
     };
   },
   computed: {
     ...mapState(['permissions']),
     ...mapGetters(['currentVendorId']),
     ...mapState('Games', ['games']),
-    ...mapState('Users', ['rowsLimit', 'users', 'usersCount', 'showInvites']),
+    ...mapState('Users', ['rowsLimit', 'users', 'usersCount', 'showInvites', 'invites']),
 
     actualUsers() {
       return filter(
@@ -128,6 +137,12 @@ export default Vue.extend({
     hasUsers() {
       return !!this.users.length;
     },
+    userGames() {
+      return [{
+        id: '*',
+        internalName: this.$t('global'),
+      }, ...this.games];
+    }
   },
   mounted() {
     this.initState({ vendorId: this.currentVendorId });
@@ -136,7 +151,7 @@ export default Vue.extend({
   methods: {
     ...mapMutations('Users', ['switchInvites']),
     ...mapActions('Games', ['fetchGames']),
-    ...mapActions('Users', ['initState', 'fetchUsers', 'changeRoles', 'sendInvite']),
+    ...mapActions('Users', ['initState', 'fetchUsers', 'changeRoles', 'sendInvite', 'resendInvite', 'cancelInvite', 'fetchInvites']),
 
     addRolesSubmit({ selectedGameId, rolesList, email }) {
       this.sendInvite({
@@ -145,6 +160,7 @@ export default Vue.extend({
         email,
         vendorId: this.currentVendorId,
       });
+      this.hasModal = false;
     },
     changeStep(step) {
       this.modalStep = step;
@@ -182,6 +198,19 @@ export default Vue.extend({
       this.fetchUsers({
         sort: `${this.sortingProps[propName] ? '+' : '-'}${propName}`,
         vendorId: this.currentVendorId,
+      });
+    },
+    async clickResendInvite(inviteId) {
+      await this.resendInvite({
+        vendorId: this.currentVendorId,
+        inviteId,
+      });
+      this.isInviteSent = true;
+    },
+    async clickCancelInvite(inviteId) {
+      await this.cancelInvite({
+        vendorId: this.currentVendorId,
+        inviteId,
       });
     },
   },

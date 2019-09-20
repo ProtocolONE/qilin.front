@@ -6,6 +6,7 @@ export default {
       lastSeen: 'Last Seen',
       name: 'Name',
       roles: 'Roles',
+      createdAt: 'Sent date',
     },
     en: {
       email: 'Email',
@@ -13,6 +14,7 @@ export default {
       lastSeen: 'Last Seen',
       name: 'Name',
       roles: 'Roles',
+      createdAt: 'Sent date',
     },
     ru: {
       email: 'Почтовый адрес',
@@ -20,6 +22,7 @@ export default {
       lastSeen: 'Последнее посещение',
       name: 'Имя',
       roles: 'Роли',
+      createdAt: 'Когда отправлено',
     },
   },
 }

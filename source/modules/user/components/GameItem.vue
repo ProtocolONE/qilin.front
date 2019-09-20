@@ -8,18 +8,23 @@
       v-if="game.icon"
       class="logo _game"
       :style="{ backgroundImage: `url(${game.icon})` }"
-    />
+    ></div>
     {{ game.internalName }}
   </UiTableCell>
   <UiTableCell>
     <div class="box _roles">
       <div class="box-inner">
         <div
-          v-for="(role, index) in game.roles"
+          v-for="({ role }, index) in roles"
           :key="index"
-          class="item _role"
+          :class="['item', '_role', `color-${role.charCodeAt(0) % 5}`]"
         >
-          {{ role.internalName }}
+          {{ capitalizeFirstLetter(role) }}
+          <span
+            @click="removeRole(role)"
+            :title="$t('removeRole')"
+            class="remove"
+          ></span>
         </div>
       </div>
     </div>
@@ -30,11 +35,11 @@
     @mouseleave.native="isTipVisible = false"
   >
     <div class="dots">
-      <IconSimpleDots/>
+      <IconSimpleDots></IconSimpleDots>
       <UiTip
         position="left"
         :visible="isTipVisible"
-        :withoutPadding="true"
+        :without-padding="true"
       >
         <div
           class="event-item"
@@ -50,11 +55,11 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { find, get, map, reduce, upperFirst } from 'lodash-es';
+import { find, get, map, reduce, upperFirst, uniqWith } from 'lodash-es';
 import { UiTableRow, UiTableCell, UiTip } from '@protocol-one/ui-kit';
-import formatDate from '@/helpers/formatDate';
 import IconSimpleDots from '@/components/IconSimpleDots.vue';
 import i18n from './i18nItem';
+import capitalizeFirstLetter from '@/helpers/capitalizeFirstLetter';
 
 export default Vue.extend({
   i18n,
@@ -69,6 +74,17 @@ export default Vue.extend({
     return {
       isTipVisible: false,
     };
+  },
+  computed: {
+    roles() {
+      return uniqWith(this.game.roles, (a, b) => a.role === b.role);
+    },
+  },
+  methods: {
+    capitalizeFirstLetter,
+    removeRole(role){
+      this.$emit('removeRole', {game: this.game, role});
+    }
   },
 });
 </script>
@@ -106,6 +122,7 @@ export default Vue.extend({
   position: relative;
   overflow: hidden;
   height: 28px;
+  margin: 0;
 
   &._games {
     text-transform: uppercase;
@@ -149,9 +166,32 @@ export default Vue.extend({
   &._role {
     padding: 0 12px;
     font-size: 14px;
-    color: #a9a9a9;
-    background-color: #f9f9f9;
-    border: 1px solid #e2e2e2;
+    color: #000;
+    padding-right: 7px;
+  }
+
+  .remove {
+    position: relative;
+    top: 3px;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    transition: transform 0.2s ease;
+    transform: scale(1);
+    &:hover {
+      transform: scale(1.5);
+    }
+    &:after {
+      content: '+';
+      font-size: 21px;
+      font-family: monospace;
+      font-weight: bold;
+      transform: rotate(45deg);
+      position: absolute;
+      left: 1px;
+      top: 1px;
+      line-height: 15px;
+    }
   }
 }
 .dots {
@@ -164,7 +204,6 @@ export default Vue.extend({
   color: #999;
   line-height: 40px;
   display: block;
-  padding: 0;
   background-color: #fff;
   text-decoration: none;
   padding: 0 24px;
@@ -173,5 +212,25 @@ export default Vue.extend({
   &:hover {
     background-color: rgba(#2f6ecd, 0.2);
   }
+}
+.color-0 {
+  background-color: #f9f9f9;
+  border: 1px solid #e2e2e2;
+}
+.color-1 {
+  background-color: #F9BBBB;
+  border: 1px solid #F9BBBB;
+}
+.color-2 {
+  background-color: #75C5A8;
+  border: 1px solid #75C5A8;
+}
+.color-3 {
+  background-color: #a0a0dc;
+  border: 1px solid #a0a0dc;
+}
+.color-4 {
+  background-color: #d2d264;
+  border: 1px solid #d2d264;
 }
 </style>

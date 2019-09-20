@@ -8,16 +8,16 @@
 
   <div class="content">
     <UiTable v-if="currentUser">
-      <UserFilters
+      <GameFilters
         :sortingProps="sortingProps"
         @toggleSort="toggleSort"
       />
-
-      <UserItem
+      <GameItem
         v-for="game in actualGames"
         :key="game.id"
         :game="game"
         @removeAllRoles="removeAllRoles"
+        @removeRole="removeRole"
       />
     </UiTable>
   </div>
@@ -55,9 +55,9 @@ import { get, filter, find, includes, map } from 'lodash-es';
 import { mapState, mapActions, mapGetters } from 'vuex';
 import { UiPaginator, UiTable } from '@protocol-one/ui-kit';
 import AddRole from '@/components/AddRole.vue';
-import UserFilters from './components/UserFilters.vue';
 import UserHeader from './components/UserHeader.vue';
-import UserItem from './components/UserItem.vue';
+import GameFilters from './components/GameFilters.vue';
+import GameItem from './components/GameItem.vue';
 import i18n from './i18n';
 
 export default Vue.extend({
@@ -66,9 +66,9 @@ export default Vue.extend({
     AddRole,
     UiPaginator,
     UiTable,
-    UserFilters,
     UserHeader,
-    UserItem,
+    GameFilters,
+    GameItem,
   },  
   data() {
     return {
@@ -94,7 +94,6 @@ export default Vue.extend({
     innerGames() {
       const roles = this.currentUser.roles;
       const globalRole = find(roles, ({ resource }) => resource.id === '*');
-      console.error(globalRole);
       return [
         {
           id: globalRole.resource.id,
@@ -108,7 +107,10 @@ export default Vue.extend({
           icon,
           roles: map(
             filter(roles, ({ resource }) => resource.id === id),
-            ({ role, resource }) => ({ role, internalName: resource.meta.internalName })
+            ({ role, resource }) => ({
+              role,
+              internalName: resource.meta.internalName
+            })
           ),
         })),
       ];
@@ -133,9 +135,10 @@ export default Vue.extend({
       return !!this.users.length;
     },
   },
-  mounted() {
+  async mounted() {
     if (!this.users.length) {
-      this.initState({ vendorId: this.currentVendorId });
+      await this.initState({ vendorId: this.currentVendorId });
+
     }
 
     if (!this.games.length) {
@@ -169,6 +172,9 @@ export default Vue.extend({
         sort: propName ? `${this.sortingProps[propName] ? '+' : '-'}${propName}` : '',
         vendorId: this.currentVendorId,
       });
+    },
+    removeRole({game, role}) {
+
     },
     removeAllRoles() {
       this.changeRoles({ userId: this.currentUser.id, vendorId: this.currentVendorId, roles: [] });
